@@ -1,0 +1,11 @@
+{
+  "name": "ui-enterprise",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:grafana/ui-enterprise.git",
+  "author": "Kevin Minehart <kmineh0151@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "react": "^16.14.0"
+  }
+}
