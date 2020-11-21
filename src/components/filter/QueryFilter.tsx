@@ -1,41 +1,65 @@
 import React, { PureComponent } from 'react';
-import { DynatraceFilterConjunction, DynatraceQueryFilterGroup, DimensionDef } from '../types';
 import { KeyValue, SelectableValue } from '@grafana/data';
 import { QueryFilterGroup } from './QueryFilterGroup';
 
-interface Props {
-  getOptions: () => Promise<KeyValue<DimensionDef>>;
-  value: DynatraceQueryFilterGroup;
-  onChange: (group: DynatraceQueryFilterGroup) => void;
+export enum FilterConjunction {
+  AND = 'AND',
+  OR = 'OR',
+  NONE = 'NONE',
 }
 
-interface State extends DynatraceQueryFilterGroup {}
+export interface FilterHeader {
+  conjunction: FilterConjunction;
+}
 
-export function getConjunctions(): Array<SelectableValue<DynatraceFilterConjunction>> {
-  return Object.keys(DynatraceFilterConjunction)
+
+export interface FilterGroup<T> extends FilterHeader {
+  filters: Filter<T>[];
+}
+
+export type Filter<T> = FilterGroup<T> | FilterEntry<T>;
+
+export interface FilterEntry<T> extends FilterHeader {
+  key: SelectableValue<T>;
+  op: string;
+  value: SelectableValue<T>;
+  matches?: T;
+}
+
+
+interface Props<T> {
+  getOptions: () => Promise<Filter<T>[]>;
+  filter: FilterGroup<T>;
+  onChange: (group: FilterGroup<T>) => void;
+}
+
+interface State<T> extends FilterGroup<T> {}
+
+export function getConjunctions(): Array<SelectableValue<FilterConjunction>> {
+  return Object.keys(FilterConjunction)
     .filter(conjunction => conjunction !== 'NONE')
     .map((conjunction: string) => {
       return {
         label: conjunction,
-        value: DynatraceFilterConjunction[conjunction],
+        value: FilterConjunction[conjunction],
       };
     });
 }
 
-export class QueryFilter extends PureComponent<Props, State> {
-  constructor(props: Props) {
+export class QueryFilter<T> extends PureComponent<Props<T>, State<T>> {
+  constructor(props: Props<T>) {
     super(props);
     this.state = {
-      ...this.props.value,
-      conjunction: DynatraceFilterConjunction.NONE,
+      ...this.props.filter,
+      conjunction: FilterConjunction.NONE,
     };
   }
 
-  onChange = (group: DynatraceQueryFilterGroup) => {
+  onChange = (group: FilterGroup<T>) => {
     this.props.onChange(group);
   };
 
   render() {
-    return <QueryFilterGroup id={-1} getOptions={this.props.getOptions} value={this.state} onChange={this.onChange} />;
+    return <QueryFilterGroup id={-1} getOptions={this.props.getOptions} group={this.state} onChange={this.onChange} />;
   }
 }

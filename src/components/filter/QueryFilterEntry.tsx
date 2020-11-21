@@ -1,52 +1,19 @@
 import React, { PureComponent } from 'react';
-import { DynatraceQueryFilterEntry, DynatraceFilterConjunction, DimensionDef, DynatraceName } from '../types';
 import { SelectableValue, KeyValue, stringToJsRegex } from '@grafana/data';
+import { FilterEntry, Filter, FilterConjunction } from './QueryFilter';
 import { Segment, SegmentAsync } from '@grafana/ui';
 import { getConjunctions } from './QueryFilter';
 import _ from 'lodash';
 
 const removeText = '--- Remove ---';
 
-interface Props {
+interface Props<T> {
   id: number;
-  getOptions: () => Promise<KeyValue<DimensionDef>>;
-  value: DynatraceQueryFilterEntry;
-  onChange: (event: DynatraceQueryFilterEntry) => void;
+  getOptions: () => Promise<Filter<T>[]>;
+  filter: FilterEntry<T>;
+  onChange: (event: FilterEntry<T>) => void;
   onRemove: () => void;
 }
-
-export interface State extends DynatraceQueryFilterEntry {
-  options: KeyValue<DimensionDef>;
-}
-
-const emptyDimensionDef: DimensionDef = {
-  index: -1,
-  name: '',
-  key: '',
-  type: '',
-  values: [
-    {
-      name: '',
-      displayName: '',
-    },
-  ],
-  tags: [
-    {
-      name: '',
-      displayName: '',
-    },
-  ],
-  healthState: {
-    name: '',
-    displayName: '',
-  },
-  mzNames: [
-    {
-      name: '',
-      displayName: '',
-    },
-  ],
-};
 
 const processRegex = (regex: string, items: Array<SelectableValue<string>>): string[] => {
   const r: RegExp = stringToJsRegex(regex);
@@ -58,20 +25,16 @@ const processRegex = (regex: string, items: Array<SelectableValue<string>>): str
   }, []);
 };
 
-export class QueryFilterEntry extends PureComponent<Props, State> {
+export class QueryFilterEntry<T> extends PureComponent<Props<T>> {
   ops: Array<SelectableValue<string>>;
-  constructor(props: Props) {
+  constructor(props: Props<T>) {
     super(props);
-    this.state = {
-      ...this.props.value,
-      options: {},
-    };
     this.ops = [
       { label: '=', value: '=' },
       { label: '!=', value: '!=' },
     ];
 
-    const filter = this.props.value;
+    const { filter } = this.props;
     if (typeof filter.value === 'string') {
       filter.value = { name: filter.value, displayName: filter.value };
     }
@@ -88,19 +51,18 @@ export class QueryFilterEntry extends PureComponent<Props, State> {
     });
   }
 
-  static New(
-    name: string,
-    displayName: string,
-    options: KeyValue<DimensionDef>,
-    conj?: DynatraceFilterConjunction
-  ): DynatraceQueryFilterEntry {
+  static New<T>(
+    name: SelectableValue<T>,
+    options: KeyValue<T>,
+    conj?: FilterConjunction
+  ): FilterEntry<T> {
     const state = {
-      key: { name, displayName },
+      key: { name, displayName: name },
       op: '=',
-      value: { name: '', displayName: `Select <${displayName}>` },
+      value: { name: '', displayName: `Select <${name}>` },
       options,
     };
-    const conjunction = conj || DynatraceFilterConjunction.OR;
+    const conjunction = conj || FilterConjunction.OR;
     return { ...state, conjunction };
   }
 
@@ -108,126 +70,79 @@ export class QueryFilterEntry extends PureComponent<Props, State> {
     return s.op === '=' ? `eq(${s.key},${s.value})` : `ne(${s.key},${s.value})`;
   };
 
-  onChange = (state: State) => {
-    this.setState(state);
-    this.props.onChange(state);
-  };
+  onChangeFilterKey = async (key: SelectableValue<T>) => {
+    const { onChange, filter } = this.props;
 
-  onChangeFilterKey = (displayName: string) => {
-    if (displayName === removeText) {
+    if (key.label === removeText) {
       this.props.onRemove();
-    } else {
-      this.props.getOptions().then(options => {
-        const name = options[displayName];
-        this.setState({
-          ...this.state,
-          key: { name: name.key, displayName: name.name },
-          value: { name: '', displayName: `Select <${name.name}>` },
-          options,
-        });
-      });
-    }
+    } 
+
+    onChange({ ...filter, key });
   };
 
   onChangeFilterOp = (op: string) => {
-    const { key, value, options } = this.state;
+    const { onChange, filter } = this.props;
 
-    let matches: DynatraceName[] = [];
+    let matches: SelectableValue<T>[] = [];
     // By default, handle =~, but if it changes to either of the regex filters, handle them here.
-    if (op === '=~' || op === '!~') {
-      matches = processRegex(value.displayName, this.filterValues(value.displayName, false)).map(match => {
-        return (
-          options[key.displayName].values.find((n: DynatraceName) => n.displayName === match) ||
-          emptyDimensionDef.values[0]
-        );
-      });
-    }
-    this.onChange({ ...this.state, op, value: { ...value, matches } });
+    // if (op === '=~' || op === '!~') {
+    //   matches = processRegex(filter.value.label!, this.filterValues(filter.value.options, false)).map(match => {
+    //     return (
+    //       options[key.displayName].values.find((n: T) => n.displayName === match) ||
+    //       emptyDimensionDef.values[0]
+    //     );
+    //   });
+    // }
+    onChange({ ...filter, op, value: { ...filter.value, matches } });
   };
 
-  onChangeFilterValue = (sv: SelectableValue<string>) => {
-    let { key, op, options } = this.state;
-    const val = sv.value || '';
+  onChangeFilterValue = (value: SelectableValue<T>) => {
+    let { onChange, filter } = this.props;
+    // const val = sv.value || '';
 
-    const entry: DynatraceName | undefined = options[key.displayName].values.find(
-      (n: DynatraceName) => n.displayName === val
-    );
+    // const entry: DynatraceName | undefined = options[key.displayName].values.find(
+    //   (n: DynatraceName) => n.displayName === val
+    // );
 
-    let value: any = { name: entry?.name || key.name, displayName: val, type: sv.type };
-    if (val.match(/^\/.*\/$/)) {
-      op = '=~';
-      // We have a regex. Go through the list of dimensions and match appropriate entries
-      value = {
-        name: '',
-        displayName: val,
-        matches: processRegex(val, this.filterValues(val, false)).map(match => {
-          return (
-            options[key.displayName].values.find((n: DynatraceName) => n.displayName === match) ||
-            emptyDimensionDef.values[0]
-          );
-        }),
-      };
-    }
-    this.onChange({ ...this.state, op, value });
+    // let value: any = { name: entry?.name || key.name, displayName: val, type: sv.type };
+    // if (val.match(/^\/.*\/$/)) {
+    //   op = '=~';
+    //   // We have a regex. Go through the list of dimensions and match appropriate entries
+    //   value = {
+    //     name: '',
+    //     displayName: val,
+    //     matches: processRegex(val, this.filterValues(val, false)).map(match => {
+    //       return (
+    //         options[key.displayName].values.find((n: DynatraceName) => n.displayName === match) ||
+    //         emptyDimensionDef.values[0]
+    //       );
+    //     }),
+    //   };
+    // }
+    onChange({ ...filter, value });
   };
 
-  onChangeFilterConjunction = (conjunction: DynatraceFilterConjunction) => {
-    this.onChange({ ...this.state, conjunction });
+  onChangeFilterConjunction = (conjunction: FilterConjunction) => {
+    let { onChange, filter } = this.props;
+    onChange({ ...filter, conjunction });
   };
 
-  selectableFilterValues = (names: DynatraceName[], typeIn?: string): Array<SelectableValue<string>> => {
-    if (!names) {
-      return [];
-    }
-    return names.map((value: DynatraceName) => {
-      const type = value.type || typeIn || 'Dimension';
-      return { label: value.displayName, value: value.displayName, type };
-    });
+  filterKeys = async (): Promise<SelectableValue<T>[]> => {
+    return;
   };
 
-  filterKeys = async (): Promise<Array<SelectableValue<string>>> => {
-    const options = _.merge({ [removeText]: [] }, await this.props.getOptions());
-    return Object.keys(options).map(label => {
-      return { label, value: label };
-    });
-  };
-
-  filterValues = (key: string, includeRemove = true): Array<SelectableValue<string>> => {
-    const { options } = this.state;
-    const o: KeyValue<DimensionDef> = includeRemove ? _.merge({ [removeText]: [] }, options) : options;
-    if (!o[key]) {
-      o[key] = emptyDimensionDef;
-    }
-
-    return this.selectableFilterValues(o[key].values, 'Dimension').concat([
-      {
-        label: 'Tags',
-        value: 'Tags',
-        options: this.selectableFilterValues(o[key].tags, 'tag'),
-      },
-      {
-        label: 'Health Status',
-        value: 'Health Status',
-        options: [
-          { label: 'HEALTHY', value: 'HEALTHY', type: 'healthState' },
-          { label: 'UNHEALTHY', value: 'UNHEALTHY', type: 'healthState' },
-        ],
-      },
-      {
-        label: 'Management Zone',
-        value: 'Management Zone',
-        options: this.selectableFilterValues(o[key].mzNames, 'mzName'),
-      },
-    ]);
+  filterValues = (key: string, includeRemove = true): Promise<SelectableValue<T>[]> => {
+    return;
   };
 
   render() {
+    const { filter } = this.props;
     let conjunction = <></>;
     // The first element in the list never has a conjunction.
     if (this.props.id !== 0) {
       conjunction = (
         <Segment
-          value={this.state.conjunction}
+          value={filter.conjunction}
           options={getConjunctions()}
           onChange={e => e.value && this.onChangeFilterConjunction(e.value)}
         />
@@ -237,16 +152,16 @@ export class QueryFilterEntry extends PureComponent<Props, State> {
       <>
         {conjunction}
         <SegmentAsync
-          value={this.state.key.displayName}
-          loadOptions={() => this.filterKeys()}
-          onChange={e => e.value && this.onChangeFilterKey(e.value)}
+          value={filter.key}
+          loadOptions={this.filterKeys}
+          onChange={this.onChangeFilterKey}
         />
-        <Segment value={this.state.op} options={this.ops} onChange={e => e.value && this.onChangeFilterOp(e.value)} />
-        <Segment
-          value={this.state.value.displayName}
-          options={this.filterValues(this.state.key.displayName)}
+        <Segment value={filter.op} options={this.ops} onChange={e => e.value && this.onChangeFilterOp(e.value)} />
+        <SegmentAsync
+          value={filter.value}
+          loadOptions={this.filterValues}
           allowCustomValue
-          onChange={e => e && this.onChangeFilterValue(e)}
+          onChange={this.onChangeFilterValue}
         />
       </>
     );

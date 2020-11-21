@@ -1,13 +1,6 @@
 import { concat } from 'lodash';
 import React, { PureComponent } from 'react';
-import {
-  DynatraceQueryFilter,
-  DynatraceFilterConjunction,
-  DynatraceQueryFilterGroup,
-  DynatraceQueryFilterEntry,
-  DimensionDef,
-} from '../types';
-import { getConjunctions } from './QueryFilter';
+import { getConjunctions, FilterGroup, FilterEntry, Filter, FilterConjunction } from './QueryFilter';
 import { QueryFilterEntry } from './QueryFilterEntry';
 import { SelectableValue, KeyValue } from '@grafana/data';
 import { Segment, SegmentAsync } from '@grafana/ui';
@@ -16,85 +9,68 @@ const removeGroup = '--- Remove Group ---';
 const removeOption: Array<SelectableValue<string[]>> = [{ label: removeGroup, value: [] }];
 const filterGroup = '( Filter Group )';
 
-interface Props {
+interface Props<T> {
   id: number;
-  getOptions: () => Promise<KeyValue<DimensionDef>>;
-  value: DynatraceQueryFilterGroup;
-  onChange: (entry: DynatraceQueryFilterGroup) => void;
+  getOptions: () => Promise<Filter<T>[]>;
+  group: FilterGroup<T>;
+  onChange: (entry: FilterGroup<T>) => void;
 }
 
-interface State extends DynatraceQueryFilterGroup {}
-
-export class QueryFilterGroup extends PureComponent<Props, State> {
-  constructor(props: Props) {
+export class QueryFilterGroup<T> extends PureComponent<Props<T>> {
+  constructor(props: Props<T>) {
     super(props);
-    this.state = this.props.value;
   }
 
-  static New(filters?: DynatraceQueryFilter[]): DynatraceQueryFilterGroup {
+  static New<T>(filters?: Filter<T>[]): FilterGroup<T> {
     return {
-      conjunction: DynatraceFilterConjunction.AND,
+      conjunction: FilterConjunction.AND,
       filters: filters ?? [],
     };
   }
 
-  onChange = (state: State) => {
-    this.setState(state);
-    this.props.onChange(state);
-  };
-
-  onChangeFilter = (filter: DynatraceQueryFilter, index: number) => {
-    this.onChange({
-      ...this.state,
-      filters: this.state.filters.map((value, i) => (i === index ? filter : value)),
+  onChangeFilter = (filter: Filter<T>, index: number) => {
+    const { onChange, group } = this.props;
+    onChange({
+      ...group,
+      filters: group.filters.map((value, i) => (i === index ? filter : value)),
     });
   };
 
   onRemove = (index: number) => {
-    this.onChange({
-      ...this.state,
-      filters: this.state.filters.filter((f, i) => i !== index),
+    const { onChange, group } = this.props;
+    onChange({
+      ...group,
+      filters: group.filters.filter((_, i) => i !== index),
     });
   };
 
-  onAdd = (entry: DynatraceQueryFilter) => {
+  onAdd = (filter: Filter<T>) => {
+    const { onChange, group } = this.props;
     // On initial add, we don't have a valid filter value, so don't notify anyone
     // quite yet, until we've selected a reasonable value to filter on.
-    this.setState({ filters: [...this.state.filters, entry] });
+    onChange({ ...group,  filters: [...group.filters, filter] });
   };
 
-  onChangeFilterConjunction = (conjunction: DynatraceFilterConjunction, index: number) => {
-    this.onChange({
-      ...this.state,
-      filters: this.state.filters.map((f, i) => (i === index ? { ...f, conjunction } : f)),
+  onChangeFilterConjunction = (conjunction: FilterConjunction, index: number) => {
+    const { onChange, group } = this.props;
+    onChange({
+      ...group,
+      filters: group.filters.map((f, i) => (i === index ? { ...f, conjunction } : f)),
     });
   };
-
-  getOptions(options: KeyValue<DimensionDef>): Array<SelectableValue<DynatraceQueryFilter>> {
-    const groupEntry: SelectableValue<DynatraceQueryFilterGroup> = {
-      label: filterGroup,
-      value: QueryFilterGroup.New(),
-    };
-    return concat(
-      [groupEntry],
-      Object.values(options).map((d: DimensionDef) => {
-        return { label: d.name, value: QueryFilterEntry.New(d.key, d.name, options) };
-      })
-    );
-  }
 
   clickableSegment(children: JSX.Element): JSX.Element {
     return <a className="gf-form-label query-part">{children}</a>;
   }
 
-  renderEntry(filter: DynatraceQueryFilterEntry, i: number) {
+  renderEntry(filter: FilterEntry<T>, i: number) {
     return (
       <React.Fragment key={Math.random().toString(8)}>
         <QueryFilterEntry
           key={Math.random().toString(8)}
           id={i}
           getOptions={this.props.getOptions}
-          value={filter}
+          filter={filter}
           onChange={e => this.onChangeFilter(e, i)}
           onRemove={() => this.onRemove(i)}
         />
@@ -102,7 +78,7 @@ export class QueryFilterGroup extends PureComponent<Props, State> {
     );
   }
 
-  renderGroup(filter: DynatraceQueryFilterGroup, i: number) {
+  renderGroup(filter: FilterGroup<T>, i: number) {
     let conjunction: JSX.Element = <></>;
     // The first item in a list never has a conjunction
     if (i !== 0) {
@@ -128,7 +104,7 @@ export class QueryFilterGroup extends PureComponent<Props, State> {
           key={Math.random().toString(8)}
           id={i}
           getOptions={this.props.getOptions}
-          value={filter}
+          group={filter}
           onChange={e => this.onChangeFilter({ ...e, filters: e.filters }, i)}
         />
         <Segment
@@ -142,10 +118,10 @@ export class QueryFilterGroup extends PureComponent<Props, State> {
   }
 
   renderState(): JSX.Element[] {
-    const { filters } = this.state;
-    return filters
+    const { group } = this.props;
+    return group.filters
       .filter(
-        (filter: DynatraceQueryFilter) => 'value' in filter || ('filters' in filter && Array.isArray(filter['filters']))
+        (filter: Filter<T>) => 'value' in filter || ('filters' in filter && Array.isArray(filter['filters']))
       )
       .map((filter, i) => {
         if ('value' in filter) {
@@ -162,11 +138,8 @@ export class QueryFilterGroup extends PureComponent<Props, State> {
         {this.renderState()}
         <SegmentAsync
           Component={this.clickableSegment(<i className="fa fa-plus" />)}
-          loadOptions={async () => {
-            const options = await this.props.getOptions();
-            return this.getOptions(options);
-          }}
-          onChange={e => e.value && this.onAdd(e.value)}
+          loadOptions={this.props.getOptions}
+          onChange={this.onAdd}
         />
       </>
     );
