@@ -10,7 +10,7 @@ const removeText = '--- Remove ---';
 interface Props<T> {
   id: number;
   getOptions: () => Promise<Filter<T>[]>;
-  filter: FilterEntry<T>;
+  entry: FilterEntry<T>;
   onChange: (event: FilterEntry<T>) => void;
   onRemove: () => void;
 }
@@ -34,54 +34,25 @@ export class QueryFilterEntry<T> extends PureComponent<Props<T>> {
       { label: '!=', value: '!=' },
     ];
 
-    const { filter } = this.props;
-    if (typeof filter.value === 'string') {
-      filter.value = { name: filter.value, displayName: filter.value };
-    }
-    if (filter.value.displayName.match(/^\/.*\/$/)) {
+    const { entry } = this.props;
+    if (entry.value.label?.match(/^\/.*\/$/)) {
       this.ops.push({ label: '=~', value: '=~' });
       this.ops.push({ label: '!~', value: '!~' });
     }
-
-    this.props.getOptions().then(options => {
-      this.setState({
-        ...this.state,
-        options,
-      });
-    });
   }
-
-  static New<T>(
-    name: SelectableValue<T>,
-    options: KeyValue<T>,
-    conj?: FilterConjunction
-  ): FilterEntry<T> {
-    const state = {
-      key: { name, displayName: name },
-      op: '=',
-      value: { name: '', displayName: `Select <${name}>` },
-      options,
-    };
-    const conjunction = conj || FilterConjunction.OR;
-    return { ...state, conjunction };
-  }
-
-  static condition = (s: { key: string; op: string; value: string }): string => {
-    return s.op === '=' ? `eq(${s.key},${s.value})` : `ne(${s.key},${s.value})`;
-  };
 
   onChangeFilterKey = async (key: SelectableValue<T>) => {
-    const { onChange, filter } = this.props;
+    const { onChange, entry } = this.props;
 
     if (key.label === removeText) {
       this.props.onRemove();
     } 
 
-    onChange({ ...filter, key });
+    onChange({ ...entry, key });
   };
 
   onChangeFilterOp = (op: string) => {
-    const { onChange, filter } = this.props;
+    const { onChange, entry } = this.props;
 
     let matches: SelectableValue<T>[] = [];
     // By default, handle =~, but if it changes to either of the regex filters, handle them here.
@@ -93,11 +64,11 @@ export class QueryFilterEntry<T> extends PureComponent<Props<T>> {
     //     );
     //   });
     // }
-    onChange({ ...filter, op, value: { ...filter.value, matches } });
+    onChange({ ...entry, op, value: { ...entry.value, matches } });
   };
 
   onChangeFilterValue = (value: SelectableValue<T>) => {
-    let { onChange, filter } = this.props;
+    let { onChange, entry } = this.props;
     // const val = sv.value || '';
 
     // const entry: DynatraceName | undefined = options[key.displayName].values.find(
@@ -119,12 +90,12 @@ export class QueryFilterEntry<T> extends PureComponent<Props<T>> {
     //     }),
     //   };
     // }
-    onChange({ ...filter, value });
+    onChange({ ...entry, value });
   };
 
   onChangeFilterConjunction = (conjunction: FilterConjunction) => {
-    let { onChange, filter } = this.props;
-    onChange({ ...filter, conjunction });
+    let { onChange, entry } = this.props;
+    onChange({ ...entry, conjunction });
   };
 
   filterKeys = async (): Promise<SelectableValue<T>[]> => {
@@ -136,13 +107,13 @@ export class QueryFilterEntry<T> extends PureComponent<Props<T>> {
   };
 
   render() {
-    const { filter } = this.props;
+    const { entry } = this.props;
     let conjunction = <></>;
     // The first element in the list never has a conjunction.
     if (this.props.id !== 0) {
       conjunction = (
         <Segment
-          value={filter.conjunction}
+          value={entry.conjunction}
           options={getConjunctions()}
           onChange={e => e.value && this.onChangeFilterConjunction(e.value)}
         />
@@ -152,13 +123,13 @@ export class QueryFilterEntry<T> extends PureComponent<Props<T>> {
       <>
         {conjunction}
         <SegmentAsync
-          value={filter.key}
+          value={entry.key}
           loadOptions={this.filterKeys}
           onChange={this.onChangeFilterKey}
         />
-        <Segment value={filter.op} options={this.ops} onChange={e => e.value && this.onChangeFilterOp(e.value)} />
+        <Segment value={entry.op} options={this.ops} onChange={e => e.value && this.onChangeFilterOp(e.value)} />
         <SegmentAsync
-          value={filter.value}
+          value={entry.value}
           loadOptions={this.filterValues}
           allowCustomValue
           onChange={this.onChangeFilterValue}
