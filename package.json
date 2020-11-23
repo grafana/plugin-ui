@@ -6,6 +6,11 @@
   "author": "Kevin Minehart <kmineh0151@gmail.com>",
   "private": true,
   "dependencies": {
-    "react": "^16.14.0"
+    "react": "^16.14.0",
+    "@grafana/data": "next",
+    "@grafana/runtime": "next",
+    "@grafana/toolkit": "next",
+    "@grafana/ui": "next",
+    "rc-cascader": "^1.4.0"
   }
 }
