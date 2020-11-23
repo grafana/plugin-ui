@@ -10,7 +10,7 @@
     "@grafana/data": "next",
     "@grafana/runtime": "next",
     "@grafana/toolkit": "next",
-    "@material-ui/core": "^4.10.2",
-    "@types/react-select": "^3.0.8"
+    "@grafana/ui": "next",
+    "rc-cascader": "^1.4.0"
   }
 }
