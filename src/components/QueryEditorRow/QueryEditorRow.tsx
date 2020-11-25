@@ -16,7 +16,7 @@ export class QueryEditorRow extends PureComponent<Props> {
     const label = this.props.label ? (
       <label className={`gf-form-label query-keyword ${this.props.className}`}>{this.props.label}</label>
     ) : (
-      <></>
+      <div></div>
     );
     return (
       <div style={{ display: 'flex' }}>

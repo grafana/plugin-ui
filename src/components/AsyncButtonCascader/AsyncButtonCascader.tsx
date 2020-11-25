@@ -11,7 +11,7 @@ export interface AsyncButtonCascaderProps {
   options: CascaderOption[];
   children: string;
   disabled?: boolean;
-  value?: string[];
+  value: string[];
   fieldNames?: { label: string; value: string; children: string };
   loadData?: (selectedOptions: CascaderOption[]) => void;
   onChange?: (value: string[], selectedOptions: CascaderOption[]) => void;
