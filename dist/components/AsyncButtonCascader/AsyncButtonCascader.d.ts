@@ -1,5 +1,5 @@
 import React from 'react';
-import { CascaderOption } from '@grafana/ui';
+import { CascaderOption } from 'rc-cascader';
 export interface AsyncButtonCascaderProps {
     options: CascaderOption[];
     children: string;

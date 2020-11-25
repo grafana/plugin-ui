@@ -2,7 +2,7 @@
 "compilerOptions": {
     "baseUrl": "node_modules/@types",
     "declarationDir": "dist",
-    "outDir": "compiled",
+    "outDir": "dist",
     "rootDirs": [".", "stories"],
 },
 "include": ["src"],

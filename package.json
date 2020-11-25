@@ -4,10 +4,9 @@
   "repository": "git@github.com:grafana/ui-enterprise.git",
   "author": "Kevin Minehart <kmineh0151@gmail.com>",
   "private": true,
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "microbundle-crl --no-compress --format cjs --output dist",
-    "compile": "tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "react": "^16.14.0",
@@ -16,10 +15,12 @@
     "@grafana/toolkit": "next",
     "@grafana/ui": "next",
     "@grafana/tsconfig": "^1.0.0-rc1",
-    "microbundle-crl": "^0.13.10",
     "rc-cascader": "1.0.1"
   },
+  "devDependencies": {
+    "typescript": "4.0.2"
+  },
   "files": [
-    "dist"
+    "dist/**/*"
   ]
 }

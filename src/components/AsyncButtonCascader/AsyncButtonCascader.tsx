@@ -1,9 +1,9 @@
 import React from 'react';
-import { Icon, CascaderOption } from '@grafana/ui';
+import { Icon } from '@grafana/ui';
 import { css, cx } from 'emotion';
 
 // @ts-ignore
-import RCCascader from 'rc-cascader';
+import RCCascader, { CascaderOption } from 'rc-cascader';
 import { stylesFactory, useTheme } from '@grafana/ui';
 import { GrafanaTheme } from '@grafana/data';
 
