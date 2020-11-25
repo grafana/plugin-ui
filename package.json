@@ -6,7 +6,8 @@
   "private": true,
   "main": "src/index.ts",
   "scripts": {
-    "build": "microbundle-crl --no-compress --format cjs --output dist"
+    "build": "microbundle-crl --no-compress --format cjs --output dist",
+    "compile": "tsc"
   },
   "dependencies": {
     "react": "^16.14.0",
