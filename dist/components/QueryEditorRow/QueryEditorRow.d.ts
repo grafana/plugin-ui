@@ -1,11 +1,7 @@
-import { PureComponent } from 'react';
-declare type Props = {
+import { FunctionComponent } from 'react';
+export interface QueryEditorRowProps {
     label?: string;
     className?: string;
-};
-export declare class QueryEditorRow extends PureComponent<Props> {
-    className: string;
-    constructor(props: Props);
-    render(): JSX.Element;
+    noFillEnd?: boolean;
 }
-export {};
+export declare const QueryEditorRow: FunctionComponent<QueryEditorRowProps>;

@@ -1,33 +1,27 @@
-import React, { PureComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 
-type Props = {
+export interface QueryEditorRowProps {
   label?: string;
   className?: string;
+  noFillEnd?: boolean;
 };
 
-export class QueryEditorRow extends PureComponent<Props> {
-  className: string;
-  constructor(props: Props) {
-    super(props);
-    this.className = this.props.className || 'width-8';
-  }
+export const QueryEditorRow: FunctionComponent<QueryEditorRowProps> = props => {
+  const className: string = props.className ?? 'width-8';
+  const noFillEnd: boolean = props.noFillEnd ?? false;
 
-  render() {
-    const label = this.props.label ? (
-      <label className={`gf-form-label query-keyword ${this.props.className}`}>{this.props.label}</label>
-    ) : (
-      <div></div>
-    );
-    return (
-      <div style={{ display: 'flex' }}>
-        <div className={'gf-form-inline'}>
-          {label}
-          {this.props.children}
-        </div>
-        <div className={'gf-form gf-form--grow'}>
+  return (
+    <div className='gf-form'>
+      {props.label && (
+        <label className={`gf-form-label query-keyword ${className}`}>{props.label}</label>
+      )}
+      {props.children}
+
+      <div className={'gf-form--grow'}>
+        {noFillEnd || (
           <div className={'gf-form-label gf-form-label--grow'}></div>
-        </div>
+        )}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
