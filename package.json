@@ -6,7 +6,8 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "tsc"
   },
   "dependencies": {
     "react": "^16.14.0",
