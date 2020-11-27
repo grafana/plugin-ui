@@ -2,7 +2,7 @@
   "name": "ui-enterprise",
   "version": "1.0.0",
   "repository": "git@github.com:grafana/ui-enterprise.git",
-  "author": "Kevin Minehart <kmineh0151@gmail.com>",
+  "author": "Grafana Labs",
   "private": true,
   "main": "dist/index.js",
   "scripts": {
