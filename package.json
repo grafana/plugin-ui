@@ -9,7 +9,7 @@
     "build": "tsc",
     "postinstall": "tsc",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook:build": "build-storybook"
   },
   "dependencies": {
     "@grafana/data": "next",
