@@ -7,18 +7,29 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "postinstall": "tsc"
+    "postinstall": "tsc",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "react": "^16.14.0",
     "@grafana/data": "next",
     "@grafana/runtime": "next",
     "@grafana/toolkit": "next",
-    "@grafana/ui": "next",
     "@grafana/tsconfig": "^1.0.0-rc1",
-    "rc-cascader": "1.0.1"
+    "@grafana/ui": "next",
+    "rc-cascader": "1.0.1",
+    "react": "^16.14.0",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@storybook/addon-actions": "^6.1.7",
+    "@storybook/addon-essentials": "^6.1.7",
+    "@storybook/addon-links": "^6.1.7",
+    "@storybook/addons": "^6.1.7",
+    "@storybook/react": "^6.1.7",
+    "@storybook/theming": "^6.1.7",
+    "babel-loader": "^8.2.2",
     "typescript": "4.0.2"
   },
   "files": [
