@@ -3,7 +3,7 @@ import { Input } from '@grafana/ui';
 import { Props as InputProps } from '@grafana/ui/components/Input/Input';
 import { useDebounce } from '../../hooks/useDebounce';
 
-interface DebounceInputProps extends Omit<InputProps, 'ref'> {
+export interface DebounceInputProps extends Omit<InputProps, 'ref'> {
   value: string;
   onDebounce: (debouncedInput?: string) => void;
   delay?: number;
