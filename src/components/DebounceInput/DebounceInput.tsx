@@ -9,7 +9,7 @@ export interface DebounceInputProps extends Omit<InputProps, 'ref'> {
   delay?: number;
 }
 
-const DebounceInput = (props: DebounceInputProps) => {
+export const DebounceInput = (props: DebounceInputProps) => {
   const { delay, onDebounce, value, ...rest } = props;
   const [input, setInput] = React.useState(value);
 
@@ -27,5 +27,3 @@ const DebounceInput = (props: DebounceInputProps) => {
     />
   );
 };
-
-export default DebounceInput;
