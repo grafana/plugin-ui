@@ -3,7 +3,7 @@ import React from 'react';
 import { DebounceInput } from './DebounceInput';
 
 export default {
-  title: 'Layout/DebounceInput',
+  title: 'Forms/DebounceInput',
   component: DebounceInput,
 };
 
