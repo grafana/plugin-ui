@@ -2,6 +2,19 @@ version: 2.1
 orbs:
   node: circleci/node@3.0.0
 workflows:
-  node-tests:
+  build:
     jobs:
-      - node/test
+      - build
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: yarn install --immutable
+      - run:
+          name: test
+          command: yarn test
