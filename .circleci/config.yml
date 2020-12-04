@@ -16,5 +16,5 @@ jobs:
           name: Install Dependencies
           command: yarn install --immutable
       - run:
-          name: test
+          name: Unit Test
           command: yarn test
