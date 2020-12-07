@@ -24,6 +24,8 @@
     "rc-cascader": "1.0.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
     "typescript": "4.0.2"
   },
   "devDependencies": {
@@ -38,8 +40,6 @@
     "@storybook/addons": "^6.1.7",
     "@storybook/react": "^6.1.7",
     "@storybook/theming": "^6.1.7",
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
     "@types/lodash": "^4.14.165",
     "@types/testing-library__jest-dom": "^5.9.5",
