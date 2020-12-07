@@ -9,7 +9,7 @@ export interface SelectWithIconProps extends SelectCommonProps<string> {
   displayIcon: boolean;
   children?: React.ReactNode;
   renderRemove?: boolean;
-  onRemove?: (ev?: any) => void;
+  onRemove?: (ev?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onClickOutside?: () => void;
 }
 

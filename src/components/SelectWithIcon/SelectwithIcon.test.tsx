@@ -1,10 +1,4 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import {
   DEFAULT_ADD_ICON,
@@ -12,7 +6,7 @@ import {
   SelectWithIcon,
 } from './SelectWithIcon';
 import { Chance } from 'chance';
-import { generateOptions } from '../../__fixtures__/Select';
+import { generateOptions, selectOption } from '../../__fixtures__/Select';
 import userEvent from '@testing-library/user-event';
 import { getIcon } from '../../__fixtures__/Icon';
 
@@ -175,20 +169,15 @@ describe('SelectWithIcon', () => {
         <SelectWithIcon
           displayIcon={false}
           options={options}
-          onChange={onChange()}
+          onChange={onChange}
         />
       );
 
-      const select = await waitFor(() => screen.getByRole('textbox'));
-      const selectedValue = options[0].value!;
+      const selectedLabel = options[0].label!;
 
-      expect(screen.queryByDisplayValue(selectedValue)).not.toBeInTheDocument();
+      await selectOption(selectedLabel);
 
-      act(() => {
-        fireEvent.change(select, { target: { value: selectedValue } });
-      });
-
-      expect(screen.getByDisplayValue(selectedValue)).toBeInTheDocument();
+      expect(screen.getByText(selectedLabel)).toBeInTheDocument();
     });
 
     it('calls onChange when dropdown value changes', async () => {
@@ -199,17 +188,13 @@ describe('SelectWithIcon', () => {
         <SelectWithIcon
           displayIcon={false}
           options={options}
-          onChange={onChange()}
+          onChange={onChange}
         />
       );
 
       expect(onChange).not.toHaveBeenCalled();
 
-      const select = await waitFor(() => screen.getByRole('textbox'));
-
-      act(() => {
-        fireEvent.change(select, { target: { value: options[0].value! } });
-      });
+      await selectOption(options[0].label!);
 
       expect(onChange).toHaveBeenCalledTimes(1);
     });
@@ -240,63 +225,22 @@ describe('SelectWithIcon', () => {
       expect(screen.queryByText(options[2].label!)).not.toBeInTheDocument();
     });
 
-    it('renders updated value when dropdown value changes', async () => {
-      const options = generateOptions();
-      const firstSelected = options[0];
-      const secondSelected = options[1];
-
-      render(
-        <SelectWithIcon
-          isMulti={true}
-          displayIcon={false}
-          options={options}
-          value={[]}
-          onChange={jest.fn()}
-        />
-      );
-
-      const select = await waitFor(() => screen.getByRole('textbox'));
-
-      expect(
-        screen.queryByDisplayValue(
-          `${firstSelected.value!},${secondSelected.value!}`
-        )
-      ).not.toBeInTheDocument();
-
-      act(() => {
-        fireEvent.change(select, {
-          target: { value: [firstSelected.value!, secondSelected.value!] },
-        });
-      });
-
-      expect(
-        screen.getByDisplayValue(
-          `${firstSelected.value!},${secondSelected.value!}`
-        )
-      ).toBeInTheDocument();
-    });
-
     it('calls onChange when dropdown value changes', async () => {
       const options = generateOptions();
       const onChange = jest.fn();
 
       render(
         <SelectWithIcon
+          isMulti={true}
           displayIcon={false}
           options={options}
-          onChange={onChange()}
+          onChange={onChange}
         />
       );
 
       expect(onChange).not.toHaveBeenCalled();
 
-      const select = await waitFor(() => screen.getByRole('textbox'));
-
-      act(() => {
-        fireEvent.change(select, {
-          target: { value: [options[0].value!, options[1].value!] },
-        });
-      });
+      await selectOption(options[0].label!);
 
       expect(onChange).toHaveBeenCalledTimes(1);
     });
