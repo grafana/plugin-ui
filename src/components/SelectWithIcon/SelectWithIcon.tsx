@@ -9,9 +9,12 @@ export interface SelectWithIconProps extends SelectCommonProps<string> {
   displayIcon: boolean;
   children?: React.ReactNode;
   renderRemove?: boolean;
-  onRemove?: () => void;
+  onRemove?: (ev?: any) => void;
   onClickOutside?: () => void;
 }
+
+export const DEFAULT_ADD_ICON = 'search-plus';
+export const DEFAULT_REMOVE_ICON = 'search-minus';
 
 export const SelectWithIcon = (props: SelectWithIconProps) => {
   const {
@@ -35,10 +38,14 @@ export const SelectWithIcon = (props: SelectWithIconProps) => {
 
   React.useEffect(() => setDisplayIcon(displayIconCriteria), [value]);
 
+  const addIconToAdd = addIcon || DEFAULT_ADD_ICON;
+  const removeIconToAdd = removeIcon || DEFAULT_REMOVE_ICON;
+
   return displayIcon ? (
     <Button
+      title={addIconToAdd}
       variant='secondary'
-      icon={addIcon || 'search-plus'}
+      icon={addIconToAdd}
       onClick={() => {
         setOpenDropdown(true);
         setDisplayIcon(!displayIcon);
@@ -79,9 +86,14 @@ export const SelectWithIcon = (props: SelectWithIconProps) => {
       {!displayIcon ? children : null}
       {!displayIcon && renderRemove ? (
         <Button
+          title={removeIconToAdd}
           variant='secondary'
-          icon={removeIcon || 'search-minus'}
-          onClick={onRemove}
+          icon={removeIconToAdd}
+          onClick={(ev) => {
+            if (onRemove) {
+              onRemove(ev);
+            }
+          }}
         />
       ) : null}
     </>
