@@ -7,8 +7,8 @@ import { kebabCase } from 'lodash';
 export const generateOptions = (): Array<SelectableValue<string>> => {
   const numberOfOptions = 5;
 
-  return Array.from(new Array(numberOfOptions), (_, index) => {
-    const name = Chance(index).name();
+  return Array.from(new Array(numberOfOptions), () => {
+    const name = Chance().name();
 
     return {
       label: name,
