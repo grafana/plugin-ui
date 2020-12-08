@@ -9,7 +9,7 @@ import {
   Icon,
 } from '@grafana/ui';
 
-const getStyles = stylesFactory((theme: GrafanaTheme, isReversed = false) => {
+const getStyles = stylesFactory((theme: GrafanaTheme) => {
   const containerBorder = theme.isDark
     ? theme.palette.dark9
     : theme.palette.gray5;
@@ -18,9 +18,8 @@ const getStyles = stylesFactory((theme: GrafanaTheme, isReversed = false) => {
     container: css`
       top: -1px;
       position: absolute;
-      ${isReversed ? 'left' : 'right'}: 544px;
-      box-shadow: ${isReversed ? '10px' : '0px'} 0px 20px
-        ${theme.colors.dropdownShadow};
+      right: 544px;
+      box-shadow: 0px 0px 20px ${theme.colors.dropdownShadow};
       background-color: ${theme.colors.bodyBg};
       z-index: -1;
       border: 1px solid ${containerBorder};
@@ -31,7 +30,7 @@ const getStyles = stylesFactory((theme: GrafanaTheme, isReversed = false) => {
         background-color: ${theme.colors.bodyBg};
         width: 19px;
         height: 100%;
-        content: ${!isReversed ? ' ' : ''};
+        content: '';
         position: absolute;
         top: 0;
         right: -19px;
