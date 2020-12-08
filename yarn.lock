@@ -3016,6 +3016,11 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-calendar@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@types/react-calendar/-/react-calendar-3.1.2.tgz#a8afe394aadd639cfee7f0441bc3ced4fa0092f3"
+  integrity sha512-QZ8EMG2P3230GQNEMXtSJq8v8zJkJqs8xpbohMbBefYG7i1MX2YzOsDoBWF2dpq36mrkXpoNgmmeVnXIT0DYtw==
+
 "@types/react-color@3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/react-color/-/react-color-3.0.1.tgz#5433e2f503ea0e0831cbc6fd0c20f8157d93add0"
