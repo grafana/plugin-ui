@@ -2,7 +2,7 @@ import { ClickOutsideWrapper, Input } from '@grafana/ui';
 import React from 'react';
 import { DatePicker } from '../DatePicker/DatePicker';
 import { Props as InputProps } from '@grafana/ui/components/Input/Input';
-import './styles.css';
+import './style.css';
 
 const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
