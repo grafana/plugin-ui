@@ -318,4 +318,24 @@ describe('SelectWithIcon', () => {
       expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
+
+  it('renders custom value', () => {
+    const options = generateOptions();
+
+    render(
+      <SelectWithIcon
+        allowCustomValue={true}
+        displayIcon={false}
+        options={options}
+        onChange={jest.fn()}
+      />
+    );
+
+    const customValue = Chance().word();
+
+    userEvent.type(screen.getByText('Choose'), `${customValue}{enter}`);
+
+    expect(screen.queryByText('Choose')).not.toBeInTheDocument();
+    expect(screen.getByText(customValue)).toBeInTheDocument();
+  });
 });

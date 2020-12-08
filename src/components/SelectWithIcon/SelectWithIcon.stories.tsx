@@ -1,7 +1,7 @@
 import React from 'react';
 import { SelectWithIcon } from './SelectWithIcon';
 import { generateOptions } from '../../__fixtures__/Select';
-import { IconName, Input } from '@grafana/ui';
+import { IconName, InfoBox, Input } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import { getIcon } from '../../__fixtures__/Icon';
 
@@ -116,5 +116,25 @@ export const customRemoveIcon = () => {
       onRemove={() => setValue('')}
       removeIcon={icon}
     />
+  );
+};
+
+export const customValues = () => {
+  const [value, setValue] = React.useState<string>();
+
+  return (
+    <>
+      <InfoBox title='Selected value'>{`"${value}"`}</InfoBox>
+      <SelectWithIcon
+        allowCustomValue={true}
+        width={40}
+        displayIcon={!value}
+        options={generateOptions()}
+        value={value}
+        onChange={(ev) => setValue(ev.value)}
+        renderRemove={Boolean(value)}
+        onRemove={() => setValue('')}
+      />
+    </>
   );
 };
