@@ -1,6 +1,6 @@
 import React from 'react';
 import { DatePicker } from './DatePicker';
-import { Button, ClickOutsideWrapper } from '@grafana/ui';
+import { Button } from '@grafana/ui';
 
 export default {
   title: 'Pickers And Editors/DatePicker',
@@ -14,17 +14,12 @@ export const basic = () => {
   return (
     <>
       <Button onClick={() => setOpen(true)}>Show Calendar</Button>
-      <ClickOutsideWrapper
-        useCapture={true}
-        includeButtonPress={false}
-        onClick={() => setOpen(false)}
-      >
-        <DatePicker
-          isOpen={open}
-          value={date}
-          onChange={(newDate) => setDate(newDate)}
-        />
-      </ClickOutsideWrapper>
+      <DatePicker
+        isOpen={open}
+        value={date}
+        onChange={(newDate) => setDate(newDate)}
+        onClose={() => setOpen(false)}
+      />
     </>
   );
 };

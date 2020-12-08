@@ -2,7 +2,12 @@ import React, { memo } from 'react';
 import { css } from 'emotion';
 import Calendar from 'react-calendar';
 import { GrafanaTheme } from '@grafana/data';
-import { stylesFactory, useTheme, Icon } from '@grafana/ui';
+import {
+  stylesFactory,
+  useTheme,
+  ClickOutsideWrapper,
+  Icon,
+} from '@grafana/ui';
 
 const getStyles = stylesFactory((theme: GrafanaTheme, isReversed = false) => {
   const containerBorder = theme.isDark
@@ -162,6 +167,7 @@ const getBodyStyles = stylesFactory((theme: GrafanaTheme) => {
 
 export interface DatePickerProps {
   isOpen?: boolean;
+  onClose: () => void;
   onChange: (value: Date) => void;
   value?: Date;
 }
@@ -169,16 +175,22 @@ export interface DatePickerProps {
 export const DatePicker = memo<DatePickerProps>((props) => {
   const theme = useTheme();
   const styles = getStyles(theme);
-  const { isOpen } = props;
+  const { isOpen, onClose } = props;
 
   if (!isOpen) {
     return null;
   }
 
   return (
-    <div className={styles.modal}>
-      <Body {...props} />
-    </div>
+    <ClickOutsideWrapper
+      useCapture={true}
+      includeButtonPress={false}
+      onClick={onClose}
+    >
+      <div className={styles.modal} data-testid='date-picker'>
+        <Body {...props} />
+      </div>
+    </ClickOutsideWrapper>
   );
 });
 
@@ -190,7 +202,7 @@ const Body = memo<DatePickerProps>(({ value, onChange }) => {
     <Calendar
       className={styles.body}
       tileClassName={styles.title}
-      value={value}
+      value={value || new Date()}
       nextLabel={<Icon name='angle-right' />}
       prevLabel={<Icon name='angle-left' />}
       onChange={(ev) => {

@@ -1,4 +1,4 @@
-import { ClickOutsideWrapper, Input } from '@grafana/ui';
+import { Input } from '@grafana/ui';
 import React from 'react';
 import { DatePicker } from '../DatePicker/DatePicker';
 import { Props as InputProps } from '@grafana/ui/components/Input/Input';
@@ -28,17 +28,12 @@ export const DatePickerWithInput = (props: DatePickerWithInputProps) => {
         onChange={() => {}}
         {...rest}
       />
-      <ClickOutsideWrapper
-        useCapture={true}
-        includeButtonPress={false}
-        onClick={() => setOpen(false)}
-      >
-        <DatePicker
-          isOpen={open}
-          value={value}
-          onChange={(ev) => onChange(ev)}
-        />
-      </ClickOutsideWrapper>
+      <DatePicker
+        isOpen={open}
+        value={value}
+        onChange={(ev) => onChange(ev)}
+        onClose={() => setOpen(false)}
+      />
     </>
   );
 };
