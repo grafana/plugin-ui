@@ -13,12 +13,10 @@ import { getIcon } from '../../__fixtures__/Icon';
 describe('SelectWithIcon', () => {
   describe('display icon is true', () => {
     it('renders icon', () => {
-      const options = generateOptions();
-
       render(
         <SelectWithIcon
           displayIcon={true}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         />
       );
@@ -27,12 +25,10 @@ describe('SelectWithIcon', () => {
     });
 
     it('does not render dropdown', () => {
-      const options = generateOptions();
-
       render(
         <SelectWithIcon
           displayIcon={true}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         />
       );
@@ -41,13 +37,12 @@ describe('SelectWithIcon', () => {
     });
 
     it('does not render children', () => {
-      const options = generateOptions();
       const text = Chance().word();
 
       render(
         <SelectWithIcon
           displayIcon={true}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         >
           {text}
@@ -58,12 +53,10 @@ describe('SelectWithIcon', () => {
     });
 
     it('hides icon after icon is clicked', async () => {
-      const options = generateOptions();
-
       render(
         <SelectWithIcon
           displayIcon={true}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         />
       );
@@ -78,12 +71,10 @@ describe('SelectWithIcon', () => {
     });
 
     it('renders dropdown after icon is clicked', async () => {
-      const options = generateOptions();
-
       render(
         <SelectWithIcon
           displayIcon={true}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         />
       );
@@ -98,14 +89,13 @@ describe('SelectWithIcon', () => {
     });
 
     it('renders icon passed in', () => {
-      const options = generateOptions();
       const icon = getIcon();
 
       render(
         <SelectWithIcon
           displayIcon={true}
           addIcon={icon}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         />
       );
@@ -117,12 +107,10 @@ describe('SelectWithIcon', () => {
 
   describe('display icon is false', () => {
     it('does not render icon', () => {
-      const options = generateOptions();
-
       render(
         <SelectWithIcon
           displayIcon={false}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         />
       );
@@ -131,12 +119,10 @@ describe('SelectWithIcon', () => {
     });
 
     it('renders dropdown', () => {
-      const options = generateOptions();
-
       render(
         <SelectWithIcon
           displayIcon={false}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         />
       );
@@ -145,13 +131,12 @@ describe('SelectWithIcon', () => {
     });
 
     it('renders children', () => {
-      const options = generateOptions();
       const text = Chance().word();
 
       render(
         <SelectWithIcon
           displayIcon={false}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         >
           {text}
@@ -248,12 +233,10 @@ describe('SelectWithIcon', () => {
 
   describe('remove option', () => {
     it('renders icon if renderRemove is true', () => {
-      const options = generateOptions();
-
       render(
         <SelectWithIcon
           displayIcon={false}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
           renderRemove={true}
         />
@@ -263,12 +246,10 @@ describe('SelectWithIcon', () => {
     });
 
     it('does not render icon if renderRemove is false', () => {
-      const options = generateOptions();
-
       render(
         <SelectWithIcon
           displayIcon={false}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
           renderRemove={false}
         />
@@ -278,7 +259,6 @@ describe('SelectWithIcon', () => {
     });
 
     it('renders icon passed in', () => {
-      const options = generateOptions();
       const icon = getIcon();
 
       render(
@@ -286,7 +266,7 @@ describe('SelectWithIcon', () => {
           displayIcon={false}
           renderRemove={true}
           removeIcon={icon}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
         />
       );
@@ -296,13 +276,12 @@ describe('SelectWithIcon', () => {
     });
 
     it('calls onRemove after remove button is clicked', () => {
-      const options = generateOptions();
       const onRemove = jest.fn();
 
       render(
         <SelectWithIcon
           displayIcon={false}
-          options={options}
+          options={generateOptions()}
           onChange={jest.fn()}
           renderRemove={true}
           onRemove={onRemove}
@@ -320,13 +299,11 @@ describe('SelectWithIcon', () => {
   });
 
   it('renders custom value', () => {
-    const options = generateOptions();
-
     render(
       <SelectWithIcon
         allowCustomValue={true}
         displayIcon={false}
-        options={options}
+        options={generateOptions()}
         onChange={jest.fn()}
       />
     );
