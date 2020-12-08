@@ -6,8 +6,8 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "postinstall": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "postinstall": "yarn build",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook"
