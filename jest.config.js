@@ -12,6 +12,7 @@ module.exports = {
   globals: { 'ts-jest': { isolatedModules: true } },
   moduleNameMapper: {
     '^react($|/.+)': '<rootDir>/node_modules/react$1',
+    '\\.css': '<rootDir>/src/test/mocks/style.ts',
   },
   watchPathIgnorePatterns: ['<rootDir>/node_modules/'],
 };
