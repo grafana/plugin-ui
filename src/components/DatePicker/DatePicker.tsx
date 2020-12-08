@@ -1,13 +1,8 @@
-import React, { FormEvent, memo } from 'react';
+import React, { memo } from 'react';
 import { css } from 'emotion';
 import Calendar from 'react-calendar';
 import { GrafanaTheme } from '@grafana/data';
-import {
-  stylesFactory,
-  useTheme,
-  ClickOutsideWrapper,
-  Icon,
-} from '@grafana/ui';
+import { stylesFactory, useTheme, Icon } from '@grafana/ui';
 
 const getStyles = stylesFactory((theme: GrafanaTheme, isReversed = false) => {
   const containerBorder = theme.isDark
@@ -167,8 +162,6 @@ const getBodyStyles = stylesFactory((theme: GrafanaTheme) => {
 
 export interface DatePickerProps {
   isOpen?: boolean;
-  onClose?: () => void;
-  onApply?: (e: FormEvent<HTMLButtonElement>) => void;
   onChange: (value: Date) => void;
   value?: Date;
 }
@@ -176,24 +169,10 @@ export interface DatePickerProps {
 export const DatePicker = memo<DatePickerProps>((props) => {
   const theme = useTheme();
   const styles = getStyles(theme);
-  const { isOpen, onClose } = props;
+  const { isOpen } = props;
 
   if (!isOpen) {
     return null;
-  }
-
-  if (onClose) {
-    return (
-      <ClickOutsideWrapper
-        useCapture={true}
-        includeButtonPress={false}
-        onClick={onClose!}
-      >
-        <div className={styles.modal}>
-          <Body {...props} />
-        </div>
-      </ClickOutsideWrapper>
-    );
   }
 
   return (
