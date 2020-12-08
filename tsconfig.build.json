@@ -6,6 +6,7 @@
     "test",
     "dist",
     "node_modules",
-    ".storybook"
+    ".storybook",
+    "__fixtures__"
   ]
 }
