@@ -68,6 +68,7 @@ export const SelectWithIcon = (props: SelectWithIconProps) => {
         }}
       >
         <Select
+          autoFocus={true}
           isMulti={isMulti}
           maxVisibleValues={isMulti ? maxVisibleValues : undefined}
           isLoading={isLoading}
