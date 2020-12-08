@@ -6,8 +6,8 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "postinstall": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "postinstall": "yarn build",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook"
@@ -18,14 +18,11 @@
     "@grafana/toolkit": "next",
     "@grafana/tsconfig": "^1.0.0-rc1",
     "@grafana/ui": "next",
-    "@types/chance": "^1.1.0",
-    "chance": "^1.1.7",
     "lodash": "^4.17.20",
     "rc-cascader": "1.0.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/react": "^11.2.2",
+    "react-calendar": "^3.2.1",
     "typescript": "4.0.2"
   },
   "devDependencies": {
@@ -42,8 +39,14 @@
     "@storybook/theming": "^6.1.7",
     "@testing-library/user-event": "^12.5.0",
     "@types/lodash": "^4.14.165",
+    "@types/react-calendar": "^3.1.2",
     "@types/testing-library__jest-dom": "^5.9.5",
     "babel-loader": "^8.2.2",
+    "mockdate": "^3.0.2",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@types/chance": "^1.1.0",
+    "chance": "^1.1.7",
     "ts-jest": "^26.4.4"
   },
   "files": [
