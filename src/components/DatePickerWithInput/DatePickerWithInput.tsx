@@ -4,7 +4,7 @@ import { DatePicker } from '../DatePicker/DatePicker';
 import { Props as InputProps } from '@grafana/ui/components/Input/Input';
 import './style.css';
 
-const formatDate = (date: Date) => date.toISOString().split('T')[0];
+export const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
 export interface DatePickerWithInputProps
   extends Omit<InputProps, 'ref' | 'value' | 'onChange'> {
