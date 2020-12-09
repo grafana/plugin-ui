@@ -10,3 +10,7 @@ export {
   DatePickerWithInputProps,
   formatDate,
 } from './DatePickerWithInput/DatePickerWithInput';
+export {
+  SelectWithIcon,
+  SelectWithIconProps,
+} from './SelectWithIcon/SelectWithIcon';
