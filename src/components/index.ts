@@ -4,3 +4,8 @@ export {
   DebounceInput,
   DebounceInputProps,
 } from './DebounceInput/DebounceInput';
+export { DatePicker, DatePickerProps } from './DatePicker/DatePicker';
+export {
+  DatePickerWithInput,
+  DatePickerWithInputProps,
+} from './DatePickerWithInput/DatePickerWithInput';
