@@ -1,12 +1,19 @@
 {
-"compilerOptions": {
+  "compilerOptions": {
     "jsx": "react",
     "baseUrl": "node_modules/@types",
     "declarationDir": "dist",
     "outDir": "dist",
-    "rootDirs": [".", "stories"],
-},
-"include": ["src"],
-"extends": "@grafana/tsconfig",
-"exclude": ["node_modules", "dist", "compiled"]
+    "rootDirs": [".", "stories"]
+  },
+  "include": ["src"],
+  "extends": "@grafana/tsconfig",
+  "exclude": [
+    "**/*.stories.tsx",
+    "**/*.test.ts*",
+    "test",
+    "dist",
+    "node_modules",
+    ".storybook"
+  ]
 }
