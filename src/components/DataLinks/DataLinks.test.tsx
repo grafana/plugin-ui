@@ -1,11 +1,7 @@
 import React from 'react';
 import { act, render, screen, fireEvent } from '@testing-library/react';
 import { DataLinks } from './DataLinks';
-// import { Button } from '@grafana/ui';
-// import { DataLink } from './DataLink';
-// import { act } from 'react-dom/test-utils';
 import * as jestFetchMock from 'jest-fetch-mock';
-import '@babel/polyfill'
 
 jestFetchMock.enableFetchMocks();
 
@@ -49,46 +45,44 @@ describe('DataLinks', () => {
   });
 
   it('renders correctly when no fields', async () => {
+    const onChangeMock = jest.fn();
     await act(async () => {
-      await render(<DataLinks onChange={() => {}} />);
-      expect(screen.getByRole('button')).toBeInTheDocument();
-      expect(screen.getByText('Add').contains).toBeTruthy();
+      await render(<DataLinks onChange={onChangeMock} />);
     });
+    expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument()
   });
 
   it('renders correctly when there are fields', async () => {
+    const onChangeMock = jest.fn();
     await act(async () => {
-      await render(<DataLinks value={testValue} onChange={() => {}} />);
-      testValue.forEach(v => {
-        expect(screen.getByText(v.url)).toBeInTheDocument();
-        expect(screen.getByDisplayValue(v.field)).toBeInTheDocument();
-      });
-      expect(screen.getAllByText('Field').length).toBe(2);
+      await render(<DataLinks value={testValue} onChange={onChangeMock} />);
     });
+    testValue.forEach(v => {
+      expect(screen.getByText(v.url)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(v.field)).toBeInTheDocument();
+    });
+    expect(screen.getAllByText('Field').length).toBe(2);
   });
 
   it('adds new field', async () => {
     const onChangeMock = jest.fn();
     await act(async () => {
       await render(<DataLinks onChange={onChangeMock} />);
-        
-      // Click the add button
-      fireEvent.click(screen.getByText('Add'));
-
-      expect(onChangeMock).toHaveBeenCalledTimes(1);
     });
+    expect(onChangeMock).not.toHaveBeenCalled();
+    // Click the add button
+    fireEvent.click(screen.getByText('Add'));
+    expect(onChangeMock).toHaveBeenCalledTimes(1);
   });
 
   it('removes field', async () => {
     const onChangeMock = jest.fn();
     await act(async () => {
       await render(<DataLinks value={testValue} onChange={onChangeMock} />);
-      
-      // Click the remove button
-      fireEvent.click(screen.getAllByTitle('Remove field')[0]);
-
-      expect(onChangeMock).toHaveBeenCalledTimes(1);
     });
+    // Click the remove button
+    fireEvent.click(screen.getAllByTitle('Remove field')[0]);
+    expect(onChangeMock).toHaveBeenCalledTimes(1);
   });
 });
 

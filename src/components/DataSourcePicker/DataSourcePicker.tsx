@@ -85,16 +85,6 @@ export class DataSourcePicker extends PureComponent<Props> {
           noOptionsMessage="No datasources found"
           value={value!}
           invalid={invalid}
-          // getOptionLabel={o => {
-          //   if (isUnsignedPluginSignature(o.meta.signature) && o !== value) {
-          //     return (
-          //       <HorizontalGroup align="center" justify="space-between">
-          //         <span>{o.label}</span> <PluginSignatureBadge status={o.meta.signature} />
-          //       </HorizontalGroup>
-          //     );
-          //   }
-          //   return o.label ? (<div>{o.label}</div>) : <></>
-          // }}
         />
       </div>
     );
