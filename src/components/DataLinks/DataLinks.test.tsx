@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, fireEvent } from '@testing-library/react';
 import { DataLinks } from './DataLinks';
 // import { Button } from '@grafana/ui';
 // import { DataLink } from './DataLink';
@@ -51,56 +51,54 @@ describe('DataLinks', () => {
   it('renders correctly when no fields', async () => {
     await act(async () => {
       await render(<DataLinks onChange={() => {}} />);
-      expect(screen.getAllByText('Add').length).toBe(1);
+      expect(screen.getByRole('button')).toBeInTheDocument();
+      expect(screen.getByText('Add').contains).toBeTruthy();
     });
-      
-    // expect(wrapper.find(Button).length).toBe(1);
-    // expect(wrapper.find(Button).contains('Add')).toBeTruthy();
-    // expect(wrapper.find(DataLink).length).toBe(0);
   });
 
-//   it('renders correctly when there are fields', async () => {
-//     // @ts-ignore we shouldn't use Promises in act => the "void | undefined" is here to forbid any sneaky "Promise" returns.
-//     const result = await render(<DataLinks value={testValue} onChange={() => {}} />);
+  it('renders correctly when there are fields', async () => {
+    await act(async () => {
+      await render(<DataLinks value={testValue} onChange={() => {}} />);
+      testValue.forEach(v => {
+        expect(screen.getByText(v.url)).toBeInTheDocument();
+        expect(screen.getByDisplayValue(v.field)).toBeInTheDocument();
+      });
+      expect(screen.getAllByText('Field').length).toBe(2);
+    });
+  });
 
-//   //   expect(wrapper.find(Button).filterWhere((button: any) => button.contains('Add')).length).toBe(1);
-//   //   expect(wrapper.find(DataLink).length).toBe(2);
-//   });
+  it('adds new field', async () => {
+    const onChangeMock = jest.fn();
+    await act(async () => {
+      await render(<DataLinks onChange={onChangeMock} />);
+        
+      // Click the add button
+      fireEvent.click(screen.getByText('Add'));
 
-//   it('adds new field', async () => {
-//     const onChangeMock = jest.fn();
-//     // @ts-ignore we shouldn't use Promises in act => the "void | undefined" is here to forbid any sneaky "Promise" returns.
-//     const result = await render(<DataLinks onChange={onChangeMock} />);
-//     // const addButton = wrapper.find(Button).filterWhere((button: any) => button.contains('Add'));
-//     // addButton.simulate('click');
-//     // expect(onChangeMock.mock.calls[0][0].length).toBe(1);
-//   });
+      expect(onChangeMock).toHaveBeenCalledTimes(1);
+    });
+  });
 
-//   it('removes field', async () => {
-//     const onChangeMock = jest.fn();
-//     // @ts-ignore we shouldn't use Promises in act => the "void | undefined" is here to forbid any sneaky "Promise" returns.
-//     const result = await render(<DataLinks value={testValue} onChange={onChangeMock} />);
-//   //   const removeButton = wrapper
-//   //     .find(DataLink)
-//   //     .at(0)
-//   //     .find(Button);
-//   //   removeButton.simulate('click');
-//   //   const newValue = onChangeMock.mock.calls[0][0];
-//   //   expect(newValue.length).toBe(1);
-//   //   expect(newValue[0]).toMatchObject({
-//   //     field: 'regex2',
-//   //     url: 'localhost2',
-//   //   });
-//   });
+  it('removes field', async () => {
+    const onChangeMock = jest.fn();
+    await act(async () => {
+      await render(<DataLinks value={testValue} onChange={onChangeMock} />);
+      
+      // Click the remove button
+      fireEvent.click(screen.getAllByTitle('Remove field')[0]);
+
+      expect(onChangeMock).toHaveBeenCalledTimes(1);
+    });
+  });
 });
 
-// const testValue = [
-//   {
-//     field: 'regex1',
-//     url: 'localhost1',
-//   },
-//   {
-//     field: 'regex2',
-//     url: 'localhost2',
-//   },
-// ];
+const testValue = [
+  {
+    field: 'regex1',
+    url: 'localhost1',
+  },
+  {
+    field: 'regex2',
+    url: 'localhost2',
+  },
+];
