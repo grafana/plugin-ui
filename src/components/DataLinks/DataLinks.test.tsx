@@ -70,6 +70,7 @@ describe('DataLinks', () => {
       await render(<DataLinks onChange={onChangeMock} />);
     });
     expect(onChangeMock).not.toHaveBeenCalled();
+    //expect(screen.getAllByText('Field').length).toBe(0);
     // Click the add button
     fireEvent.click(screen.getByText('Add'));
     expect(onChangeMock).toHaveBeenCalledTimes(1);
