@@ -105,17 +105,19 @@ export const DataLink = (props: Props) => {
             setShowInternalLink(!showInternalLink);
           }}
         />
-        <DataSourcePicker
-          // Uid and value should be always set in the db and so in the items.
-          datasources={datasources}
-          onChange={ds => {
-            onChange({
-              ...value,
-              datasource: ds,
-            });
-          }}
-          current={value.datasource}
-        />
+        {showInternalLink && (
+          <DataSourcePicker
+            // Uid and value should be always set in the db and so in the items.
+            datasources={datasources}
+            onChange={ds => {
+              onChange({
+                ...value,
+                datasource: ds,
+              });
+            }}
+            current={value.datasource}
+          />
+        )}
       </div>
     </div>
   );
