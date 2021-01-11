@@ -90,10 +90,14 @@ describe('DataLinks', () => {
 const testValue = [
   {
     field: 'regex1',
+    label: 'label1',
+    matcherRegex: '/.*/',
     url: 'localhost1',
   },
   {
     field: 'regex2',
+    label: 'label2',
+    matcherRegex: '/.*/',
     url: 'localhost2',
   },
 ];

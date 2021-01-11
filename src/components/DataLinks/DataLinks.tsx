@@ -62,7 +62,6 @@ export const DataLinks = (props: Props) => {
             return (
               <DataLink
                 className={styles.dataLink}
-                datasources={datasources}
                 key={index}
                 value={field}
                 onChange={newField => {
@@ -95,7 +94,7 @@ export const DataLinks = (props: Props) => {
             icon="plus"
             onClick={event => {
               event.preventDefault();
-              const newDataLinks = [...(value || []), { field: '', url: '' }];
+              const newDataLinks = [...(value || []), { field: '', label: '', matcherRegex: '', url: '' }];
               onChange(newDataLinks);
             }}
           >
