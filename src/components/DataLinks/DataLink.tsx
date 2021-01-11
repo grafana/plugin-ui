@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { css } from 'emotion';
-import { VariableSuggestion, DataSourceSelectItem } from '@grafana/data';
+import { VariableSuggestion, DataSourceInstanceSettings, DataSourceJsonData } from '@grafana/data';
 import { Button, LegacyForms, DataLinkInput, stylesFactory } from '@grafana/ui';
 const { FormField, Switch } = LegacyForms;
 import { DataLinkConfig } from './types';
@@ -25,16 +25,16 @@ const getStyles = stylesFactory(() => ({
 
 type Props = {
   value: DataLinkConfig;
-  datasources?: DataSourceSelectItem[];
+  datasources?: DataSourceInstanceSettings<DataSourceJsonData>[];
   onChange: (value: DataLinkConfig) => void;
   onDelete: () => void;
   suggestions: VariableSuggestion[];
   className?: string;
 };
 export const DataLink = (props: Props) => {
-  const { value, onChange, onDelete, suggestions, className, datasources } = props;
+  const { value, onChange, onDelete, suggestions, className } = props;
   const styles = getStyles();
-  const [showInternalLink, setShowInternalLink] = useInternalLink(value.datasource?.meta.id);
+  const [showInternalLink, setShowInternalLink] = useInternalLink(value.datasourceUid);
 
   const handleChange = (field: keyof typeof value) => (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange({
@@ -76,7 +76,7 @@ export const DataLink = (props: Props) => {
           value={value.label}
           onChange={handleChange('label')}
           tooltip={
-            'Use to parse and capture some part of the log message. You can use the captured groups in the template.'
+            'Use to provide a meaningful label to the data matched in the regex'
           }
         />
         <FormField
@@ -123,7 +123,7 @@ export const DataLink = (props: Props) => {
             if (showInternalLink) {
               onChange({
                 ...value,
-                datasource: undefined,
+                datasourceUid: undefined,
               });
             }
             setShowInternalLink(!showInternalLink);
@@ -132,14 +132,14 @@ export const DataLink = (props: Props) => {
         {showInternalLink && (
           <DataSourcePicker
             // Uid and value should be always set in the db and so in the items.
-            datasources={datasources}
             onChange={ds => {
+              console.log("We selected datasource", ds);
               onChange({
                 ...value,
-                datasource: ds,
+                datasourceUid: ds.uid,
               });
             }}
-            current={value.datasource}
+            current={value.datasourceUid}
           />
         )}
       </div>
