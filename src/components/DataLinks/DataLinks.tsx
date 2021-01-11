@@ -95,7 +95,7 @@ export const DataLinks = (props: Props) => {
             icon="plus"
             onClick={event => {
               event.preventDefault();
-              const newDataLinks = [...(value || []), { field: '', url: '' }];
+              const newDataLinks = [...(value || []), { field: '', label: '', matcherRegex: '', url: '' }];
               onChange(newDataLinks);
             }}
           >

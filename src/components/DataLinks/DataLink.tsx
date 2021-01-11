@@ -69,6 +69,30 @@ export const DataLink = (props: Props) => {
       </div>
       <div className="gf-form">
         <FormField
+          className={styles.nameField}
+          inputWidth={null}
+          label="Label"
+          type="text"
+          value={value.label}
+          onChange={handleChange('label')}
+          tooltip={
+            'Use to parse and capture some part of the log message. You can use the captured groups in the template.'
+          }
+        />
+        <FormField
+          className={styles.regexField}
+          inputWidth={null}
+          label="Regex"
+          type="text"
+          value={value.matcherRegex}
+          onChange={handleChange('matcherRegex')}
+          tooltip={
+            'Use to parse and capture some part of the log message. You can use the captured groups in the template.'
+          }
+        />
+      </div>
+      <div className="gf-form">
+        <FormField
           label={showInternalLink ? 'Query' : 'URL'}
           labelWidth={6}
           inputEl={
