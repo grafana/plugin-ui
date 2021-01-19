@@ -32,7 +32,7 @@ export const mockDataSourcePluginMeta = (): DataSourcePluginMeta => ({
   unlicensed: generateBoolean(),
   id: Chance().word(),
   name: Chance().word(),
-  type: generatePluginType(),
+  type: mockPluginType(),
   info: mockPluginMetaInfo(),
   module: Chance().word(),
   baseUrl: Chance().word(),
@@ -57,10 +57,10 @@ export const mockPluginMetaInfo = (): PluginMetaInfo => ({
 export const mockPluginMeta = (): PluginMeta => ({
   id: Chance().word(),
   name: Chance().word(),
-  type: generatePluginType(),
+  type: mockPluginType(),
   info: mockPluginMetaInfo(),
   includes: [mockPluginInclude()],
-  state: generatePluginState(),
+  state: mockPluginState(),
   module: Chance().word(),
   baseUrl: Chance().word(),
   dependencies: mockPluginDependencies(),
@@ -72,12 +72,12 @@ export const mockPluginMeta = (): PluginMeta => ({
   enterprise: generateBoolean(),
   latestVersion: Chance().word(),
   pinned: generateBoolean(),
-  signature: generatePluginSignatureStatus(),
+  signature: mockPluginSignatureStatus(),
   live: generateBoolean(),
 });
 
 export const mockPluginInclude = (): PluginInclude => ({
-  type: generatePluginIncludeType(),
+  type: mockPluginIncludeType(),
   name: Chance().word(),
   path: Chance().word(),
   icon: Chance().word(),
@@ -86,7 +86,7 @@ export const mockPluginInclude = (): PluginInclude => ({
   component: Chance().word(),
 });
 
-export const generatePluginType = (): PluginType =>
+export const mockPluginType = (): PluginType =>
   Chance().pickone([
     PluginType.panel,
     PluginType.datasource,
@@ -94,7 +94,7 @@ export const generatePluginType = (): PluginType =>
     PluginType.renderer,
   ]);
 
-export const generatePluginIncludeType = (): PluginIncludeType =>
+export const mockPluginIncludeType = (): PluginIncludeType =>
   Chance().pickone([
     PluginIncludeType.dashboard,
     PluginIncludeType.page,
@@ -102,7 +102,7 @@ export const generatePluginIncludeType = (): PluginIncludeType =>
     PluginIncludeType.datasource,
   ]);
 
-export const generatePluginState = (): PluginState =>
+export const mockPluginState = (): PluginState =>
   Chance().pickone([
     PluginState.alpha,
     PluginState.beta,
@@ -114,7 +114,7 @@ export const mockPluginDependencies = (): PluginDependencies => ({
   plugins: [],
 });
 
-export const generatePluginSignatureStatus = (): PluginSignatureStatus =>
+export const mockPluginSignatureStatus = (): PluginSignatureStatus =>
   Chance().pickone([
     PluginSignatureStatus.internal,
     PluginSignatureStatus.valid,
