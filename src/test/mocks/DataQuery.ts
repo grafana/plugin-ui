@@ -8,5 +8,5 @@ export const mockDataQuery = (): DataQuery => ({
   key: Chance().guid(),
   queryType: Chance().word(),
   dataTopic: DataTopic.Annotations,
-  datasource: undefinedOr(Chance().word),
+  datasource: undefinedOr(() => Chance().word()),
 });
