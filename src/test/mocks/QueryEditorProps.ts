@@ -7,7 +7,7 @@ import {
 } from '@grafana/data';
 import { Chance } from 'chance';
 
-export const mockQuery = (): QueryEditorProps<any> => ({
+export const mockQueryEditorProps = (): QueryEditorProps<any, any, any> => ({
   datasource: {},
   query: {
     refId: Chance().word(),

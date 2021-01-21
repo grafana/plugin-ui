@@ -1,4 +1,5 @@
 export * from './Datasource';
+export * from './DataQuery';
 export * from './Plugin';
-export * from './Query';
+export * from './QueryEditorProps';
 export * from './utils';
