@@ -5,7 +5,10 @@ import React, { PureComponent } from 'react';
 import { HorizontalGroup, Select } from '@grafana/ui';
 import { DataSourceInstanceSettings, SelectableValue } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
-import { isUnsignedPluginSignature, PluginSignatureBadge } from '../Plugins/PluginSignatureBadge';
+import {
+  isUnsignedPluginSignature,
+  PluginSignatureBadge,
+} from '../Plugins/PluginSignatureBadge';
 import { getDataSourceSrv } from '@grafana/runtime';
 
 export interface Props {
@@ -47,16 +50,16 @@ export class DataSourcePicker extends PureComponent<Props, State> {
 
   componentDidMount() {
     const { current } = this.props;
-    const dsSettings = this.dataSourceSrv.getDataSourceSettingsByUid(current!);
+    const dsSettings = this.dataSourceSrv.getInstanceSettings(current!);
     if (!dsSettings) {
       this.setState({ error: 'Could not find data source ' + current });
     }
   }
 
   onChange = (item: SelectableValue<string>) => {
-    console.log("We got an item", item, item.value);
-    const dsSettings = this.dataSourceSrv.getDataSourceSettingsByUid(item.value!);
-    console.log("ds settings is", dsSettings);
+    console.log('We got an item', item, item.value);
+    const dsSettings = this.dataSourceSrv.getInstanceSettings(item.value!);
+    console.log('ds settings is', dsSettings);
 
     if (dsSettings) {
       this.props.onChange(dsSettings);
@@ -73,7 +76,7 @@ export class DataSourcePicker extends PureComponent<Props, State> {
       };
     }
 
-    const ds = this.dataSourceSrv.getDataSourceSettingsByUid(current!);
+    const ds = this.dataSourceSrv.getInstanceSettings(current!);
 
     if (ds) {
       return {
@@ -94,14 +97,12 @@ export class DataSourcePicker extends PureComponent<Props, State> {
   }
 
   getDataSourceOptions() {
-    const options = this.dataSourceSrv
-      .getAll()
-      .map(ds => ({
-        value: ds.uid,
-        label: ds.name,
-        imgUrl: ds.meta.info.logos.small,
-        meta: ds.meta,
-      }));
+    const options = this.dataSourceSrv.getList().map((ds) => ({
+      value: ds.uid,
+      label: ds.name,
+      imgUrl: ds.meta.info.logos.small,
+      meta: ds.meta,
+    }));
 
     return options;
   }
@@ -115,7 +116,7 @@ export class DataSourcePicker extends PureComponent<Props, State> {
     return (
       <div aria-label={selectors.components.DataSourcePicker.container}>
         <Select
-          className="ds-picker select-container"
+          className='ds-picker select-container'
           isMulti={false}
           isClearable={false}
           backspaceRemovesValue={false}
@@ -126,14 +127,19 @@ export class DataSourcePicker extends PureComponent<Props, State> {
           openMenuOnFocus={openMenuOnFocus}
           maxMenuHeight={500}
           placeholder={placeholder}
-          noOptionsMessage="No datasources found"
+          noOptionsMessage='No datasources found'
           value={value}
           invalid={!!error}
-          getOptionLabel={o => {
-            if (o.meta && isUnsignedPluginSignature(o.meta.signature) && o !== value) {
+          getOptionLabel={(o) => {
+            if (
+              o.meta &&
+              isUnsignedPluginSignature(o.meta.signature) &&
+              o !== value
+            ) {
               return (
-                <HorizontalGroup align="center" justify="space-between">
-                  <span>{o.label}</span> <PluginSignatureBadge status={o.meta.signature} />
+                <HorizontalGroup align='center' justify='space-between'>
+                  <span>{o.label}</span>{' '}
+                  <PluginSignatureBadge status={o.meta.signature} />
                 </HorizontalGroup>
               );
             }
