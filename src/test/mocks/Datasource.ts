@@ -16,6 +16,7 @@ export const mockDatasource = (): DataSourceWithBackend => ({
   // DataSourceApi
   name: Chance().word(),
   id: 1,
+  type: Chance().word(),
   interval: Chance().word(),
   importQueries: jest.fn(),
   init: jest.fn(),
