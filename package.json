@@ -14,11 +14,11 @@
     "storybook:build": "build-storybook"
   },
   "dependencies": {
-    "@grafana/data": "next",
-    "@grafana/runtime": "next",
-    "@grafana/toolkit": "next",
+    "@grafana/data": "^7.3.7",
+    "@grafana/runtime": "^7.3.7",
+    "@grafana/toolkit": "^7.3.7",
     "@grafana/tsconfig": "^1.0.0-rc1",
-    "@grafana/ui": "next",
+    "@grafana/ui": "^7.3.7",
     "@types/chance": "^1.1.0",
     "rc-cascader": "1.0.1",
     "react": "^16.14.0",
