@@ -2,7 +2,6 @@
 # This script will grab the yaml file needed and put it in the directory needed
 # If there is already an existing provisioning folder, this wil remove it
 # The user will need access to the plugin-provisioning repository
-# Plugins can use this with bash 
 
 RED=1
 GREEN=2
