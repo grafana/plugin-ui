@@ -57,9 +57,7 @@ export class DataSourcePicker extends PureComponent<Props, State> {
   }
 
   onChange = (item: SelectableValue<string>) => {
-    console.log('We got an item', item, item.value);
     const dsSettings = this.dataSourceSrv.getInstanceSettings(item.value!);
-    console.log('ds settings is', dsSettings);
 
     if (dsSettings) {
       this.props.onChange(dsSettings);
