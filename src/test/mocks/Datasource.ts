@@ -14,6 +14,7 @@ export const mockDatasource = (): DataSourceWithBackend => ({
   callHealthCheck: jest.fn(),
   testDatasource: jest.fn(),
   // DataSourceApi
+  uid: Chance().guid(),
   name: Chance().word(),
   id: 1,
   type: Chance().word(),
