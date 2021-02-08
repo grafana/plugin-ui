@@ -133,7 +133,6 @@ export const DataLink = (props: Props) => {
           <DataSourcePicker
             // Uid and value should be always set in the db and so in the items.
             onChange={ds => {
-              console.log("We selected datasource", ds);
               onChange({
                 ...value,
                 datasourceUid: ds.uid,

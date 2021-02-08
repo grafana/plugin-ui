@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { css } from 'emotion';
 import { Button, stylesFactory, useTheme } from '@grafana/ui';
-import { GrafanaTheme, VariableOrigin, DataLinkBuiltInVars, DataSourceSelectItem } from '@grafana/data';
+import {
+  GrafanaTheme,
+  VariableOrigin,
+  DataLinkBuiltInVars,
+  DataSourceSelectItem,
+} from '@grafana/data';
 import { DataLinkConfig } from './types';
 import { DataLink } from './DataLink';
 
@@ -21,42 +26,43 @@ type Props = {
 };
 export const DataLinks = (props: Props) => {
   const { value, onChange } = props;
-  const [ datasources, setDatasources ] = useState<DataSourceSelectItem[]>([]);
+  const [datasources, setDatasources] = useState<DataSourceSelectItem[]>([]);
   const theme = useTheme();
   const styles = getStyles(theme);
 
   if (!datasources?.length) {
     fetch('/api/datasources').then(async (resp: Response) => {
-      const restDS = await resp.json() as any[];
-      const newDS: DataSourceSelectItem[] = restDS.map(ds => {
-        return {
-            name: ds.name,
-            value: ds.type,
-            meta: {
-              id: ds.id,
-              info: {
-                logos: {
-                  small: ds.typeLogoUrl
-                }
-              }
+      const restDS = (await resp.json()) as any[];
+      const newDS: DataSourceSelectItem[] = restDS.map((ds) => {
+        return ({
+          name: ds.name,
+          value: ds.type,
+          meta: {
+            id: ds.id,
+            info: {
+              logos: {
+                small: ds.typeLogoUrl,
+              },
             },
-            sort: '',
-        } as DataSourceSelectItem;
+          },
+          sort: '',
+        } as unknown) as DataSourceSelectItem;
       });
-      
+
       setDatasources(newDS);
-    });  
+    });
   }
-  
+
   return (
     <>
-      <h3 className="page-heading">Data links</h3>
+      <h3 className='page-heading'>Data links</h3>
 
       <div className={styles.infoText}>
-        Add links to existing fields. Links will be shown in log row details next to the field value.
+        Add links to existing fields. Links will be shown in log row details
+        next to the field value.
       </div>
 
-      <div className="gf-form-group">
+      <div className='gf-form-group'>
         {value &&
           value.map((field, index) => {
             return (
@@ -64,7 +70,7 @@ export const DataLinks = (props: Props) => {
                 className={styles.dataLink}
                 key={index}
                 value={field}
-                onChange={newField => {
+                onChange={(newField) => {
                   const newDataLinks = [...value];
                   newDataLinks.splice(index, 1, newField);
                   onChange(newDataLinks);
@@ -91,10 +97,13 @@ export const DataLinks = (props: Props) => {
             className={css`
               margin-right: 10px;
             `}
-            icon="plus"
-            onClick={event => {
+            icon='plus'
+            onClick={(event) => {
               event.preventDefault();
-              const newDataLinks = [...(value || []), { field: '', label: '', matcherRegex: '', url: '' }];
+              const newDataLinks = [
+                ...(value || []),
+                { field: '', label: '', matcherRegex: '', url: '' },
+              ];
               onChange(newDataLinks);
             }}
           >
