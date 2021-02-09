@@ -51,7 +51,7 @@ describe('DebounceSegment', () => {
         options={options} 
         value={value} onDebounce={jest.fn()} />);
 
-      // Click the element to dispaly the input
+      // Click the element to display the input
       container.querySelector('a')!.click();
       const updatedValue = options[0];
       act(() => {
@@ -75,7 +75,7 @@ describe('DebounceSegment', () => {
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
-      // Click the element to dispaly the input
+      // Click the element to display the input
       container.querySelector('a')!.click();
       const updatedValue = options[0];
       act(() => {
@@ -107,7 +107,7 @@ describe('DebounceSegment', () => {
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
-      // Click the element to dispaly the input
+      // Click the element to display the input
       container.querySelector('a')!.click();
       const updatedValue = options[0];
       act(() => {
@@ -132,7 +132,7 @@ describe('DebounceSegment', () => {
 
       expect(screen.getByText(value)).toBeInTheDocument();
 
-      // Click the element to dispaly the input
+      // Click the element to display the input
       container.querySelector('a')!.click();
       const updatedValue = options[0];
       act(() => {
@@ -155,7 +155,7 @@ describe('DebounceSegment', () => {
       );
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
-      // Click the element to dispaly the input
+      // Click the element to display the input
       container.querySelector('a')!.click();
       const updatedValue = options[0];
       act(() => {
@@ -188,7 +188,7 @@ describe('DebounceSegment', () => {
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
-      // Click the element to dispaly the input
+      // Click the element to display the input
       container.querySelector('a')!.click();
 
       const updatedValue = options[0];
