@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Segment as GrafanaSegment } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import { SegmentSyncProps as GrafanaSegmentProps } from '@grafana/ui/components/Segment/Segment';
@@ -16,8 +16,8 @@ export function Segment<T> (props: SegmentProps<T>) {
 
   const debouncedSegment = useDebounce(input, delay);
 
-  React.useEffect(() => onDebounce(debouncedSegment), [debouncedSegment]);
-  React.useEffect(() => setInput(value), [value]);
+  useEffect(() => onDebounce(debouncedSegment), [debouncedSegment]);
+  useEffect(() => setInput(value), [value]);
 
   return (
     <GrafanaSegment
