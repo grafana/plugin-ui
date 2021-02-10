@@ -4,6 +4,10 @@ export {
   DebounceInput,
   DebounceInputProps,
 } from './DebounceInput/DebounceInput';
+export {
+  Segment,
+  SegmentProps,
+} from './Segment/Segment';
 export { DatePicker, DatePickerProps } from './DatePicker/DatePicker';
 export {
   DatePickerWithInput,
