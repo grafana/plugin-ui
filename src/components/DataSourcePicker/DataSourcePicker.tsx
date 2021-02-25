@@ -9,7 +9,7 @@ import {
   isUnsignedPluginSignature,
   PluginSignatureBadge,
 } from '../Plugins/PluginSignatureBadge';
-import { getDataSourceSrv } from '@grafana/runtime';
+import { getDataSourceSrv, DataSourceSrv } from '@grafana/runtime';
 
 export interface Props {
   onChange: (ds: DataSourceInstanceSettings) => void;
@@ -34,7 +34,7 @@ export interface State {
 }
 
 export class DataSourcePicker extends PureComponent<Props, State> {
-  dataSourceSrv = getDataSourceSrv();
+  dataSourceSrv: DataSourceSrv = getDataSourceSrv();
 
   static defaultProps: Partial<Props> = {
     autoFocus: false,
@@ -95,7 +95,7 @@ export class DataSourcePicker extends PureComponent<Props, State> {
   }
 
   getDataSourceOptions() {
-    const options = this.dataSourceSrv.getList().map((ds) => ({
+    const options: any = this.dataSourceSrv.getList().map((ds) => ({
       value: ds.uid,
       label: ds.name,
       imgUrl: ds.meta.info.logos.small,
