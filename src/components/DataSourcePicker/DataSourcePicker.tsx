@@ -94,7 +94,7 @@ export class DataSourcePicker extends PureComponent<Props, State> {
     };
   }
 
-  getDataSourceOptions() {
+  getDataSourceOptions(): Array<SelectableValue<string>> {
     const options: Array<SelectableValue<string>> = this.dataSourceSrv.getList().map((ds) => ({
       value: ds.uid,
       label: ds.name,
