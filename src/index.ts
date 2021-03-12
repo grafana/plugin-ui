@@ -4,4 +4,5 @@
  * @packageDocumentation
  */
 export * from './components';
+export * from './unreleasedComponents';
 export * from './test/mocks';
