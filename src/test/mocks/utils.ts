@@ -10,6 +10,11 @@ export const undefinedOr = (fn: Function) =>
 export const generateArrayOf = (fn: Function, numberOf: number = 3) =>
   Array.from(new Array(numberOf), () => fn());
 
+// react-select (used by @grafana/ui) renders very differently from the native Select HTML element
+// and because they are not accessible and do not pass data-testid or aria-labels down,
+// it is difficult to grab the correct element and simulate selecting different options
+// the helper functions below can be used instead
+
 /**
  * Opens a Select or MultiSelect dropdown
  *
