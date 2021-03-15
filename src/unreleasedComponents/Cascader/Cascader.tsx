@@ -246,6 +246,7 @@ export class Cascader extends React.PureComponent<
           >
             <div className={disableDivFocus}>
               <Input
+                css={null}
                 width={width}
                 placeholder={placeholder}
                 onBlur={this.onBlurCascade}
