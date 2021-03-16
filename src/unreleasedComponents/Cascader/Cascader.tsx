@@ -125,7 +125,9 @@ export class Cascader extends React.PureComponent<
       if (optionPath.indexOf(initValue) === optionPath.length - 1) {
         return {
           rcValue: optionPath,
-          activeLabel: option.singleLabel || '',
+          activeLabel: this.props.displayAllSelectedLevels
+            ? option.label
+            : option.singleLabel || '',
         };
       }
     }
@@ -154,7 +156,9 @@ export class Cascader extends React.PureComponent<
   onSelect = (obj: SelectableValue<string[]>) => {
     const valueArray = obj.value || [];
     this.setState({
-      activeLabel: obj.singleLabel || '',
+      activeLabel: this.props.displayAllSelectedLevels
+        ? obj.label
+        : obj.singleLabel || '',
       rcValue: valueArray,
       isSearching: false,
     });

@@ -28,7 +28,9 @@ const options = [
   },
 ];
 
-const CascaderWithOptionsStateUpdate = (props: Omit<CascaderProps, 'options'>) => {
+const CascaderWithOptionsStateUpdate = (
+  props: Omit<CascaderProps, 'options'>
+) => {
   const [updatedOptions, setOptions] = React.useState<CascaderOption[]>([
     {
       label: 'Initial state option',
@@ -50,7 +52,12 @@ describe('Cascader', () => {
     });
 
     it('displays updated options', () => {
-      render(<CascaderWithOptionsStateUpdate placeholder={placeholder} onSelect={jest.fn()} />);
+      render(
+        <CascaderWithOptionsStateUpdate
+          placeholder={placeholder}
+          onSelect={jest.fn()}
+        />
+      );
 
       userEvent.click(screen.getByPlaceholderText(placeholder));
 
@@ -62,12 +69,19 @@ describe('Cascader', () => {
       });
 
       userEvent.click(screen.getByPlaceholderText(placeholder));
-      expect(screen.queryByText('Initial state option')).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('Initial state option')
+      ).not.toBeInTheDocument();
       expect(screen.getByText('First')).toBeInTheDocument();
     });
 
     it('filters updated results when searching', () => {
-      render(<CascaderWithOptionsStateUpdate placeholder={placeholder} onSelect={jest.fn()} />);
+      render(
+        <CascaderWithOptionsStateUpdate
+          placeholder={placeholder}
+          onSelect={jest.fn()}
+        />
+      );
 
       act(() => {
         jest.runAllTimers();
@@ -80,7 +94,13 @@ describe('Cascader', () => {
   });
 
   it('filters results when searching', () => {
-    render(<Cascader placeholder={placeholder} options={options} onSelect={jest.fn()} />);
+    render(
+      <Cascader
+        placeholder={placeholder}
+        options={options}
+        onSelect={jest.fn()}
+      />
+    );
 
     userEvent.type(screen.getByPlaceholderText(placeholder), 'Third');
 
@@ -88,9 +108,30 @@ describe('Cascader', () => {
     expect(screen.getByText('First / Third')).toBeInTheDocument();
   });
 
+  it('displays selected value with all levels when displayAllSelectedLevels is true and selecting a value from the search', () => {
+    render(
+      <Cascader
+        displayAllSelectedLevels={true}
+        placeholder={placeholder}
+        options={options}
+        onSelect={jest.fn()}
+      />
+    );
+
+    userEvent.type(screen.getByPlaceholderText(placeholder), 'Third');
+    userEvent.click(screen.getByText('First / Third'));
+
+    expect(screen.getByDisplayValue('First / Third')).toBeInTheDocument();
+  });
+
   it('displays all levels selected with default separator when displayAllSelectedLevels is true', () => {
     render(
-      <Cascader displayAllSelectedLevels={true} placeholder={placeholder} options={options} onSelect={() => {}} />
+      <Cascader
+        displayAllSelectedLevels={true}
+        placeholder={placeholder}
+        options={options}
+        onSelect={() => {}}
+      />
     );
 
     expect(screen.queryByDisplayValue('First/Second')).not.toBeInTheDocument();
@@ -121,12 +162,19 @@ describe('Cascader', () => {
     userEvent.click(screen.getByText('First'));
     userEvent.click(screen.getByText('Second'));
 
-    expect(screen.getByDisplayValue(`First${separator}Second`)).toBeInTheDocument();
+    expect(
+      screen.getByDisplayValue(`First${separator}Second`)
+    ).toBeInTheDocument();
   });
 
   it('displays last level selected when displayAllSelectedLevels is false', () => {
     render(
-      <Cascader displayAllSelectedLevels={false} placeholder={placeholder} options={options} onSelect={jest.fn()} />
+      <Cascader
+        displayAllSelectedLevels={false}
+        placeholder={placeholder}
+        options={options}
+        onSelect={jest.fn()}
+      />
     );
 
     userEvent.click(screen.getByPlaceholderText(placeholder));
@@ -137,7 +185,13 @@ describe('Cascader', () => {
   });
 
   it('displays last level selected when displayAllSelectedLevels is not passed in', () => {
-    render(<Cascader placeholder={placeholder} options={options} onSelect={jest.fn()} />);
+    render(
+      <Cascader
+        placeholder={placeholder}
+        options={options}
+        onSelect={jest.fn()}
+      />
+    );
 
     userEvent.click(screen.getByPlaceholderText(placeholder));
     userEvent.click(screen.getByText('First'));
