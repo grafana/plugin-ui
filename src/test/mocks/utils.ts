@@ -19,7 +19,7 @@ export const generateArrayOf = (fn: Function, numberOf: number = 3) =>
  * Opens a Select or MultiSelect dropdown
  *
  * @param {HTMLElement} container The container wrapping the Select or MultiSelect component
- * @param {boolean} [typeOptionLabel=false] If we should type the optional label after opening - this is useful for AsyncSelect
+ * @param {string} optionLabel The option text we want to type or search
  */
 export const openSelect = (container: HTMLElement, optionLabel?: string) => {
   const selectInput = within(container).getByRole('textbox');
