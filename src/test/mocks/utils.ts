@@ -44,7 +44,7 @@ export const selectOption = async (
   optionLabel: string,
   typeOptionLabel?: boolean
 ) => {
-  openSelect(container, typeOptionLabel ? optionLabel : '');
+  openSelect(container, typeOptionLabel ? optionLabel : undefined);
 
   // wait for the list to show
   const option = await waitFor(() => within(container).getByText(optionLabel));
