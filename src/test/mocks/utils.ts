@@ -18,7 +18,7 @@ export const generateArrayOf = (fn: Function, numberOf: number = 3) =>
 /**
  * Opens a Select or MultiSelect dropdown
  *
- * @param container The container wrapping the Select or MultiSelect component
+ * @param {HTMLElement} container The container wrapping the Select or MultiSelect component
  */
 export const openSelect = (container: HTMLElement) => {
   const selectInput = within(container).getByRole('textbox');
@@ -33,14 +33,22 @@ export const openSelect = (container: HTMLElement) => {
 /**
  * Selects an option from the Select or MultiSelect component
  *
- * @param container The container wrapping the Select or MultiSelect component
- * @param optionLabel The option we want to select
+ * @param {HTMLElement} container The container wrapping the Select or MultiSelect component
+ * @param {string} optionLabel The option we want to select
+ * @param {boolean} [typeOptionLabel=false] If we should type the optional label after opening - this is useful for AsyncSelect
  */
 export const selectOption = async (
   container: HTMLElement,
-  optionLabel: string
+  optionLabel: string,
+  typeOptionLabel?: boolean
 ) => {
   openSelect(container);
+
+  // if we have an async Select and we want to type the option label to display it
+  if (typeOptionLabel) {
+    const selectInput = within(container).getByRole('textbox');
+    userEvent.type(selectInput, optionLabel);
+  }
 
   // wait for the list to show
   const option = await waitFor(() => within(container).getByText(optionLabel));
