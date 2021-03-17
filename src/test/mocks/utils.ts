@@ -18,29 +18,33 @@ export const generateArrayOf = (fn: Function, numberOf: number = 3) =>
 /**
  * Opens a Select or MultiSelect dropdown
  *
- * @param container The container wrapping the Select or MultiSelect component
+ * @param {HTMLElement} container The container wrapping the Select or MultiSelect component
+ * @param {string} optionLabel The option text we want to type or search
  */
-export const openSelect = (container: HTMLElement) => {
+export const openSelect = (container: HTMLElement, optionLabel?: string) => {
   const selectInput = within(container).getByRole('textbox');
 
   // this needs to be here to support autoFocus=true prop
   fireEvent.blur(selectInput);
 
-  // open the dropdown
-  userEvent.type(selectInput, '{arrowdown}');
+  // if we have an async Select, we want to type the option label to make the option available
+  // otherwise, just press down to open the dropdown
+  userEvent.type(selectInput, optionLabel ?? '{arrowdown}');
 };
 
 /**
  * Selects an option from the Select or MultiSelect component
  *
- * @param container The container wrapping the Select or MultiSelect component
- * @param optionLabel The option we want to select
+ * @param {HTMLElement} container The container wrapping the Select or MultiSelect component
+ * @param {string} optionLabel The option we want to select
+ * @param {boolean} [typeOptionLabel=false] If we should type the optional label after opening - this is useful for AsyncSelect
  */
 export const selectOption = async (
   container: HTMLElement,
-  optionLabel: string
+  optionLabel: string,
+  typeOptionLabel?: boolean
 ) => {
-  openSelect(container);
+  openSelect(container, typeOptionLabel ? optionLabel : undefined);
 
   // wait for the list to show
   const option = await waitFor(() => within(container).getByText(optionLabel));
