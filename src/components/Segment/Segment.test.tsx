@@ -1,23 +1,26 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import { Segment } from './Segment';
 import { Chance } from 'chance';
 import { DEFAULT_DELAY } from '../../hooks/useDebounce';
+import userEvent from '@testing-library/user-event';
 
 jest.useFakeTimers();
 
-const getOptions  = () => {
-  return [{
-    value: "option 1",
-    label: "Option 1",
-  }, {
-    value: "option 2",
-    label: "Option 2",
-  }]
-}
+const getOptions = () => {
+  return [
+    {
+      value: 'option 1',
+      label: 'Option 1',
+    },
+    {
+      value: 'option 2',
+      label: 'Option 2',
+    },
+  ];
+};
 
 describe('Segment', () => {
-
   it('renders value initially', () => {
     const options = getOptions();
     const value = Chance().word();
@@ -33,7 +36,7 @@ describe('Segment', () => {
 
     render(
       <Segment
-        options={options} 
+        options={options}
         value={Chance().word()}
         onDebounce={() => debounceFunction()}
       />
@@ -47,16 +50,16 @@ describe('Segment', () => {
       const options = getOptions();
       const value = Chance().word();
 
-      const { container } =render(<Segment
-        options={options} 
-        value={value} onDebounce={jest.fn()} />);
+      render(
+        <Segment options={options} value={value} onDebounce={jest.fn()} />
+      );
 
-      // Click the element to display the input
-      container.querySelector('a')!.click();
+      userEvent.click(screen.getByText(value));
+
       const updatedValue = options[0];
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        fireEvent.click(element);
+        userEvent.click(element);
 
         jest.advanceTimersByTime(DEFAULT_DELAY - 1);
       });
@@ -69,18 +72,22 @@ describe('Segment', () => {
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
-      const { container } = render(
-        <Segment options={options} value={value} onDebounce={() => debounceFunction()} />
+      render(
+        <Segment
+          options={options}
+          value={value}
+          onDebounce={() => debounceFunction()}
+        />
       );
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
-      // Click the element to display the input
-      container.querySelector('a')!.click();
+      userEvent.click(screen.getByText(value));
+
       const updatedValue = options[0];
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        fireEvent.click(element);
+        userEvent.click(element);
 
         jest.advanceTimersByTime(DEFAULT_DELAY - 1);
       });
@@ -94,7 +101,7 @@ describe('Segment', () => {
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
-      const { container } = render(
+      render(
         <Segment
           options={options}
           value={value}
@@ -107,12 +114,12 @@ describe('Segment', () => {
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
-      // Click the element to display the input
-      container.querySelector('a')!.click();
+      userEvent.click(screen.getByText(value));
+
       const updatedValue = options[0];
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        fireEvent.click(element);
+        userEvent.click(element);
 
         jest.advanceTimersByTime(delay - 1);
       });
@@ -128,16 +135,18 @@ describe('Segment', () => {
       const options = getOptions();
       const value = Chance().word();
 
-      const { container } = render(<Segment options={options} value={value} onDebounce={jest.fn()} />);
+      render(
+        <Segment options={options} value={value} onDebounce={jest.fn()} />
+      );
 
       expect(screen.getByText(value)).toBeInTheDocument();
 
-      // Click the element to display the input
-      container.querySelector('a')!.click();
+      userEvent.click(screen.getByText(value));
+
       const updatedValue = options[0];
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        fireEvent.click(element);
+        userEvent.click(element);
 
         jest.advanceTimersByTime(DEFAULT_DELAY);
       });
@@ -150,17 +159,21 @@ describe('Segment', () => {
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
-      const { container } = render(
-        <Segment options={options} value={value} onDebounce={() => debounceFunction()} />
+      render(
+        <Segment
+          options={options}
+          value={value}
+          onDebounce={() => debounceFunction()}
+        />
       );
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
-      // Click the element to display the input
-      container.querySelector('a')!.click();
+      userEvent.click(screen.getByText(value));
+
       const updatedValue = options[0];
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        fireEvent.click(element);
+        userEvent.click(element);
 
         jest.advanceTimersByTime(DEFAULT_DELAY);
       });
@@ -174,29 +187,27 @@ describe('Segment', () => {
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
-      const { container } = render(
+      render(
         <Segment
           options={options}
           value={value}
           onDebounce={() => debounceFunction()}
           delay={delay}
         />
-        );
+      );
 
-
-      expect(container.querySelector('a')?.text).toBe(value);
+      expect(screen.getByText(value)).toBeInTheDocument();
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
-      // Click the element to display the input
-      container.querySelector('a')!.click();
+      userEvent.click(screen.getByText(value));
 
       const updatedValue = options[0];
 
       // Update the input element / fire the input change event
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        fireEvent.click(element);
+        userEvent.click(element);
 
         jest.advanceTimersByTime(delay);
       });
