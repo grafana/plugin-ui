@@ -25,15 +25,10 @@ export type BaseTestDatasource = () => Promise<TestDatasourceReturn>
  * @param baseTestDatasource The original testDatasource function
  * @returns Either the health check result if the health check was successful or an error that is handled later by Grafana
  */
-export const testDatasource = async (baseTestDatasource: BaseTestDatasource): Promise<TestDatasourceReturn> => {
-  // the backwards compatibility only affects the health check error messages
-  // so only transform the error we give to Grafana
-  try {
-    const response = await baseTestDatasource()
-    return response
-  }
-  catch (ex) {
-    // the priority order of the error message we want returned in the older format
-    throw new Error(ex.details?.verboseMessage ?? ex.details?.message ?? ex.message)
-  }
-}
+export const testDatasource = (baseTestDatasource: BaseTestDatasource): Promise<TestDatasourceReturn> => 
+  baseTestDatasource()
+    // the backwards compatibility only affects the health check error messages
+    // so only transform the error we give to Grafana
+    .catch(ex => {
+      throw new Error(ex.details?.verboseMessage ?? ex.details?.message ?? ex.message)
+    })
