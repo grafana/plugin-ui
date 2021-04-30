@@ -27,8 +27,9 @@ export type BaseTestDatasource = () => Promise<TestDatasourceReturn>
  */
 export const testDatasource = (baseTestDatasource: BaseTestDatasource): Promise<TestDatasourceReturn> => 
   baseTestDatasource()
-    // the backwards compatibility only affects the health check error messages
-    // so only transform the error we give to Grafana
-    .catch(ex => {
-      throw new Error(ex.details?.verboseMessage ?? ex.details?.message ?? ex.message)
-    })
+  // the backwards compatibility only affects the health check error messages
+  // so only transform the error we give to Grafana
+  .catch(ex => {
+    throw new Error(ex.details?.verboseMessage ?? ex.details?.message ?? ex.message)
+  })
+  
