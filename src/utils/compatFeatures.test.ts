@@ -11,18 +11,18 @@ describe("healthDiagnosticsErrorsCompat", () => {
 
     it("returns baseTestDatasource response that is a health check result", async () => {
       const expectedResponse = mockHealthCheckResult() 
-      const mockBaseTestDatasource = jest.fn().mockResolvedValue(expectedResponse)
+      const baseDatasource = jest.fn().mockResolvedValue(expectedResponse)
 
-      const response = await healthDiagnosticsErrorsCompat(mockBaseTestDatasource)
+      const response = await healthDiagnosticsErrorsCompat(baseDatasource)
 
       expect(response).toEqual(expectedResponse)
     })
 
     it("returns baseTestDatasource response that is a health check error", async () => {
       const expectedResponse = mockHealthCheckResultError()
-      const mockBaseTestDatasource = jest.fn().mockRejectedValue(expectedResponse)
+      const baseTestDatasource = jest.fn().mockRejectedValue(expectedResponse)
 
-      const response = healthDiagnosticsErrorsCompat(mockBaseTestDatasource)
+      const response = healthDiagnosticsErrorsCompat(baseTestDatasource)
 
       await expect(response).rejects.toThrow(expectedResponse)
     })
