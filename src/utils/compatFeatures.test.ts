@@ -6,7 +6,7 @@ import { healthDiagnosticsErrorsCompat } from "./compatFeatures"
 describe("healthDiagnosticsErrorsCompat", () => {
   describe("is compatible", () => {
     beforeEach(() => {
-      jest.spyOn(compat, "hasCapability").mockReturnValue(true)
+      jest.spyOn(compat, "hasCompatibility").mockReturnValue(true)
     })
 
     it("returns baseTestDatasource response that is a health check result", async () => {
@@ -30,7 +30,7 @@ describe("healthDiagnosticsErrorsCompat", () => {
 
   describe("is not compatible", () => {
     beforeEach(() => {
-      jest.spyOn(compat, "hasCapability").mockReturnValue(false)
+      jest.spyOn(compat, "hasCompatibility").mockReturnValue(false)
     })
 
     it("returns override testDatasource response that is a health check result", async () => {

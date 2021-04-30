@@ -1,4 +1,4 @@
-import { hasCapability, CompatibilityFeature } from "./compatibility";
+import { hasCompatibility, CompatibilityFeature } from "./compatibility";
 import { BaseTestDatasource, testDatasource, TestDatasourceReturn } from "./testDatasource";
 
 /**
@@ -8,7 +8,7 @@ import { BaseTestDatasource, testDatasource, TestDatasourceReturn } from "./test
  * @returns The result in the expected format for the Grafana version
  */
 export const healthDiagnosticsErrorsCompat = (baseTestDatasource: BaseTestDatasource): Promise<TestDatasourceReturn> => {
-  if (hasCapability(CompatibilityFeature.HEALTH_DIAGNOSTICS_ERRORS)) {
+  if (hasCompatibility(CompatibilityFeature.HEALTH_DIAGNOSTICS_ERRORS)) {
     return baseTestDatasource()
   }
 

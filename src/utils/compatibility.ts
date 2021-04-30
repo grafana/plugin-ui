@@ -13,7 +13,7 @@ export enum CompatibilityFeature {
  * @param feature The feature that requires backwards compatibility
  * @returns True if the Grafana version running can support the feature, otherwise false
  */
- export const hasCapability = (feature: CompatibilityFeature): boolean => {
+ export const hasCompatibility = (feature: CompatibilityFeature): boolean => {
   const version = config.buildInfo.version;
 
   switch (feature) {
