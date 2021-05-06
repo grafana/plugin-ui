@@ -7,8 +7,8 @@ import { BaseTestDatasource, testDatasource, TestDatasourceReturn } from "./test
  * @param baseTestDatasource The original testDatasource function
  * @returns The result in the expected format for the Grafana version
  */
-export const healthDiagnosticsErrorsCompat = (baseTestDatasource: BaseTestDatasource): Promise<TestDatasourceReturn> => {
-  if (hasCompatibility(CompatibilityFeature.HEALTH_DIAGNOSTICS_ERRORS)) {
+export const healthDiagnosticsErrorsCompat = (baseTestDatasource: BaseTestDatasource, toggle?: boolean): Promise<TestDatasourceReturn> => {
+  if (toggle && hasCompatibility(CompatibilityFeature.HEALTH_DIAGNOSTICS_ERRORS)) {
     return baseTestDatasource()
   }
 
