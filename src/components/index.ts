@@ -17,3 +17,4 @@ export {
 export * from './DataSourcePicker/DataSourcePicker';
 export * from './DataLinks';
 export * from './Cascader/Cascader';
+export { InlineSwitch, CertificationKey } from '@grafana/ui';
