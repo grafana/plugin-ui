@@ -1,6 +1,6 @@
-# ui-enterprise
+# plugin-ui
 
-React components for Grafana Enterprise plugins
+React components for Grafana plugins
 
 ## Compatibility
 
