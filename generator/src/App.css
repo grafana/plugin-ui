@@ -1,0 +1,106 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 60px;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  /* justify-content: center; */
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding-left: 10px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.add-button {
+  margin-left: 10px !important;
+} 
+
+.component-select {
+  background-color: white;
+}
+
+/* .MuiOutlinedInput-input {
+  padding: 8px 30px 8px 20px !important;
+} */
+.MuiSelect-outlined {
+  padding: 8px 30px 8px 20px !important;
+}
+
+.half {
+  width: 100%;
+  /* display: inline-block; */
+}
+
+.types {
+  width: 50%
+}
+
+.half > div {
+  width: 100%;
+  /* height: 100%; */
+  height: calc(100vh - 80px);
+}
+
+.container {
+  margin: 0;
+  height: calc(100vh - 60px);
+  width: 100%;
+  display: flex;
+  /* flex-direction: column; */
+  /* align-items: center; */
+}
+
+.left {
+  border-right: 1px solid;
+}
+
+.MuiOutlinedInput-multiline {
+  height: 100%;
+  border-radius: 0 !important;
+  border: none;
+  align-items: flex-start !important;
+}
+
+form {
+  padding: 20px;
+}
+
+form > div {
+  padding-bottom: 20px;
+}
+
+#json-pretty {
+  text-align: left;
+}
+
+pre {
+  height: calc(100vh - 86px);
+  margin: 0;
+}
