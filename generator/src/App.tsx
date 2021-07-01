@@ -13,6 +13,7 @@ import Drawer from '@material-ui/core/Drawer';
 import { Type, types } from './types';
 import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css';
+import AddIcon from '@material-ui/icons/Add';
 
 function App() {
 
@@ -51,7 +52,12 @@ function App() {
 
     const item: any = {};
     for (const p of selected.props) {
-      item[p] = "";
+      if (!['options', 'showIf'].includes(p)) {
+        item[p] = "";
+      }
+      if (p === 'options') {
+        item[p] = [];
+      }
     }
     const json = [...state.json, item];
 
@@ -100,12 +106,52 @@ function App() {
     }
 
     const json = state.items.map(i => {
-      return i.values;
+      return {...i.values, options: i.options}
     });
 
     setState({
       ...state,
       active: {...active, values},
+      json
+    });
+  }
+
+  const addOption = () => {
+    const item = state.active!;
+    const options = item?.options || [];
+    const update = [...options, {value: '', label: ''}]
+    setState({
+      ...state,
+      active: {...item, options: update},
+    });
+  }
+
+  const onOptionChange = (e: any) => (prop: string, index: number) => {
+    const value = e.target.value;
+    const active = state.active!;
+    const options = active?.options || [];
+    const opt = options[index];
+    const update = {...opt, [prop]: value};
+    const listUpdate = options.map((o,i) => {
+      if (i === index) {
+        return update;
+      }
+      return o;
+    });
+
+    const item = state.items.find(i => i.key === active.key);
+    if (item) {
+      item.options = listUpdate;
+    }
+
+    const json = state.items.map(i => {
+      const values = i.values;
+      return {...values, options: i.options}
+    });
+
+    setState({
+      ...state,
+      active: {...active, options: listUpdate},
       json
     });
   }
@@ -138,7 +184,7 @@ function App() {
             {state.items.map(item => {
               return (
                 <ListItem button onClick={() => show(item)} key={item.key}>
-                  <ListItemText primary="String" />
+                  <ListItemText primary={item.name} />
                   <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete" onClick={() => remove(item)}>
                       <DeleteIcon />
@@ -174,15 +220,45 @@ function App() {
           {state.active && state.active!.props.map(prop => {
             const values = state.active!.values || {};
             const value = values[prop] || "";
+            const options = state.active!.options || [];
             return (
             <div key={prop}>
-              <TextField
-                id={prop}
-                label={prop}
-                variant="outlined"
-                value={value}
-                onChange={(e) => onPropChange(e)(prop)}
-              />
+              {!['options','showIf'].includes(prop)  &&
+                <TextField
+                  id={prop}
+                  label={prop}
+                  variant="outlined"
+                  value={value}
+                  size="small"
+                  fullWidth
+                  onChange={(e) => onPropChange(e)(prop)}
+                />
+              }
+              {prop === 'options' &&
+                <>
+                  <div className="options-header">
+                    <span>Options</span>
+                    <IconButton aria-label="add" onClick={addOption}>
+                      <AddIcon />
+                    </IconButton>
+                  </div>
+                  
+                  {options.map((o,i) => {
+                    return (
+                      <div key={i}>
+                        <TextField
+                          placeholder="key"
+                          onChange={(e) => onOptionChange(e)('value', i)}
+                        />
+                        <TextField
+                          placeholder="value"
+                          onChange={(e) => onOptionChange(e)('label', i)}
+                        />
+                      </div>
+                    )
+                  })}
+                </>
+              }
             </div>
             )
           })}

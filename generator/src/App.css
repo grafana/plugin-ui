@@ -104,3 +104,13 @@ pre {
   height: calc(100vh - 86px);
   margin: 0;
 }
+
+.options-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.options-header > span {
+  line-height: 45px;
+  /* padding-left: 10px; */
+}
