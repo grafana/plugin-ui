@@ -114,3 +114,7 @@ pre {
   line-height: 45px;
   /* padding-left: 10px; */
 }
+
+.check {
+  text-align: left;
+}

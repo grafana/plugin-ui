@@ -1,5 +1,5 @@
 import './App.css';
-import { Button, IconButton, ListItemSecondaryAction } from '@material-ui/core';
+import { Button, IconButton, ListItemSecondaryAction, FormControlLabel, Checkbox } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
@@ -52,11 +52,14 @@ function App() {
 
     const item: any = {};
     for (const p of selected.props) {
-      if (!['options', 'showIf'].includes(p)) {
+      if (!['options', 'showIf', 'secure'].includes(p)) {
         item[p] = "";
       }
       if (p === 'options') {
         item[p] = [];
+      }
+      if (p === 'secure') {
+        item[p] = false;
       }
     }
     const json = [...state.json, item];
@@ -156,6 +159,28 @@ function App() {
     });
   }
 
+  const handleCheckChange = (event: any) => {
+    // TODO: this is almost the same as onPropChange
+    const val = event.target.checked;
+    const active = state.active!;
+    const values = {...active?.values, secure: val}
+
+    const item = state.items.find(i => i.key === active.key);
+    if (item) {
+      item.values = values;
+    }
+
+    const json = state.items.map(i => {
+      return {...i.values, options: i.options}
+    });
+
+    setState({
+      ...state,
+      active: {...active, values},
+      json
+    });
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -219,11 +244,18 @@ function App() {
         <form noValidate autoComplete="off">
           {state.active && state.active!.props.map(prop => {
             const values = state.active!.values || {};
-            const value = values[prop] || "";
+            let value;
+            let className = '';
+            if (prop === "secure") {
+              value = values[prop] || false;
+              className = 'check';
+            } else {
+              value = values[prop] || "";
+            }
             const options = state.active!.options || [];
             return (
-            <div key={prop}>
-              {!['options','showIf'].includes(prop)  &&
+            <div key={prop} className={className}>
+              {!['options','showIf','secure'].includes(prop)  &&
                 <TextField
                   id={prop}
                   label={prop}
@@ -233,6 +265,19 @@ function App() {
                   fullWidth
                   onChange={(e) => onPropChange(e)(prop)}
                 />
+              }
+              {prop === 'secure' && 
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={value}
+                      onChange={handleCheckChange}
+                      name="secure"
+                      color="primary"
+                    />
+                  }
+                label="Secure"
+              />
               }
               {prop === 'options' &&
                 <>

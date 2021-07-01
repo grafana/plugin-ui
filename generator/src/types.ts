@@ -4,7 +4,8 @@ export const stringType = {
   props: [
     'key',
     'label',
-    'placeholder'
+    'placeholder',
+    'secure'
   ]
 }
 
@@ -50,7 +51,7 @@ export interface ValueLabel {
 }
 
 export interface KeyValues {
-  [key: string]: string;
+  [key: string]: any;
 }
 
 export interface Type {
