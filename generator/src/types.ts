@@ -5,7 +5,20 @@ export const stringType = {
     'key',
     'label',
     'placeholder',
-    'secure'
+    'tooltip',
+    'secure',
+    'showIf'
+  ]
+}
+
+export const numberType = {
+  key: 'number',
+  name: 'number',
+  props: [
+    'key',
+    'label',
+    'placeholder',
+    'tooltip'
   ]
 }
 
@@ -15,6 +28,7 @@ export const boolType = {
   props: [
     'key',
     'label',
+    'tooltip'
   ]
 }
 
@@ -25,6 +39,7 @@ export const selectType = {
     'key',
     'label',
     'placeholder',
+    'tooltip',
     'options'
   ]
 }
@@ -32,6 +47,7 @@ export const selectType = {
 export const types = [
   stringType,
   boolType,
+  numberType,
   selectType
 ]
 
@@ -54,10 +70,17 @@ export interface KeyValues {
   [key: string]: any;
 }
 
+export interface ShowIf {
+  key: string
+  oper: string
+  value: string
+}
+
 export interface Type {
   key?: string;
   name: string;
   props: string[];
   values?: KeyValues
   options?: ValueLabel[]
+  showIf?: ShowIf[]
 }

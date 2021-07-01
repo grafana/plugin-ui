@@ -33,7 +33,7 @@ function App() {
   }
   const [state, setState] = React.useState(defaultState);
 
-  const handleChange = (event: any) => {
+  const handleSelectComponent = (event: any) => {
     const name = event.target.value;
     const selected = types.find((t: Type) => t.name === name);
     setState({
@@ -55,7 +55,7 @@ function App() {
       if (!['options', 'showIf', 'secure'].includes(p)) {
         item[p] = "";
       }
-      if (p === 'options') {
+      if (p === 'options' || p === 'showIf') {
         item[p] = [];
       }
       if (p === 'secure') {
@@ -159,6 +159,46 @@ function App() {
     });
   }
 
+  const addShowIf = () => {
+    const item = state.active!;
+    const showIf = item?.showIf || [];
+    const update = [...showIf, {key: '', oper: '=', value: ''}]
+    setState({
+      ...state,
+      active: {...item, showIf: update},
+    });
+  }
+
+  const onShowIfChange = (e: any) => (prop: string, index: number) => {
+    const value = e.target.value;
+    const active = state.active!;
+    const showIf = active?.showIf || [];
+    const opt = showIf[index];
+    const update = {...opt, [prop]: value};
+    const listUpdate = showIf.map((o,i) => {
+      if (i === index) {
+        return update;
+      }
+      return o;
+    });
+
+    const item = state.items.find(i => i.key === active.key);
+    if (item) {
+      item.showIf = listUpdate;
+    }
+
+    const json = state.items.map(i => {
+      const values = i.values;
+      return {...values, showIf: i.showIf}
+    });
+
+    setState({
+      ...state,
+      active: {...active, showIf: listUpdate},
+      json
+    });
+  }
+
   const handleCheckChange = (event: any) => {
     // TODO: this is almost the same as onPropChange
     const val = event.target.checked;
@@ -189,7 +229,7 @@ function App() {
               className="component-select"
               native
               value={state.name}
-              onChange={handleChange}
+              onChange={handleSelectComponent}
               inputProps={{
                 name: 'name',
                 id: 'name-native-simple',
@@ -253,6 +293,7 @@ function App() {
               value = values[prop] || "";
             }
             const options = state.active!.options || [];
+            const showIf = state.active!.showIf || [];
             return (
             <div key={prop} className={className}>
               {!['options','showIf','secure'].includes(prop)  &&
@@ -279,6 +320,38 @@ function App() {
                 label="Secure"
               />
               }
+              {/* SHOW IF */}
+              {prop === 'showIf' &&
+                <>
+                  <div className="options-header">
+                    <span>Show If</span>
+                    <IconButton aria-label="add" onClick={addShowIf}>
+                      <AddIcon />
+                    </IconButton>
+                  </div>
+                  
+                  {showIf.map((o,i) => {
+                    return (
+                      <div key={i}>
+                        <TextField
+                          placeholder="key"
+                          onChange={(e) => onShowIfChange(e)('key', i)}
+                        />
+                        <Select onChange={(e) => onShowIfChange(e)('oper', i)} defaultValue="=">
+                          <option aria-label="eq" value="=">=</option>
+                          <option aria-label="in" value="in">in</option>
+                          <option aria-label="not in" value="!in">!in</option>
+                        </Select>
+                        <TextField
+                          placeholder="value"
+                          onChange={(e) => onShowIfChange(e)('value', i)}
+                        />
+                      </div>
+                    )
+                  })}
+                </>
+              }
+
               {prop === 'options' &&
                 <>
                   <div className="options-header">
@@ -292,11 +365,11 @@ function App() {
                     return (
                       <div key={i}>
                         <TextField
-                          placeholder="key"
+                          placeholder="value"
                           onChange={(e) => onOptionChange(e)('value', i)}
                         />
                         <TextField
-                          placeholder="value"
+                          placeholder="label"
                           onChange={(e) => onOptionChange(e)('label', i)}
                         />
                       </div>
