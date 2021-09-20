@@ -20,7 +20,6 @@ export const DebounceInput = (props: DebounceInputProps) => {
 
   return (
     <Input
-      css={undefined}
       onChange={(ev) => setInput(ev.currentTarget.value)}
       value={input}
       {...rest}
