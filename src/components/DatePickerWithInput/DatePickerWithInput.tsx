@@ -22,7 +22,6 @@ export const DatePickerWithInput = (props: DatePickerWithInputProps) => {
       <Input
         type='date'
         placeholder='Date'
-        css={null}
         value={formatDate(value || new Date())}
         onClick={() => setOpen(true)}
         onChange={() => {}}

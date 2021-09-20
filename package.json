@@ -14,11 +14,11 @@
     "storybook:build": "build-storybook"
   },
   "dependencies": {
-    "@grafana/data": "^7.4.1",
-    "@grafana/runtime": "^7.4.1",
-    "@grafana/toolkit": "^7.4.1",
+    "@grafana/data": "^7.5.10",
+    "@grafana/runtime": "^7.5.10",
+    "@grafana/toolkit": "^7.5.10",
     "@grafana/tsconfig": "^1.0.0-rc1",
-    "@grafana/ui": "^7.5.3",
+    "@grafana/ui": "^7.5.10",
     "@types/chance": "^1.1.0",
     "@types/memoize-one": "^5.1.2",
     "@types/react-calendar": "^3.1.2",
