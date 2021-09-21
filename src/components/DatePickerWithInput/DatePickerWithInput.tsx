@@ -13,14 +13,13 @@ export interface DatePickerWithInputProps
 }
 
 export const DatePickerWithInput = (props: DatePickerWithInputProps) => {
-  const { value, onChange, key, ...rest } = props;
+  const { value, onChange, ...rest } = props;
 
   const [open, setOpen] = React.useState(false);
 
   return (
     <>
       <Input
-        key={key}
         type='date'
         placeholder='Date'
         value={formatDate(value || new Date())}
