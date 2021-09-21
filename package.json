@@ -1,7 +1,7 @@
 {
-  "name": "ui-enterprise",
+  "name": "plugin-ui",
   "version": "1.0.0",
-  "repository": "git@github.com:grafana/ui-enterprise.git",
+  "repository": "git@github.com:grafana/plugin-ui.git",
   "author": "Grafana Labs",
   "private": true,
   "main": "dist/index.js",
