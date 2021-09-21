@@ -30,7 +30,7 @@ export const DatePickerWithInput = (props: DatePickerWithInputProps) => {
       <DatePicker
         isOpen={open}
         value={value}
-        onChange={(ev) => onChange(ev)}
+        onChange={(ev: any) => onChange(ev)}
         onClose={() => setOpen(false)}
       />
     </>

@@ -43,7 +43,7 @@ const Body = memo<DatePickerProps>(({ value, onChange }) => {
       value={value || new Date()}
       nextLabel={<Icon name='angle-right' />}
       prevLabel={<Icon name='angle-left' />}
-      onChange={(ev) => {
+      onChange={(ev: any) => {
         if (!Array.isArray(ev)) {
           onChange(ev);
         }
