@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { css } from 'emotion';
 import { Button, stylesFactory, useTheme } from '@grafana/ui';
 import {
   GrafanaTheme,
   VariableOrigin,
   DataLinkBuiltInVars,
-  DataSourceSelectItem,
 } from '@grafana/data';
 import { DataLinkConfig } from './types';
 import { DataLink } from './DataLink';
@@ -26,32 +25,8 @@ type Props = {
 };
 export const DataLinks = (props: Props) => {
   const { value, onChange } = props;
-  const [datasources, setDatasources] = useState<DataSourceSelectItem[]>([]);
   const theme = useTheme();
   const styles = getStyles(theme);
-
-  if (!datasources?.length) {
-    fetch('/api/datasources').then(async (resp: Response) => {
-      const restDS = (await resp.json()) as any[];
-      const newDS: DataSourceSelectItem[] = restDS.map((ds) => {
-        return ({
-          name: ds.name,
-          value: ds.type,
-          meta: {
-            id: ds.id,
-            info: {
-              logos: {
-                small: ds.typeLogoUrl,
-              },
-            },
-          },
-          sort: '',
-        } as unknown) as DataSourceSelectItem;
-      });
-
-      setDatasources(newDS);
-    });
-  }
 
   return (
     <>
