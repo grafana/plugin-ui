@@ -1,12 +1,13 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 export interface QueryEditorRowProps {
   label?: string;
   className?: string;
   noFillEnd?: boolean;
+  children?: React.ReactNode;
 };
 
-export const QueryEditorRow: FunctionComponent<QueryEditorRowProps> = props => {
+export const QueryEditorRow = (props: QueryEditorRowProps) => {
   const className: string = props.className ?? 'width-8';
   const noFillEnd: boolean = props.noFillEnd ?? false;
 

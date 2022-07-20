@@ -38,7 +38,8 @@ export const mockDatasource = (): DataSourceWithBackend => ({
   interpolateVariablesInQueries: jest.fn(),
   annotations: {},
   annotationQuery: jest.fn(),
-  channelSupport: { getChannelConfig: jest.fn(), getSupportedPaths: jest.fn() },
+  streamOptionsProvider: jest.fn(),
+  getRef: jest.fn(),
 });
 
 const mockQueryHint = (): QueryHint => ({
@@ -67,4 +68,5 @@ export const mockDatasourceInstanceSettings = (): DataSourceInstanceSettings => 
   database: Chance().word(),
   basicAuth: Chance().word(),
   withCredentials: generateBoolean(),
+  access: Chance().pickone(["direct", "proxy"]),
 });
