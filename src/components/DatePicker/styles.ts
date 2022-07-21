@@ -1,36 +1,36 @@
-import { GrafanaTheme } from '@grafana/data';
+import { GrafanaTheme2 } from '@grafana/data';
 import { css } from '@emotion/css';
 
-export const getStyles = ((theme: GrafanaTheme) => {
+export const getStyles = ((theme: GrafanaTheme2) => {
   const containerBorder = theme.isDark
-    ? theme.palette.dark9
-    : theme.palette.gray5;
+    ? theme.v1.palette.dark9
+    : theme.v1.palette.gray5;
 
   return {
     container: css`
       top: -1px;
       position: absolute;
       right: 544px;
-      box-shadow: 0px 0px 20px ${theme.colors.dropdownShadow};
-      background-color: ${theme.colors.bodyBg};
+      box-shadow: 0px 0px 20px ${theme.v1.colors.dropdownShadow};
+      background-color: ${theme.v1.colors.bodyBg};
       z-index: -1;
       border: 1px solid ${containerBorder};
       border-radius: 2px 0 0 2px;
 
       &:after {
         display: block;
-        background-color: ${theme.colors.bodyBg};
+        background-color: ${theme.v1.colors.bodyBg};
         width: 19px;
         height: 100%;
         content: '';
         position: absolute;
         top: 0;
         right: -19px;
-        border-left: 1px solid ${theme.colors.border1};
+        border-left: 1px solid ${theme.v1.colors.border1};
       }
     `,
     modal: css`
-      z-index: ${theme.zIndex.modal};
+      z-index: ${theme.v1.zIndex.modal};
     `,
     content: css`
       margin: 0 auto;
@@ -44,22 +44,22 @@ export const getStyles = ((theme: GrafanaTheme) => {
       left: 0;
       background: #202226;
       opacity: 0.7;
-      z-index: ${theme.zIndex.modalBackdrop};
+      z-index: ${theme.v1.zIndex.modalBackdrop};
       text-align: center;
     `,
   };
 });
 
-export const getBodyStyles = ((theme: GrafanaTheme) => {
+export const getBodyStyles = ((theme: GrafanaTheme2) => {
   const containerBorder = theme.isDark
-    ? theme.palette.dark9
-    : theme.palette.gray5;
+    ? theme.v1.palette.dark9
+    : theme.v1.palette.gray5;
 
   return {
     title: css`
       color: ${theme.colors.text};
-      background-color: ${theme.colors.bodyBg};
-      font-size: ${theme.typography.size.md};
+      background-color: ${theme.v1.colors.bodyBg};
+      font-size: ${theme.v1.typography.size.md};
       border: 1px solid transparent;
 
       &:hover {
@@ -69,10 +69,10 @@ export const getBodyStyles = ((theme: GrafanaTheme) => {
     body: css`
       z-index: ${theme.zIndex.modal};
       position: fixed;
-      background-color: ${theme.colors.bodyBg};
+      background-color: ${theme.v1.colors.bodyBg};
       width: 268px;
 
-      box-shadow: 0px 0px 20px ${theme.colors.dropdownShadow};
+      box-shadow: 0px 0px 20px ${theme.v1.colors.dropdownShadow};
       border: 1px solid ${containerBorder};
       border-radius: 2px 0 0 2px;
 
@@ -83,13 +83,13 @@ export const getBodyStyles = ((theme: GrafanaTheme) => {
         background-color: inherit;
         color: ${theme.colors.text};
         border: 0;
-        font-weight: ${theme.typography.weight.semibold};
+        font-weight: ${theme.v1.typography.weight.semibold};
       }
 
       .react-calendar__month-view__weekdays {
         background-color: inherit;
         text-align: center;
-        color: ${theme.palette.blue77};
+        color: ${theme.v1.palette.blue77};
 
         abbr {
           border: 0;
@@ -119,9 +119,9 @@ export const getBodyStyles = ((theme: GrafanaTheme) => {
 
       .react-calendar__tile--active,
       .react-calendar__tile--active:hover {
-        color: ${theme.palette.white};
-        font-weight: ${theme.typography.weight.semibold};
-        background: ${theme.palette.blue95};
+        color: ${theme.v1.palette.white};
+        font-weight: ${theme.v1.typography.weight.semibold};
+        background: ${theme.v1.palette.blue95};
         box-shadow: none;
         border: 0px;
       }
@@ -130,12 +130,12 @@ export const getBodyStyles = ((theme: GrafanaTheme) => {
       .react-calendar__tile--rangeStart {
         padding: 0;
         border: 0px;
-        color: ${theme.palette.white};
-        font-weight: ${theme.typography.weight.semibold};
-        background: ${theme.palette.blue95};
+        color: ${theme.v1.palette.white};
+        font-weight: ${theme.v1.typography.weight.semibold};
+        background: ${theme.v1.palette.blue95};
 
         abbr {
-          background-color: ${theme.palette.blue77};
+          background-color: ${theme.v1.palette.blue77};
           border-radius: 100px;
           display: block;
           padding-top: 2px;

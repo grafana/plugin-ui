@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Calendar from 'react-calendar';
-import { useTheme, ClickOutsideWrapper, Icon } from '@grafana/ui';
+import { useTheme2, ClickOutsideWrapper, Icon } from '@grafana/ui';
 import { getStyles, getBodyStyles } from './styles';
 
 export interface DatePickerProps {
@@ -11,7 +11,7 @@ export interface DatePickerProps {
 }
 
 export const DatePicker = memo<DatePickerProps>((props) => {
-  const theme = useTheme();
+  const theme = useTheme2();
   const styles = getStyles(theme);
   const { isOpen, onClose } = props;
 
@@ -33,7 +33,7 @@ export const DatePicker = memo<DatePickerProps>((props) => {
 });
 
 const Body = memo<DatePickerProps>(({ value, onChange }) => {
-  const theme = useTheme();
+  const theme = useTheme2();
   const styles = getBodyStyles(theme);
 
   return (

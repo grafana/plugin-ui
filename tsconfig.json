@@ -1,13 +1,13 @@
+
 {
   "compilerOptions": {
-    "jsx": "react",
-    "baseUrl": "node_modules/@types",
-    "declarationDir": "dist",
+    "declarationDir": "dist/src",
+    "module": "commonjs",
     "outDir": "dist",
-    "rootDirs": [".", "stories"],
-    "module": "CommonJS"
+    "rootDirs": ["."],
+    "useUnknownInCatchVariables": false
   },
-  "include": ["src"],
+  "exclude": ["dist", "node_modules"],
   "extends": "@grafana/tsconfig",
-  "exclude": ["node_modules", "dist", "compiled"]
+  "include": ["src/**/*.ts", "../../public/app/types/jquery/*.ts"]
 }
