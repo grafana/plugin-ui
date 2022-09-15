@@ -1,6 +1,6 @@
 {
   "name": "plugin-ui",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "repository": "git@github.com:grafana/plugin-ui.git",
   "author": "Grafana Labs",
   "private": true,
@@ -8,7 +8,6 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json && yarn copy-files",
     "copy-files": "copyfiles -u 1 src/**/*.css dist/",
-    "postinstall": "yarn build",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook"
