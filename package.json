@@ -4,7 +4,7 @@
   "repository": "git@github.com:grafana/plugin-ui.git",
   "author": "Grafana Labs",
   "private": true,
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json && yarn copy-files",
     "copy-files": "copyfiles -u 1 src/**/*.css dist/",
@@ -49,6 +49,7 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.8.3",
+    "@types/react": "17.0.22",
     "@types/testing-library__jest-dom": "^5.9.5",
     "babel-loader": "^8.2.2",
     "jest-fetch-mock": "^3.0.3",
