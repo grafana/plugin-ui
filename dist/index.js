@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateOptions = exports.selectOption = exports.SqlDatasource = void 0;
 const tslib_1 = require("tslib");
 /**
- * A library containing the different design components of the Grafana enterprise plugins ecosystem.
+ * A library containing the different design components of the Grafana plugins ecosystem.
  *
  * @packageDocumentation
  */
