@@ -1,6 +1,6 @@
 {
   "name": "plugin-ui",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "repository": "git@github.com:grafana/plugin-ui.git",
   "author": "Grafana Labs",
   "private": true,
@@ -57,6 +57,7 @@
     "ts-jest": "^26.4.4"
   },
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "package.json"
   ]
 }
