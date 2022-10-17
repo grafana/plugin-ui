@@ -5,7 +5,8 @@
     "module": "commonjs",
     "outDir": "dist",
     "rootDirs": ["."],
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "declaration": true,
   },
   "exclude": ["dist", "node_modules"],
   "extends": "@grafana/tsconfig",
