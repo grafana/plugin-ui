@@ -1,5 +1,5 @@
 {
-  "name": "plugin-ui",
+  "name": "@grafana/plugin-ui",
   "version": "0.1.9",
   "repository": "git@github.com:grafana/plugin-ui.git",
   "author": "Grafana Labs",
