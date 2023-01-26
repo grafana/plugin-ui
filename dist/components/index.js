@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CertificationKey = exports.InlineSwitch = exports.formatDate = exports.DatePickerWithInput = exports.DatePicker = exports.Segment = exports.DebounceInput = exports.QueryEditorRow = exports.AsyncButtonCascader = void 0;
+exports.CustomHeadersSettings = exports.CertificationKey = exports.InlineSwitch = exports.formatDate = exports.DatePickerWithInput = exports.DatePicker = exports.Segment = exports.DebounceInput = exports.QueryEditorRow = exports.AsyncButtonCascader = void 0;
 const tslib_1 = require("tslib");
 var AsyncButtonCascader_1 = require("./AsyncButtonCascader/AsyncButtonCascader");
 Object.defineProperty(exports, "AsyncButtonCascader", { enumerable: true, get: function () { return AsyncButtonCascader_1.AsyncButtonCascader; } });
@@ -22,4 +22,6 @@ var ui_1 = require("@grafana/ui");
 Object.defineProperty(exports, "InlineSwitch", { enumerable: true, get: function () { return ui_1.InlineSwitch; } });
 Object.defineProperty(exports, "CertificationKey", { enumerable: true, get: function () { return ui_1.CertificationKey; } });
 tslib_1.__exportStar(require("./QueryEditor"), exports);
+var CustomHeadersSettings_1 = require("./CustomHeadersSettings/CustomHeadersSettings");
+Object.defineProperty(exports, "CustomHeadersSettings", { enumerable: true, get: function () { return CustomHeadersSettings_1.CustomHeadersSettings; } });
 //# sourceMappingURL=index.js.map
