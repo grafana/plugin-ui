@@ -2,9 +2,13 @@ name: Plugin E2E
 on:
   workflow_call:
 jobs:
+  checkout:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
   e2e:
     runs-on: ubuntu-20.04
-    needs: [test-and-build]
     strategy:
       fail-fast: false
       matrix:
@@ -28,11 +32,12 @@ jobs:
           path: e2e/artifacts/test-and-build-backend
       - name: Consolidate artifacts
         run: |
-          mkdir -p e2e/artifacts/{test-and-build-frontend,test-and-build-backend,build}
-          cp -r e2e/artifacts/test-and-build-frontend/* e2e/artifacts/build
-          cp -r e2e/artifacts/test-and-build-backend/* e2e/artifacts/build
-          chmod +x e2e/artifacts/build/gpx*;
-          ls -lha e2e/artifacts/build
+          mkdir -p dist
+          mkdir -p e2e/artifacts/{test-and-build-frontend,test-and-build-backend}
+          cp -r e2e/artifacts/test-and-build-frontend/* dist
+          cp -r e2e/artifacts/test-and-build-backend/* dist
+          chmod +x dist/gpx*;
+          ls -lha dist
       - name: Install dependencies
         run: |
           cd e2e
@@ -55,7 +60,7 @@ jobs:
       - name: Run E2E
         run: |
           cd e2e
-          yarn e2e
+          npx cypress@10.10.0 run
       - name: Stop the docker container
         if: always()
         run: |

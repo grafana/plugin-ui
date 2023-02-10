@@ -35,9 +35,24 @@ jobs:
       - name: Install frontend dependencies
         run: |
           yarn install --frozen-lockfile;
+      - name: Test frontend
+        run: |
+          if [ -f "./.config/webpack/webpack.config.ts" ]; then
+            ./node_modules/.bin/jest --passWithNoTests --maxWorkers 4
+          else
+            echo "deferring tests to build step"
+          fi
       - name: Build frontend
         run: |
-          yarn build
+          if [ -f "./.config/webpack/webpack.config.ts" ]; then
+            if [ -f "./webpack.config.ts" ]; then
+              ./node_modules/.bin/webpack -c ./webpack.config.ts --env production
+            else
+              ./node_modules/.bin/webpack -c ./.config/webpack/webpack.config.ts --env production
+            fi
+          else
+            ./node_modules/.bin/grafana-toolkit plugin:ci-build
+          fi
       - name: Build artifacts
         uses: actions/upload-artifact@v3
         with:
