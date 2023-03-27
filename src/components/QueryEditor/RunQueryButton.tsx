@@ -35,7 +35,7 @@ export const RunQueryButton: React.FC<RunQueryButtonProps> = ({
       icon={icon}
       disabled={disabled || queryRunning}
       onClick={onClick}
-      data-testid={dataTestId ?? false}
+      data-testid={dataTestId}
     >
       Run query
     </Button>
