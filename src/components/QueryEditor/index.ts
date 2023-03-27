@@ -14,5 +14,6 @@ export { InlineSelect } from './InlineSelect';
 export { InputGroup } from './InputGroup';
 export { Space } from './Space';
 export { SqlQueryEditor } from './QueryEditor';
+export { RunQueryButton } from './RunQueryButton';
 
 export * from './types';
