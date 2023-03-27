@@ -7,7 +7,7 @@ import { ConfirmModal } from './ConfirmModal';
 import { DatasetSelector } from './DatasetSelector';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TableSelector } from './TableSelector';
-import { InlineField, Select, InlineSwitch, Button, Tooltip, RadioButtonGroup } from '@grafana/ui';
+import { InlineField, Select, InlineSwitch, RadioButtonGroup } from '@grafana/ui';
 import { QueryWithDefaults } from './defaults';
 import { EditorField } from './EditorField';
 import { EditorHeader } from './EditorHeader';
@@ -15,6 +15,7 @@ import { EditorRow } from './EditorRow';
 import { FlexItem } from './FlexItem';
 import { InlineSelect } from './InlineSelect';
 import { Space } from './Space';
+import {RunQueryButton} from './RunQueryButton'
 import { DB, SQLQuery, QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
 import { defaultToRawSql } from './utils/sql.utils';
 
@@ -175,26 +176,10 @@ export function QueryHeader({
 
         <FlexItem grow={1} />
 
-        {isQueryRunnable ? (
-          <Button icon="play" variant="primary" size="sm" onClick={() => onRunQuery()}>
-            Run query
-          </Button>
-        ) : (
-          <Tooltip
-            theme="error"
-            content={
-              <>
-                Your query is invalid. Check below for details. <br />
-                However, you can still run this query.
-              </>
-            }
-            placement="top"
-          >
-            <Button icon="exclamation-triangle" variant="secondary" size="sm" onClick={() => onRunQuery()}>
-              Run query
-            </Button>
-          </Tooltip>
-        )}
+        <RunQueryButton
+          queryInvalid={isQueryRunnable}
+          onClick={() => onRunQuery()}
+        />
 
         <RadioButtonGroup options={editorModes} size="sm" value={editorMode} onChange={onEditorModeChange} />
 
