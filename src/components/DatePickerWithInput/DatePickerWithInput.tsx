@@ -13,9 +13,13 @@ export interface DatePickerWithInputProps
 }
 
 export const DatePickerWithInput = (props: DatePickerWithInputProps) => {
-  const { value, onChange, ...rest } = props;
-
+  const { value, onChange, className, ...rest } = props;
   const [open, setOpen] = React.useState(false);
+
+  let inputClassName = 'grafana-plugin-ui-date-input'
+  if (className) {
+    inputClassName += ` ${className}`;
+  }
 
   return (
     <>
@@ -25,6 +29,7 @@ export const DatePickerWithInput = (props: DatePickerWithInputProps) => {
         value={formatDate(value || new Date())}
         onClick={() => setOpen(true)}
         onChange={() => {}}
+        className={inputClassName}
         {...rest}
       />
       <DatePicker
