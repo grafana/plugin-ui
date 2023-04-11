@@ -1,2 +1,2 @@
-export { RequiredInlineLabel } from "./RequiredInlineLabel";
+export { InlineLabel } from "./InlineLabel";
 export { DataSourceDescription } from "./DataSourceDescription";
