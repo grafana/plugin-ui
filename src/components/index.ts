@@ -19,4 +19,5 @@ export * from './DataLinks';
 export * from './Cascader/Cascader';
 export { InlineSwitch, CertificationKey } from '@grafana/ui';
 export * from './QueryEditor';
+export * from './ConfigEditor';
 export { CustomHeadersSettings } from './CustomHeadersSettings/CustomHeadersSettings';
