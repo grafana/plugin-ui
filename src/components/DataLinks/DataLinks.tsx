@@ -11,8 +11,9 @@ import { DataLink } from './DataLink';
 
 const getStyles = ((theme: GrafanaTheme2) => ({
   infoText: css`
-    padding-bottom: ${theme.v1.spacing.md};
-    color: ${theme.v1.colors.textWeak};
+    font-size: ${theme.typography.bodySmall.fontSize};
+    color: ${theme.colors.text.secondary};
+    margin-bottom: ${theme.v1.spacing.md};
   `,
   dataLink: css`
     margin-bottom: ${theme.v1.spacing.sm};
@@ -30,7 +31,7 @@ export const DataLinks = (props: Props) => {
 
   return (
     <>
-      <h3 className='page-heading'>Data links</h3>
+      <h3>Data links</h3>
 
       <div className={styles.infoText}>
         Add links to existing fields. Links will be shown in log row details
