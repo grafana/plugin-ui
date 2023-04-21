@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { css } from "@emotion/css";
-import { Button, useTheme2 } from "@grafana/ui";
+import { Button } from "@grafana/ui";
 import { CustomHeader } from "./CustomHeader";
 import { ConfigSection } from "../../ConfigEditor";
 import type { Header, LocalHeader } from "../types";
@@ -14,7 +14,6 @@ export const CustomHeaders: React.FC<Props> = ({
   headers: headersFromProps,
   onChange,
 }) => {
-  const { typography } = useTheme2();
   const [headers, setHeaders] = useState<LocalHeader[]>(
     headersFromProps.map((header) => ({
       ...header,
@@ -57,13 +56,6 @@ export const CustomHeaders: React.FC<Props> = ({
     container: css({
       marginTop: 24,
     }),
-    collapsible: css({
-      ...typography.h6,
-      fontWeight: typography.fontWeightRegular,
-    }),
-    collapsibleContent: css({
-      paddingTop: 0,
-    }),
     addHeaderButton: css({
       marginTop: 12,
     }),
@@ -73,7 +65,7 @@ export const CustomHeaders: React.FC<Props> = ({
     <div className={styles.container}>
       <ConfigSection
         title="HTTP headers"
-        description="Pass along additional context and metadata about the request/response."
+        description="Pass along additional context and metadata about the request/response"
         isCollapsible
         isOpen={headers.length > 0}
         kind="sub-section"

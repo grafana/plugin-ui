@@ -8,8 +8,8 @@ import { useCommonStyles } from "../styles";
 
 export type Props = {
   enabled: boolean;
-  certificateConfigured: boolean;
   onToggle: (enabled: boolean) => void;
+  certificateConfigured: boolean;
   onCertificateChange: (certificate: string) => void;
   onCertificateReset: () => void;
 };
@@ -54,6 +54,7 @@ export const SelfSignedCertificate: React.FC<Props> = ({
           onReset={onCertificateReset}
           placeholder="Begins with --- BEGIN CERTIFICATE ---"
           rows={6}
+          required
         />
       </InlineField>
     </TLSSettingsSection>

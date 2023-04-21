@@ -16,19 +16,6 @@ export type CustomMethod = {
   component: ReactElement;
 };
 
-export type TLSSettings = {
-  customCertificate: {
-    enabled: boolean;
-  };
-  skipVerification: {
-    enabled: boolean;
-  };
-  clientCertificate: {
-    enabled: boolean;
-    serverName: string;
-  };
-};
-
 export type Header = {
   name: string;
   configured: boolean;

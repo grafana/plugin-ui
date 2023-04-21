@@ -1,22 +1,22 @@
 # Auth component
 
-Auth component is meant to replace the old `DataSourceHttpSettings` component which has a number of UX issues. At the moment component is stored here in `@grafana/plugin-ui` so that it can be used in external datasources regardless of Grafana version (Enterprise datasources must support at least 2 latest major Grafana versions).
+Auth component is meant to replace the old [`DataSourceHttpSettings`](https://github.com/grafana/grafana/blob/d02aee24795aecc09efa6d81e35b25d8f151bb25/packages/grafana-ui/src/components/DataSourceSettings/DataSourceHttpSettings.tsx) component which has a number of UX issues. The new component is stored here in `@grafana/plugin-ui` so that it can be used in external datasources regardless of Grafana version (Enterprise datasources must support at least 2 latest major Grafana versions).
 
-In the new component only one authentication method can be selected at a time and all TLS options are located in a separate section and can be added on top of any selected authentication method.
+In the new component only one authentication method can be selected at a time and all TLS options are located in a separate section and can be added to any selected authentication method.
 
-It is also possible to extend the component with custom Auth method. Read more in the "Adding custom Auth method" section.
+It is also possible to extend the component with custom auth methods.
 
-This is how it looks like:
+Screenshots of the component:
 
 <img src="./docs-img/screenshot-auth.png" width="600">
 
 <img src="./docs-img/screenshot-auth-select.png" width="600">
 
-## Replacing the old [DataSourceHttpSettings](https://github.com/grafana/grafana/blob/d02aee24795aecc09efa6d81e35b25d8f151bb25/packages/grafana-ui/src/components/DataSourceSettings/DataSourceHttpSettings.tsx) component with the new one
+## Replacing the old DataSourceHttpSettings component with the new one
 
 Even though the new component has completely different props shape, there is a special utility that takes the legacy props and returns the new props.
 
-> ❗️Note: The new component only takes care about the Auth section of the old component (see screenshot above). So the HTTP section (URL, Allowed cookies, Timeout) need to be added alongside the new component separately when needed.
+> ❗️Note: The new component only takes care about the Auth section of the old component (see screenshot above). So the HTTP section of the old component (URL, Allowed cookies, Timeout) should be added alongside the new component separately when needed.
 
 **Example**:
 
@@ -60,7 +60,7 @@ type Props = {
   visibleMethods?: (AuthMethod | CustomMethodId)[];
 
   // Allows to render custom auth methods alongside default ones.
-  // You can also use new component for rendering only custom auth methods.
+  // It is also possible to render only custom auth methods.
   customMethods?: {
     id: CustomMethodId;
     label: string;
@@ -86,17 +86,17 @@ type Props = {
   TLS?: {
     selfSignedCertificate: {
       enabled: boolean;
-      certificateConfigured: boolean;
       onToggle: (enabled: boolean) => void;
+      certificateConfigured: boolean;
       onCertificateChange: (certificate: string) => void;
       onCertificateReset: () => void;
     };
     TLSClientAuth: {
       enabled: boolean;
+      onToggle: (enabled: boolean) => void;
       serverName: string;
       clientCertificateConfigured: boolean;
       clientKeyConfigured: boolean;
-      onToggle: (enabled: boolean) => void;
       onServerNameChange: (serverName: string) => void;
       onClientCertificateChange: (clientCertificate: string) => void;
       onClientKeyChange: (clientKey: string) => void;
@@ -135,15 +135,15 @@ type Header = {
 };
 ```
 
-If `TLS` property in `Props` object is not passed, the TLS settings section will not be rendered.
+If `TLS` is not passed, the TLS settings section will not be rendered.
 
-If `customHeaders` property in `Props` object field is not passed, custom headers section will not be rendered.
+If `customHeaders` is not passed, custom headers section will not be rendered.
 
 ## Adding your own auth methods
 
 You can extend the component with your custom auth method(s) by passing it to the `Props` under `customMethods` array. Your custom methods will be rendered as a part of the methods list. Once user selects your custom method, the respective component will be rendered.
 
-`customMethods` is an array of the following object shape:
+`customMethods` is an array of the following objects:
 
 ```ts
 type CustomMethod = {
@@ -172,18 +172,6 @@ const ConfigEditor = () => {
       // Reshaped legacy props
       {...newAuthProps}
 
-      // Still need to call the method from `newAuthProps` to store
-      // the legacy data correctly. Also make sure to store the data
-      // about your component being selected/unselected.
-      onAuthMethodSelect={(method) => {
-        newAuthProps.onAuthMethodSelect(method);
-        setSigV4Selected(method === sigV4Id); // <-- change this accordingly
-      }}
-
-      // If your method is selected pass its id to `selectedMethod`,
-      // otherwise pass the id from converted legacy data
-      selectedMethod={sigV4Selected ? sigV4Id : newAuthProps.selectedMethod}
-
       // Your custom auth methods
       customMethods={[
         {
@@ -203,6 +191,19 @@ const ConfigEditor = () => {
           ),
         },
       ]}
+
+      // Still need to call `onAuthMethodSelect` function from
+      // `newAuthProps` to store the legacy data correctly.
+      // Also make sure to store the data about your component
+      // being selected/unselected.
+      onAuthMethodSelect={(method) => {
+        newAuthProps.onAuthMethodSelect(method);
+        setSigV4Selected(method === sigV4Id); // <-- change this accordingly
+      }}
+
+      // If your method is selected pass its id to `selectedMethod`,
+      // otherwise pass the id from converted legacy data
+      selectedMethod={sigV4Selected ? sigV4Id : newAuthProps.selectedMethod}
     />
 
     {/* Other component logic... */}

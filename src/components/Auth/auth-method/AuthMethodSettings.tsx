@@ -11,8 +11,7 @@ const defaultOptions: Record<AuthMethod, SelectableValue<AuthMethod>> = {
   [AuthMethod.BasicAuth]: {
     label: "Basic authentication",
     value: AuthMethod.BasicAuth,
-    description:
-      "Authenticate with your data source username and password that can be found here.",
+    description: "Authenticate with your data source username and password.",
   },
   [AuthMethod.CrossSiteCredentials]: {
     label: "Enable cross-site access control requests",
@@ -48,7 +47,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
   visibleMethods,
   customMethods,
   onAuthMethodSelect,
-  basicAuth = defaultProps.basic(),
+  basicAuth,
 }) => {
   const { colors } = useTheme2();
   const isSingleMethodMode = visibleMethods.length === 1;
@@ -86,7 +85,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
         }
         return option;
       });
-  }, [mostCommonMethod]);
+  }, [visibleMethods, customMethods, mostCommonMethod]);
 
   let selected = selectedMethod;
   if (isSingleMethodMode) {
@@ -95,33 +94,29 @@ export const AuthMethodSettings: React.FC<Props> = ({
     selected = mostCommonMethod;
   }
 
-  let title = isSingleMethodMode
-    ? preparedOptions[0].label
+  const title = isSingleMethodMode
+    ? preparedOptions[0].label ?? ""
     : "Authentication methods";
 
-  let description = isSingleMethodMode
-    ? preparedOptions[0].description
+  const description = isSingleMethodMode
+    ? preparedOptions[0].description ?? ""
     : "Choose an authentication method to access the data source";
 
   const styles = {
-    selectedMethodFields: css({
-      marginTop: 12,
-    }),
     authMethods: css({
       marginTop: 20,
-      padding: isSingleMethodMode ? 0 : "16px 16px 12px",
-      border: isSingleMethodMode
-        ? "none"
-        : `1px solid ${colors.background.secondary}`,
+      ...(!isSingleMethodMode && {
+        padding: "16px 16px 12px",
+        border: `1px solid ${colors.background.secondary}`,
+      }),
+    }),
+    selectedMethodFields: css({
+      marginTop: 12,
     }),
   };
 
   return (
-    <ConfigSection
-      title={title ?? ""}
-      description={description ?? ""}
-      kind="sub-section"
-    >
+    <ConfigSection title={title} description={description} kind="sub-section">
       <div className={styles.authMethods}>
         {!isSingleMethodMode && (
           <AuthMethodSelector
@@ -131,22 +126,13 @@ export const AuthMethodSettings: React.FC<Props> = ({
           />
         )}
         <div className={styles.selectedMethodFields}>
-          {selected === AuthMethod.BasicAuth && <BasicAuth {...basicAuth} />}
+          {selected === AuthMethod.BasicAuth && basicAuth && (
+            <BasicAuth {...basicAuth} />
+          )}
           {selected.startsWith("custom-") &&
             (customMethods?.find((m) => m.id === selected)?.component ?? null)}
         </div>
       </div>
     </ConfigSection>
   );
-};
-
-const defaultProps = {
-  basic(): BasicAuthProps {
-    return {
-      passwordConfigured: false,
-      onUserChange: () => {},
-      onPasswordChange: () => {},
-      onPasswordReset: () => {},
-    };
-  },
 };

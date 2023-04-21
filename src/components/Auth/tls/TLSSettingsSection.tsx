@@ -21,9 +21,6 @@ export const TLSSettingsSection: React.FC<Props> = ({
     container: css({
       marginTop: 3,
     }),
-    content: css({
-      margin: "8px 0 16px 24px",
-    }),
     checkboxContainer: css({
       display: "flex",
       alignItems: "center",
@@ -37,6 +34,9 @@ export const TLSSettingsSection: React.FC<Props> = ({
       marginTop: -2,
       marginLeft: 5,
       color: colors.text.secondary,
+    }),
+    content: css({
+      margin: "8px 0 16px 24px",
     }),
   };
 

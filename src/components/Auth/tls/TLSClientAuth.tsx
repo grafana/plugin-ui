@@ -8,10 +8,10 @@ import { useCommonStyles } from "../styles";
 
 export type Props = {
   enabled: boolean;
+  onToggle: (enabled: boolean) => void;
   serverName: string;
   clientCertificateConfigured: boolean;
   clientKeyConfigured: boolean;
-  onToggle: (enabled: boolean) => void;
   onServerNameChange: (serverName: string) => void;
   onClientCertificateChange: (clientCertificate: string) => void;
   onClientKeyChange: (clientKey: string) => void;
@@ -59,6 +59,7 @@ export const TLSClientAuth: React.FC<Props> = ({
           placeholder="domain.example.com"
           value={serverName}
           onChange={(e) => onServerNameChange(e.currentTarget.value)}
+          required
         />
       </InlineField>
       <InlineField
@@ -85,13 +86,14 @@ export const TLSClientAuth: React.FC<Props> = ({
           onReset={onClientCertificateReset}
           placeholder="Begins with --- BEGIN CERTIFICATE ---"
           rows={6}
+          required
         />
       </InlineField>
       <InlineField
         label={
           <InlineLabel
             width={24}
-            tooltip="The client key can be generated from a Certificate Authority or be self-signed. Learn how X authenticates client certificates <link to any docs from the data source>."
+            tooltip="The client key can be generated from a Certificate Authority or be self-signed."
             required
             htmlFor="client-auth-client-key-input"
           >
@@ -111,6 +113,7 @@ export const TLSClientAuth: React.FC<Props> = ({
           onReset={onClientKeyReset}
           placeholder={`Begins with --- RSA PRIVATE KEY CERTIFICATE ---`}
           rows={6}
+          required
         />
       </InlineField>
     </TLSSettingsSection>

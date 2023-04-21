@@ -15,12 +15,10 @@ export const AuthMethodSelector: React.FC<Props> = ({
   onChange,
 }) => {
   return (
-    <>
-      <Select
-        options={options}
-        value={selectedMethod}
-        onChange={(option) => onChange(option.value as AuthMethod)}
-      />
-    </>
+    <Select
+      options={options}
+      value={selectedMethod}
+      onChange={(option) => onChange(option.value!)}
+    />
   );
 };
