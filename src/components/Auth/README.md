@@ -8,9 +8,11 @@ It is also possible to extend the component with custom Auth method. Read more i
 
 This is how it looks like:
 
-<img src="./docs-img/screenshot-auth.png">
+<img src="./docs-img/screenshot-auth.png" width="600">
 
-## Replacing the old DataSourceHttpSettings component with the new one
+<img src="./docs-img/screenshot-auth-select.png" width="600">
+
+## Replacing the old [DataSourceHttpSettings](https://github.com/grafana/grafana/blob/d02aee24795aecc09efa6d81e35b25d8f151bb25/packages/grafana-ui/src/components/DataSourceSettings/DataSourceHttpSettings.tsx) component with the new one
 
 Even though the new component has completely different props shape, there is a special utility that takes the legacy props and returns the new props.
 
