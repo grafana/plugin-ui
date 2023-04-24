@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo, useState } from "react";
 import { css } from "@emotion/css";
 import { useTheme2, Select } from "@grafana/ui";
 import { SelectableValue } from "@grafana/data";
@@ -48,6 +48,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
   onAuthMethodSelect,
   basicAuth,
 }) => {
+  const [authMethodChanged, setAuthMethodChanged] = useState(false);
   const { colors, spacing } = useTheme2();
   const isSingleMethodMode = visibleMethods.length === 1;
 
@@ -89,8 +90,20 @@ export const AuthMethodSettings: React.FC<Props> = ({
   let selected = selectedMethod;
   if (isSingleMethodMode) {
     selected = visibleMethods[0];
-  } else if (selectedMethod === AuthMethod.NoAuth && mostCommonMethod) {
+  } else if (
+    selectedMethod === AuthMethod.NoAuth &&
+    mostCommonMethod &&
+    !authMethodChanged
+  ) {
     selected = mostCommonMethod;
+  }
+
+  let AuthFieldsComponent: ReactElement | null = null;
+  if (selected === AuthMethod.BasicAuth && basicAuth) {
+    AuthFieldsComponent = <BasicAuth {...basicAuth} />;
+  } else if (selected.startsWith("custom-")) {
+    AuthFieldsComponent =
+      customMethods?.find((m) => m.id === selected)?.component ?? null;
   }
 
   const title = isSingleMethodMode
@@ -105,7 +118,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
     authMethods: css({
       marginTop: spacing(2.5),
       ...(!isSingleMethodMode && {
-        padding: spacing(2, 2, 1.5),
+        padding: spacing(2),
         border: `1px solid ${colors.border.weak}`,
       }),
     }),
@@ -121,16 +134,17 @@ export const AuthMethodSettings: React.FC<Props> = ({
           <Select
             options={preparedOptions}
             value={selected}
-            onChange={(option) => onAuthMethodSelect(option.value!)}
+            onChange={(option) => {
+              setAuthMethodChanged(true);
+              onAuthMethodSelect(option.value!);
+            }}
           />
         )}
-        <div className={styles.selectedMethodFields}>
-          {selected === AuthMethod.BasicAuth && basicAuth && (
-            <BasicAuth {...basicAuth} />
-          )}
-          {selected.startsWith("custom-") &&
-            (customMethods?.find((m) => m.id === selected)?.component ?? null)}
-        </div>
+        {AuthFieldsComponent && (
+          <div className={styles.selectedMethodFields}>
+            {AuthFieldsComponent}
+          </div>
+        )}
       </div>
     </ConfigSection>
   );

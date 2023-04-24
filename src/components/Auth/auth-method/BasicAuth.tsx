@@ -1,5 +1,5 @@
 import React from "react";
-import { cx } from "@emotion/css";
+import { cx, css } from "@emotion/css";
 import { InlineField, Input, PopoverContent } from "@grafana/ui";
 import { InlineLabel } from "../../ConfigEditor";
 import { SecretInput } from "../../../unreleasedComponents/SecretInput";
@@ -25,6 +25,11 @@ export const BasicAuth: React.FC<Props> = ({
   onPasswordReset,
 }) => {
   const commonStyles = useCommonStyles();
+  const styles = {
+    lastInlineField: css({
+      marginBottom: 0,
+    }),
+  };
   return (
     <>
       <InlineField
@@ -53,7 +58,8 @@ export const BasicAuth: React.FC<Props> = ({
       <InlineField
         className={cx(
           commonStyles.inlineFieldNoMarginRight,
-          commonStyles.inlineFieldWithSecret
+          commonStyles.inlineFieldWithSecret,
+          styles.lastInlineField
         )}
         label={
           <InlineLabel
