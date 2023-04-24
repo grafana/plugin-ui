@@ -38,7 +38,6 @@ export const Auth: React.FC<Props> = ({
     | CustomMethodId
   )[] = visibleMethodsFromProps ?? [
     AuthMethod.BasicAuth,
-    AuthMethod.CrossSiteCredentials,
     AuthMethod.OAuthForward,
     AuthMethod.NoAuth,
     ...(customMethods?.map((m) => m.id) ?? []),

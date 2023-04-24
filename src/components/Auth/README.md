@@ -16,7 +16,9 @@ Screenshots of the component:
 
 Even though the new component has completely different props shape, there is a special utility that takes the legacy props and returns the new props.
 
-> ❗️Note: The new component only takes care about the Auth section of the old component (see screenshot above). So the HTTP section of the old component (URL, Allowed cookies, Timeout) should be added alongside the new component separately when needed.
+> ❗️Note 1: The new component doesn't show "Enable cross-site access control requests" (previously known as "With credentials") auth method by default as in most of the cases it's not used and we are moving away from it. You can still enable it using `visibleMethods` prop if needed.
+
+> ❗️Note 2: The new component only takes care about the Auth section of the old component (see screenshot above). So the HTTP section of the old component (URL, Allowed cookies, Timeout) should be added alongside the new component separately when needed.
 
 **Example**:
 
