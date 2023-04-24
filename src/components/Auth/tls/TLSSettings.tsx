@@ -1,5 +1,6 @@
 import React from "react";
 import { css } from "@emotion/css";
+import { useTheme2 } from "@grafana/ui";
 import { SelfSignedCertificate } from "./SelfSignedCertificate";
 import { TLSClientAuth as TLSClientAuthComponent } from "./TLSClientAuth";
 import { SkipTLSVerification } from "./SkipTLSVerification";
@@ -36,9 +37,11 @@ export const TLSSettings: React.FC<Props> = ({
   TLSClientAuth,
   skipTLSVerification,
 }) => {
+  const { spacing } = useTheme2();
+
   const styles = {
     container: css({
-      marginTop: 24,
+      marginTop: spacing(3),
     }),
   };
 

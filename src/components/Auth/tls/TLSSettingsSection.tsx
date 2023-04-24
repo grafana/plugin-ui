@@ -16,7 +16,7 @@ export const TLSSettingsSection: React.FC<Props> = ({
   tooltipText,
   onToggle,
 }) => {
-  const { colors, typography } = useTheme2();
+  const { colors, typography, spacing } = useTheme2();
   const styles = {
     container: css({
       marginTop: 3,
@@ -36,7 +36,7 @@ export const TLSSettingsSection: React.FC<Props> = ({
       color: colors.text.secondary,
     }),
     content: css({
-      margin: "8px 0 16px 24px",
+      margin: spacing(1, 0, 2, 3),
     }),
   };
 

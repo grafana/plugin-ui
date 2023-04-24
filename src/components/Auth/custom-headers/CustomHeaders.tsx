@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { css } from "@emotion/css";
-import { Button } from "@grafana/ui";
+import { Button, useTheme2 } from "@grafana/ui";
 import { CustomHeader } from "./CustomHeader";
 import { ConfigSection } from "../../ConfigEditor";
 import type { Header, LocalHeader } from "../types";
@@ -14,6 +14,8 @@ export const CustomHeaders: React.FC<Props> = ({
   headers: headersFromProps,
   onChange,
 }) => {
+  const { spacing } = useTheme2();
+
   const [headers, setHeaders] = useState<LocalHeader[]>(
     headersFromProps.map((header) => ({
       ...header,
@@ -54,10 +56,10 @@ export const CustomHeaders: React.FC<Props> = ({
 
   const styles = {
     container: css({
-      marginTop: 24,
+      marginTop: spacing(3),
     }),
     addHeaderButton: css({
-      marginTop: 12,
+      marginTop: spacing(1.5),
     }),
   };
 

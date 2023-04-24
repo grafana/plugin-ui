@@ -1,8 +1,7 @@
 import React, { useMemo } from "react";
 import { css } from "@emotion/css";
-import { useTheme2 } from "@grafana/ui";
+import { useTheme2, Select } from "@grafana/ui";
 import { SelectableValue } from "@grafana/data";
-import { AuthMethodSelector } from "./AuthMethodSelector";
 import { BasicAuth, Props as BasicAuthProps } from "./BasicAuth";
 import { ConfigSection } from "../../ConfigEditor";
 import { AuthMethod, CustomMethod, CustomMethodId } from "../types";
@@ -49,7 +48,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
   onAuthMethodSelect,
   basicAuth,
 }) => {
-  const { colors } = useTheme2();
+  const { colors, spacing } = useTheme2();
   const isSingleMethodMode = visibleMethods.length === 1;
 
   const preparedOptions = useMemo(() => {
@@ -104,14 +103,14 @@ export const AuthMethodSettings: React.FC<Props> = ({
 
   const styles = {
     authMethods: css({
-      marginTop: 20,
+      marginTop: spacing(2.5),
       ...(!isSingleMethodMode && {
-        padding: "16px 16px 12px",
-        border: `1px solid ${colors.background.secondary}`,
+        padding: spacing(2, 2, 1.5),
+        border: `1px solid ${colors.border.weak}`,
       }),
     }),
     selectedMethodFields: css({
-      marginTop: 12,
+      marginTop: spacing(1.5),
     }),
   };
 
@@ -119,10 +118,10 @@ export const AuthMethodSettings: React.FC<Props> = ({
     <ConfigSection title={title} description={description} kind="sub-section">
       <div className={styles.authMethods}>
         {!isSingleMethodMode && (
-          <AuthMethodSelector
-            selectedMethod={selected}
+          <Select
             options={preparedOptions}
-            onChange={onAuthMethodSelect}
+            value={selected}
+            onChange={(option) => onAuthMethodSelect(option.value!)}
           />
         )}
         <div className={styles.selectedMethodFields}>

@@ -31,7 +31,7 @@ export const Auth: React.FC<Props> = ({
   TLS,
   customHeaders,
 }) => {
-  const { colors } = useTheme2();
+  const { spacing } = useTheme2();
 
   const visibleMethods: (
     | AuthMethod
@@ -46,18 +46,8 @@ export const Auth: React.FC<Props> = ({
 
   const styles = {
     container: css({
-      margin: "24px 0",
+      margin: spacing(2, 0),
       maxWidth: 578,
-    }),
-    selectedMethodFields: css({
-      marginTop: 12,
-    }),
-    authMethods: css({
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "flex-start",
-      padding: "16px 16px 12px",
-      border: `1px solid ${colors.background.secondary}`,
     }),
   };
 

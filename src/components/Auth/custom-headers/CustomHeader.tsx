@@ -1,6 +1,12 @@
 import React from "react";
 import { css, cx } from "@emotion/css";
-import { InlineFieldRow, InlineField, Input, IconButton } from "@grafana/ui";
+import {
+  InlineFieldRow,
+  InlineField,
+  Input,
+  IconButton,
+  useTheme2,
+} from "@grafana/ui";
 import { SecretInput } from "../../../unreleasedComponents/SecretInput";
 import type { LocalHeader } from "../types";
 import { useCommonStyles } from "../styles";
@@ -18,6 +24,7 @@ export const CustomHeader: React.FC<Props> = ({
   onBlur,
   onDelete,
 }) => {
+  const { spacing } = useTheme2();
   const commonStyles = useCommonStyles();
   const styles = {
     container: css({
@@ -29,7 +36,7 @@ export const CustomHeader: React.FC<Props> = ({
     headerNameField: css({
       width: "40%",
       marginRight: 0,
-      paddingRight: 8,
+      paddingRight: spacing(1),
     }),
     headerValueField: css({
       width: "45%",
