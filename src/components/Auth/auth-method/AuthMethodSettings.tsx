@@ -50,6 +50,9 @@ export const AuthMethodSettings: React.FC<Props> = ({
 }) => {
   const [authMethodChanged, setAuthMethodChanged] = useState(false);
   const { colors, spacing } = useTheme2();
+
+  // When only one method should be visible component will look slightly
+  // different as we don't need to render Select.
   const isSingleMethodMode = visibleMethods.length === 1;
 
   const preparedOptions = useMemo(() => {
