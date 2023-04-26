@@ -16,9 +16,10 @@ export type Props = {
   visibleMethods?: (AuthMethod | CustomMethodId)[];
   customMethods?: CustomMethod[];
   onAuthMethodSelect: (authType: AuthMethod | CustomMethodId) => void;
-  basicAuth?: BasicAuthProps;
-  TLS?: TLSSettingsProps;
-  customHeaders?: CustomHeadersProps;
+  basicAuth?: Omit<BasicAuthProps, "readOnly">;
+  TLS?: Omit<TLSSettingsProps, "readOnly">;
+  customHeaders?: Omit<CustomHeadersProps, "readOnly">;
+  readOnly?: boolean;
 };
 
 export const Auth: React.FC<Props> = ({
@@ -30,6 +31,7 @@ export const Auth: React.FC<Props> = ({
   basicAuth,
   TLS,
   customHeaders,
+  readOnly = false,
 }) => {
   const { spacing } = useTheme2();
 
@@ -60,9 +62,12 @@ export const Auth: React.FC<Props> = ({
         visibleMethods={visibleMethods}
         onAuthMethodSelect={onAuthMethodSelect}
         basicAuth={basicAuth}
+        readOnly={readOnly}
       />
-      {TLS && <TLSSettings {...TLS} />}
-      {customHeaders && <CustomHeaders {...customHeaders} />}
+      {TLS && <TLSSettings {...TLS} readOnly={readOnly} />}
+      {customHeaders && (
+        <CustomHeaders {...customHeaders} readOnly={readOnly} />
+      )}
     </div>
   );
 };

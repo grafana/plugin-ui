@@ -20,6 +20,7 @@ export function convertLegacyAuthProps({
     basicAuth: getBasicAuthProps(config, onChange),
     TLS: getTLSProps(config, onChange),
     customHeaders: getCustomHeaders(config, onChange),
+    readOnly: config.readOnly,
   };
 
   return props;

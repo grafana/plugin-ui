@@ -16,15 +16,17 @@ import {
 import { ConfigSection } from "../../ConfigEditor";
 
 export type Props = {
-  selfSignedCertificate: SelfSignedCertificateProps;
-  TLSClientAuth: TLSClientAuthProps;
-  skipTLSVerification: SkipTLSVerificationProps;
+  selfSignedCertificate: Omit<SelfSignedCertificateProps, "readOnly">;
+  TLSClientAuth: Omit<TLSClientAuthProps, "readOnly">;
+  skipTLSVerification: Omit<SkipTLSVerificationProps, "readOnly">;
+  readOnly: boolean;
 };
 
 export const TLSSettings: React.FC<Props> = ({
   selfSignedCertificate,
   TLSClientAuth,
   skipTLSVerification,
+  readOnly,
 }) => {
   const { spacing } = useTheme2();
 
@@ -41,9 +43,9 @@ export const TLSSettings: React.FC<Props> = ({
       description="Additional security measures that can be applied on top of authentication"
       kind="sub-section"
     >
-      <SelfSignedCertificate {...selfSignedCertificate} />
-      <TLSClientAuthComponent {...TLSClientAuth} />
-      <SkipTLSVerification {...skipTLSVerification} />
+      <SelfSignedCertificate {...selfSignedCertificate} readOnly={readOnly} />
+      <TLSClientAuthComponent {...TLSClientAuth} readOnly={readOnly} />
+      <SkipTLSVerification {...skipTLSVerification} readOnly={readOnly} />
     </ConfigSection>
   );
 };

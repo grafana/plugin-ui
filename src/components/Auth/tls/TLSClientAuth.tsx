@@ -22,6 +22,7 @@ export type Props = {
     certificateLabel?: string;
     keyLabel?: string;
   };
+  readOnly: boolean;
 };
 
 export const TLSClientAuth: React.FC<Props> = ({
@@ -36,6 +37,7 @@ export const TLSClientAuth: React.FC<Props> = ({
   onClientCertificateReset,
   onClientKeyReset,
   tooltips,
+  readOnly,
 }) => {
   const commonStyles = useCommonStyles();
 
@@ -45,6 +47,7 @@ export const TLSClientAuth: React.FC<Props> = ({
       label="TLS Client Authentication"
       tooltipText="Validate using TLS client authentication, in which the server authenticates the client"
       onToggle={(newEnabled) => onToggle(newEnabled)}
+      readOnly={readOnly}
     >
       <InlineField
         label={
@@ -62,6 +65,7 @@ export const TLSClientAuth: React.FC<Props> = ({
         }
         grow
         className={commonStyles.inlineFieldNoMarginRight}
+        disabled={readOnly}
       >
         <Input
           id="client-auth-servername-input"
@@ -90,12 +94,13 @@ export const TLSClientAuth: React.FC<Props> = ({
           commonStyles.inlineFieldNoMarginRight,
           commonStyles.inlineFieldWithSecret
         )}
+        disabled={readOnly}
       >
         <SecretTextArea
           id="client-auth-client-certificate-input"
           isConfigured={clientCertificateConfigured}
           onChange={(e) => onClientCertificateChange(e.currentTarget.value)}
-          onReset={onClientCertificateReset}
+          onReset={readOnly ? () => {} : onClientCertificateReset}
           placeholder="Begins with --- BEGIN CERTIFICATE ---"
           rows={6}
           required
@@ -120,12 +125,13 @@ export const TLSClientAuth: React.FC<Props> = ({
           commonStyles.inlineFieldNoMarginRight,
           commonStyles.inlineFieldWithSecret
         )}
+        disabled={readOnly}
       >
         <SecretTextArea
           id="client-auth-client-key-input"
           isConfigured={clientKeyConfigured}
           onChange={(e) => onClientKeyChange(e.currentTarget.value)}
-          onReset={onClientKeyReset}
+          onReset={readOnly ? () => {} : onClientKeyReset}
           placeholder={`Begins with --- RSA PRIVATE KEY CERTIFICATE ---`}
           rows={6}
           required

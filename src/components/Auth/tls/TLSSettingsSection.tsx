@@ -7,6 +7,7 @@ type Props = {
   label: string;
   tooltipText: string;
   onToggle: (enabled: boolean) => void;
+  readOnly: boolean;
 };
 
 export const TLSSettingsSection: React.FC<Props> = ({
@@ -15,6 +16,7 @@ export const TLSSettingsSection: React.FC<Props> = ({
   label,
   tooltipText,
   onToggle,
+  readOnly,
 }) => {
   const { colors, typography, spacing } = useTheme2();
   const styles = {
@@ -48,6 +50,7 @@ export const TLSSettingsSection: React.FC<Props> = ({
           label={label}
           onChange={() => onToggle(!enabled)}
           className={styles.checkbox}
+          disabled={readOnly}
         />
         <Tooltip placement="top" content={tooltipText}>
           <Icon name="info-circle" className={styles.infoIcon} size="sm" />

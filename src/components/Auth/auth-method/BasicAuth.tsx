@@ -13,6 +13,7 @@ export type Props = {
   onUserChange: (user: string) => void;
   onPasswordChange: (password: string) => void;
   onPasswordReset: () => void;
+  readOnly: boolean;
 };
 
 export const BasicAuth: React.FC<Props> = ({
@@ -23,6 +24,7 @@ export const BasicAuth: React.FC<Props> = ({
   onUserChange,
   onPasswordChange,
   onPasswordReset,
+  readOnly,
 }) => {
   const commonStyles = useCommonStyles();
   const styles = {
@@ -46,6 +48,7 @@ export const BasicAuth: React.FC<Props> = ({
         }
         grow
         interactive
+        disabled={readOnly}
       >
         <Input
           id="basic-auth-user-input"
@@ -73,11 +76,12 @@ export const BasicAuth: React.FC<Props> = ({
         }
         grow
         interactive
+        disabled={readOnly}
       >
         <SecretInput
           id="basic-auth-password-input"
           isConfigured={passwordConfigured}
-          onReset={onPasswordReset}
+          onReset={readOnly ? () => {} : onPasswordReset}
           placeholder="Password"
           onChange={(e) => onPasswordChange(e.currentTarget.value)}
           required

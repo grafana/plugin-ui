@@ -16,6 +16,7 @@ type Props = {
   onChange: (header: LocalHeader) => void;
   onBlur: () => void;
   onDelete: () => void;
+  readOnly: boolean;
 };
 
 export const CustomHeader: React.FC<Props> = ({
@@ -23,6 +24,7 @@ export const CustomHeader: React.FC<Props> = ({
   onChange,
   onBlur,
   onDelete,
+  readOnly,
 }) => {
   const { spacing } = useTheme2();
   const commonStyles = useCommonStyles();
@@ -56,6 +58,7 @@ export const CustomHeader: React.FC<Props> = ({
           grow
           className={styles.headerNameField}
           htmlFor={`custom-header-${header.id}-name-input`}
+          disabled={readOnly}
         >
           <Input
             id={`custom-header-${header.id}-name-input`}
@@ -78,6 +81,7 @@ export const CustomHeader: React.FC<Props> = ({
             styles.headerValueField
           )}
           htmlFor={`custom-header-${header.id}-value-input`}
+          disabled={readOnly}
         >
           <SecretInput
             id={`custom-header-${header.id}-value-input`}
@@ -88,8 +92,10 @@ export const CustomHeader: React.FC<Props> = ({
             onChange={(e) =>
               onChange({ ...header, value: e.currentTarget.value })
             }
-            onReset={() =>
-              onChange({ ...header, configured: false, value: "" })
+            onReset={
+              readOnly
+                ? () => {}
+                : () => onChange({ ...header, configured: false, value: "" })
             }
             onBlur={onBlur}
             className={styles.input}
@@ -102,6 +108,7 @@ export const CustomHeader: React.FC<Props> = ({
           className={styles.removeHeaderBtn}
           onClick={onDelete}
           type="button"
+          disabled={readOnly}
         />
       </InlineFieldRow>
     </>

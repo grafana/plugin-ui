@@ -37,7 +37,8 @@ type Props = {
   visibleMethods: (AuthMethod | CustomMethodId)[];
   customMethods?: CustomMethod[];
   onAuthMethodSelect: (authType: AuthMethod | CustomMethodId) => void;
-  basicAuth?: BasicAuthProps;
+  basicAuth?: Omit<BasicAuthProps, "readOnly">;
+  readOnly: boolean;
 };
 
 export const AuthMethodSettings: React.FC<Props> = ({
@@ -47,6 +48,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
   customMethods,
   onAuthMethodSelect,
   basicAuth,
+  readOnly,
 }) => {
   const [authMethodChanged, setAuthMethodChanged] = useState(false);
   const { colors, spacing } = useTheme2();
@@ -103,7 +105,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
 
   let AuthFieldsComponent: ReactElement | null = null;
   if (selected === AuthMethod.BasicAuth && basicAuth) {
-    AuthFieldsComponent = <BasicAuth {...basicAuth} />;
+    AuthFieldsComponent = <BasicAuth {...basicAuth} readOnly={readOnly} />;
   } else if (selected.startsWith("custom-")) {
     AuthFieldsComponent =
       customMethods?.find((m) => m.id === selected)?.component ?? null;
@@ -141,6 +143,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
               setAuthMethodChanged(true);
               onAuthMethodSelect(option.value!);
             }}
+            disabled={readOnly}
           />
         )}
         {AuthFieldsComponent && (

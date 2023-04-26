@@ -8,11 +8,13 @@ import type { Header, HeaderWithValue, LocalHeader } from "../types";
 export type Props = {
   headers: Header[];
   onChange: (headers: HeaderWithValue[]) => void;
+  readOnly: boolean;
 };
 
 export const CustomHeaders: React.FC<Props> = ({
   headers: headersFromProps,
   onChange,
+  readOnly,
 }) => {
   const { spacing } = useTheme2();
 
@@ -81,6 +83,7 @@ export const CustomHeaders: React.FC<Props> = ({
               onChange={(header) => onHeaderChange(header.id, header)}
               onDelete={() => onHeaderDelete(header.id)}
               onBlur={onBlur}
+              readOnly={readOnly}
             />
           ))}
         </div>
@@ -90,6 +93,7 @@ export const CustomHeaders: React.FC<Props> = ({
             variant="secondary"
             fill="outline"
             onClick={onHeaderAdd}
+            disabled={readOnly}
           >
             {headers.length === 0 ? "Add header" : "Add another header"}
           </Button>
