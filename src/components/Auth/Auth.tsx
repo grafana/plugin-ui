@@ -9,6 +9,7 @@ import {
   CustomHeaders,
   Props as CustomHeadersProps,
 } from "./custom-headers/CustomHeaders";
+import { ConfigSection } from "../ConfigEditor";
 
 export type Props = {
   selectedMethod: AuthMethod | CustomMethodId;
@@ -54,20 +55,21 @@ export const Auth: React.FC<Props> = ({
 
   return (
     <div className={styles.container}>
-      <h3>Authentication</h3>
-      <AuthMethodSettings
-        selectedMethod={selectedMethod}
-        mostCommonMethod={mostCommonMethod}
-        customMethods={customMethods}
-        visibleMethods={visibleMethods}
-        onAuthMethodSelect={onAuthMethodSelect}
-        basicAuth={basicAuth}
-        readOnly={readOnly}
-      />
-      {TLS && <TLSSettings {...TLS} readOnly={readOnly} />}
-      {customHeaders && (
-        <CustomHeaders {...customHeaders} readOnly={readOnly} />
-      )}
+      <ConfigSection title="Authentication">
+        <AuthMethodSettings
+          selectedMethod={selectedMethod}
+          mostCommonMethod={mostCommonMethod}
+          customMethods={customMethods}
+          visibleMethods={visibleMethods}
+          onAuthMethodSelect={onAuthMethodSelect}
+          basicAuth={basicAuth}
+          readOnly={readOnly}
+        />
+        {TLS && <TLSSettings {...TLS} readOnly={readOnly} />}
+        {customHeaders && (
+          <CustomHeaders {...customHeaders} readOnly={readOnly} />
+        )}
+      </ConfigSection>
     </div>
   );
 };

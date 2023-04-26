@@ -20,9 +20,10 @@ export const GenericConfigSection: React.FC<Props> = ({
   kind = "section",
   className,
 }) => {
-  const { colors, typography } = useTheme2();
+  const { colors, typography, spacing } = useTheme2();
   const [isOpen, setIsOpen] = useState(isCollapsible ? isInitiallyOpen : true);
   const iconName: IconName = isOpen ? "angle-up" : "angle-down";
+  const isSubSection = kind === "sub-section";
 
   const collapsibleButtonAriaLabel = `${
     isOpen ? "Collapse" : "Expand"
@@ -34,13 +35,21 @@ export const GenericConfigSection: React.FC<Props> = ({
       justifyContent: "space-between",
       alignItems: "center",
     }),
+    title: css({
+      margin: 0,
+    }),
     subtitle: css({
-      marginBottom: typography.pxToRem(4),
+      margin: 0,
       fontWeight: typography.fontWeightRegular,
     }),
     descriptionText: css({
+      marginTop: spacing(isSubSection ? 0.25 : 0.5),
+      marginBottom: 0,
       ...typography.bodySmall,
       color: colors.text.secondary,
+    }),
+    content: css({
+      marginTop: spacing(2),
     }),
   };
 
@@ -48,7 +57,7 @@ export const GenericConfigSection: React.FC<Props> = ({
     <div className={className}>
       <div className={styles.header}>
         {kind === "section" ? (
-          <h3>{title}</h3>
+          <h3 className={styles.title}>{title}</h3>
         ) : (
           <h6 className={styles.subtitle}>{title}</h6>
         )}
@@ -63,7 +72,7 @@ export const GenericConfigSection: React.FC<Props> = ({
         )}
       </div>
       {description && <p className={styles.descriptionText}>{description}</p>}
-      {isOpen && <div>{children}</div>}
+      {isOpen && <div className={styles.content}>{children}</div>}
     </div>
   );
 };

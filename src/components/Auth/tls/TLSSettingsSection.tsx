@@ -18,7 +18,7 @@ export const TLSSettingsSection: React.FC<Props> = ({
   onToggle,
   readOnly,
 }) => {
-  const { colors, typography, spacing } = useTheme2();
+  const { colors, spacing } = useTheme2();
   const styles = {
     container: css({
       marginTop: 3,
@@ -26,11 +26,6 @@ export const TLSSettingsSection: React.FC<Props> = ({
     checkboxContainer: css({
       display: "flex",
       alignItems: "center",
-    }),
-    checkbox: css({
-      "*": {
-        fontWeight: typography.fontWeightRegular,
-      },
     }),
     infoIcon: css({
       marginTop: -2,
@@ -49,7 +44,6 @@ export const TLSSettingsSection: React.FC<Props> = ({
           value={enabled}
           label={label}
           onChange={() => onToggle(!enabled)}
-          className={styles.checkbox}
           disabled={readOnly}
         />
         <Tooltip placement="top" content={tooltipText}>
