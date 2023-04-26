@@ -92,6 +92,9 @@ type Props = {
       certificateConfigured: boolean;
       onCertificateChange: (certificate: string) => void;
       onCertificateReset: () => void;
+      tooltips?: {
+        certificateLabel?: string;
+      };
     };
     TLSClientAuth: {
       enabled: boolean;
@@ -104,6 +107,11 @@ type Props = {
       onClientKeyChange: (clientKey: string) => void;
       onClientCertificateReset: () => void;
       onClientKeyReset: () => void;
+      tooltips?: {
+        serverNameLabel?: string;
+        certificateLabel?: string;
+        keyLabel?: string;
+      };
     };
     skipTLSVerification: {
       enabled: boolean;
@@ -114,8 +122,11 @@ type Props = {
   // Data and callback for rendering the custom headers section
   customHeaders?: {
     headers: Header[];
-    onChange: (headers: Header[]) => void;
+    onChange: (headers: HeaderWithValue[]) => void;
   };
+
+  // In read-only mode all inputs/buttons will be disabled
+  readOnly: boolean;
 };
 
 // Default auth methods
@@ -133,8 +144,10 @@ type CustomMethodId = `custom-${string}`;
 type Header = {
   name: string;
   configured: boolean;
-  value?: string;
 };
+
+// Used in `customHeaders` Props field in `onChange` callback
+type HeaderWithValue = Header & { value: string };
 ```
 
 If `TLS` is not passed, the TLS settings section will not be rendered.
