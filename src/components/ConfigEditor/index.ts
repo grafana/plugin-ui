@@ -1,3 +1,3 @@
 export { InlineLabel } from "./InlineLabel";
 export { DataSourceDescription } from "./DataSourceDescription";
-export { ConfigSection } from "./ConfigSection";
+export { ConfigSection, ConfigSubSection } from "./ConfigSections";

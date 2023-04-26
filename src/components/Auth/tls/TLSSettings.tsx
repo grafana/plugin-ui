@@ -13,7 +13,7 @@ import {
   SkipTLSVerification,
   Props as SkipTLSVerificationProps,
 } from "./SkipTLSVerification";
-import { ConfigSection } from "../../ConfigEditor";
+import { ConfigSubSection } from "../../ConfigEditor";
 
 export type Props = {
   selfSignedCertificate: Omit<SelfSignedCertificateProps, "readOnly">;
@@ -37,15 +37,14 @@ export const TLSSettings: React.FC<Props> = ({
   };
 
   return (
-    <ConfigSection
+    <ConfigSubSection
       className={styles.container}
       title="TLS settings"
       description="Additional security measures that can be applied on top of authentication"
-      kind="sub-section"
     >
       <SelfSignedCertificate {...selfSignedCertificate} readOnly={readOnly} />
       <TLSClientAuthComponent {...TLSClientAuth} readOnly={readOnly} />
       <SkipTLSVerification {...skipTLSVerification} readOnly={readOnly} />
-    </ConfigSection>
+    </ConfigSubSection>
   );
 };

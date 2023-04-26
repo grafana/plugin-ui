@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { css } from "@emotion/css";
 import { Button, useTheme2 } from "@grafana/ui";
 import { CustomHeader } from "./CustomHeader";
-import { ConfigSection } from "../../ConfigEditor";
+import { ConfigSubSection } from "../../ConfigEditor";
 import type { Header, HeaderWithValue, LocalHeader } from "../types";
 
 export type Props = {
@@ -68,12 +68,11 @@ export const CustomHeaders: React.FC<Props> = ({
 
   return (
     <div className={styles.container}>
-      <ConfigSection
+      <ConfigSubSection
         title="HTTP headers"
         description="Pass along additional context and metadata about the request/response"
         isCollapsible
         isOpen={headers.length > 0}
-        kind="sub-section"
       >
         <div>
           {headers.map((header) => (
@@ -98,7 +97,7 @@ export const CustomHeaders: React.FC<Props> = ({
             {headers.length === 0 ? "Add header" : "Add another header"}
           </Button>
         </div>
-      </ConfigSection>
+      </ConfigSubSection>
     </div>
   );
 };

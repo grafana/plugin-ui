@@ -3,7 +3,7 @@ import { css } from "@emotion/css";
 import { useTheme2, Select } from "@grafana/ui";
 import { SelectableValue } from "@grafana/data";
 import { BasicAuth, Props as BasicAuthProps } from "./BasicAuth";
-import { ConfigSection } from "../../ConfigEditor";
+import { ConfigSubSection } from "../../ConfigEditor";
 import { AuthMethod, CustomMethod, CustomMethodId } from "../types";
 
 const defaultOptions: Record<AuthMethod, SelectableValue<AuthMethod>> = {
@@ -133,7 +133,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
   };
 
   return (
-    <ConfigSection title={title} description={description} kind="sub-section">
+    <ConfigSubSection title={title} description={description}>
       <div className={styles.authMethods}>
         {!isSingleMethodMode && (
           <Select
@@ -152,6 +152,6 @@ export const AuthMethodSettings: React.FC<Props> = ({
           </div>
         )}
       </div>
-    </ConfigSection>
+    </ConfigSubSection>
   );
 };

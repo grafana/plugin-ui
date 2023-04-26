@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { css } from "@emotion/css";
 import { useTheme2, IconButton, IconName } from "@grafana/ui";
 
-type Props = {
+export type Props = {
   title: string;
-  description: string;
+  description?: string;
   isCollapsible?: boolean;
   isOpen?: boolean;
   kind?: "section" | "sub-section";
   className?: string;
 };
 
-export const ConfigSection: React.FC<Props> = ({
+export const GenericConfigSection: React.FC<Props> = ({
   children,
   title,
   description,
@@ -23,6 +23,10 @@ export const ConfigSection: React.FC<Props> = ({
   const { colors, typography } = useTheme2();
   const [isOpen, setIsOpen] = useState(isCollapsible ? isInitiallyOpen : true);
   const iconName: IconName = isOpen ? "angle-up" : "angle-down";
+
+  const collapsibleButtonAriaLabel = `${
+    isOpen ? "Collapse" : "Expand"
+  } section "${title}"`;
 
   const styles = {
     header: css({
@@ -53,10 +57,12 @@ export const ConfigSection: React.FC<Props> = ({
             name={iconName}
             onClick={() => setIsOpen(!isOpen)}
             type="button"
+            size="xl"
+            aria-label={collapsibleButtonAriaLabel}
           />
         )}
       </div>
-      <p className={styles.descriptionText}>{description}</p>
+      {description && <p className={styles.descriptionText}>{description}</p>}
       {isOpen && <div>{children}</div>}
     </div>
   );
