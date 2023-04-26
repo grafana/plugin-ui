@@ -52,10 +52,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
 }) => {
   const [authMethodChanged, setAuthMethodChanged] = useState(false);
   const { colors, spacing } = useTheme2();
-
-  // When only one method should be visible component will look slightly
-  // different as we don't need to render Select.
-  const isSingleMethodMode = visibleMethods.length === 1;
+  const hasSelect = visibleMethods.length > 1;
 
   const preparedOptions = useMemo(() => {
     const customOptions =
@@ -82,7 +79,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
       .filter((method) => Boolean(allOptions[method]))
       .map((method) => {
         const option = allOptions[method];
-        if (method === mostCommonMethod && !isSingleMethodMode) {
+        if (method === mostCommonMethod && hasSelect) {
           return {
             ...option,
             label: `${option.label} (most common)`,
@@ -93,7 +90,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
   }, [visibleMethods, customMethods, mostCommonMethod]);
 
   let selected = selectedMethod;
-  if (isSingleMethodMode) {
+  if (!hasSelect) {
     selected = visibleMethods[0];
   } else if (
     selectedMethod === AuthMethod.NoAuth &&
@@ -111,18 +108,18 @@ export const AuthMethodSettings: React.FC<Props> = ({
       customMethods?.find((m) => m.id === selected)?.component ?? null;
   }
 
-  const title = isSingleMethodMode
-    ? preparedOptions[0].label ?? ""
-    : "Authentication methods";
+  const title = hasSelect
+    ? "Authentication methods"
+    : preparedOptions[0].label ?? "";
 
-  const description = isSingleMethodMode
-    ? preparedOptions[0].description ?? ""
-    : "Choose an authentication method to access the data source";
+  const description = hasSelect
+    ? "Choose an authentication method to access the data source"
+    : preparedOptions[0].description ?? "";
 
   const styles = {
     authMethods: css({
       marginTop: spacing(2.5),
-      ...(!isSingleMethodMode && {
+      ...(hasSelect && {
         padding: spacing(2),
         border: `1px solid ${colors.border.weak}`,
       }),
@@ -135,7 +132,7 @@ export const AuthMethodSettings: React.FC<Props> = ({
   return (
     <ConfigSubSection title={title} description={description}>
       <div className={styles.authMethods}>
-        {!isSingleMethodMode && (
+        {hasSelect && (
           <Select
             options={preparedOptions}
             value={selected}
