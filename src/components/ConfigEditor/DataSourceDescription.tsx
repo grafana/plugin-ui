@@ -14,24 +14,29 @@ export const DataSourceDescription: React.FC<Props> = ({
   hasRequiredFields = true,
 }) => {
   const theme = useTheme2();
+
   const styles = {
-    text: css`
-      font-size: 14px;
-      a {
-        color: ${theme.colors.primary.text};
-        text-decoration: underline;
-        :hover {
-          text-decoration: none;
-        }
-      }
-    `,
+    container: css({
+      margin: theme.spacing(4, 0),
+    }),
+    text: css({
+      ...theme.typography.body,
+      color: theme.colors.text.secondary,
+      a: css({
+        color: theme.colors.text.link,
+        textDecoration: "underline",
+        "&:hover": {
+          textDecoration: "none",
+        },
+      }),
+    }),
     asterisk: css`
       color: ${theme.colors.error.main};
     `,
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <p className={styles.text}>
         Before you can use the {dataSourceName} data source, you must configure
         it below or in the config file.
@@ -44,12 +49,12 @@ export const DataSourceDescription: React.FC<Props> = ({
       </p>
       {hasRequiredFields && (
         <p className={styles.text}>
-          <em>
+          <i>
             Fields marked in <span className={styles.asterisk}>*</span> are
             required
-          </em>
+          </i>
         </p>
       )}
-    </>
+    </div>
   );
 };
