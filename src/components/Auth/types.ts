@@ -19,7 +19,8 @@ export type CustomMethod = {
 export type Header = {
   name: string;
   configured: boolean;
-  value?: string;
 };
 
-export type LocalHeader = Header & { id: string };
+export type HeaderWithValue = Header & { value: string };
+
+export type LocalHeader = HeaderWithValue & { id: string };

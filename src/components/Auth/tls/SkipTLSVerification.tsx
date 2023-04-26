@@ -11,7 +11,7 @@ export const SkipTLSVerification: React.FC<Props> = ({ enabled, onToggle }) => {
     <TLSSettingsSection
       enabled={enabled}
       label="Skip TLS certificate validation"
-      tooltipText="Skipping TLS certificate validation is not recommended unless absolutely necessary or for testing."
+      tooltipText="Skipping TLS certificate validation is not recommended unless absolutely necessary or for testing"
       onToggle={(newEnabled) => onToggle(newEnabled)}
     />
   );

@@ -10,7 +10,7 @@ const defaultOptions: Record<AuthMethod, SelectableValue<AuthMethod>> = {
   [AuthMethod.BasicAuth]: {
     label: "Basic authentication",
     value: AuthMethod.BasicAuth,
-    description: "Authenticate with your data source username and password.",
+    description: "Authenticate with your data source username and password",
   },
   [AuthMethod.CrossSiteCredentials]: {
     label: "Enable cross-site access control requests",
@@ -22,7 +22,7 @@ const defaultOptions: Record<AuthMethod, SelectableValue<AuthMethod>> = {
     label: "Forward OAuth Identity",
     value: AuthMethod.OAuthForward,
     description:
-      "Forward the OAuth access token (and if available: the OIDC ID token) of the user querying to the data source.",
+      "Forward the OAuth access token (and if available: the OIDC ID token) of the user querying to the data source",
   },
   [AuthMethod.NoAuth]: {
     label: "No Authentication",

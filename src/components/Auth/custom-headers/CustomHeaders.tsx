@@ -3,11 +3,11 @@ import { css } from "@emotion/css";
 import { Button, useTheme2 } from "@grafana/ui";
 import { CustomHeader } from "./CustomHeader";
 import { ConfigSection } from "../../ConfigEditor";
-import type { Header, LocalHeader } from "../types";
+import type { Header, HeaderWithValue, LocalHeader } from "../types";
 
 export type Props = {
   headers: Header[];
-  onChange: (headers: Header[]) => void;
+  onChange: (headers: HeaderWithValue[]) => void;
 };
 
 export const CustomHeaders: React.FC<Props> = ({
@@ -20,6 +20,7 @@ export const CustomHeaders: React.FC<Props> = ({
     headersFromProps.map((header) => ({
       ...header,
       id: uniqueId(),
+      value: "",
     }))
   );
 

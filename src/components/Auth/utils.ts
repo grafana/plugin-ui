@@ -220,7 +220,6 @@ function getCustomHeaders(
       const index = key.slice(headerNamePrefix.length);
       return {
         name: config.jsonData[key],
-        value: config.secureJsonData?.[`${headerValuePrefix}${index}`] ?? "",
         configured:
           config.secureJsonFields[`${headerValuePrefix}${index}`] ?? false,
       };

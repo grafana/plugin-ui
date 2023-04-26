@@ -1,35 +1,24 @@
 import React from "react";
 import { css } from "@emotion/css";
 import { useTheme2 } from "@grafana/ui";
-import { SelfSignedCertificate } from "./SelfSignedCertificate";
-import { TLSClientAuth as TLSClientAuthComponent } from "./TLSClientAuth";
-import { SkipTLSVerification } from "./SkipTLSVerification";
+import {
+  SelfSignedCertificate,
+  Props as SelfSignedCertificateProps,
+} from "./SelfSignedCertificate";
+import {
+  TLSClientAuth as TLSClientAuthComponent,
+  Props as TLSClientAuthProps,
+} from "./TLSClientAuth";
+import {
+  SkipTLSVerification,
+  Props as SkipTLSVerificationProps,
+} from "./SkipTLSVerification";
 import { ConfigSection } from "../../ConfigEditor";
 
 export type Props = {
-  selfSignedCertificate: {
-    enabled: boolean;
-    onToggle: (enabled: boolean) => void;
-    certificateConfigured: boolean;
-    onCertificateChange: (certificate: string) => void;
-    onCertificateReset: () => void;
-  };
-  TLSClientAuth: {
-    enabled: boolean;
-    onToggle: (enabled: boolean) => void;
-    serverName: string;
-    clientCertificateConfigured: boolean;
-    clientKeyConfigured: boolean;
-    onServerNameChange: (serverName: string) => void;
-    onClientCertificateChange: (clientCertificate: string) => void;
-    onClientKeyChange: (clientKey: string) => void;
-    onClientCertificateReset: () => void;
-    onClientKeyReset: () => void;
-  };
-  skipTLSVerification: {
-    enabled: boolean;
-    onToggle: (enabled: boolean) => void;
-  };
+  selfSignedCertificate: SelfSignedCertificateProps;
+  TLSClientAuth: TLSClientAuthProps;
+  skipTLSVerification: SkipTLSVerificationProps;
 };
 
 export const TLSSettings: React.FC<Props> = ({

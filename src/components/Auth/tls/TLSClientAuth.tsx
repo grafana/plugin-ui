@@ -17,6 +17,11 @@ export type Props = {
   onClientKeyChange: (clientKey: string) => void;
   onClientCertificateReset: () => void;
   onClientKeyReset: () => void;
+  tooltips?: {
+    serverNameLabel?: string;
+    certificateLabel?: string;
+    keyLabel?: string;
+  };
 };
 
 export const TLSClientAuth: React.FC<Props> = ({
@@ -30,6 +35,7 @@ export const TLSClientAuth: React.FC<Props> = ({
   onClientKeyChange,
   onClientCertificateReset,
   onClientKeyReset,
+  tooltips,
 }) => {
   const commonStyles = useCommonStyles();
 
@@ -37,14 +43,17 @@ export const TLSClientAuth: React.FC<Props> = ({
     <TLSSettingsSection
       enabled={enabled}
       label="TLS Client Authentication"
-      tooltipText="Validate using TLS client authentication, in which the server authenticates the client."
+      tooltipText="Validate using TLS client authentication, in which the server authenticates the client"
       onToggle={(newEnabled) => onToggle(newEnabled)}
     >
       <InlineField
         label={
           <InlineLabel
             width={24}
-            tooltip="A Servername is used to verify the hostname on the returned certificate."
+            tooltip={
+              tooltips?.serverNameLabel ??
+              "A Servername is used to verify the hostname on the returned certificate"
+            }
             required
             htmlFor="client-auth-servername-input"
           >
@@ -66,7 +75,10 @@ export const TLSClientAuth: React.FC<Props> = ({
         label={
           <InlineLabel
             width={24}
-            tooltip="The client certificate can be generated from a Certificate Authority or be self-signed."
+            tooltip={
+              tooltips?.certificateLabel ??
+              "The client certificate can be generated from a Certificate Authority or be self-signed"
+            }
             required
             htmlFor="client-auth-client-certificate-input"
           >
@@ -93,7 +105,10 @@ export const TLSClientAuth: React.FC<Props> = ({
         label={
           <InlineLabel
             width={24}
-            tooltip="The client key can be generated from a Certificate Authority or be self-signed."
+            tooltip={
+              tooltips?.keyLabel ??
+              "The client key can be generated from a Certificate Authority or be self-signed"
+            }
             required
             htmlFor="client-auth-client-key-input"
           >
