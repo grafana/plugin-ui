@@ -92,6 +92,7 @@ type Props = {
       certificateConfigured: boolean;
       onCertificateChange: (certificate: string) => void;
       onCertificateReset: () => void;
+      // Field labels tooltips
       tooltips?: {
         certificateLabel?: string;
       };
@@ -107,6 +108,7 @@ type Props = {
       onClientKeyChange: (clientKey: string) => void;
       onClientCertificateReset: () => void;
       onClientKeyReset: () => void;
+      // Field labels tooltips
       tooltips?: {
         serverNameLabel?: string;
         certificateLabel?: string;
@@ -156,7 +158,7 @@ If `customHeaders` is not passed, custom headers section will not be rendered.
 
 ## Adding your own auth methods
 
-You can extend the component with your custom auth method(s) by passing it to the `Props` under `customMethods` array. Your custom methods will be rendered as a part of the methods list. Once user selects your custom method, the respective component will be rendered.
+You can extend the component with your custom auth method(s) by passing it to the `Props` under `customMethods` array. Your custom methods will be rendered as a part of the methods list, you don't need to specify it under `visibleMethods` unless you want to render only specific methods or change the methods order in the list. Once user selects your custom method, the respective component will be rendered.
 
 `customMethods` is an array of the following objects:
 

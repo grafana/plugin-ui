@@ -44,48 +44,15 @@ function getOnAuthMethodSelectHandler(
   onChange: onChangeHandler
 ): (method: AuthMethod | CustomMethodId) => void {
   return (method: AuthMethod | CustomMethodId) => {
-    if (method === AuthMethod.BasicAuth) {
-      onChange({
-        ...config,
-        basicAuth: true,
-        withCredentials: false,
-        jsonData: {
-          ...config.jsonData,
-          oauthPassThru: false,
-        },
-      });
-    } else if (method === AuthMethod.CrossSiteCredentials) {
-      onChange({
-        ...config,
-        basicAuth: false,
-        withCredentials: true,
-        jsonData: {
-          ...config.jsonData,
-          oauthPassThru: false,
-        },
-      });
-    } else if (method === AuthMethod.OAuthForward) {
-      onChange({
-        ...config,
-        basicAuth: false,
-        withCredentials: false,
-        jsonData: {
-          ...config.jsonData,
-          oauthPassThru: true,
-        },
-      });
-    } else {
-      // Applies for NoAuth or some custom method
-      onChange({
-        ...config,
-        basicAuth: false,
-        withCredentials: false,
-        jsonData: {
-          ...config.jsonData,
-          oauthPassThru: false,
-        },
-      });
-    }
+    onChange({
+      ...config,
+      basicAuth: method === AuthMethod.BasicAuth,
+      withCredentials: method === AuthMethod.CrossSiteCredentials,
+      jsonData: {
+        ...config.jsonData,
+        oauthPassThru: method === AuthMethod.OAuthForward,
+      },
+    });
   };
 }
 
