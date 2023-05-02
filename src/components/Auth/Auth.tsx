@@ -26,7 +26,7 @@ export type Props = {
 export const Auth: React.FC<Props> = ({
   selectedMethod,
   mostCommonMethod,
-  visibleMethods: visibleMethodsFromProps,
+  visibleMethods,
   customMethods,
   onAuthMethodSelect,
   basicAuth,
@@ -35,16 +35,6 @@ export const Auth: React.FC<Props> = ({
   readOnly = false,
 }) => {
   const { spacing } = useTheme2();
-
-  const visibleMethods: (
-    | AuthMethod
-    | CustomMethodId
-  )[] = visibleMethodsFromProps ?? [
-    AuthMethod.BasicAuth,
-    AuthMethod.OAuthForward,
-    AuthMethod.NoAuth,
-    ...(customMethods?.map((m) => m.id) ?? []),
-  ];
 
   const styles = {
     container: css({

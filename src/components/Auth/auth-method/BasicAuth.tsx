@@ -42,12 +42,12 @@ export const BasicAuth: React.FC<Props> = ({
             tooltip={userTooltip}
             required
             htmlFor="basic-auth-user-input"
+            interactive
           >
             User
           </InlineLabel>
         }
         grow
-        interactive
         disabled={readOnly}
       >
         <Input
@@ -70,12 +70,12 @@ export const BasicAuth: React.FC<Props> = ({
             tooltip={passwordTooltip}
             required
             htmlFor="basic-auth-password-input"
+            interactive
           >
             Password
           </InlineLabel>
         }
         grow
-        interactive
         disabled={readOnly}
       >
         <SecretInput

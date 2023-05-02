@@ -59,6 +59,7 @@ export const TLSClientAuth: React.FC<Props> = ({
             }
             required
             htmlFor="client-auth-servername-input"
+            interactive
           >
             ServerName
           </InlineLabel>
@@ -85,6 +86,7 @@ export const TLSClientAuth: React.FC<Props> = ({
             }
             required
             htmlFor="client-auth-client-certificate-input"
+            interactive
           >
             Client Certificate
           </InlineLabel>
@@ -116,6 +118,7 @@ export const TLSClientAuth: React.FC<Props> = ({
             }
             required
             htmlFor="client-auth-client-key-input"
+            interactive
           >
             Client Key
           </InlineLabel>

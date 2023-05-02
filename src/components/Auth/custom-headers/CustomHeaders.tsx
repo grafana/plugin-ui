@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { css } from "@emotion/css";
 import { Button, useTheme2 } from "@grafana/ui";
 import { CustomHeader } from "./CustomHeader";
@@ -26,6 +26,26 @@ export const CustomHeaders: React.FC<Props> = ({
     }))
   );
 
+  useEffect(() => {
+    let changed = false;
+    const newHeaders = headers.map<LocalHeader>((header) => {
+      const configured = headersFromProps.find((h) => h.name === header.name)
+        ?.configured;
+      if (
+        typeof configured !== "undefined" &&
+        header.configured != configured
+      ) {
+        changed = true;
+        return { ...header, configured };
+      }
+      return header;
+    });
+
+    if (changed) {
+      setHeaders(newHeaders);
+    }
+  }, [headersFromProps]);
+
   const onHeaderAdd = () => {
     setHeaders([
       ...headers,
@@ -45,7 +65,13 @@ export const CustomHeaders: React.FC<Props> = ({
     const newHeaders = [...headers];
     newHeaders.splice(index, 1);
     setHeaders(newHeaders);
-    onChange(newHeaders);
+    onChange(
+      newHeaders.map(({ name, value, configured }) => ({
+        name,
+        value,
+        configured,
+      }))
+    );
   };
 
   const onBlur = () =>

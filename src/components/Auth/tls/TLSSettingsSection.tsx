@@ -2,7 +2,7 @@ import React from "react";
 import { css } from "@emotion/css";
 import { Checkbox, Tooltip, Icon, useTheme2 } from "@grafana/ui";
 
-type Props = {
+export type Props = {
   enabled: boolean;
   label: string;
   tooltipText: string;
@@ -46,7 +46,7 @@ export const TLSSettingsSection: React.FC<Props> = ({
           onChange={() => onToggle(!enabled)}
           disabled={readOnly}
         />
-        <Tooltip placement="top" content={tooltipText}>
+        <Tooltip placement="top" content={tooltipText} interactive>
           <Icon name="info-circle" className={styles.infoIcon} size="sm" />
         </Tooltip>
       </div>

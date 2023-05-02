@@ -26,7 +26,9 @@ export function convertLegacyAuthProps({
   return props;
 }
 
-function getSelectedMethod(config: DataSourceSettings<any, any>): AuthMethod {
+export function getSelectedMethod(
+  config: DataSourceSettings<any, any>
+): AuthMethod {
   if (config.basicAuth) {
     return AuthMethod.BasicAuth;
   }
@@ -39,7 +41,7 @@ function getSelectedMethod(config: DataSourceSettings<any, any>): AuthMethod {
   return AuthMethod.NoAuth;
 }
 
-function getOnAuthMethodSelectHandler(
+export function getOnAuthMethodSelectHandler(
   config: DataSourceSettings<any, any>,
   onChange: onChangeHandler
 ): (method: AuthMethod | CustomMethodId) => void {
@@ -56,7 +58,7 @@ function getOnAuthMethodSelectHandler(
   };
 }
 
-function getBasicAuthProps(
+export function getBasicAuthProps(
   config: DataSourceSettings<any, any>,
   onChange: (config: DataSourceSettings<any, any>) => void
 ): AuthProps["basicAuth"] {
@@ -85,7 +87,7 @@ function getBasicAuthProps(
   };
 }
 
-function getTLSProps(
+export function getTLSProps(
   config: DataSourceSettings<any, any>,
   onChange: onChangeHandler
 ): AuthProps["TLS"] {
@@ -177,7 +179,7 @@ function getTLSProps(
   };
 }
 
-function getCustomHeaders(
+export function getCustomHeaders(
   config: DataSourceSettings<any, any>,
   onChange: onChangeHandler
 ): AuthProps["customHeaders"] {

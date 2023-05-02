@@ -31,10 +31,10 @@ const defaultOptions: Record<AuthMethod, SelectableValue<AuthMethod>> = {
   },
 };
 
-type Props = {
+export type Props = {
   selectedMethod: AuthMethod | CustomMethodId;
   mostCommonMethod?: AuthMethod | CustomMethodId;
-  visibleMethods: (AuthMethod | CustomMethodId)[];
+  visibleMethods?: (AuthMethod | CustomMethodId)[];
   customMethods?: CustomMethod[];
   onAuthMethodSelect: (authType: AuthMethod | CustomMethodId) => void;
   basicAuth?: Omit<BasicAuthProps, "readOnly">;
@@ -44,7 +44,7 @@ type Props = {
 export const AuthMethodSettings: React.FC<Props> = ({
   selectedMethod,
   mostCommonMethod,
-  visibleMethods,
+  visibleMethods: visibleMethodsFromProps,
   customMethods,
   onAuthMethodSelect,
   basicAuth,
@@ -52,6 +52,15 @@ export const AuthMethodSettings: React.FC<Props> = ({
 }) => {
   const [authMethodChanged, setAuthMethodChanged] = useState(false);
   const { colors, spacing } = useTheme2();
+  const visibleMethods: (
+    | AuthMethod
+    | CustomMethodId
+  )[] = visibleMethodsFromProps ?? [
+    AuthMethod.BasicAuth,
+    AuthMethod.OAuthForward,
+    AuthMethod.NoAuth,
+    ...(customMethods?.map((m) => m.id) ?? []),
+  ];
   const hasSelect = visibleMethods.length > 1;
 
   const preparedOptions = useMemo(() => {

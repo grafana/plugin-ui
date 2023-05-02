@@ -11,7 +11,7 @@ import { SecretInput } from "../../../unreleasedComponents/SecretInput";
 import type { LocalHeader } from "../types";
 import { useCommonStyles } from "../styles";
 
-type Props = {
+export type Props = {
   header: LocalHeader;
   onChange: (header: LocalHeader) => void;
   onBlur: () => void;

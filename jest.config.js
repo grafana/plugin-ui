@@ -13,6 +13,7 @@ module.exports = {
   moduleNameMapper: {
     '^react($|/.+)': '<rootDir>/node_modules/react$1',
     '\\.css': '<rootDir>/src/test/mocks/style.ts',
+    'react-inlinesvg': '<rootDir>/src/test/mocks/react-inlinesvg.tsx',
   },
   watchPathIgnorePatterns: ['<rootDir>/node_modules/'],
 };

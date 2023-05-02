@@ -46,6 +46,7 @@ export const SelfSignedCertificate: React.FC<Props> = ({
             }
             required
             htmlFor="self-signed-certificate-input"
+            interactive
           >
             CA Certificate
           </InlineLabel>
