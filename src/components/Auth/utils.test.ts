@@ -5,10 +5,86 @@ import {
   getBasicAuthProps,
   getTLSProps,
   getCustomHeaders,
+  convertLegacyAuthProps,
 } from "./utils";
+import { Props as AuthProps } from "./Auth";
 import { AuthMethod } from "./types";
 
 describe("utils", () => {
+  describe("convertLegacyAuthProps", () => {
+    it("should convert legacy props to new props correctly", () => {
+      const config = ({
+        basicAuth: true,
+        basicAuthUser: "test-user",
+        jsonData: {
+          tlsAuthWithCACert: false,
+          tlsAuth: false,
+          serverName: "test.server.name",
+          tlsSkipVerify: true,
+          httpHeaderName1: "X-Name1",
+          httpHeaderName2: "X-Name2",
+        },
+        secureJsonFields: {
+          tlsCACert: false,
+          tlsClientCert: false,
+          tlsClientKey: false,
+          basicAuthPassword: false,
+          httpHeaderValue1: false,
+          httpHeaderValue2: true,
+        },
+        readOnly: true,
+      } as unknown) as DataSourceSettings<any, any>;
+      const onChange = jest.fn();
+      const newProps = convertLegacyAuthProps({ config, onChange });
+      const expected: AuthProps = {
+        selectedMethod: AuthMethod.BasicAuth,
+        onAuthMethodSelect: expect.any(Function),
+        basicAuth: {
+          user: "test-user",
+          passwordConfigured: false,
+          onUserChange: expect.any(Function),
+          onPasswordChange: expect.any(Function),
+          onPasswordReset: expect.any(Function),
+        },
+        TLS: {
+          selfSignedCertificate: {
+            enabled: false,
+            onToggle: expect.any(Function),
+            certificateConfigured: false,
+            onCertificateChange: expect.any(Function),
+            onCertificateReset: expect.any(Function),
+          },
+          TLSClientAuth: {
+            enabled: false,
+            onToggle: expect.any(Function),
+            serverName: "test.server.name",
+            clientCertificateConfigured: false,
+            clientKeyConfigured: false,
+            onServerNameChange: expect.any(Function),
+            onClientCertificateChange: expect.any(Function),
+            onClientCertificateReset: expect.any(Function),
+            onClientKeyChange: expect.any(Function),
+            onClientKeyReset: expect.any(Function),
+          },
+          skipTLSVerification: {
+            enabled: true,
+            onToggle: expect.any(Function),
+          },
+        },
+        customHeaders: {
+          headers: [
+            { name: "X-Name1", configured: false },
+            { name: "X-Name2", configured: true },
+          ],
+          onChange: expect.any(Function),
+        },
+        readOnly: true,
+      };
+
+      expect(newProps).toStrictEqual(expected);
+    });
+  });
+
   describe("getSelectedMethod", () => {
     it("should return basic auth selected method", () => {
       const res = getSelectedMethod({ basicAuth: true } as DataSourceSettings);
