@@ -1,6 +1,5 @@
 import React from "react";
 import { css } from "@emotion/css";
-import { useTheme2 } from "@grafana/ui";
 import { AuthMethod, CustomMethod, CustomMethodId } from "./types";
 import { AuthMethodSettings } from "./auth-method/AuthMethodSettings";
 import { TLSSettings, Props as TLSSettingsProps } from "./tls/TLSSettings";
@@ -34,11 +33,8 @@ export const Auth: React.FC<Props> = ({
   customHeaders,
   readOnly = false,
 }) => {
-  const { spacing } = useTheme2();
-
   const styles = {
     container: css({
-      margin: spacing(2, 0),
       maxWidth: 578,
     }),
   };
