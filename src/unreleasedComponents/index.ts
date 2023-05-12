@@ -1,2 +1,3 @@
 // noop for when there are no components here
-export {};
+export { SecretInput } from "./SecretInput";
+export { SecretTextArea } from "./SecretTextarea";
