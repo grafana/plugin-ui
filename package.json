@@ -21,6 +21,7 @@
     "@grafana/data": "^8.4.7",
     "@grafana/experimental": "^0.0.2-canary.39",
     "@grafana/runtime": "^8.4.7",
+    "@grafana/e2e": "^8.4.7",
     "@grafana/tsconfig": "1.2.0-rc1",
     "@grafana/ui": "^8.4.7",
     "@types/chance": "^1.1.0",
