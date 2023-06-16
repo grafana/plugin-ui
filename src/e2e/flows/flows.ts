@@ -5,7 +5,7 @@ export const selectListOption = (container: Cypress.Chainable<JQuery<HTMLElement
   e2e.components.Select.option().should('be.visible').contains(value).click();
 };
 
-const openDashboardSettings = (sectionName = 'Variables') => {
+export const openDashboardSettings = (sectionName = 'Variables') => {
   e2e.components.PageToolbar.item('Dashboard settings').click();
   cy.get('.dashboard-settings__aside').within(() => {
     cy.contains(sectionName).should('be.visible').click();
