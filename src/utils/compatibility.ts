@@ -2,7 +2,8 @@ import { config } from "@grafana/runtime";
 import { gte } from "semver";
 
 export enum CompatibilityFeature {
-  HEALTH_DIAGNOSTICS_ERRORS
+  HEALTH_DIAGNOSTICS_ERRORS,
+  SECURE_SOCKS_PROXY
 }
 
 /**
@@ -19,6 +20,8 @@ export enum CompatibilityFeature {
   switch (feature) {
     case CompatibilityFeature.HEALTH_DIAGNOSTICS_ERRORS:
       return gte(version, "8.0.0");
+    case CompatibilityFeature.SECURE_SOCKS_PROXY:
+      return gte(version, "10.0.0");
     default:
       return false;
   }
