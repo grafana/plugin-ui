@@ -40,7 +40,7 @@ export const SecureSocksProxyToggle: React.FC<Props> = ({
                 <>
                   Proxy the datasource connection through the secure socks proxy to a different network. To learn more about configuring the datasource connection proxy, {' '}
                   <a
-                    href="https://grafana.com/docs/grafana/next/setup-grafana/configure-grafana/proxy/"
+                    href="https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/proxy/"
                     target="_blank"
                     rel="noopener noreferrer"
                   > 
