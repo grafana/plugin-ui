@@ -1,5 +1,6 @@
 import { e2e } from '@grafana/e2e';
 import { selectors } from '../selectors';
+import { TimeRangeConfig } from '@grafana/e2e/flows/setTimeRange';
 
 const e2eSelectors = e2e.getSelectors(selectors.components);
 
@@ -22,5 +23,31 @@ export const fillQuery = (query: string, overrideFormat?: 'Table' | 'Time Series
     e2e().wait(3000);
 };
 
+export interface QueryOpts {
+    name: string;
+    query: string;
+    title?: string;
+    timeRange: TimeRangeConfig;
+    viewport?: Cypress.ViewportPreset;
+}
 
+export const runQuery = (opts: QueryOpts, pre?: () => void, post?: () => void) => {
+    if (pre !== undefined) {
+        pre();
+    }
+    if (opts.viewport !== undefined) {
+        cy.viewport(opts.viewport);
+    }
+    e2e.flows.login();
+    e2e.flows.addDashboard({timeRange: opts.timeRange});
+    e2e.flows.addPanel({
+      dataSourceName: `E2E Datasource for ${opts.name}`,
+      panelTitle: opts.title || 'Query',
+      saveDashboard: false,
+      queriesForm: () => fillQuery(opts.query),
+    });
+    if (post !== undefined) {
+        post();
+    }
+}
   
