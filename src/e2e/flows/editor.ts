@@ -1,6 +1,5 @@
 import { e2e } from '@grafana/e2e';
 import { selectors } from '../selectors';
-import { TimeRangeConfig } from '@grafana/e2e/flows/setTimeRange';
 
 const e2eSelectors = e2e.getSelectors(selectors.components);
 
@@ -27,7 +26,11 @@ export interface QueryOpts {
     name: string;
     query: string;
     title?: string;
-    timeRange: TimeRangeConfig;
+    timeRange: {
+        from: string;
+        to: string;
+        zone?: string;
+    };
     viewport?: Cypress.ViewportPreset;
 }
 

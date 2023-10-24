@@ -1,13 +1,12 @@
 import { Input } from '@grafana/ui';
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { DatePicker } from '../DatePicker/DatePicker';
-import { Props as InputProps } from '@grafana/ui/components/Input/Input';
 import './style.css';
 
 export const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
 export interface DatePickerWithInputProps
-  extends Omit<InputProps, 'ref' | 'value' | 'onChange'> {
+  extends Omit<ComponentProps<typeof Input>, 'ref' | 'value' | 'onChange'> {
   value?: Date;
   onChange: (value: Date) => void;
 }
