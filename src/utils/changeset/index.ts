@@ -6,7 +6,7 @@ import { join } from "node:path";
 import prompts from "prompts";
 import getChangesets from "@changesets/read";
 import writeChangesets from "@changesets/write";
-import { glob } from "glob";
+import { glob } from "fast-glob";
 
 const changeTypes = {
   feature: { icon: "🚀", prefix: "Feature" },
@@ -98,7 +98,7 @@ async function updateChangelogFiles() {
   ) as { workspaces?: string[] };
 
   const packageRoots: string[] = packageJson.workspaces
-    ? await glob(packageJson.workspaces)
+    ? await glob(packageJson.workspaces, { onlyDirectories: true })
     : [dir];
 
   for (const rootDir of packageRoots) {
