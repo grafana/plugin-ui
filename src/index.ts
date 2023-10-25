@@ -9,4 +9,3 @@ export * from './test/mocks';
 export * from './utils';
 export { SqlDatasource } from './datasource/SqlDatasource';
 export { selectOption, generateOptions } from './8x';
-export * from './e2e';
