@@ -85,7 +85,7 @@ export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range 
         queryRowFilter={queryRowFilter}
         query={queryWithDefaults}
         isQueryRunnable={isQueryRunnable}
-        labels={datasource.getDB(datasource.id).labels}
+        labels={datasource.getDB(datasource.id)?.labels}
       />
 
       <Space v={0.5} />

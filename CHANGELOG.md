@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.6.2 - 2024-02-02
+
+- ⚙️ **Chore**: better type checks for DB.labels
+
 ## v0.6.1 - 2024-01-09
 
 - 🐛 **Fix**: moving user_event library from dev-dependencies to dependencies
