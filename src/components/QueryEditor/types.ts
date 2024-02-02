@@ -145,7 +145,7 @@ export interface DB {
   getSqlCompletionProvider: () => LanguageCompletionProvider;
   toRawSql?: (query: SQLQuery) => string;
   functions: () => Promise<Aggregate[]>;
-  labels: Map<string, string>;
+  labels?: Map<"dataset", string>;
 }
 
 export interface QueryEditorProps {
