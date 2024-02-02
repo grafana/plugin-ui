@@ -1,6 +1,6 @@
 {
   "name": "@grafana/plugin-ui",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "repository": "git@github.com:grafana/plugin-ui.git",
   "author": "Grafana Labs",
   "main": "dist/index.js",
