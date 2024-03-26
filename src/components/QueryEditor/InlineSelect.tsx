@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { GroupBase } from 'react-select';
 
 import { GrafanaTheme2 } from '@grafana/data';
-import { SelectCommonProps, SelectContainerProps, stylesFactory, useTheme2,  SelectContainer as BaseSelectContainer } from '@grafana/ui';
+import { Select, SelectCommonProps, SelectContainerProps, stylesFactory, useTheme2,  SelectContainer as BaseSelectContainer } from '@grafana/ui';
 
 interface InlineSelectProps<T> extends SelectCommonProps<T> {
   label?: string;
@@ -27,7 +27,6 @@ export function InlineSelect<T>({ label: labelProp, ...props }: InlineSelectProp
           {':'}&nbsp;
         </label>
       )}
-      {/* @ts-ignore */}
       <Select openMenuOnFocus inputId={id} {...props} components={components} />
     </div>
   );
