@@ -21,6 +21,8 @@ import { defaultToRawSql } from './utils/sql.utils';
 
 interface QueryHeaderProps {
   db: DB;
+  defaultDataset: string;
+  disableDatasets: boolean;
   query: QueryWithDefaults;
   onChange: (query: SQLQuery) => void;
   onRunQuery: () => void;
@@ -37,6 +39,8 @@ const editorModes = [
 
 export function QueryHeader({
   db,
+  defaultDataset,
+  disableDatasets,
   query,
   queryRowFilter,
   onChange,
@@ -211,17 +215,21 @@ export function QueryHeader({
           <Space v={0.5} />
 
           <EditorRow>
-            <EditorField label={labels.get('dataset') || 'Dataset'} width={25}>
-              <DatasetSelector
-                db={db}
-                value={query.dataset === undefined ? null : query.dataset}
-                onChange={onDatasetChange}
-              />
-            </EditorField>
+            {disableDatasets === false && (
+              <EditorField label={labels.get('dataset') || 'Dataset'} width={25}>
+                <DatasetSelector
+                  db={db}
+                  dataset={defaultDataset}
+                  value={query.dataset === undefined ? null : query.dataset}
+                  onChange={onDatasetChange}
+                />
+              </EditorField>
+            )}
 
             <EditorField label="Table" width={25}>
               <TableSelector
                 db={db}
+                dataset={query.dataset || defaultDataset}
                 query={query}
                 value={query.table === undefined ? null : query.table}
                 onChange={onTableChange}
