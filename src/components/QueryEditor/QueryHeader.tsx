@@ -22,7 +22,7 @@ import { defaultToRawSql } from './utils/sql.utils';
 interface QueryHeaderProps {
   db: DB;
   defaultDataset: string;
-  disableDatasets: boolean;
+  enableDatasets: boolean;
   query: QueryWithDefaults;
   onChange: (query: SQLQuery) => void;
   onRunQuery: () => void;
@@ -40,7 +40,7 @@ const editorModes = [
 export function QueryHeader({
   db,
   defaultDataset,
-  disableDatasets,
+  enableDatasets,
   query,
   queryRowFilter,
   onChange,
@@ -215,7 +215,7 @@ export function QueryHeader({
           <Space v={0.5} />
 
           <EditorRow>
-            {disableDatasets === false && (
+            {enableDatasets === true && (
               <EditorField label={labels.get('dataset') || 'Dataset'} width={25}>
                 <DatasetSelector
                   db={db}

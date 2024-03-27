@@ -15,10 +15,10 @@ import { SqlDatasource } from '../../datasource/SqlDatasource';
 import { Space } from './Space';
 
 interface Props extends QueryEditorProps<SqlDatasource, SQLQuery, SQLOptions> {
-  disableDatasets?: boolean;
+  enableDatasets?: boolean;
 }
 
-export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range, disableDatasets = false }: Props) {
+export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range, enableDatasets = true }: Props) {
   const [isQueryRunnable, setIsQueryRunnable] = useState(true);
   const db = datasource.getDB();
   const defaultDataset = datasource.dataset;
@@ -84,7 +84,7 @@ export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range,
       <QueryHeader
         db={db}
         defaultDataset={defaultDataset || ''}
-        disableDatasets={disableDatasets}
+        enableDatasets={enableDatasets}
         onChange={onQueryHeaderChange}
         onRunQuery={onRunQuery}
         onQueryRowChange={setQueryRowFilter}
