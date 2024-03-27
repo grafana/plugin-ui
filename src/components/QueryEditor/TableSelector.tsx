@@ -8,19 +8,21 @@ import { QueryWithDefaults } from './defaults';
 
 interface TableSelectorProps extends ResourceSelectorProps {
   db: DB;
+  dataset: string;
   value: string | null;
   query: QueryWithDefaults;
   onChange: (v: SelectableValue) => void;
 }
 
-export const TableSelector: React.FC<TableSelectorProps> = ({ db, query, value, className, onChange }) => {
+export const TableSelector: React.FC<TableSelectorProps> = ({ db, dataset, value, className, onChange }) => {
   const state = useAsync(async () => {
-    if (!query.dataset) {
+    if (!dataset) {
       return [];
     }
-    const tables = await db.tables(query.dataset);
+
+    const tables = await db.tables(dataset)
     return tables.map(toOption);
-  }, [query.dataset]);
+  }, [dataset]);
 
   return (
     <Select
