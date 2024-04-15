@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.6.3 - 2024-04-15
+
+- ⚙️ **Chore**: allow datasets to be disabled in the sql query editor
+
 ## v0.6.2 - 2024-02-02
 
 - ⚙️ **Chore**: better type checks for DB.labels

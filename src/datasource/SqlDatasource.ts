@@ -54,6 +54,7 @@ export abstract class SqlDatasource extends DataSourceWithBackend<SQLQuery, SQLO
   name: string;
   interval: string;
   db: DB;
+  dataset?: string;
   annotations = {};
 
   constructor(

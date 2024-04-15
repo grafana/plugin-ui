@@ -8,6 +8,7 @@ import { DB, ResourceSelectorProps, toOption } from './types';
 
 interface DatasetSelectorProps extends ResourceSelectorProps {
   db: DB;
+  dataset: string;
   value: string | null;
   applyDefault?: boolean;
   disabled?: boolean;
@@ -16,6 +17,7 @@ interface DatasetSelectorProps extends ResourceSelectorProps {
 
 export const DatasetSelector: React.FC<DatasetSelectorProps> = ({
   db,
+  dataset,
   value,
   onChange,
   disabled,
@@ -23,6 +25,11 @@ export const DatasetSelector: React.FC<DatasetSelectorProps> = ({
   applyDefault,
 }) => {
   const state = useAsync(async () => {
+    if (dataset) {
+      onChange(toOption(dataset));
+      return [toOption(dataset)];
+    }
+
     const datasets = await db.datasets();
     return datasets.map(toOption);
   }, []);
