@@ -14,11 +14,9 @@ import { VisualEditor } from './visual-query-builder/VisualEditor';
 import { SqlDatasource } from '../../datasource/SqlDatasource';
 import { Space } from './Space';
 
-interface Props extends QueryEditorProps<SqlDatasource, SQLQuery, SQLOptions> {
-  enableDatasets?: boolean;
-}
+interface Props extends QueryEditorProps<SqlDatasource, SQLQuery, SQLOptions> {}
 
-export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range, enableDatasets = true }: Props) {
+export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range }: Props) {
   const [isQueryRunnable, setIsQueryRunnable] = useState(true);
   const db = datasource.getDB();
   const defaultDataset = datasource.dataset;
@@ -84,7 +82,7 @@ export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range,
       <QueryHeader
         db={db}
         defaultDataset={defaultDataset || ''}
-        enableDatasets={enableDatasets}
+        enableDatasets={db.disableDatasets === true ? false : true}
         onChange={onQueryHeaderChange}
         onRunQuery={onRunQuery}
         onQueryRowChange={setQueryRowFilter}

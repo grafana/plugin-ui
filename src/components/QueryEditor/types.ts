@@ -146,6 +146,7 @@ export interface DB {
   toRawSql?: (query: SQLQuery) => string;
   functions: () => Promise<Aggregate[]>;
   labels?: Map<"dataset", string>;
+  disableDatasets?: boolean;
 }
 
 export interface QueryEditorProps {
