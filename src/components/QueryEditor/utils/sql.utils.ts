@@ -9,7 +9,7 @@ import {
 } from '../expressions';
 import { SQLQuery, SQLExpression, DB } from '../types';
 
-export function getRawSqlFN(db: DB) {
+export function getRawSqlFn(db: DB) {
   if (db.toRawSql) {
     return db.toRawSql;
   }

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { DB, SQLExpression, SQLQuery } from '../types';
 
-import { getRawSqlFN } from './sql.utils';
+import { getRawSqlFn } from './sql.utils';
 
 interface UseSqlChange {
   db: DB;
@@ -13,7 +13,7 @@ interface UseSqlChange {
 export function useSqlChange({ query, onQueryChange, db }: UseSqlChange) {
   const onSqlChange = useCallback(
     (sql: SQLExpression) => {
-      const toRawSql = getRawSqlFN(db);
+      const toRawSql = getRawSqlFn(db);
       const rawSql = toRawSql({ sql, dataset: query.dataset, table: query.table, refId: query.refId });
       const newQuery: SQLQuery = { ...query, sql, rawSql };
       onQueryChange(newQuery);
