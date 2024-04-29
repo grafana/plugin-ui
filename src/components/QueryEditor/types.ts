@@ -1,22 +1,26 @@
-import { JsonTree } from 'react-awesome-query-builder';
+import { JsonTree } from "react-awesome-query-builder";
 
 import {
   DataFrame,
-  DataQuery,
   DataSourceJsonData,
   MetricFindValue,
   SelectableValue,
   TimeRange,
   toOption as toOptionFromData,
-} from '@grafana/data';
+} from "@grafana/data";
 
-import { QueryWithDefaults } from './defaults';
+import { DataQuery } from "@grafana/schema";
+
+import { QueryWithDefaults } from "./defaults";
 import {
   QueryEditorFunctionExpression,
   QueryEditorGroupByExpression,
   QueryEditorPropertyExpression,
-} from './expressions';
-import { CompletionItemKind, LanguageCompletionProvider } from '@grafana/experimental';
+} from "./expressions";
+import {
+  CompletionItemKind,
+  LanguageCompletionProvider,
+} from "@grafana/experimental";
 
 export interface SqlQueryForInterpolation {
   dataset?: string;
@@ -44,14 +48,16 @@ export interface SQLOptions extends SQLConnectionLimits, DataSourceJsonData {
   timeInterval: string;
 }
 
+// Match the Enums Expected in SqlUtil and SqlDS
+// https://github.com/grafana/grafana-plugin-sdk-go/blob/main/data/sqlutil/query.go#L18-L29
 export enum QueryFormat {
-  Timeseries = 'time_series',
-  Table = 'table',
+  Timeseries,
+  Table,
 }
 
 export enum EditorMode {
-  Builder = 'builder',
-  Code = 'code',
+  Builder = "builder",
+  Code = "code",
 }
 
 export interface SQLQuery extends DataQuery {
@@ -79,7 +85,7 @@ export interface SQLExpression {
   filters?: SQLFilters;
   groupBy?: QueryEditorGroupByExpression[];
   orderBy?: QueryEditorPropertyExpression;
-  orderByDirection?: 'ASC' | 'DESC';
+  orderByDirection?: "ASC" | "DESC";
   limit?: number;
   offset?: number;
 }
@@ -105,8 +111,8 @@ export interface QueryRowFilter {
 }
 
 export const QUERY_FORMAT_OPTIONS = [
-  { label: 'Time series', value: QueryFormat.Timeseries },
-  { label: 'Table', value: QueryFormat.Table },
+  { label: "Time series", value: QueryFormat.Timeseries },
+  { label: "Table", value: QueryFormat.Table },
 ];
 
 const backWardToOption = (value: string) => ({ label: value, value });
@@ -120,7 +126,13 @@ export interface ResourceSelectorProps {
 }
 // React Awesome Query builder field types.
 // These are responsible for rendering the correct UI for the field.
-export type RAQBFieldTypes = 'text' | 'number' | 'boolean' | 'datetime' | 'date' | 'time';
+export type RAQBFieldTypes =
+  | "text"
+  | "number"
+  | "boolean"
+  | "datetime"
+  | "date"
+  | "time";
 
 export interface SQLSelectableValue extends SelectableValue {
   type?: string;
@@ -138,10 +150,15 @@ export interface DB {
   datasets: () => Promise<string[]>;
   tables: (dataset?: string) => Promise<string[]>;
   fields: (query: SQLQuery, order?: boolean) => Promise<SQLSelectableValue[]>;
-  validateQuery: (query: SQLQuery, range?: TimeRange) => Promise<ValidationResults>;
+  validateQuery: (
+    query: SQLQuery,
+    range?: TimeRange
+  ) => Promise<ValidationResults>;
   dsID: () => number;
   dispose?: (dsID?: string) => void;
-  lookup: (path?: string) => Promise<Array<{ name: string; completion: string }>>;
+  lookup: (
+    path?: string
+  ) => Promise<Array<{ name: string; completion: string }>>;
   getSqlCompletionProvider: () => LanguageCompletionProvider;
   toRawSql?: (query: SQLQuery) => string;
   functions: () => Promise<Aggregate[]>;
