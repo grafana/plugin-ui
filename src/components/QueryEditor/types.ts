@@ -53,6 +53,9 @@ export interface SQLOptions extends SQLConnectionLimits, DataSourceJsonData {
 export enum QueryFormat {
   Timeseries,
   Table,
+  Logs,
+  Trace,
+  OptiuonMulti,
 }
 
 export enum EditorMode {
