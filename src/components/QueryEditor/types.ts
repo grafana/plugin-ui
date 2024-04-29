@@ -55,7 +55,7 @@ export enum QueryFormat {
   Table,
   Logs,
   Trace,
-  OptiuonMulti,
+  OptionMulti,
 }
 
 export enum EditorMode {
