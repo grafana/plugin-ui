@@ -1,35 +1,23 @@
-import React, { useCallback, useState } from "react";
-import { useCopyToClipboard } from "react-use";
+import React, { useCallback, useState } from 'react';
+import { useCopyToClipboard } from 'react-use';
 
-import { SelectableValue } from "@grafana/data";
+import { SelectableValue } from '@grafana/data';
 
-import { ConfirmModal } from "./ConfirmModal";
-import { DatasetSelector } from "./DatasetSelector";
-import { ErrorBoundary } from "./ErrorBoundary";
-import { TableSelector } from "./TableSelector";
-import {
-  InlineField,
-  Select,
-  InlineSwitch,
-  RadioButtonGroup,
-} from "@grafana/ui";
-import { QueryWithDefaults } from "./defaults";
-import { EditorField } from "./EditorField";
-import { EditorHeader } from "./EditorHeader";
-import { EditorRow } from "./EditorRow";
-import { FlexItem } from "./FlexItem";
-import { InlineSelect } from "./InlineSelect";
-import { Space } from "./Space";
-import { RunQueryButton } from "./RunQueryButton";
-import {
-  DB,
-  SQLQuery,
-  QueryRowFilter,
-  EditorMode,
-  QueryFormat,
-  QUERY_FORMAT_OPTIONS,
-} from "./types";
-import { defaultToRawSql } from "./utils/sql.utils";
+import { ConfirmModal } from './ConfirmModal';
+import { DatasetSelector } from './DatasetSelector';
+import { ErrorBoundary } from './ErrorBoundary';
+import { TableSelector } from './TableSelector';
+import { InlineField, Select, InlineSwitch, RadioButtonGroup } from '@grafana/ui';
+import { QueryWithDefaults } from './defaults';
+import { EditorField } from './EditorField';
+import { EditorHeader } from './EditorHeader';
+import { EditorRow } from './EditorRow';
+import { FlexItem } from './FlexItem';
+import { InlineSelect } from './InlineSelect';
+import { Space } from './Space';
+import {RunQueryButton} from './RunQueryButton'
+import { DB, SQLQuery, QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
+import { defaultToRawSql } from './utils/sql.utils';
 
 interface QueryHeaderProps {
   db: DB;
@@ -41,13 +29,12 @@ interface QueryHeaderProps {
   onQueryRowChange: (queryRowFilter: QueryRowFilter) => void;
   queryRowFilter: QueryRowFilter;
   isQueryRunnable: boolean;
-  labels?: Map<string, string>;
-  queryFormatOptions?: SelectableValue[];
+  labels?: Map<string,string>;
 }
 
 const editorModes = [
-  { label: "Builder", value: EditorMode.Builder },
-  { label: "Code", value: EditorMode.Code },
+  { label: 'Builder', value: EditorMode.Builder },
+  { label: 'Code', value: EditorMode.Code },
 ];
 
 export function QueryHeader({
@@ -60,8 +47,7 @@ export function QueryHeader({
   onRunQuery,
   onQueryRowChange,
   isQueryRunnable,
-  labels = new Map([["dataset", "Dataset"]]),
-  queryFormatOptions = QUERY_FORMAT_OPTIONS,
+  labels = new Map([['dataset', 'Dataset']]),
 }: QueryHeaderProps) {
   const { editorMode } = query;
   const [_, copyToClipboard] = useCopyToClipboard();
@@ -80,10 +66,7 @@ export function QueryHeader({
   );
 
   const onFormatChange = (e: SelectableValue) => {
-    const next = {
-      ...query,
-      format: e.value !== undefined ? e.value : QueryFormat.Table,
-    };
+    const next = { ...query, format: e.value !== undefined ? e.value : QueryFormat.Table };
     onChange(next);
   };
 
@@ -97,7 +80,7 @@ export function QueryHeader({
       dataset: e.value,
       table: undefined,
       sql: undefined,
-      rawSql: "",
+      rawSql: '',
     };
 
     onChange(next);
@@ -112,7 +95,7 @@ export function QueryHeader({
       ...query,
       table: e.value,
       sql: undefined,
-      rawSql: "",
+      rawSql: '',
     };
     onChange(next);
   };
@@ -128,7 +111,7 @@ export function QueryHeader({
                 placeholder="Select format"
                 value={query.format}
                 onChange={onFormatChange}
-                options={queryFormatOptions}
+                options={QUERY_FORMAT_OPTIONS}
               />
             </InlineField>
           }
@@ -139,7 +122,7 @@ export function QueryHeader({
             placeholder="Select format"
             menuShouldPortal
             onChange={onFormatChange}
-            options={queryFormatOptions}
+            options={QUERY_FORMAT_OPTIONS}
           />
         </ErrorBoundary>
 
@@ -153,10 +136,7 @@ export function QueryHeader({
               value={queryRowFilter.filter}
               onChange={(ev) =>
                 ev.target instanceof HTMLInputElement &&
-                onQueryRowChange({
-                  ...queryRowFilter,
-                  filter: ev.target.checked,
-                })
+                onQueryRowChange({ ...queryRowFilter, filter: ev.target.checked })
               }
             />
 
@@ -168,10 +148,7 @@ export function QueryHeader({
               value={queryRowFilter.group}
               onChange={(ev) =>
                 ev.target instanceof HTMLInputElement &&
-                onQueryRowChange({
-                  ...queryRowFilter,
-                  group: ev.target.checked,
-                })
+                onQueryRowChange({ ...queryRowFilter, group: ev.target.checked })
               }
             />
 
@@ -183,10 +160,7 @@ export function QueryHeader({
               value={queryRowFilter.order}
               onChange={(ev) =>
                 ev.target instanceof HTMLInputElement &&
-                onQueryRowChange({
-                  ...queryRowFilter,
-                  order: ev.target.checked,
-                })
+                onQueryRowChange({ ...queryRowFilter, order: ev.target.checked })
               }
             />
 
@@ -198,10 +172,7 @@ export function QueryHeader({
               value={queryRowFilter.preview}
               onChange={(ev) =>
                 ev.target instanceof HTMLInputElement &&
-                onQueryRowChange({
-                  ...queryRowFilter,
-                  preview: ev.target.checked,
-                })
+                onQueryRowChange({ ...queryRowFilter, preview: ev.target.checked })
               }
             />
           </>
@@ -214,12 +185,7 @@ export function QueryHeader({
           onClick={() => onRunQuery()}
         />
 
-        <RadioButtonGroup
-          options={editorModes}
-          size="sm"
-          value={editorMode}
-          onChange={onEditorModeChange}
-        />
+        <RadioButtonGroup options={editorModes} size="sm" value={editorMode} onChange={onEditorModeChange} />
 
         <ConfirmModal
           isOpen={showConfirm}
@@ -250,10 +216,7 @@ export function QueryHeader({
 
           <EditorRow>
             {enableDatasets === true && (
-              <EditorField
-                label={labels.get("dataset") || "Dataset"}
-                width={25}
-              >
+              <EditorField label={labels.get('dataset') || 'Dataset'} width={25}>
                 <DatasetSelector
                   db={db}
                   dataset={defaultDataset}
