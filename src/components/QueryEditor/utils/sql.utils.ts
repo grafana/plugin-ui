@@ -10,18 +10,10 @@ import {
 import { SQLQuery, SQLExpression, DB } from '../types';
 
 export function getRawSqlFn(db: DB) {
-  if (db.toRawSql) {
-    return db.toRawSql;
-  }
-
-  if (db.disableDatasets) {
-    return toRawSqlWithoutDataset;
-  }
-
-  return toRawSql;
+  return db.toRawSql ? db.toRawSql : (query : SQLQuery) => toRawSql(query, Boolean(db.disableDatasets))
 }
 
-export function toRawSql({ sql, dataset, table }: SQLQuery): string {
+export function toRawSql({ sql, dataset, table }: SQLQuery, disableDatasets: boolean): string {
   let rawQuery = '';
 
   if (!sql || !haveColumns(sql.columns)) {
@@ -30,44 +22,14 @@ export function toRawSql({ sql, dataset, table }: SQLQuery): string {
 
   rawQuery += createSelectClause(sql.columns);
 
-  if (dataset && table) {
-    rawQuery += `FROM ${dataset}.${table} `;
-  }
-
-  if (sql.whereString) {
-    rawQuery += `WHERE ${sql.whereString} `;
-  }
-
-  if (sql.groupBy?.[0]?.property.name) {
-    const groupBy = sql.groupBy.map((g) => g.property.name).filter((g) => !isEmpty(g));
-    rawQuery += `GROUP BY ${groupBy.join(', ')} `;
-  }
-
-  if (sql.orderBy?.property.name) {
-    rawQuery += `ORDER BY ${sql.orderBy.property.name} `;
-  }
-
-  if (sql.orderBy?.property.name && sql.orderByDirection) {
-    rawQuery += `${sql.orderByDirection} `;
-  }
-
-  if (sql.limit !== undefined && sql.limit >= 0) {
-    rawQuery += `LIMIT ${sql.limit} `;
-  }
-  return rawQuery;
-}
-
-export function toRawSqlWithoutDataset({ sql, table }: SQLQuery): string {
-  let rawQuery = '';
-
-  if (!sql || !haveColumns(sql.columns)) {
-    return rawQuery;
-  }
-
-  rawQuery += createSelectClause(sql.columns);
-
-  if (table) {
-    rawQuery += `FROM ${table} `;
+  if (disableDatasets === true) {
+    if (table) {
+      rawQuery += `FROM ${table} `;
+    }
+  } else {
+    if (dataset && table) {
+      rawQuery += `FROM ${dataset}.${table} `;
+    }
   }
 
   if (sql.whereString) {
