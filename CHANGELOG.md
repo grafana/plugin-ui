@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.7.0 - 2024-04-30
+
+- ⚙️ **Chore**: changing the QueryFormat enum to match grafana's sqlds and sqlutil constant values
+
 ## v0.6.3 - 2024-04-15
 
 - ⚙️ **Chore**: allow datasets to be disabled in the sql query editor
