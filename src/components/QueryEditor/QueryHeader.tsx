@@ -18,6 +18,7 @@ import { Space } from './Space';
 import {RunQueryButton} from './RunQueryButton'
 import { DB, SQLQuery, QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
 import { defaultToRawSql } from './utils/sql.utils';
+import { v4 as uuidv4 } from 'uuid';
 
 interface QueryHeaderProps {
   db: DB;
@@ -129,7 +130,7 @@ export function QueryHeader({
         {editorMode === EditorMode.Builder && (
           <>
             <InlineSwitch
-              id="sql-filter"
+              id={`sql-filter-${uuidv4()}`}
               label="Filter"
               transparent={true}
               showLabel={true}
@@ -141,7 +142,7 @@ export function QueryHeader({
             />
 
             <InlineSwitch
-              id="sql-group"
+              id={`sql-group-${uuidv4()}`}
               label="Group"
               transparent={true}
               showLabel={true}
@@ -153,7 +154,7 @@ export function QueryHeader({
             />
 
             <InlineSwitch
-              id="sql-order"
+              id={`sql-order-${uuidv4()}`}
               label="Order"
               transparent={true}
               showLabel={true}
@@ -165,7 +166,7 @@ export function QueryHeader({
             />
 
             <InlineSwitch
-              id="sql-preview"
+              id={`sql-preview-${uuidv4()}`}
               label="Preview"
               transparent={true}
               showLabel={true}
