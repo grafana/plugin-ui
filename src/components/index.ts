@@ -21,3 +21,4 @@ export { InlineSwitch, CertificationKey } from '@grafana/ui';
 export * from './QueryEditor';
 export * from './ConfigEditor';
 export { CustomHeadersSettings } from './CustomHeadersSettings/CustomHeadersSettings';
+export { ApiQueryEditor } from './ApiQueryEditor/ApiQueryEditor';
