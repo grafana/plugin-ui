@@ -22,7 +22,7 @@ export function toRawSql({ sql, dataset, table }: SQLQuery, disableDatasets: boo
 
   rawQuery += createSelectClause(sql.columns);
 
-  if (disableDatasets === true) {
+  if (disableDatasets) {
     if (table) {
       rawQuery += `FROM ${table} `;
     }
