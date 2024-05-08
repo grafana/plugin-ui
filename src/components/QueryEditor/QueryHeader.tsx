@@ -17,7 +17,7 @@ import { InlineSelect } from './InlineSelect';
 import { Space } from './Space';
 import {RunQueryButton} from './RunQueryButton'
 import { DB, SQLQuery, QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
-import { defaultToRawSql } from './utils/sql.utils';
+import { getRawSqlFn } from './utils/sql.utils';
 
 interface QueryHeaderProps {
   db: DB;
@@ -52,7 +52,7 @@ export function QueryHeader({
   const { editorMode } = query;
   const [_, copyToClipboard] = useCopyToClipboard();
   const [showConfirm, setShowConfirm] = useState(false);
-  const toRawSql = db.toRawSql || defaultToRawSql;
+  const toRawSql = getRawSqlFn(db);
 
   const onEditorModeChange = useCallback(
     (newEditorMode: EditorMode) => {
