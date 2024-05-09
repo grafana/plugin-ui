@@ -181,7 +181,7 @@ export function QueryHeader({
         <FlexItem grow={1} />
 
         <RunQueryButton
-          queryInvalid={isQueryRunnable}
+          queryInvalid={!isQueryRunnable}
           onClick={() => onRunQuery()}
         />
 
