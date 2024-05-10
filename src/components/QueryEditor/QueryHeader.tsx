@@ -129,7 +129,6 @@ export function QueryHeader({
         {editorMode === EditorMode.Builder && (
           <>
             <InlineSwitch
-              id="sql-filter"
               label="Filter"
               transparent={true}
               showLabel={true}
@@ -141,7 +140,6 @@ export function QueryHeader({
             />
 
             <InlineSwitch
-              id="sql-group"
               label="Group"
               transparent={true}
               showLabel={true}
@@ -153,7 +151,6 @@ export function QueryHeader({
             />
 
             <InlineSwitch
-              id="sql-order"
               label="Order"
               transparent={true}
               showLabel={true}
@@ -165,7 +162,6 @@ export function QueryHeader({
             />
 
             <InlineSwitch
-              id="sql-preview"
               label="Preview"
               transparent={true}
               showLabel={true}
