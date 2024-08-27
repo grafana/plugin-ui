@@ -19,7 +19,7 @@ export interface AsyncButtonCascaderProps {
   className?: string;
 }
 
-const getStyles = ((theme: GrafanaTheme2) => {
+const getStyles = (theme: GrafanaTheme2) => {
   return {
     popup: css`
       label: popup;
@@ -29,9 +29,9 @@ const getStyles = ((theme: GrafanaTheme2) => {
       margin: 1px 0 0 4px;
     `,
   };
-});
+};
 
-export const AsyncButtonCascader: React.FC<AsyncButtonCascaderProps> = props => {
+export const AsyncButtonCascader = (props: AsyncButtonCascaderProps) => {
   const { onChange, className, loadData, ...rest } = props;
   const theme = useTheme2();
   const styles = getStyles(theme);

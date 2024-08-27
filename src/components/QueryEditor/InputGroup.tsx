@@ -4,9 +4,11 @@ import React from 'react';
 import { GrafanaTheme2 } from '@grafana/data';
 import { useTheme2, stylesFactory } from '@grafana/ui';
 
-interface InputGroupProps {}
+interface InputGroupProps {
+  children?: React.ReactNode;
+}
 
-export const InputGroup: React.FC<InputGroupProps> = ({ children }) => {
+export const InputGroup = ({ children }: InputGroupProps) => {
   const theme = useTheme2();
   const styles = useStyles(theme);
 

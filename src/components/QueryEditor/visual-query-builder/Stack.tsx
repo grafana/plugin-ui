@@ -9,9 +9,10 @@ interface StackProps {
   alignItems?: CSSProperties['alignItems'];
   wrap?: boolean;
   gap?: number;
+  children?: React.ReactNode;
 }
 
-export const Stack: React.FC<StackProps> = ({ children, ...props }) => {
+export const Stack = ({ children, ...props }: StackProps) => {
   const theme = useTheme2();
   const styles = useStyles(theme, props);
 
@@ -22,7 +23,7 @@ const useStyles = stylesFactory((theme: GrafanaTheme2, props: StackProps) => ({
   root: css({
     display: 'flex',
     flexDirection: props.direction ?? 'row',
-    flexWrap: props.wrap ?? true ? 'wrap' : undefined,
+    flexWrap: (props.wrap ?? true) ? 'wrap' : undefined,
     alignItems: props.alignItems,
     gap: theme.spacing(props.gap ?? 2),
   }),

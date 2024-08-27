@@ -4,9 +4,11 @@ import React from 'react';
 import { GrafanaTheme2 } from '@grafana/data';
 import { useTheme2, stylesFactory } from '@grafana/ui';
 
-interface EditorHeaderProps {}
+interface EditorHeaderProps {
+  children?: React.ReactNode;
+}
 
-export const EditorHeader: React.FC<EditorHeaderProps> = ({ children }) => {
+export const EditorHeader = ({ children }: EditorHeaderProps) => {
   const theme = useTheme2();
   const styles = getStyles(theme);
 
