@@ -1,5 +1,11 @@
 # Change Log
 
+## v0.8.0 - 2024-07-30
+
+- ⚙️ **Chore**: Update `@grafana` dependencies from v9 to `10.4.0` and make them peerDependencies and devDependencies
+- ⚙️ **Chore**: Update `react` to `18.2.0`
+- ⚙️ **Chore**: **BREAKING**: Remove SecretInput and SecretTextArea components, use these components from @grafana/ui
+
 ## v0.7.0 - 2024-04-30
 
 - ⚙️ **Chore**: changing the QueryFormat enum to match grafana's sqlds and sqlutil constant values

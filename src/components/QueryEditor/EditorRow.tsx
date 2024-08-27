@@ -6,9 +6,11 @@ import { GrafanaTheme2 } from '@grafana/data';
 import { Stack } from './Stack';
 import { useStyles2 } from '@grafana/ui';
 
-interface EditorRowProps {}
+interface EditorRowProps {
+  children?: React.ReactNode;
+}
 
-export const EditorRow: React.FC<EditorRowProps> = ({ children }) => {
+export const EditorRow = ({ children }: EditorRowProps) => {
   const styles = useStyles2(getStyles);
 
   return (

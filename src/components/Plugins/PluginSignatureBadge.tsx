@@ -6,7 +6,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   status?: PluginSignatureStatus;
 }
 
-export const PluginSignatureBadge: React.FC<Props> = ({ status, ...otherProps }) => {
+export const PluginSignatureBadge = ({ status, ...otherProps }: Props) => {
   const display = getSignatureDisplayModel(status);
   return (
     <Badge

@@ -4,9 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import {
   DataFrame,
   DataFrameView,
-  DataQuery,
   DataSourceInstanceSettings,
-  DataSourceRef,
   MetricFindValue,
   ScopedVars,
   TimeRange,
@@ -21,6 +19,7 @@ import {
   TemplateSrv,
   toDataQueryResponse,
 } from '@grafana/runtime';
+import { DataQuery } from '@grafana/schema';
 
 import { MACRO_NAMES } from './constants';
 // import { toTestingStatus } from '@grafana/runtime/utils/queryResponse';
@@ -117,10 +116,7 @@ export abstract class SqlDatasource extends DataSourceWithBackend<SQLQuery, SQLO
     return !query.hide;
   }
 
-  applyTemplateVariables(
-    target: SQLQuery,
-    scopedVars: ScopedVars
-  ): Record<string, string | DataSourceRef | SQLQuery['format']> {
+  applyTemplateVariables(target: SQLQuery, scopedVars: ScopedVars): SQLQuery {
     const queryModel = this.getQueryModel(target, this.templateSrv, scopedVars);
     const rawSql = this.clean(queryModel.interpolate());
     return {
@@ -153,7 +149,7 @@ export abstract class SqlDatasource extends DataSourceWithBackend<SQLQuery, SQLO
     return this.getResponseParser().transformMetricFindResponse(response);
   }
 
-  async runSql<T>(query: string, options?: RunSQLOptions) {
+  async runSql<T extends object>(query: string, options?: RunSQLOptions) {
     const frame = await this.runMetaQuery({ rawSql: query, format: QueryFormat.Table, refId: options?.refId }, options);
     return new DataFrameView<T>(frame);
   }

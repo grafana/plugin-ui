@@ -1,16 +1,12 @@
-import React from "react";
-import { css } from "@emotion/css";
-import { useTheme2, InlineLabel as OriginalInlineLabel } from "@grafana/ui";
+import React from 'react';
+import { css } from '@emotion/css';
+import { useTheme2, InlineLabel as OriginalInlineLabel } from '@grafana/ui';
 
 type Props = React.ComponentProps<typeof OriginalInlineLabel> & {
   required?: boolean;
 };
 
-export const InlineLabel: React.FC<Props> = ({
-  children,
-  required = false,
-  ...props
-}) => {
+export const InlineLabel = ({ children, required = false, ...props }: Props) => {
   const theme = useTheme2();
 
   const styles = {

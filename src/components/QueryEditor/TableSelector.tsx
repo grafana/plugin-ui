@@ -14,13 +14,13 @@ interface TableSelectorProps extends ResourceSelectorProps {
   onChange: (v: SelectableValue) => void;
 }
 
-export const TableSelector: React.FC<TableSelectorProps> = ({ db, dataset, value, className, onChange }) => {
+export const TableSelector = ({ db, dataset, value, className, onChange }: TableSelectorProps) => {
   const state = useAsync(async () => {
     if (!dataset) {
       return [];
     }
 
-    const tables = await db.tables(dataset)
+    const tables = await db.tables(dataset);
     return tables.map(toOption);
   }, [dataset]);
 

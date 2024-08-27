@@ -1,10 +1,4 @@
-import {
-  QueryEditorProps,
-  DataTopic,
-  dateTime,
-  LoadingState,
-  TimeRange,
-} from '@grafana/data';
+import { QueryEditorProps, DataTopic, dateTime, LoadingState, TimeRange } from '@grafana/data';
 import { Chance } from 'chance';
 
 export const mockQueryEditorProps = (): QueryEditorProps<any, any, any> => ({
@@ -27,7 +21,6 @@ export const mockQueryEditorProps = (): QueryEditorProps<any, any, any> => ({
     timeRange: mockTimeRange(),
   },
   range: mockTimeRange(),
-  exploreId: Chance().guid(),
   history: [],
 });
 
