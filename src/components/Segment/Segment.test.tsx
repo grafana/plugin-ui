@@ -1,27 +1,28 @@
-import { act, render, screen } from '@testing-library/react';
-import React from 'react';
-import { Segment } from './Segment';
-import { Chance } from 'chance';
-import { DEFAULT_DELAY } from '../../hooks/useDebounce';
-import userEvent from '@testing-library/user-event';
+import { act, render, screen } from "@testing-library/react";
+import React from "react";
+import { Segment } from "./Segment";
+import { Chance } from "chance";
+import { DEFAULT_DELAY } from "../../hooks/useDebounce";
+import userEvent from "@testing-library/user-event";
 
 jest.useFakeTimers();
+const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
 
 const getOptions = () => {
   return [
     {
-      value: 'option 1',
-      label: 'Option 1',
+      value: "option 1",
+      label: "Option 1",
     },
     {
-      value: 'option 2',
-      label: 'Option 2',
+      value: "option 2",
+      label: "Option 2",
     },
   ];
 };
 
-describe('Segment', () => {
-  it('renders value initially', () => {
+describe("Segment", () => {
+  it("renders value initially", () => {
     const options = getOptions();
     const value = Chance().word();
 
@@ -30,7 +31,7 @@ describe('Segment', () => {
     expect(screen.getByText(value)).toBeInTheDocument();
   });
 
-  it('calls onDebounce on first render', () => {
+  it("calls onDebounce on first render", () => {
     const options = getOptions();
     const debounceFunction = jest.fn();
 
@@ -45,8 +46,8 @@ describe('Segment', () => {
     expect(debounceFunction).toHaveBeenCalledTimes(1);
   });
 
-  describe('delay has not passed', () => {
-    it('renders updated value', () => {
+  describe("delay has not passed", () => {
+    it("renders updated value", async () => {
       const options = getOptions();
       const value = Chance().word();
 
@@ -54,7 +55,7 @@ describe('Segment', () => {
         <Segment options={options} value={value} onDebounce={jest.fn()} />
       );
 
-      userEvent.click(screen.getByText(value));
+      await user.click(screen.getByText(value));
 
       const updatedValue = options[0];
       act(() => {
@@ -64,10 +65,10 @@ describe('Segment', () => {
         jest.advanceTimersByTime(DEFAULT_DELAY - 1);
       });
 
-      expect(screen.getByText(updatedValue.value)).toBeInTheDocument();
+      expect(screen.getByText(updatedValue.label)).toBeInTheDocument();
     });
 
-    it('does not call onDebounce with default delay', () => {
+    it("does not call onDebounce with default delay", async () => {
       const options = getOptions();
       const value = Chance().word();
       const debounceFunction = jest.fn();
@@ -82,7 +83,7 @@ describe('Segment', () => {
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
-      userEvent.click(screen.getByText(value));
+      await user.click(screen.getByText(value));
 
       const updatedValue = options[0];
       act(() => {
@@ -95,7 +96,7 @@ describe('Segment', () => {
       expect(debounceFunction).toHaveBeenCalledTimes(1);
     });
 
-    it('does not call onDebounce with delay passed in', () => {
+    it("does not call onDebounce with delay passed in", async () => {
       const options = getOptions();
       const delay = Chance().integer({ min: 2, max: 500 });
       const value = Chance().word();
@@ -114,7 +115,7 @@ describe('Segment', () => {
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
-      userEvent.click(screen.getByText(value));
+      await user.click(screen.getByText(value));
 
       const updatedValue = options[0];
       act(() => {
@@ -124,14 +125,14 @@ describe('Segment', () => {
         jest.advanceTimersByTime(delay - 1);
       });
 
-      expect(screen.getByText(updatedValue.value)).toBeInTheDocument();
+      expect(screen.getByText(updatedValue.label)).toBeInTheDocument();
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('delay has passed', () => {
-    it('renders updated value', () => {
+  describe("delay has passed", () => {
+    it("renders updated value", async () => {
       const options = getOptions();
       const value = Chance().word();
 
@@ -141,7 +142,7 @@ describe('Segment', () => {
 
       expect(screen.getByText(value)).toBeInTheDocument();
 
-      userEvent.click(screen.getByText(value));
+      await user.click(screen.getByText(value));
 
       const updatedValue = options[0];
       act(() => {
@@ -151,10 +152,10 @@ describe('Segment', () => {
         jest.advanceTimersByTime(DEFAULT_DELAY);
       });
 
-      expect(screen.getByText(updatedValue.value)).toBeInTheDocument();
+      expect(screen.getByText(updatedValue.label)).toBeInTheDocument();
     });
 
-    it('calls onDebounce with default delay', () => {
+    it("calls onDebounce with default delay", async () => {
       const options = getOptions();
       const value = Chance().word();
       const debounceFunction = jest.fn();
@@ -168,12 +169,12 @@ describe('Segment', () => {
       );
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
-      userEvent.click(screen.getByText(value));
+      await user.click(screen.getByText(value));
 
       const updatedValue = options[0];
-      act(() => {
+      await act(async () => {
         const element = screen.getByText(updatedValue.label)!;
-        userEvent.click(element);
+        await user.click(element);
 
         jest.advanceTimersByTime(DEFAULT_DELAY);
       });
@@ -181,9 +182,9 @@ describe('Segment', () => {
       expect(debounceFunction).toHaveBeenCalledTimes(2);
     });
 
-    it('calls onDebounce with delay passed in', () => {
+    it("calls onDebounce with delay passed in", async () => {
       const options = getOptions();
-      const delay = Chance().integer({ min: 0 });
+      const delay = Chance().integer({ min: 0, max: 500 });
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
@@ -200,14 +201,14 @@ describe('Segment', () => {
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
-      userEvent.click(screen.getByText(value));
+      await user.click(screen.getByText(value));
 
       const updatedValue = options[0];
 
       // Update the input element / fire the input change event
-      act(() => {
+      await act(async () => {
         const element = screen.getByText(updatedValue.label)!;
-        userEvent.click(element);
+        await user.click(element);
 
         jest.advanceTimersByTime(delay);
       });

@@ -15,7 +15,9 @@ export function Segment<T> (props: SegmentProps<T>) {
 
   const debouncedSegment = useDebounce(input, delay);
 
-  useEffect(() => onDebounce(debouncedSegment), [debouncedSegment]);
+  useEffect(() => {
+    onDebounce(debouncedSegment), [debouncedSegment]
+});
   useEffect(() => setInput(value), [value]);
 
   return (
