@@ -30,7 +30,7 @@ module.exports = {
   globals: { 'ts-jest': { isolatedModules: true } },
   moduleNameMapper: {
     '^react($|/.+)': '<rootDir>/node_modules/react$1',
-    '\\.css': '<rootDir>/src/test/mocks/style.ts',
+    '\\.css': '<rootDir>/jest/style.ts',
     'react-inlinesvg': path.resolve(__dirname, 'jest', 'react-inlinesvg.tsx'),
   },
   testEnvironment: 'jest-environment-jsdom',
