@@ -60,7 +60,7 @@ describe("Segment", () => {
       const updatedValue = options[0];
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        userEvent.click(element);
+        user.click(element);
 
         jest.advanceTimersByTime(DEFAULT_DELAY - 1);
       });
@@ -88,7 +88,7 @@ describe("Segment", () => {
       const updatedValue = options[0];
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        userEvent.click(element);
+        user.click(element);
 
         jest.advanceTimersByTime(DEFAULT_DELAY - 1);
       });
@@ -120,7 +120,7 @@ describe("Segment", () => {
       const updatedValue = options[0];
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        userEvent.click(element);
+        user.click(element);
 
         jest.advanceTimersByTime(delay - 1);
       });
@@ -147,7 +147,7 @@ describe("Segment", () => {
       const updatedValue = options[0];
       act(() => {
         const element = screen.getByText(updatedValue.label)!;
-        userEvent.click(element);
+        user.click(element);
 
         jest.advanceTimersByTime(DEFAULT_DELAY);
       });
