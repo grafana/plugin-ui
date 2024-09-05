@@ -57,7 +57,7 @@ describe("<SecureSocksProxyToggle />", () => {
 
   it("should not render when secureSocksDSProxyEnabled is disabled in config", () => {
     jest.spyOn(compat, "hasCompatibility").mockReturnValue(true);
-    jest.spyOn(config as any, "secureSocksDSProxyEnabled").mockReturnValue(false);
+    config.secureSocksDSProxyEnabled = false;
 
     const { container } = render(
       <SecureSocksProxyToggle
@@ -72,7 +72,7 @@ describe("<SecureSocksProxyToggle />", () => {
 
   it("should render and switch json data when enabled in config", () => {
     jest.spyOn(compat, "hasCompatibility").mockReturnValue(true);
-    jest.spyOn(config as any, "secureSocksDSProxyEnabled").mockReturnValue(true);
+    config.secureSocksDSProxyEnabled = true;
 
     const { getByLabelText } = render(
       <SecureSocksProxyToggle

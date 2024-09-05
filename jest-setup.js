@@ -1,3 +1,4 @@
+import { TextEncoder } from 'util';
 import '@testing-library/jest-dom';
 
 Object.defineProperty(global, 'matchMedia', {
@@ -13,3 +14,5 @@ Object.defineProperty(global, 'matchMedia', {
       dispatchEvent: jest.fn(),
     })),
   });
+
+global.TextEncoder = TextEncoder;
