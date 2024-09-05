@@ -30,6 +30,7 @@ export const SecureSocksProxyToggle = ({ labelWidth = 10, ...props }: Props) => 
         <div className="gf-form">
           <div className="gf-form gf-form-inline">
             <InlineField
+              htmlFor="secureSocksProxyEnabled"
               label="Secure Socks Proxy Enabled"
               labelWidth={labelWidth}
               tooltip={
@@ -46,7 +47,7 @@ export const SecureSocksProxyToggle = ({ labelWidth = 10, ...props }: Props) => 
                 </>
               }
             >
-              <InlineSwitch value={dataSourceConfig.jsonData.enableSecureSocksProxy} onChange={handleSwitchChange} />
+              <InlineSwitch id="secureSocksProxyEnabled" value={dataSourceConfig.jsonData.enableSecureSocksProxy} onChange={handleSwitchChange} />
             </InlineField>
           </div>
         </div>

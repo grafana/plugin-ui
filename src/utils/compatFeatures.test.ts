@@ -1,7 +1,7 @@
 import * as compat from "./compatibility"
-import { mockHealthCheckResult, mockHealthCheckResultError } from "../test/mocks/TestDatasource"
 import * as testDatasourceOverride from "./testDatasource"
 import { healthDiagnosticsErrorsCompat } from "./compatFeatures"
+import {mockHealthCheckResult, mockHealthCheckResultError} from "../test/mocks"
 
 describe("healthDiagnosticsErrorsCompat", () => {
   afterEach(() => {

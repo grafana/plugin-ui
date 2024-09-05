@@ -1,4 +1,4 @@
-import { mockHealthCheckDetails, mockHealthCheckResult, mockHealthCheckResultError } from "../test/mocks/TestDatasource"
+import { mockHealthCheckDetails, mockHealthCheckResult, mockHealthCheckResultError } from "../test/mocks"
 import { testDatasource } from "./testDatasource"
 
 describe("testDatasource", () => {
