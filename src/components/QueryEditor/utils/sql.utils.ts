@@ -10,7 +10,7 @@ import {
 import { SQLQuery, SQLExpression, DB } from '../types';
 
 export function getRawSqlFn(db: DB) {
-  return db.toRawSql ? db.toRawSql : (query : SQLQuery) => toRawSql(query, Boolean(db.disableDatasets))
+  return db.toRawSql ? db.toRawSql : (query: SQLQuery) => toRawSql(query, Boolean(db.disableDatasets))
 }
 
 export function toRawSql({ sql, dataset, table }: SQLQuery, disableDatasets: boolean): string {

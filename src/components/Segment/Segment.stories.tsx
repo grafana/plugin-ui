@@ -10,7 +10,7 @@ export default {
 
 export const basic = () => {
   const [value, setValue] = React.useState('');
-  const options: SelectableValue<string>[] = [{
+  const options: Array<SelectableValue<string>> = [{
     label: "Option 1",
     value: "option1",
   }, {

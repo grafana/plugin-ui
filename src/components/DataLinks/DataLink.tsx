@@ -25,7 +25,7 @@ const getStyles = stylesFactory(() => ({
 
 type Props = {
   value: DataLinkConfig;
-  datasources?: DataSourceInstanceSettings<DataSourceJsonData>[];
+  datasources?: Array<DataSourceInstanceSettings<DataSourceJsonData>>;
   onChange: (value: DataLinkConfig) => void;
   onDelete: () => void;
   suggestions: VariableSuggestion[];
