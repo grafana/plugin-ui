@@ -7,19 +7,14 @@ export default {
   component: DatePicker,
 };
 
-export const basic = () => {
+export const Basic = () => {
   const [date, setDate] = React.useState<Date>(new Date());
   const [open, setOpen] = React.useState(false);
 
   return (
     <>
       <Button onClick={() => setOpen(true)}>Show Calendar</Button>
-      <DatePicker
-        isOpen={open}
-        value={date}
-        onChange={(newDate) => setDate(newDate)}
-        onClose={() => setOpen(false)}
-      />
+      <DatePicker isOpen={open} value={date} onChange={(newDate) => setDate(newDate)} onClose={() => setOpen(false)} />
     </>
   );
 };

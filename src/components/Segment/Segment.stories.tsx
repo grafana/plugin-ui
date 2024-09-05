@@ -8,22 +8,25 @@ export default {
   component: Segment,
 };
 
-export const basic = () => {
+export const Basic = () => {
   const [value, setValue] = React.useState('');
-  const options: Array<SelectableValue<string>> = [{
-    label: "Option 1",
-    value: "option1",
-  }, {
-    label: "Option 2",
-    value: "option2",
-  }]
+  const options: Array<SelectableValue<string>> = [
+    {
+      label: 'Option 1',
+      value: 'option1',
+    },
+    {
+      label: 'Option 2',
+      value: 'option2',
+    },
+  ];
 
   return (
     <>
-      <InfoBox title='Updated value'>{`"${value}"`}</InfoBox>
+      <InfoBox title="Updated value">{`"${value}"`}</InfoBox>
       <Segment
         options={options}
-        placeholder='Type something here'
+        placeholder="Type something here"
         value={value}
         onDebounce={(newValue) => setValue(newValue!)}
       />
@@ -31,25 +34,26 @@ export const basic = () => {
   );
 };
 
-export const customDelay = () => {
+export const CustomDelay = () => {
   const [value, setValue] = React.useState('');
   const delay = 1000;
-  const options = [{
-    label: "Option 1",
-    value: "option1",
-  }, {
-    label: "Option 2",
-    value: "option2",
-  }]
+  const options = [
+    {
+      label: 'Option 1',
+      value: 'option1',
+    },
+    {
+      label: 'Option 2',
+      value: 'option2',
+    },
+  ];
 
   return (
     <>
-      <InfoBox title={`Updated value with custom delay of ${delay}`}>
-        {`"${value}"`}
-      </InfoBox>
+      <InfoBox title={`Updated value with custom delay of ${delay}`}>{`"${value}"`}</InfoBox>
       <Segment
         options={options}
-        placeholder='Type something here'
+        placeholder="Type something here"
         value={value}
         onDebounce={(newValue) => setValue(newValue!)}
         delay={delay}

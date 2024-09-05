@@ -7,32 +7,26 @@ export default {
   component: DebounceInput,
 };
 
-export const basic = () => {
+export const Basic = () => {
   const [value, setValue] = React.useState('');
 
   return (
     <>
-      <InfoBox title='Updated value'>{`"${value}"`}</InfoBox>
-      <DebounceInput
-        placeholder='Type something here'
-        value={value}
-        onDebounce={(newValue) => setValue(newValue!)}
-      />
+      <InfoBox title="Updated value">{`"${value}"`}</InfoBox>
+      <DebounceInput placeholder="Type something here" value={value} onDebounce={(newValue) => setValue(newValue!)} />
     </>
   );
 };
 
-export const customDelay = () => {
+export const CustomDelay = () => {
   const [value, setValue] = React.useState('');
   const delay = 1000;
 
   return (
     <>
-      <InfoBox title={`Updated value with custom delay of ${delay}`}>
-        {`"${value}"`}
-      </InfoBox>
+      <InfoBox title={`Updated value with custom delay of ${delay}`}>{`"${value}"`}</InfoBox>
       <DebounceInput
-        placeholder='Type something here'
+        placeholder="Type something here"
         value={value}
         onDebounce={(newValue) => setValue(newValue!)}
         delay={delay}

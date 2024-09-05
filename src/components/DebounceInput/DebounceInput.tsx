@@ -14,14 +14,10 @@ export const DebounceInput = (props: DebounceInputProps) => {
 
   const debouncedInput = useDebounce(input, delay);
 
+  // TODO: We should fix this
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => onDebounce(debouncedInput), [debouncedInput]);
   React.useEffect(() => setInput(value), [value]);
 
-  return (
-    <Input
-      onChange={(ev) => setInput(ev.currentTarget.value)}
-      value={input}
-      {...rest}
-    />
-  );
+  return <Input onChange={(ev) => setInput(ev.currentTarget.value)} value={input} {...rest} />;
 };

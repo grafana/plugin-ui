@@ -9,15 +9,15 @@ export interface SegmentProps<T> extends Omit<ComponentProps<typeof GrafanaSegme
   delay?: number;
 }
 
-export function Segment<T> (props: SegmentProps<T>) {
+export function Segment<T>(props: SegmentProps<T>) {
   const { delay, onDebounce, value, options, ...rest } = props;
   const [input, setInput] = React.useState(value);
 
   const debouncedSegment = useDebounce(input, delay);
 
-  useEffect(() => {
-    onDebounce(debouncedSegment), [debouncedSegment]
-});
+  // TODO: We should fix this
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => onDebounce(debouncedSegment), [debouncedSegment]);
   useEffect(() => setInput(value), [value]);
 
   return (
@@ -28,4 +28,4 @@ export function Segment<T> (props: SegmentProps<T>) {
       {...rest}
     />
   );
-};
+}
