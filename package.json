@@ -13,7 +13,8 @@
     "storybook:build": "build-storybook",
     "changeset": "ts-node src/utils/changeset/index.ts",
     "lint": "eslint --cache --ignore-path ./.gitignore --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "yarn run lint --fix"
+    "lint:fix": "yarn run lint --fix",
+    "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
   "bin": {
     "changeset-improved": "./dist/utils/changeset/index.js"

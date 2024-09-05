@@ -15,9 +15,10 @@ export function Segment<T>(props: SegmentProps<T>) {
 
   const debouncedSegment = useDebounce(input, delay);
 
-  // TODO: We should fix this
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => onDebounce(debouncedSegment), [debouncedSegment]);
+  useEffect(() => {
+    onDebounce(debouncedSegment);
+  });
+
   useEffect(() => setInput(value), [value]);
 
   return (
