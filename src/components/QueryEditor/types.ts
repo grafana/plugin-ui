@@ -187,9 +187,3 @@ export interface MetaDefinition {
   completion?: string;
   kind: CompletionItemKind;
 }
-
-export interface SQLConnectionLimits {
-  maxOpenConns: number;
-  maxIdleConns: number;
-  connMaxLifetime: number;
-}

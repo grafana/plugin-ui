@@ -20,17 +20,15 @@ export const DatePicker = memo<DatePickerProps>((props) => {
   }
 
   return (
-    <ClickOutsideWrapper
-      useCapture={true}
-      includeButtonPress={false}
-      onClick={onClose}
-    >
-      <div className={styles.modal} data-testid='date-picker'>
+    <ClickOutsideWrapper useCapture={true} includeButtonPress={false} onClick={onClose}>
+      <div className={styles.modal} data-testid="date-picker">
         <Body {...props} />
       </div>
     </ClickOutsideWrapper>
   );
 });
+
+DatePicker.displayName = 'DatePicker';
 
 const Body = memo<DatePickerProps>(({ value, onChange }) => {
   const theme = useTheme2();
@@ -41,14 +39,16 @@ const Body = memo<DatePickerProps>(({ value, onChange }) => {
       className={styles.body}
       tileClassName={styles.title}
       value={value || new Date()}
-      nextLabel={<Icon name='angle-right' />}
-      prevLabel={<Icon name='angle-left' />}
+      nextLabel={<Icon name="angle-right" />}
+      prevLabel={<Icon name="angle-left" />}
       onChange={(ev: any) => {
         if (!Array.isArray(ev)) {
           onChange(ev);
         }
       }}
-      locale='en'
+      locale="en"
     />
   );
 });
+
+Body.displayName = 'Body';

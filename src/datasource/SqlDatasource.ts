@@ -233,10 +233,6 @@ export const SEARCH_FILTER_VARIABLE = '__searchFilter';
 export const containsSearchFilter = (query: string | unknown): boolean =>
   query && typeof query === 'string' ? query.indexOf(SEARCH_FILTER_VARIABLE) !== -1 : false;
 
-export interface SearchFilterOptions {
-  searchFilter?: string;
-}
-
 export const getSearchFilterScopedVar = (args: {
   query: string;
   wildcardChar: string;

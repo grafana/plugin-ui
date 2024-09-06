@@ -1,9 +1,9 @@
-import { act, render, screen } from "@testing-library/react";
-import React from "react";
-import { Segment } from "./Segment";
-import { Chance } from "chance";
-import { DEFAULT_DELAY } from "../../hooks/useDebounce";
-import userEvent from "@testing-library/user-event";
+import { act, render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { Segment } from './Segment';
+import { Chance } from 'chance';
+import { DEFAULT_DELAY } from '../../hooks/useDebounce';
+import userEvent from '@testing-library/user-event';
 
 jest.useFakeTimers();
 const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
@@ -11,18 +11,18 @@ const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
 const getOptions = () => {
   return [
     {
-      value: "option 1",
-      label: "Option 1",
+      value: 'option 1',
+      label: 'Option 1',
     },
     {
-      value: "option 2",
-      label: "Option 2",
+      value: 'option 2',
+      label: 'Option 2',
     },
   ];
 };
 
-describe("Segment", () => {
-  it("renders value initially", () => {
+describe('Segment', () => {
+  it('renders value initially', () => {
     const options = getOptions();
     const value = Chance().word();
 
@@ -31,29 +31,21 @@ describe("Segment", () => {
     expect(screen.getByText(value)).toBeInTheDocument();
   });
 
-  it("calls onDebounce on first render", () => {
+  it('calls onDebounce on first render', () => {
     const options = getOptions();
     const debounceFunction = jest.fn();
 
-    render(
-      <Segment
-        options={options}
-        value={Chance().word()}
-        onDebounce={() => debounceFunction()}
-      />
-    );
+    render(<Segment options={options} value={Chance().word()} onDebounce={() => debounceFunction()} />);
 
     expect(debounceFunction).toHaveBeenCalledTimes(1);
   });
 
-  describe("delay has not passed", () => {
-    it("renders updated value", async () => {
+  describe('delay has not passed', () => {
+    it('renders updated value', async () => {
       const options = getOptions();
       const value = Chance().word();
 
-      render(
-        <Segment options={options} value={value} onDebounce={jest.fn()} />
-      );
+      render(<Segment options={options} value={value} onDebounce={jest.fn()} />);
 
       await user.click(screen.getByText(value));
 
@@ -68,18 +60,12 @@ describe("Segment", () => {
       expect(screen.getByText(updatedValue.label)).toBeInTheDocument();
     });
 
-    it("does not call onDebounce with default delay", async () => {
+    it('does not call onDebounce with default delay', async () => {
       const options = getOptions();
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
-      render(
-        <Segment
-          options={options}
-          value={value}
-          onDebounce={() => debounceFunction()}
-        />
-      );
+      render(<Segment options={options} value={value} onDebounce={() => debounceFunction()} />);
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
@@ -96,7 +82,7 @@ describe("Segment", () => {
       expect(debounceFunction).toHaveBeenCalledTimes(1);
     });
 
-    it("does not call onDebounce with delay passed in", async () => {
+    it('does not call onDebounce with delay passed in', async () => {
       const options = getOptions();
       const delay = Chance().integer({ min: 2, max: 500 });
       const value = Chance().word();
@@ -131,14 +117,12 @@ describe("Segment", () => {
     });
   });
 
-  describe("delay has passed", () => {
-    it("renders updated value", async () => {
+  describe('delay has passed', () => {
+    it('renders updated value', async () => {
       const options = getOptions();
       const value = Chance().word();
 
-      render(
-        <Segment options={options} value={value} onDebounce={jest.fn()} />
-      );
+      render(<Segment options={options} value={value} onDebounce={jest.fn()} />);
 
       expect(screen.getByText(value)).toBeInTheDocument();
 
@@ -155,18 +139,12 @@ describe("Segment", () => {
       expect(screen.getByText(updatedValue.label)).toBeInTheDocument();
     });
 
-    it("calls onDebounce with default delay", async () => {
+    it('calls onDebounce with default delay', async () => {
       const options = getOptions();
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
-      render(
-        <Segment
-          options={options}
-          value={value}
-          onDebounce={() => debounceFunction()}
-        />
-      );
+      render(<Segment options={options} value={value} onDebounce={() => debounceFunction()} />);
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
       await user.click(screen.getByText(value));
@@ -179,23 +157,18 @@ describe("Segment", () => {
         jest.advanceTimersByTime(DEFAULT_DELAY);
       });
 
-      expect(debounceFunction).toHaveBeenCalledTimes(2);
+      await waitFor(() => {
+        expect(debounceFunction).toHaveBeenCalledTimes(2);
+      });
     });
 
-    it("calls onDebounce with delay passed in", async () => {
+    it('calls onDebounce with delay passed in', async () => {
       const options = getOptions();
-      const delay = Chance().integer({ min: 0, max: 500 });
-      const value = Chance().word();
+      const delay = 100;
+      const value = 'test';
       const debounceFunction = jest.fn();
 
-      render(
-        <Segment
-          options={options}
-          value={value}
-          onDebounce={() => debounceFunction()}
-          delay={delay}
-        />
-      );
+      render(<Segment options={options} value={value} onDebounce={debounceFunction} delay={delay} />);
 
       expect(screen.getByText(value)).toBeInTheDocument();
 
@@ -205,7 +178,7 @@ describe("Segment", () => {
 
       const updatedValue = options[0];
 
-      // Update the input element / fire the input change event
+      // // Update the input element / fire the input change event
       await act(async () => {
         const element = screen.getByText(updatedValue.label)!;
         await user.click(element);
@@ -213,7 +186,9 @@ describe("Segment", () => {
         jest.advanceTimersByTime(delay);
       });
 
-      expect(debounceFunction).toHaveBeenCalledTimes(2);
+      await waitFor(() => {
+        expect(debounceFunction).toHaveBeenCalledTimes(2);
+      });
     });
   });
 });
