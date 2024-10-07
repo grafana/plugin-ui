@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test-and-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,5 +15,5 @@ jobs:
           cache: 'yarn'
       - run: yarn install --immutable --prefer-offline
       - run: yarn lint
-      - run: yarn typecheck
       - run: yarn jest
+      - run: yarn build
