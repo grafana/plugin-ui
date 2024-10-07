@@ -1,12 +1,12 @@
-import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
-import { DataLinks } from "./DataLinks";
-import * as jestFetchMock from "jest-fetch-mock";
-import userEvent from "@testing-library/user-event";
+import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { DataLinks } from './DataLinks';
+import * as jestFetchMock from 'jest-fetch-mock';
+import userEvent from '@testing-library/user-event';
 
 jestFetchMock.enableFetchMocks();
 
-describe("DataLinks", () => {
+describe('DataLinks', () => {
   fetchMock.mockResponse(
     `[
        {
@@ -45,54 +45,54 @@ describe("DataLinks", () => {
     window.getSelection = originalGetSelection;
   });
 
-  it("renders correctly when no fields", async () => {
+  it('renders correctly when no fields', async () => {
     const onChangeMock = jest.fn();
     render(<DataLinks onChange={onChangeMock} />);
-    expect(screen.getByRole("button", { name: "Add" })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument();
   });
 
-  it("renders correctly when there are fields", async () => {
+  it('renders correctly when there are fields', async () => {
     const onChangeMock = jest.fn();
     await waitFor(() => {
-      render(<DataLinks value={testValue} onChange={onChangeMock} />)
+      render(<DataLinks value={testValue} onChange={onChangeMock} />);
     });
     testValue.forEach((v) => {
       expect(screen.getByText(v.url)).toBeInTheDocument();
       expect(screen.getByDisplayValue(v.field)).toBeInTheDocument();
     });
-    expect(screen.getAllByText("Field").length).toBe(2);
+    expect(screen.getAllByText('Field').length).toBe(2);
   });
 
-  it("adds new field", async () => {
+  it('adds new field', async () => {
     const onChangeMock = jest.fn();
     render(<DataLinks onChange={onChangeMock} />);
     expect(onChangeMock).not.toHaveBeenCalled();
     //expect(screen.getAllByText('Field').length).toBe(0);
     // Click the add button
-    await userEvent.click(screen.getByText("Add"));
+    await userEvent.click(screen.getByText('Add'));
     expect(onChangeMock).toHaveBeenCalledTimes(1);
   });
 
-  it("removes field", async () => {
+  it('removes field', async () => {
     const onChangeMock = jest.fn();
     render(<DataLinks value={testValue} onChange={onChangeMock} />);
     // Click the remove button
-    await userEvent.click(screen.getAllByTitle("Remove field")[0]);
+    await userEvent.click(screen.getAllByTitle('Remove field')[0]);
     expect(onChangeMock).toHaveBeenCalledTimes(1);
   });
 });
 
 const testValue = [
   {
-    field: "regex1",
-    label: "label1",
-    matcherRegex: "/.*/",
-    url: "localhost1",
+    field: 'regex1',
+    label: 'label1',
+    matcherRegex: '/.*/',
+    url: 'localhost1',
   },
   {
-    field: "regex2",
-    label: "label2",
-    matcherRegex: "/.*/",
-    url: "localhost2",
+    field: 'regex2',
+    label: 'label2',
+    matcherRegex: '/.*/',
+    url: 'localhost2',
   },
 ];

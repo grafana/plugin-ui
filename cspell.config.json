@@ -1,12 +1,4 @@
 {
-  "ignorePaths": [
-    ".github/**",
-    "node_modules/**",
-    "dist/**",
-    "yarn.lock"
-  ],
-  "words": [
-    "cascader",
-    "lefthook"
-  ]
+  "ignorePaths": [".github/**", "node_modules/**", "dist/**", "yarn.lock"],
+  "words": ["cascader", "lefthook", "Datasource", "datasource", "gdev", "pickone", "arrowdown", "inlinesvg"]
 }

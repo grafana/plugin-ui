@@ -61,7 +61,7 @@ export const DataLink = (props: Props) => {
           variant={'destructive'}
           title="Remove field"
           icon="times"
-          onClick={event => {
+          onClick={(event) => {
             event.preventDefault();
             onDelete();
           }}
@@ -75,9 +75,7 @@ export const DataLink = (props: Props) => {
           type="text"
           value={value.label}
           onChange={handleChange('label')}
-          tooltip={
-            'Use to provide a meaningful label to the data matched in the regex'
-          }
+          tooltip={'Use to provide a meaningful label to the data matched in the regex'}
         />
         <FormField
           className={styles.regexField}
@@ -99,7 +97,7 @@ export const DataLink = (props: Props) => {
             <DataLinkInput
               placeholder={showInternalLink ? '${__value.raw}' : 'http://example.com/${__value.raw}'}
               value={value.url || ''}
-              onChange={newValue =>
+              onChange={(newValue) =>
                 onChange({
                   ...value,
                   url: newValue,
@@ -132,7 +130,7 @@ export const DataLink = (props: Props) => {
         {showInternalLink && (
           <DataSourcePicker
             // Uid and value should be always set in the db and so in the items.
-            onChange={ds => {
+            onChange={(ds) => {
               onChange({
                 ...value,
                 datasourceUid: ds.uid,

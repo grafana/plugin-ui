@@ -1,1 +1,1 @@
-export const style = 'style';	
+export const style = 'style';

@@ -3,7 +3,14 @@ import React, { useState } from 'react';
 import { GroupBase } from 'react-select';
 
 import { GrafanaTheme2 } from '@grafana/data';
-import { Select, SelectCommonProps, SelectContainerProps, stylesFactory, useTheme2,  SelectContainer as BaseSelectContainer } from '@grafana/ui';
+import {
+  Select,
+  SelectCommonProps,
+  SelectContainerProps,
+  stylesFactory,
+  useTheme2,
+  SelectContainer as BaseSelectContainer,
+} from '@grafana/ui';
 
 interface InlineSelectProps<T> extends SelectCommonProps<T> {
   label?: string;

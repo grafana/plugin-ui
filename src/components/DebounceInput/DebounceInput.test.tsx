@@ -18,12 +18,7 @@ describe('DebounceInput', () => {
   it('calls onDebounce on first render', () => {
     const debounceFunction = jest.fn();
 
-    render(
-      <DebounceInput
-        value={Chance().word()}
-        onDebounce={() => debounceFunction()}
-      />
-    );
+    render(<DebounceInput value={Chance().word()} onDebounce={() => debounceFunction()} />);
 
     expect(debounceFunction).toHaveBeenCalledTimes(1);
   });
@@ -50,9 +45,7 @@ describe('DebounceInput', () => {
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
-      render(
-        <DebounceInput value={value} onDebounce={() => debounceFunction()} />
-      );
+      render(<DebounceInput value={value} onDebounce={() => debounceFunction()} />);
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
@@ -120,9 +113,7 @@ describe('DebounceInput', () => {
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
-      render(
-        <DebounceInput value={value} onDebounce={() => debounceFunction()} />
-      );
+      render(<DebounceInput value={value} onDebounce={() => debounceFunction()} />);
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
 
@@ -142,13 +133,7 @@ describe('DebounceInput', () => {
       const value = Chance().word();
       const debounceFunction = jest.fn();
 
-      render(
-        <DebounceInput
-          value={value}
-          onDebounce={() => debounceFunction()}
-          delay={delay}
-        />
-      );
+      render(<DebounceInput value={value} onDebounce={() => debounceFunction()} delay={delay} />);
 
       expect(debounceFunction).toHaveBeenCalledTimes(1);
       expect(screen.getByDisplayValue(value)).toBeInTheDocument();

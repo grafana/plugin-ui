@@ -87,12 +87,7 @@ export const mockPluginInclude = (): PluginInclude => ({
 });
 
 export const mockPluginType = (): PluginType =>
-  Chance().pickone([
-    PluginType.panel,
-    PluginType.datasource,
-    PluginType.app,
-    PluginType.renderer,
-  ]);
+  Chance().pickone([PluginType.panel, PluginType.datasource, PluginType.app, PluginType.renderer]);
 
 export const mockPluginIncludeType = (): PluginIncludeType =>
   Chance().pickone([
@@ -103,11 +98,7 @@ export const mockPluginIncludeType = (): PluginIncludeType =>
   ]);
 
 export const mockPluginState = (): PluginState =>
-  Chance().pickone([
-    PluginState.alpha,
-    PluginState.beta,
-    PluginState.deprecated,
-  ]);
+  Chance().pickone([PluginState.alpha, PluginState.beta, PluginState.deprecated]);
 
 export const mockPluginDependencies = (): PluginDependencies => ({
   grafanaVersion: Chance().word(),

@@ -1,5 +1,5 @@
-import { hasCompatibility, CompatibilityFeature } from "./compatibility";
-import { BaseTestDatasource, testDatasource, TestDatasourceReturn } from "./testDatasource";
+import { hasCompatibility, CompatibilityFeature } from './compatibility';
+import { BaseTestDatasource, testDatasource, TestDatasourceReturn } from './testDatasource';
 
 /**
  * Calls the override testDatasource function for backwards compatibility if needed.
@@ -8,9 +8,12 @@ import { BaseTestDatasource, testDatasource, TestDatasourceReturn } from "./test
  * @param toggle Accepts a feature toggle. Defaults to false so it is clear when we want this feature turned on.
  * @returns The result in the expected format for the Grafana version
  */
-export const healthDiagnosticsErrorsCompat = (baseTestDatasource: BaseTestDatasource, toggle?: boolean): Promise<TestDatasourceReturn> => {
+export const healthDiagnosticsErrorsCompat = (
+  baseTestDatasource: BaseTestDatasource,
+  toggle?: boolean
+): Promise<TestDatasourceReturn> => {
   if (toggle && hasCompatibility(CompatibilityFeature.HEALTH_DIAGNOSTICS_ERRORS)) {
-    return baseTestDatasource()
+    return baseTestDatasource();
   }
 
   return testDatasource(baseTestDatasource);
