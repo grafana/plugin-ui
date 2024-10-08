@@ -1,6 +1,6 @@
 # plugin-ui
 
-React components for Grafana plugins
+React components for plugins developed by Grafana Labs. This package should **not** be used to develop `community` or `commercial` plugins.
 
 ## Compatibility
 
