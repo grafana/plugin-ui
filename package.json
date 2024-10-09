@@ -87,13 +87,13 @@
   },
   "peerDependencies": {
     "@changesets/cli": ">=2.x",
-    "@grafana/data": "^10.4.0",
-    "@grafana/e2e-selectors": "^10.4.0",
-    "@grafana/runtime": "^10.4.0",
+    "@grafana/data": "^10.4.0 || ^11.0.0",
+    "@grafana/e2e-selectors": "^10.4.0 || ^11.0.0",
+    "@grafana/runtime": "^10.4.0 || ^11.0.0",
     "@grafana/tsconfig": "1.3.0-rc1",
-    "@grafana/ui": "^10.4.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "@grafana/ui": "^10.4.0 || ^11.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rxjs": "^7.8.1"
   },
   "files": [
