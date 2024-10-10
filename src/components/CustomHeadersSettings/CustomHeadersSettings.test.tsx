@@ -1,31 +1,31 @@
-import React from "react";
-import { CustomHeadersSettings, Props } from "./CustomHeadersSettings";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import React from 'react';
+import { CustomHeadersSettings, Props } from './CustomHeadersSettings';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 const setup = (propOverrides?: object) => {
   const onChange = jest.fn();
   const props: Props = {
     dataSourceConfig: {
       id: 4,
-      uid: "x",
+      uid: 'x',
       orgId: 1,
-      name: "gdev-influxdb",
-      type: "influxdb",
-      typeName: "Influxdb",
-      typeLogoUrl: "",
-      access: "direct",
-      url: "http://localhost:8086",
-      user: "grafana",
-      database: "site",
+      name: 'gdev-influxdb',
+      type: 'influxdb',
+      typeName: 'Influxdb',
+      typeLogoUrl: '',
+      access: 'direct',
+      url: 'http://localhost:8086',
+      user: 'grafana',
+      database: 'site',
       basicAuth: false,
-      basicAuthUser: "",
+      basicAuthUser: '',
       withCredentials: false,
       isDefault: false,
       jsonData: {
-        timeInterval: "15s",
-        httpMode: "GET",
-        keepCookies: ["cookie1", "cookie2"],
+        timeInterval: '15s',
+        httpMode: 'GET',
+        keepCookies: ['cookie1', 'cookie2'],
       },
       secureJsonData: {
         password: true,
@@ -41,23 +41,20 @@ const setup = (propOverrides?: object) => {
   return { onChange };
 };
 
-function assertRowCount(
-  configuredInputCount: number,
-  passwordInputCount: number
-) {
-  const inputs = screen.queryAllByPlaceholderText("X-Custom-Header");
-  const passwordInputs = screen.queryAllByPlaceholderText("Header Value");
-  const configuredInputs = screen.queryAllByDisplayValue("configured");
+function assertRowCount(configuredInputCount: number, passwordInputCount: number) {
+  const inputs = screen.queryAllByPlaceholderText('X-Custom-Header');
+  const passwordInputs = screen.queryAllByPlaceholderText('Header Value');
+  const configuredInputs = screen.queryAllByDisplayValue('configured');
   expect(inputs.length).toBe(passwordInputs.length + configuredInputs.length);
 
   expect(passwordInputs).toHaveLength(passwordInputCount);
   expect(configuredInputs).toHaveLength(configuredInputCount);
 }
 
-describe("Render", () => {
-  it("should add a new header", async () => {
+describe('Render', () => {
+  it('should add a new header', async () => {
     setup();
-    const b = screen.getByRole("button", { name: "Add header" });
+    const b = screen.getByRole('button', { name: 'Add header' });
     expect(b).toBeInTheDocument();
     assertRowCount(0, 0);
 
@@ -65,25 +62,25 @@ describe("Render", () => {
     assertRowCount(0, 1);
   });
 
-  it("add header button should not submit the form", () => {
+  it('add header button should not submit the form', () => {
     setup();
-    const b = screen.getByRole("button", { name: "Add header" });
+    const b = screen.getByRole('button', { name: 'Add header' });
     expect(b).toBeInTheDocument();
-    expect(b.getAttribute("type")).toBe("button");
+    expect(b.getAttribute('type')).toBe('button');
   });
 
-  it("should remove a header", async () => {
+  it('should remove a header', async () => {
     const { onChange } = setup({
       dataSourceConfig: {
         jsonData: {
-          httpHeaderName1: "X-Custom-Header",
+          httpHeaderName1: 'X-Custom-Header',
         },
         secureJsonFields: {
           httpHeaderValue1: true,
         },
       },
     });
-    const b = screen.getByRole("button", { name: "Remove header" });
+    const b = screen.getByRole('button', { name: 'Remove header' });
     expect(b).toBeInTheDocument();
 
     assertRowCount(1, 0);
@@ -95,20 +92,20 @@ describe("Render", () => {
     expect(onChange.mock.calls[0][0].jsonData).toStrictEqual({});
   });
 
-  it("when removing a just-created header, it should clean up secureJsonData", async () => {
+  it('when removing a just-created header, it should clean up secureJsonData', async () => {
     const { onChange } = setup({
       dataSourceConfig: {
         jsonData: {
-          httpHeaderName1: "name1",
+          httpHeaderName1: 'name1',
         },
         secureJsonData: {
-          httpHeaderValue1: "value1",
+          httpHeaderValue1: 'value1',
         },
       },
     });
 
     // we remove the row
-    const removeButton = screen.getByRole("button", { name: "Remove header" });
+    const removeButton = screen.getByRole('button', { name: 'Remove header' });
     expect(removeButton).toBeInTheDocument();
     await userEvent.click(removeButton);
     assertRowCount(0, 0);
@@ -116,15 +113,15 @@ describe("Render", () => {
 
     // and we verify the onChange-data
     const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1];
-    expect(lastCall[0].jsonData).not.toHaveProperty("httpHeaderName1");
-    expect(lastCall[0].secureJsonData).not.toHaveProperty("httpHeaderValue1");
+    expect(lastCall[0].jsonData).not.toHaveProperty('httpHeaderName1');
+    expect(lastCall[0].secureJsonData).not.toHaveProperty('httpHeaderValue1');
   });
 
-  it("should reset a header", async () => {
+  it('should reset a header', async () => {
     setup({
       dataSourceConfig: {
         jsonData: {
-          httpHeaderName1: "X-Custom-Header",
+          httpHeaderName1: 'X-Custom-Header',
         },
         secureJsonFields: {
           httpHeaderValue1: true,
@@ -132,7 +129,7 @@ describe("Render", () => {
       },
     });
 
-    const b = screen.getByRole("button", { name: "Reset" });
+    const b = screen.getByRole('button', { name: 'Reset' });
     expect(b).toBeInTheDocument();
 
     assertRowCount(1, 0);

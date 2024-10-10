@@ -15,7 +15,7 @@ import { EditorRow } from './EditorRow';
 import { FlexItem } from './FlexItem';
 import { InlineSelect } from './InlineSelect';
 import { Space } from './Space';
-import {RunQueryButton} from './RunQueryButton'
+import { RunQueryButton } from './RunQueryButton';
 import { DB, SQLQuery, QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
 import { getRawSqlFn } from './utils/sql.utils';
 
@@ -29,7 +29,7 @@ interface QueryHeaderProps {
   onQueryRowChange: (queryRowFilter: QueryRowFilter) => void;
   queryRowFilter: QueryRowFilter;
   isQueryRunnable: boolean;
-  labels?: Map<string,string>;
+  labels?: Map<string, string>;
 }
 
 const editorModes = [
@@ -180,10 +180,7 @@ export function QueryHeader({
 
         <FlexItem grow={1} />
 
-        <RunQueryButton
-          queryInvalid={!isQueryRunnable}
-          onClick={() => onRunQuery()}
-        />
+        <RunQueryButton queryInvalid={!isQueryRunnable} onClick={() => onRunQuery()} />
 
         <RadioButtonGroup options={editorModes} size="sm" value={editorMode} onChange={onEditorModeChange} />
 

@@ -23,12 +23,7 @@ describe('DatePickerWithInput', () => {
     // reset the date so we can use it for the date conversion here
     MockDate.reset();
 
-    render(
-      <DatePickerWithInput
-        value={new Date(1607431703363)}
-        onChange={jest.fn()}
-      />
-    );
+    render(<DatePickerWithInput value={new Date(1607431703363)} onChange={jest.fn()} />);
 
     expect(screen.getByDisplayValue('2020-12-08')).toBeInTheDocument();
   });

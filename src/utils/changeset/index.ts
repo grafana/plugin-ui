@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
-import { fork } from "node:child_process";
-import { rm, rename, readFile, writeFile } from "node:fs/promises";
-import { join } from "node:path";
-import prompts from "prompts";
-import getChangesets from "@changesets/read";
-import writeChangesets from "@changesets/write";
-import { glob } from "fast-glob";
+import { fork } from 'node:child_process';
+import { rm, rename, readFile, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import prompts from 'prompts';
+import getChangesets from '@changesets/read';
+import writeChangesets from '@changesets/write';
+import { glob } from 'fast-glob';
 
 const changeTypes = {
-  feature: { icon: "🚀", prefix: "Feature" },
-  fix: { icon: "🐛", prefix: "Fix" },
-  docs: { icon: "📝", prefix: "Documentation" },
-  chore: { icon: "⚙️", prefix: "Chore" },
-  tests: { icon: "🧪", prefix: "Tests" },
-  refactor: { icon: "⚙️", prefix: "Chore" },
+  feature: { icon: '🚀', prefix: 'Feature' },
+  fix: { icon: '🐛', prefix: 'Fix' },
+  docs: { icon: '📝', prefix: 'Documentation' },
+  chore: { icon: '⚙️', prefix: 'Chore' },
+  tests: { icon: '🧪', prefix: 'Tests' },
+  refactor: { icon: '⚙️', prefix: 'Chore' },
 };
 const dir = process.cwd();
 
@@ -23,7 +23,7 @@ const dir = process.cwd();
 const args = process.argv.slice(2);
 
 (async () => {
-  if (args[0] === "version") {
+  if (args[0] === 'version') {
     // If this is a version change we only need to update CHANGELOG.md
     await runChangesetCmd(args);
     updateChangelogFiles();
@@ -43,9 +43,9 @@ const args = process.argv.slice(2);
 
   // Asking what's the change type
   const { changeType } = await prompts({
-    name: "changeType",
-    type: "select",
-    message: "What kind of change have you added?",
+    name: 'changeType',
+    type: 'select',
+    message: 'What kind of change have you added?',
     choices: Object.entries(changeTypes).map(([key, { icon }]) => ({
       title: `${icon} ${key}`,
       value: key,
@@ -62,29 +62,24 @@ const args = process.argv.slice(2);
     }))[0];
 
   // Remove the original changeset file
-  await rm(join(dir, ".changeset", `${newChangeset.id}.md`));
+  await rm(join(dir, '.changeset', `${newChangeset.id}.md`));
 
   // Write a new changeset file (includes change type), returns the new id
   const id = await writeChangesets(newChangeset, dir);
 
   // Rename new file to previous name
-  await rename(
-    join(dir, ".changeset", `${id}.md`),
-    join(dir, ".changeset", `${newChangeset.id}.md`)
-  );
+  await rename(join(dir, '.changeset', `${id}.md`), join(dir, '.changeset', `${newChangeset.id}.md`));
 })();
 
 function runChangesetCmd(args: string[]): Promise<void> {
   return new Promise((resolve, reject) => {
-    const child = fork(join(dir, "node_modules/.bin/changeset"), args);
-    child.on("error", reject);
-    child.on("close", (exitCode) => {
+    const child = fork(join(dir, 'node_modules/.bin/changeset'), args);
+    child.on('error', reject);
+    child.on('close', (exitCode) => {
       if (exitCode === 0) {
         resolve();
       } else {
-        reject(
-          new Error(`Changeset process exited with exit code ${exitCode}`)
-        );
+        reject(new Error(`Changeset process exited with exit code ${exitCode}`));
       }
     });
   });
@@ -92,8 +87,8 @@ function runChangesetCmd(args: string[]): Promise<void> {
 
 async function updateChangelogFiles() {
   const packageJson = JSON.parse(
-    await readFile(join(dir, "package.json"), {
-      encoding: "utf-8",
+    await readFile(join(dir, 'package.json'), {
+      encoding: 'utf-8',
     })
   ) as { workspaces?: string[] };
 
@@ -102,8 +97,8 @@ async function updateChangelogFiles() {
     : [dir];
 
   for (const rootDir of packageRoots) {
-    const filePath = join(rootDir, "CHANGELOG.md");
-    const content = await readFile(filePath, { encoding: "utf-8" });
+    const filePath = join(rootDir, 'CHANGELOG.md');
+    const content = await readFile(filePath, { encoding: 'utf-8' });
     const today = new Date();
     const date = `0${today.getDate()}`.slice(-2);
     const month = `0${today.getMonth() + 1}`.slice(-2);
@@ -111,7 +106,7 @@ async function updateChangelogFiles() {
     const formattedDate = `${year}-${month}-${date}`;
     const updatedChangeLog = content
       // Remove unnecessary titles
-      .replace(/\s### (Patch|Minor|Major) Changes\s+/gi, "")
+      .replace(/\s### (Patch|Minor|Major) Changes\s+/gi, '')
       // Add `v` prefix to the version and add date
       .replace(/## (\d+\.\d+.\d+)\s+/, `## v$1 - ${formattedDate}\n\n`);
 

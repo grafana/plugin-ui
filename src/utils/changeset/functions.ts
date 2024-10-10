@@ -1,13 +1,8 @@
-import {
-  GetReleaseLine,
-  GetDependencyReleaseLine,
-  ChangelogFunctions,
-} from "@changesets/types";
+import { GetReleaseLine, GetDependencyReleaseLine, ChangelogFunctions } from '@changesets/types';
 
-const getReleaseLine: GetReleaseLine = async (changeset) =>
-  `- ${changeset.summary}`;
+const getReleaseLine: GetReleaseLine = async (changeset) => `- ${changeset.summary}`;
 
-const getDependencyReleaseLine: GetDependencyReleaseLine = async () => "";
+const getDependencyReleaseLine: GetDependencyReleaseLine = async () => '';
 
 const defaultChangelogFunctions: ChangelogFunctions = {
   getReleaseLine,

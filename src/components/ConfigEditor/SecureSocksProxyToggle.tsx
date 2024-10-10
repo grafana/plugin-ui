@@ -47,7 +47,11 @@ export const SecureSocksProxyToggle = ({ labelWidth = 10, ...props }: Props) => 
                 </>
               }
             >
-              <InlineSwitch id="secureSocksProxyEnabled" value={dataSourceConfig.jsonData.enableSecureSocksProxy} onChange={handleSwitchChange} />
+              <InlineSwitch
+                id="secureSocksProxyEnabled"
+                value={dataSourceConfig.jsonData.enableSecureSocksProxy}
+                onChange={handleSwitchChange}
+              />
             </InlineField>
           </div>
         </div>

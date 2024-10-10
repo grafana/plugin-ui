@@ -1,2 +1,2 @@
-export { InlineLabel } from "./InlineLabel";
-export { SecureSocksProxyToggle } from "./SecureSocksProxyToggle";
+export { InlineLabel } from './InlineLabel';
+export { SecureSocksProxyToggle } from './SecureSocksProxyToggle';
