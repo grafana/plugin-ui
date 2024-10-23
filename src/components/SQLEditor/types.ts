@@ -280,7 +280,7 @@ export enum CompletionItemInsertTextRule {
   InsertAsSnippet = 4,
 }
 
-export enum EditorMode {
+export enum SQLEditorMode {
   Builder = 'builder',
   Code = 'code',
 }

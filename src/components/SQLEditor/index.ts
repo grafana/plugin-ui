@@ -22,5 +22,5 @@ export {
   CompletionItemPriority,
   CompletionItemInsertTextRule,
   type PositionContext,
-  EditorMode,
+  SQLEditorMode,
 } from './types';
