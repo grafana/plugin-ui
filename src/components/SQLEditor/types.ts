@@ -36,7 +36,7 @@ export interface ColumnDefinition {
   name: string;
   type?: string;
   description?: string;
-  // Text used for automplete. If not provided name is used.
+  // Text used for autocomplete. If not provided name is used.
   completion?: string;
 }
 
@@ -48,7 +48,7 @@ export interface SchemaDefinition {
 
 export interface TableDefinition {
   name: string;
-  // Text used for automplete. If not provided name is used.
+  // Text used for autocomplete. If not provided name is used.
   completion?: string;
 }
 
@@ -109,7 +109,7 @@ export interface SQLCompletionItemProvider
 
   /**
    * Allows providing a custom function for resolving schemas.
-   * It's up to the consumer to decide whether the schemas are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloades loaded).
+   * It's up to the consumer to decide whether the schemas are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloaded).
    * @alpha
    */
   schemas?: {
@@ -118,17 +118,17 @@ export interface SQLCompletionItemProvider
 
   /**
    * Allows providing a custom function for resolving db tables.
-   * It's up to the consumer to decide whether the columns are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloades loaded).
+   * It's up to the consumer to decide whether the columns are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloaded).
    * @alpha
    */
   tables?: {
     resolve: (TableIdentifier: TableIdentifier | null) => Promise<TableDefinition[]>;
-    // Allows providing a custom function for calculating the table name from the query. If not specified a default implemnentation is used.
+    // Allows providing a custom function for calculating the table name from the query. If not specified a default implementation is used.
     parseName?: (token: LinkedToken | null | undefined) => TableIdentifier;
   };
   /**
    * Allows providing a custom function for resolving table.
-   * It's up to the consumer to decide whether the columns are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloades loaded).
+   * It's up to the consumer to decide whether the columns are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloaded).
    * @alpha
    */
   columns?: {

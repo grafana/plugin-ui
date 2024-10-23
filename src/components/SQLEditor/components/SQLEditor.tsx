@@ -329,9 +329,9 @@ function extendStandardRegistries(id: string, lid: string, customProvider: SQLCo
       });
 
       if (kind.overrideDefault) {
-        const stbBehaviour = instanceSuggestionsRegistry.get(kind.id);
-        if (stbBehaviour !== undefined) {
-          stbBehaviour.suggestions = kind.suggestionsResolver;
+        const stbBehavior = instanceSuggestionsRegistry.get(kind.id);
+        if (stbBehavior !== undefined) {
+          stbBehavior.suggestions = kind.suggestionsResolver;
           continue;
         }
       }
@@ -345,9 +345,9 @@ function extendStandardRegistries(id: string, lid: string, customProvider: SQLCo
   }
 
   if (customProvider.schemas) {
-    const stbBehaviour = instanceSuggestionsRegistry.get(SuggestionKind.Schemas);
-    const s = stbBehaviour.suggestions;
-    stbBehaviour.suggestions = async (ctx, m) => {
+    const stbBehavior = instanceSuggestionsRegistry.get(SuggestionKind.Schemas);
+    const s = stbBehavior.suggestions;
+    stbBehavior.suggestions = async (ctx, m) => {
       const standardSchemas = await s(ctx, m);
       if (!customProvider.schemas) {
         return [...standardSchemas];
@@ -365,9 +365,9 @@ function extendStandardRegistries(id: string, lid: string, customProvider: SQLCo
   }
 
   if (customProvider.tables) {
-    const stbBehaviour = instanceSuggestionsRegistry.get(SuggestionKind.Tables);
-    const s = stbBehaviour.suggestions;
-    stbBehaviour.suggestions = async (ctx, m) => {
+    const stbBehavior = instanceSuggestionsRegistry.get(SuggestionKind.Tables);
+    const s = stbBehavior.suggestions;
+    stbBehavior.suggestions = async (ctx, m) => {
       const o = await s(ctx, m);
       const tableToken = getTableToken(ctx.currentToken);
       const tableNameParser = customProvider.tables?.parseName ?? defaultTableNameParser;
@@ -388,9 +388,9 @@ function extendStandardRegistries(id: string, lid: string, customProvider: SQLCo
   }
 
   if (customProvider.columns) {
-    const stbBehaviour = instanceSuggestionsRegistry.get(SuggestionKind.Columns);
-    const s = stbBehaviour.suggestions;
-    stbBehaviour.suggestions = async (ctx, m) => {
+    const stbBehavior = instanceSuggestionsRegistry.get(SuggestionKind.Columns);
+    const s = stbBehavior.suggestions;
+    stbBehavior.suggestions = async (ctx, m) => {
       const o = await s(ctx, m);
       const tableToken = getTableToken(ctx.currentToken);
       let tableIdentifier;

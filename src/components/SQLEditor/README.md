@@ -4,7 +4,7 @@
 
 - `SuggestionKind` - a descriptive string representing a type of a suggestion, i.e. `SelectKeyword`, `Tables`, `LogicalOperators` etc.
 - `LinkedToken` - linked list element representing each individual token with a query. Allows traversing the query back and forth. Used by `StatementPositionResolver`(see below)
-- `StatementPosition` - a desctiptive string representing cursor/token position within the query. Each statement position is defined together with `StatementPositionResolver` that, given some position context, returns a boolean value indicating whether or not we are in a given `StatementPosition` position.
+- `StatementPosition` - a descriptive string representing cursor/token position within the query. Each statement position is defined together with `StatementPositionResolver` that, given some position context, returns a boolean value indicating whether or not we are in a given `StatementPosition` position.
   ```ts
   export type StatementPositionResolver = (
     currentToken: LinkedToken | null,
@@ -13,19 +13,19 @@
     previousIsSlash: Boolean // To be removed as it's CloudWatch specific
   ) => Boolean;
   ```
-- `SuggestionKind` and `StatementPosition` are glued together via suggestions kind registry (language specific!). This registry contains items of `SuggestionKindRegistyItem` type of the following interface:
+- `SuggestionKind` and `StatementPosition` are glued together via suggestions kind registry (language specific!). This registry contains items of `SuggestionKindRegistryItem` type of the following interface:
   ```ts
-  export interface SuggestionKindRegistyItem extends RegistryItem {
+  export interface SuggestionKindRegistryItem extends RegistryItem {
     id: StatementPosition;
     kind: SuggestionKind[];
   }
   ```
   This item defines what kinds of suggestions should be provided in a given statement position
 - Registries. There are couple of different registries used that drive the autocomplete mechanism.
-  - **Language specific**: functions registry, operators registry, suggestion kinds registries and statement position resolvers registires. Those registires contain SQL defaults as well as allow extension per language type.
-  - **Instance specific**: Registry of `SuggestionsRegistyItem` items that glue particular `SuggestionKind` with an async function that provides completion items for it.
+  - **Language specific**: functions registry, operators registry, suggestion kinds registries and statement position resolvers registries. Those registries contain SQL defaults as well as allow extension per language type.
+  - **Instance specific**: Registry of `SuggestionsRegistryItem` items that glue particular `SuggestionKind` with an async function that provides completion items for it.
     ```ts
-    export interface SuggestionsRegistyItem extends RegistryItem {
+    export interface SuggestionsRegistryItem extends RegistryItem {
       id: SuggestionKind;
       suggestions: (position: PositionContext, m: typeof monacoTypes) => Promise<CustomSuggestion[]>;
     }
@@ -39,7 +39,7 @@ Goals
 - [ ] Allow providing suggestions for standard-ish SQL syntax (THIS PR)
 - [ ] Allow providing custom SQL dialects and suggestions for them (TODO - CloudWatch implementation sets a good base for how to provide custom dialect definition)
 
-`SQLEditor` component builds on top of `CodeEditor` component, but we may want to base it on `ReactMonacoEditor` component instead to be less prone to `CodeEditor` API changes and have full controll over the Monaco API. For now the `CodeEditor` is good enough for a simplification.
+`SQLEditor` component builds on top of `CodeEditor` component, but we may want to base it on `ReactMonacoEditor` component instead to be less prone to `CodeEditor` API changes and have full control over the Monaco API. For now the `CodeEditor` is good enough for a simplification.
 
 `SQLEditor` API:
 
@@ -90,7 +90,6 @@ export interface SQLCompletionItemProvider
     type: OperatorType;
   }>;
 
-
   /**
    * Allows adding macros that are available in the dialect datasource.
    * @alpha
@@ -100,7 +99,7 @@ export interface SQLCompletionItemProvider
     name: string;
     type: MacroType;
     args: Array<string>;
-  }>
+  }>;
 
   /**
    * Allows custom suggestion kinds to be defined and correlate them with <Custom>StatementPosition.
@@ -116,17 +115,17 @@ export interface SQLCompletionItemProvider
 
   /**
    * Allows providing a custom function for resolving db tables.
-   * It's up to the consumer to decide whether the columns are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloades loaded).
+   * It's up to the consumer to decide whether the columns are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloaded).
    * @alpha
    */
   tables?: {
     resolve: () => Promise<TableDefinition[]>;
-    // Allows providing a custom function for calculating the table name from the query. If not specified a default implemnentation is used. I.e. BigQuery requires the table name to be fully qualified name: <project>.<dataset>.<table>
+    // Allows providing a custom function for calculating the table name from the query. If not specified a default implementation is used. I.e. BigQuery requires the table name to be fully qualified name: <project>.<dataset>.<table>
     parseName?: (t: LinkedToken) => string;
   };
   /**
    * Allows providing a custom function for resolving table.
-   * It's up to the consumer to decide whether the columns are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloades loaded).
+   * It's up to the consumer to decide whether the columns are resolved via API calls or preloaded in the query editor(i.e. full db schema is preloaded).
    * @alpha
    */
   columns?: {

@@ -45,7 +45,7 @@ export const testStatementPosition = (
       });
     });
 
-    // using forEach here rather than test.each as been struggling to get the arguments intepolated in test name string
+    // using forEach here rather than test.each as been struggling to get the arguments interpolated in test name string
     cases.forEach((c) => {
       test(`${c.query.query}`, () => {
         assertPosition(
