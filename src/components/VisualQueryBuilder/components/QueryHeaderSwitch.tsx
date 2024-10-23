@@ -5,7 +5,7 @@ import React, { HTMLProps, useRef } from 'react';
 import { GrafanaTheme2 } from '@grafana/data';
 import { Switch, useStyles2 } from '@grafana/ui';
 
-import { Stack } from '../../QueryEditor/Stack';
+import { EditorStack } from '../../QueryEditor';
 
 interface Props extends Omit<HTMLProps<HTMLInputElement>, 'value' | 'ref'> {
   value?: boolean;
@@ -18,12 +18,12 @@ export function QueryHeaderSwitch({ label, ...inputProps }: Props) {
   const styles = useStyles2(getStyles);
 
   return (
-    <Stack gap={1}>
+    <EditorStack gap={1}>
       <label htmlFor={switchIdRef.current} className={styles.switchLabel}>
         {label}
       </label>
       <Switch {...inputProps} id={switchIdRef.current} />
-    </Stack>
+    </EditorStack>
   );
 }
 

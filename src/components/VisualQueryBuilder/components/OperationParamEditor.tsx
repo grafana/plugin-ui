@@ -6,7 +6,7 @@ import { AutoSizeInput, Button, Checkbox, Select, useStyles2 } from '@grafana/ui
 
 import { QueryBuilderOperationParamDef, QueryBuilderOperationParamEditorProps } from '../types';
 
-import { Stack } from '../../QueryEditor/Stack'
+import { EditorStack } from '../../QueryEditor';
 
 export function getOperationParamEditor(
   paramDef: QueryBuilderOperationParamDef
@@ -96,7 +96,7 @@ function SelectInputParamEditor({
   }
 
   return (
-    <Stack gap={0.5} direction="row" alignItems="center">
+    <EditorStack gap={0.5} direction="row" alignItems="center">
       <Select
         id={getOperationParamId(operationId, index)}
         value={valueOption}
@@ -117,7 +117,7 @@ function SelectInputParamEditor({
           onClick={() => onChange(index, '')}
         />
       )}
-    </Stack>
+    </EditorStack>
   );
 }
 
@@ -128,7 +128,6 @@ const getStyles = (theme: GrafanaTheme2) => {
     }),
   };
 };
-
 
 export function getOperationParamId(operationId: string, paramIndex: number) {
   return `operations.${operationId}.param.${paramIndex}`;

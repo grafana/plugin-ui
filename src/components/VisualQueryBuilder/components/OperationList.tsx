@@ -8,8 +8,7 @@ import { Button, Cascader, CascaderOption, useStyles2 } from '@grafana/ui';
 
 import { OperationEditor } from './OperationEditor';
 import { QueryBuilderOperation, VisualQuery, VisualQueryModeller } from '../types';
-
-import { Stack } from '../../QueryEditor/Stack';
+import { EditorStack } from '../../QueryEditor';
 
 export interface Props<T extends VisualQuery> {
   query: T;
@@ -89,8 +88,8 @@ export function OperationList<T extends VisualQuery>({
   };
 
   return (
-    <Stack gap={1} direction="column">
-      <Stack gap={1}>
+    <EditorStack gap={1} direction="column">
+      <EditorStack gap={1}>
         {operations.length > 0 && (
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="sortable-field-mappings" direction="horizontal">
@@ -138,8 +137,8 @@ export function OperationList<T extends VisualQuery>({
             </Button>
           )}
         </div>
-      </Stack>
-    </Stack>
+      </EditorStack>
+    </EditorStack>
   );
 }
 

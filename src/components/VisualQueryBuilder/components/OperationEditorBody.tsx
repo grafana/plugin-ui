@@ -13,8 +13,8 @@ import {
   VisualQueryModeller,
 } from '../types';
 import { getOperationParamEditor, getOperationParamId } from './OperationParamEditor';
-import { Stack } from '../../QueryEditor/Stack';
 import { v4 } from 'uuid';
+import { EditorStack } from '../../QueryEditor';
 
 type Props = {
   provided: DraggableProvided;
@@ -116,7 +116,7 @@ export function OperationEditorBody({
                 </div>
               )}
               <div className={styles.paramValue}>
-                <Stack gap={0.5} direction="row" alignItems="center" wrap={false}>
+                <EditorStack gap={0.5} direction="row" alignItems="center" wrap={false}>
                   <Editor
                     index={paramIndex}
                     paramDef={paramDef}
@@ -141,7 +141,7 @@ export function OperationEditorBody({
                       onClick={() => onRemoveRestParam(paramIndex)}
                     />
                   )}
-                </Stack>
+                </EditorStack>
               </div>
             </div>
           );

@@ -1,15 +1,16 @@
 import React from 'react';
-
-import { Stack } from './Stack';
+import { EditorStack } from './EditorStack';
 
 interface EditorRowsProps {
   children?: React.ReactNode;
 }
-
+/**
+ * Uses Stack component from @grafana/ui. Available starting from @grafana/ui@10.2.3
+ */
 export const EditorRows = ({ children }: EditorRowsProps) => {
   return (
-    <Stack gap={0.5} direction="column">
+    <EditorStack gap={0.5} direction="column">
       {children}
-    </Stack>
+    </EditorStack>
   );
 };

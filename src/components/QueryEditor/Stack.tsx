@@ -11,7 +11,9 @@ interface StackProps {
   wrap?: boolean;
   gap?: number;
 }
-
+/**
+ * @deprecated use the EditorStack component. Available starting from @grafana/ui@10.2.3
+ */
 export const Stack = ({ children, ...props }: StackProps) => {
   const theme = useTheme2();
   const styles = useStyles(theme, props);
