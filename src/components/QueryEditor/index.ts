@@ -9,7 +9,7 @@ export { EditorList } from './EditorList';
 export { EditorRows } from './EditorRows';
 export { EditorSwitch } from './EditorSwitch';
 export { FlexItem } from './FlexItem';
-export { Stack } from './Stack';
+export { EditorStack } from './EditorStack';
 export { InlineSelect } from './InlineSelect';
 export { InputGroup } from './InputGroup';
 export { Space } from './Space';

@@ -6,9 +6,8 @@ import { getValueFormat, GrafanaTheme2 } from '@grafana/data';
 import { config } from '@grafana/runtime';
 import { Collapse, Icon, Tooltip, useStyles2 } from '@grafana/ui';
 
-import { Stack } from '../../QueryEditor/Stack';
 import { QueryStats } from '../types';
-
+import { EditorStack } from '../../QueryEditor';
 
 interface Props {
   title: string;
@@ -28,7 +27,7 @@ export function QueryOptionGroup({ title, children, collapsedInfo, queryStats }:
         isOpen={isOpen}
         onToggle={toggleOpen}
         label={
-          <Stack gap={0}>
+          <EditorStack gap={0}>
             <h6 className={styles.title}>{title}</h6>
             {!isOpen && (
               <div className={styles.description}>
@@ -37,12 +36,12 @@ export function QueryOptionGroup({ title, children, collapsedInfo, queryStats }:
                 ))}
               </div>
             )}
-          </Stack>
+          </EditorStack>
         }
       >
         <div className={styles.body}>{children}</div>
       </Collapse>
-      {/**TODO: This is Loki logic that should eventually be moved to Loki */} 
+      {/**TODO: This is Loki logic that should eventually be moved to Loki */}
       {queryStats && config.featureToggles.lokiQuerySplitting && (
         <Tooltip content="Note: the query will be split into multiple parts and executed in sequence. Query limits will only apply each individual part.">
           <Icon tabIndex={0} name="info-circle" className={styles.tooltip} size="sm" />

@@ -4,14 +4,14 @@ import React from 'react';
 import { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2 } from '@grafana/ui';
 
-import { Stack } from '../../QueryEditor/Stack';
+import { EditorStack } from '../../QueryEditor';
 
 export function OperationsEditorRow({ children }: React.PropsWithChildren<{}>) {
   const styles = useStyles2(getStyles);
 
   return (
     <div className={styles.root}>
-      <Stack gap={1}>{children}</Stack>
+      <EditorStack gap={1}>{children}</EditorStack>
     </div>
   );
 }
