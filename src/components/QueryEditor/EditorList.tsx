@@ -12,7 +12,7 @@ interface EditorListProps<T> {
   onChange: (items: Array<Partial<T>>) => void;
 }
 /**
- * Uses Stack component from @grafana/ui. Available starting from @grafana/ui@10.2.3
+ * Uses Stack component from grafana-ui. Available starting from grafana-ui@10.2.3
  */
 export const EditorList = React.forwardRef(function EditorList<T>(
   { items, renderItem, onChange }: EditorListProps<T>,
