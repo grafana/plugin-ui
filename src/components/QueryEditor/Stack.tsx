@@ -12,7 +12,7 @@ interface StackProps {
   gap?: number;
 }
 /**
- * @deprecated use the EditorStack component. Available starting from @grafana/ui@10.2.3
+ * @deprecated use the EditorStack component. Available starting from grafana-ui@10.2.3
  */
 export const Stack = ({ children, ...props }: StackProps) => {
   const theme = useTheme2();
