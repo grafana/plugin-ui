@@ -22,7 +22,7 @@ interface State {
  * This is an Input field that will call `onChange` for blur and enter
  *
  * @internal this is not exported to the `@grafana/ui` library, it is used
- * by options editor (number and slider), and direclty with in grafana core
+ * by options editor (number and slider), and directly with in grafana core
  */
 
 export class NumberInput extends PureComponent<Props, State> {
