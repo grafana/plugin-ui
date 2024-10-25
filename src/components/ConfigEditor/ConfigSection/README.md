@@ -33,7 +33,7 @@ The section description property is optional, but it should only be omitted if t
 ## Usage
 
 ```tsx
-import {ConfigSection, ConfigSubSection} from '@grafana/experimental'
+import {ConfigSection, ConfigSubSection} from '@grafana/plugin-ui'
 
 
 export const ConfigEditor = (props: Props) => {

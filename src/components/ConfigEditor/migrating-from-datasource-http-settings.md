@@ -37,7 +37,7 @@ import {
   Auth
   AdvancedHttpSettings,
   convertLegacyAuthProps,
-} from '@grafana/experimental'
+} from '@grafana/plugin-ui'
 
 export const ConfigEditor = (props: Props) => {
   // ...

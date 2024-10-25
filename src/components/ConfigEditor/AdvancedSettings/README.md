@@ -35,7 +35,7 @@ import {
   ConfigSection,
   ConfigSubSection,
   AdvancedHttpSettings
-} from '@grafana/experimental'
+} from '@grafana/plugin-ui'
 
 
 export const ConfigEditor = (props: Props) => {
