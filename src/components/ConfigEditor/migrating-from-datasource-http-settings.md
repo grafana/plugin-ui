@@ -2,7 +2,7 @@
 
 ## Overview
 
-As `DataSourceHttpSettings` has a number of UX issues and is considered deprecated, `@grafana/experimental` package has a few components that will help you to migrate away from it. The new components are stored here in `@grafana/experimental` so that they can be used in both core and external datasources regardless of Grafana version (Enterprise datasources must support at least 2 latest major Grafana versions).
+As `DataSourceHttpSettings` has a number of UX issues and is considered deprecated, `@grafana/plugin-ui` package has a few components that will help you to migrate away from it. The new components can be used in both core and external datasources regardless of Grafana version (Enterprise datasources must support at least 2 latest major Grafana versions).
 
 According to the [datasource configuration best practices](https://docs.google.com/document/d/11XMaYHSMSra8AoN2-yVW-5QPbjEXgkAFbTIF6N84cGE/edit) the data source configuration page should consist of multiple sections, so there is no single component that can just replace `DataSourceHttpSettings` component. Instead, there are 3 components that will take care of different parts of the `DataSourceHttpSettings` and they can be placed in different places inside the datasource config editor. This is how mapping old -> new looks like:
 

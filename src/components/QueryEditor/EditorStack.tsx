@@ -23,14 +23,9 @@ interface StackProps {
   gap?: ThemeSpacingTokens;
 }
 
-export const EditorStack = ({ children, wrap: wrapItems, ...props }: StackProps) => {
+export const EditorStack = ({ children, wrap: wrapItems = true, ...props }: StackProps) => {
   return (
-    <Stack
-      wrap={(wrapItems ?? 'true') ? 'wrap' : undefined}
-      direction={props.direction ?? 'row'}
-      gap={props.gap ?? 2}
-      {...props}
-    >
+    <Stack wrap={wrapItems ? 'wrap' : undefined} direction={props.direction ?? 'row'} gap={props.gap ?? 2} {...props}>
       {children}
     </Stack>
   );

@@ -23,7 +23,6 @@
   "dependencies": {
     "@changesets/read": "^0.5.9",
     "@changesets/write": "^0.2.3",
-    "@grafana/experimental": "1.7.4",
     "@hello-pangea/dnd": "^17.0.0",
     "chance": "^1.1.7",
     "fast-glob": "^3.3.1",
