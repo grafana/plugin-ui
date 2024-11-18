@@ -4,15 +4,14 @@ React components for Grafana plugins
 
 ## Datasource Query and Config editor component compatibility
 
-Version 1.0.0 of plugin-ui is compatible with Grafana versions 10.4.0 and higher. If you're using plugin-ui@1.0.0 and importing Query Editor and Config Editor components, you must update the `grafanaDependency` field in your plugin.json file. 
-When you do that, consider also incrementing you plugin major version to make sure Grafana users do not accidentally install a version incompatible with their earlier Grafana versions. 
+Version 1.0.0 of plugin-ui is compatible with Grafana versions 10.4.0 and higher. If you're using plugin-ui@1.0.0 and importing Query Editor and Config Editor components, you must update the `grafanaDependency` field in your plugin.json file.
+When you do that, consider also incrementing you plugin major version to make sure Grafana users do not accidentally install a version incompatible with their earlier Grafana versions.
 
 ## Compatibility
 
 There are situations when we require backwards compatibility with core Grafana and new features are only supported by newer versions.
 
 To handle this, we've introduced the `compatibility.ts` file which contains a list of features and the versions they support for better maintainability.
-
 
 ### Considerations
 
