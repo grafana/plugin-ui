@@ -1,7 +1,6 @@
 import { Button } from '@grafana/ui';
 import React from 'react';
-
-import { Stack } from './Stack';
+import { EditorStack } from './EditorStack';
 
 interface EditorListProps<T> {
   items: Array<Partial<T>>;
@@ -13,7 +12,10 @@ interface EditorListProps<T> {
   onChange: (items: Array<Partial<T>>) => void;
 }
 
-export function EditorList<T>({ items, renderItem, onChange }: EditorListProps<T>) {
+export const EditorList = React.forwardRef(function EditorList<T>(
+  { items, renderItem, onChange }: EditorListProps<T>,
+  ref: React.Ref<HTMLButtonElement>
+) {
   const onAddItem = () => {
     const newItems = [...items, {}];
 
@@ -32,7 +34,7 @@ export function EditorList<T>({ items, renderItem, onChange }: EditorListProps<T
     onChange(newItems);
   };
   return (
-    <Stack>
+    <EditorStack>
       {items.map((item, index) => (
         <div key={index}>
           {renderItem(
@@ -42,7 +44,7 @@ export function EditorList<T>({ items, renderItem, onChange }: EditorListProps<T
           )}
         </div>
       ))}
-      <Button onClick={onAddItem} variant="secondary" size="md" icon="plus" aria-label="Add" type="button" />
-    </Stack>
+      <Button ref={ref} onClick={onAddItem} variant="secondary" size="md" icon="plus" aria-label="Add" type="button" />
+    </EditorStack>
   );
-}
+});

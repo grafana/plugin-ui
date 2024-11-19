@@ -11,7 +11,9 @@ interface StackProps {
   wrap?: boolean;
   gap?: number;
 }
-
+/**
+ * @deprecated use the EditorStack component
+ */
 export const Stack = ({ children, ...props }: StackProps) => {
   const theme = useTheme2();
   const styles = useStyles(theme, props);
