@@ -12,9 +12,6 @@ interface EditorFieldProps extends ComponentProps<typeof Field> {
   tooltip?: PopoverContent;
   tooltipInteractive?: boolean;
 }
-/**
- * Uses Space component from grafana-ui. Available starting from grafana-ui@10.4.0
- */
 export const EditorField = (props: EditorFieldProps) => {
   const { label, optional, tooltip, tooltipInteractive, children, width, ...fieldProps } = props;
 
