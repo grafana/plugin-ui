@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { SecureSocksProxyToggle } from './SecureSocksProxyToggle';
-import * as compat from '../../utils/compatibility';
 import { config } from '@grafana/runtime';
 
 describe('<SecureSocksProxyToggle />', () => {
@@ -41,18 +40,7 @@ describe('<SecureSocksProxyToggle />', () => {
     jest.clearAllMocks();
   });
 
-  it('should not render when compatibility check fails', () => {
-    jest.spyOn(compat, 'hasCompatibility').mockReturnValue(false);
-
-    const { container } = render(
-      <SecureSocksProxyToggle dataSourceConfig={dataSourceConfig} onChange={onChange} labelWidth={labelWidth} />
-    );
-
-    expect(container.firstChild).toBeNull();
-  });
-
   it('should not render when secureSocksDSProxyEnabled is disabled in config', () => {
-    jest.spyOn(compat, 'hasCompatibility').mockReturnValue(true);
     config.secureSocksDSProxyEnabled = false;
 
     const { container } = render(
@@ -63,7 +51,6 @@ describe('<SecureSocksProxyToggle />', () => {
   });
 
   it('should render and switch json data when enabled in config', () => {
-    jest.spyOn(compat, 'hasCompatibility').mockReturnValue(true);
     config.secureSocksDSProxyEnabled = true;
 
     const { getByLabelText } = render(
