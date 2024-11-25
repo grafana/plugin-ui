@@ -5,9 +5,8 @@ import { SelectableValue } from '@grafana/data';
 
 import { ConfirmModal } from './ConfirmModal';
 import { DatasetSelector } from './DatasetSelector';
-import { ErrorBoundary } from './ErrorBoundary';
 import { TableSelector } from './TableSelector';
-import { InlineField, Select, InlineSwitch, RadioButtonGroup } from '@grafana/ui';
+import { InlineSwitch, RadioButtonGroup } from '@grafana/ui';
 import { QueryWithDefaults } from './defaults';
 import { EditorField } from './EditorField';
 import { EditorHeader } from './EditorHeader';
