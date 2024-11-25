@@ -5,9 +5,8 @@ import { SelectableValue } from '@grafana/data';
 
 import { ConfirmModal } from './ConfirmModal';
 import { DatasetSelector } from './DatasetSelector';
-import { ErrorBoundary } from './ErrorBoundary';
 import { TableSelector } from './TableSelector';
-import { InlineField, Select, InlineSwitch, RadioButtonGroup } from '@grafana/ui';
+import { InlineSwitch, RadioButtonGroup } from '@grafana/ui';
 import { QueryWithDefaults } from './defaults';
 import { EditorField } from './EditorField';
 import { EditorHeader } from './EditorHeader';
@@ -103,29 +102,14 @@ export function QueryHeader({
   return (
     <>
       <EditorHeader>
-        {/* Backward compatibility check. Inline select uses SelectContainer that was added in 8.3 */}
-        <ErrorBoundary
-          fallBackComponent={
-            <InlineField label="Format" labelWidth={15}>
-              <Select
-                placeholder="Select format"
-                value={query.format}
-                onChange={onFormatChange}
-                options={QUERY_FORMAT_OPTIONS}
-              />
-            </InlineField>
-          }
-        >
-          <InlineSelect
-            label="Format"
-            value={query.format}
-            placeholder="Select format"
-            menuShouldPortal
-            onChange={onFormatChange}
-            options={QUERY_FORMAT_OPTIONS}
-          />
-        </ErrorBoundary>
-
+        <InlineSelect
+          label="Format"
+          value={query.format}
+          placeholder="Select format"
+          menuShouldPortal
+          onChange={onFormatChange}
+          options={QUERY_FORMAT_OPTIONS}
+        />
         {editorMode === EditorMode.Builder && (
           <>
             <InlineSwitch
