@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.9.1 - 2024-11-25
+
+- Remove unused dependencies
+
 ## v0.9.0 - 2024-11-25
 
 - Add unit testing infrastructure and script [#98](https://github.com/grafana/plugin-ui/pull/98)
@@ -11,7 +15,6 @@
 - Migrate SQL editor from grafana/experimental [#104](https://github.com/grafana/plugin-ui/pull/104)
 - Migrate Query Editor components from grafana/experimental [#105](https://github.com/grafana/plugin-ui/pull/105)
 - Remove compatibility feature and unused code for Grafana@8 [#107](https://github.com/grafana/plugin-ui/pull/107)
-
 
 ## v0.8.0 - 2024-07-30
 
