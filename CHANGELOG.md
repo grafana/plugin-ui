@@ -1,5 +1,18 @@
 # Change Log
 
+## v0.9.0 - 2024-11-25
+
+- Add unit testing infrastructure and script [#98](https://github.com/grafana/plugin-ui/pull/98)
+- Add linting infrastructure and bump node version to 20 [#99](https://github.com/grafana/plugin-ui/pull/99)
+- Add VisualQueryBuilder from grafana/experimental [#100](https://github.com/grafana/plugin-ui/pull/100)
+- Improve build and lint scripts, add prettier and pre-commit hook [#101](https://github.com/grafana/plugin-ui/pull/101)
+- Chore: Relax peer dependencies [#102](https://github.com/grafana/plugin-ui/pull/102)
+- Move config editor components from grafana/experimental [#103](https://github.com/grafana/plugin-ui/pull/103)
+- Migrate SQL editor from grafana/experimental [#104](https://github.com/grafana/plugin-ui/pull/104)
+- Migrate Query Editor components from grafana/experimental [#105](https://github.com/grafana/plugin-ui/pull/105)
+- Remove compatibility feature and unused code for Grafana@8 [#107](https://github.com/grafana/plugin-ui/pull/107)
+
+
 ## v0.8.0 - 2024-07-30
 
 - ⚙️ **Chore**: Update `@grafana` dependencies from v9 to `10.4.0` and make them peerDependencies and devDependencies
