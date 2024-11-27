@@ -6,7 +6,7 @@ const standardSQLLanguageDefinition: LanguageDefinition = {
   extensions: ['.sql'],
   aliases: ['sql'],
   mimetypes: [],
-  loader: () => import('./language'),
+  loader: () => require('./language'),
 
   completionProvider: getStandardSQLCompletionProvider,
 };
