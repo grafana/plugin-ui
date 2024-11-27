@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.9.2 - 2024-11-27
+
+- Fix a bug in the SQLEditor component that caused autocomplete and syntax highlighting to not work
+
 ## v0.9.1 - 2024-11-25
 
 - Remove unused dependencies
