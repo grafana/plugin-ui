@@ -17,7 +17,7 @@ import {
   QueryEditorGroupByExpression,
   QueryEditorPropertyExpression,
 } from './expressions';
-import { CompletionItemKind, LanguageCompletionProvider } from '@grafana/experimental';
+import { CompletionItemKind, LanguageCompletionProvider } from '../SQLEditor';
 
 export interface SqlQueryForInterpolation {
   dataset?: string;

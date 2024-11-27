@@ -23,7 +23,7 @@ Even though the new component has completely different props shape, there is a s
 **Example**:
 
 ```tsx
-import { Auth, convertLegacyAuthProps } from '@grafana/experimental';
+import { Auth, convertLegacyAuthProps } from '@grafana/plugin-ui';
 
 // Your config editor component
 export const ConfigEditor = (props) => {
@@ -174,7 +174,7 @@ In some cases you might want to use the `convertLegacyAuthProps` helper to creat
 It can make using the `Auth` component extremely easy and still provide enough flexibility to customize it for your needs. For instance using the `BasicAuth` we can change it's name and description shown in the dropdown, as well as the tooltips.
 
 ```tsx
-import { Auth, AuthMethod, convertLegacyAuthProps } from '@grafana/experimental';
+import { Auth, AuthMethod, convertLegacyAuthProps } from '@grafana/plugin-ui';
 
 export const ConfigEditor = ({ options, onOptionsChange }) => {
   const AuthMethodsList = [AuthMethod.NoAuth, AuthMethod.BasicAuth];

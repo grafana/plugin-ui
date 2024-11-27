@@ -44,7 +44,7 @@ type Props = {
 The common scenario if you are just replacing the legacy `DataSourceHttpSettings` component is as simple as:
 
 ```tsx
-import {ConnectionSettings} from '@grafana/experimental'
+import {ConnectionSettings} from '@grafana/plugin-ui'
 
 
 export const ConfigEditor = (props: Props) => {

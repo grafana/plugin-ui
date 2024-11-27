@@ -175,6 +175,8 @@
     "VERIFYSIGNEDBYCERT",
     "WAITFOR",
     "WRITETEXT",
-    "XACT"
+    "XACT",
+    "comparitor", 
+    "pangea"
   ]
 }

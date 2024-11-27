@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Stack } from './Stack';
+import { EditorStack } from './EditorStack';
 
 interface EditorRowsProps {
   children?: React.ReactNode;
@@ -8,8 +7,8 @@ interface EditorRowsProps {
 
 export const EditorRows = ({ children }: EditorRowsProps) => {
   return (
-    <Stack gap={0.5} direction="column">
+    <EditorStack gap={0.5} direction="column">
       {children}
-    </Stack>
+    </EditorStack>
   );
 };

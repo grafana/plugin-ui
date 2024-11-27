@@ -2,7 +2,6 @@ import React from 'react';
 import { InlineLabel as OriginalInlineLabel, InlineField, InlineSwitch } from '@grafana/ui';
 import { config } from '@grafana/runtime';
 import { DataSourceSettings } from '@grafana/data';
-import { hasCompatibility, CompatibilityFeature } from '../../utils/compatibility';
 
 type Props = Omit<React.ComponentProps<typeof OriginalInlineLabel>, 'children'> & {
   dataSourceConfig: DataSourceSettings<any, any>;
@@ -23,8 +22,6 @@ export const SecureSocksProxyToggle = ({ labelWidth = 10, ...props }: Props) => 
   };
 
   return (
-    /* if the compatibility check returns true, secureSocksDSProxyEnabled will be an option in the Grafana config */
-    hasCompatibility(CompatibilityFeature.SECURE_SOCKS_PROXY) &&
     (config as any).secureSocksDSProxyEnabled && (
       <div>
         <div className="gf-form">
