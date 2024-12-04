@@ -1,6 +1,6 @@
 import { Props as AuthProps } from './Auth';
 import { AuthMethod, Header, CustomMethodId } from './types';
-import { Config, OnChangeHandler } from '../types';
+import { CommonConfig, Config, OnChangeHandler, OnCommonChangeHandler } from '../types';
 
 const headerNamePrefix = 'httpHeaderName';
 const headerValuePrefix = 'httpHeaderValue';
@@ -82,11 +82,11 @@ export function getBasicAuthProps<C extends Config = Config>(
   };
 }
 
-export function getTLSProps<C extends Config = Config>(config: C, onChange: OnChangeHandler<C>): AuthProps['TLS'] {
+export function getTLSProps<C extends CommonConfig>(config: C, onChange: OnCommonChangeHandler<C>): AuthProps['TLS'] {
   return {
     selfSignedCertificate: {
       enabled: Boolean(config.jsonData.tlsAuthWithCACert),
-      certificateConfigured: config.secureJsonFields.tlsCACert,
+      certificateConfigured: !!config.secureJsonFields?.tlsCACert,
       onToggle: (enabled) =>
         enabled
           ? onChange({
@@ -114,8 +114,8 @@ export function getTLSProps<C extends Config = Config>(config: C, onChange: OnCh
     TLSClientAuth: {
       enabled: config.jsonData.tlsAuth,
       serverName: config.jsonData.serverName,
-      clientCertificateConfigured: config.secureJsonFields.tlsClientCert,
-      clientKeyConfigured: config.secureJsonFields.tlsClientKey,
+      clientCertificateConfigured: !!config.secureJsonFields?.tlsClientCert,
+      clientKeyConfigured: !!config.secureJsonFields?.tlsClientKey,
       onToggle: (enabled) =>
         enabled
           ? onChange({
