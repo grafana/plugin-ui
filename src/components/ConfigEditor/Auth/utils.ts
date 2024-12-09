@@ -82,7 +82,7 @@ export function getBasicAuthProps<C extends Config = Config>(
   };
 }
 
-export function getTLSProps<C extends Config>(config: C, onChange: OnChangeHandler<C>): AuthProps['TLS'] {
+export function getTLSProps<C extends Config = Config>(config: C, onChange: OnChangeHandler<C>): AuthProps['TLS'] {
   return {
     selfSignedCertificate: {
       enabled: Boolean(config.jsonData.tlsAuthWithCACert),
