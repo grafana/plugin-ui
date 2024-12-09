@@ -1,6 +1,6 @@
 import { Props as AuthProps } from './Auth';
 import { AuthMethod, Header, CustomMethodId } from './types';
-import { CommonConfig, Config, OnChangeHandler, OnCommonChangeHandler } from '../types';
+import { Config, OnChangeHandler } from '../types';
 
 const headerNamePrefix = 'httpHeaderName';
 const headerValuePrefix = 'httpHeaderValue';
@@ -82,7 +82,7 @@ export function getBasicAuthProps<C extends Config = Config>(
   };
 }
 
-export function getTLSProps<C extends CommonConfig>(config: C, onChange: OnCommonChangeHandler<C>): AuthProps['TLS'] {
+export function getTLSProps<C extends Config>(config: C, onChange: OnChangeHandler<C>): AuthProps['TLS'] {
   return {
     selfSignedCertificate: {
       enabled: Boolean(config.jsonData.tlsAuthWithCACert),

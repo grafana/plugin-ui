@@ -1,14 +1,17 @@
-import { DataSourceSettings, DataSourceJsonData, PluginMeta } from '@grafana/data';
+import { DataSourceSettings, DataSourceJsonData } from '@grafana/data';
 
-export type Config<JSONData extends DataSourceJsonData = any, SecureJSONData = any> = DataSourceSettings<
-  JSONData,
-  SecureJSONData
->;
+type DataSourceExclusiveConfig = {
+  readOnly: DataSourceSettings['readOnly'];
+  url: DataSourceSettings['url'];
+  basicAuth: DataSourceSettings['basicAuth'];
+  basicAuthUser: DataSourceSettings['basicAuthUser'];
+  withCredentials: DataSourceSettings['withCredentials'];
+};
 
-export type AppConfig<JSONData extends DataSourceJsonData = any> = PluginMeta<JSONData>;
-
-export type CommonConfig = Config | AppConfig;
+export type Config<JSONData extends DataSourceJsonData = any, SecureJSONData = {}> = {
+  jsonData: DataSourceSettings<JSONData>['jsonData'];
+  secureJsonData: DataSourceSettings<JSONData, SecureJSONData>['secureJsonData'];
+  secureJsonFields: DataSourceSettings['secureJsonFields'];
+} & Partial<DataSourceExclusiveConfig>;
 
 export type OnChangeHandler<C extends Config = Config> = (config: C) => void;
-
-export type OnCommonChangeHandler<C extends CommonConfig = CommonConfig> = (config: C) => void;
