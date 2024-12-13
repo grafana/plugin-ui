@@ -23,9 +23,9 @@ export const ConnectionSettings: <C extends Config = Config>(props: Props<C>) =>
   urlLabel,
   className,
 }) => {
-  const isValidUrl = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/.test(
-    config.url
-  );
+  const isValidUrl =
+    config.url !== undefined &&
+    /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/.test(config.url);
 
   const styles = {
     container: css({

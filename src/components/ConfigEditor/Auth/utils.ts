@@ -86,7 +86,7 @@ export function getTLSProps<C extends Config = Config>(config: C, onChange: OnCh
   return {
     selfSignedCertificate: {
       enabled: Boolean(config.jsonData.tlsAuthWithCACert),
-      certificateConfigured: config.secureJsonFields.tlsCACert,
+      certificateConfigured: !!config.secureJsonFields?.tlsCACert,
       onToggle: (enabled) =>
         enabled
           ? onChange({
@@ -114,8 +114,8 @@ export function getTLSProps<C extends Config = Config>(config: C, onChange: OnCh
     TLSClientAuth: {
       enabled: config.jsonData.tlsAuth,
       serverName: config.jsonData.serverName,
-      clientCertificateConfigured: config.secureJsonFields.tlsClientCert,
-      clientKeyConfigured: config.secureJsonFields.tlsClientKey,
+      clientCertificateConfigured: !!config.secureJsonFields?.tlsClientCert,
+      clientKeyConfigured: !!config.secureJsonFields?.tlsClientKey,
       onToggle: (enabled) =>
         enabled
           ? onChange({
