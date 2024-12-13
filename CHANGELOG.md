@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.9.3 - 2024-12-13
+
+- Make Auth component to be usable by plugins
+
 ## v0.9.2 - 2024-11-27
 
 - Fix a bug in the SQLEditor component that caused autocomplete and syntax highlighting to not work
