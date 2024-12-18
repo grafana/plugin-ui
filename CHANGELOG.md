@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.9.4 - 2024-12-18
+
+- Auth: Make AuthMethodSettings select more Playwright friendly.
+
 ## v0.9.3 - 2024-12-13
 
 - Make Auth component to be usable by plugins
