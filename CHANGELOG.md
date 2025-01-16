@@ -1,5 +1,8 @@
 # Change Log
 
+## v0.9.5 - 2025-01-16
+- Query Builder: Add support to disable operations
+
 ## v0.9.4 - 2024-12-18
 
 - Auth: Make AuthMethodSettings select more Playwright friendly.
