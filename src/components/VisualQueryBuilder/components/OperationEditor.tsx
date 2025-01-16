@@ -20,6 +20,7 @@ interface Props<T extends VisualQuery> {
   queryModeller: VisualQueryModeller;
   onChange: (index: number, update: QueryBuilderOperation) => void;
   onRemove: (index: number) => void;
+  onToggle: (index: number) => void;
   onRunQuery: () => void;
   flash?: boolean;
   highlight?: boolean;
@@ -31,6 +32,7 @@ export function OperationEditor<T extends VisualQuery>({
   operation,
   index,
   onRemove,
+  onToggle,
   onChange,
   onRunQuery,
   queryModeller,
@@ -78,6 +80,7 @@ export function OperationEditor<T extends VisualQuery>({
             definition={def}
             onChange={onChange}
             onRemove={onRemove}
+            onToggle={onToggle}
             queryModeller={queryModeller}
             query={query}
             timeRange={timeRange}

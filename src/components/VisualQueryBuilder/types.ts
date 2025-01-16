@@ -11,6 +11,7 @@ export interface QueryBuilderLabelFilter {
 export interface QueryBuilderOperation {
   id: string;
   params: QueryBuilderOperationParamValue[];
+  disabled?: boolean;
 }
 
 export interface QueryBuilderOperationDefinition<T = any> extends RegistryItem {
@@ -27,6 +28,7 @@ export interface QueryBuilderOperationDefinition<T = any> extends RegistryItem {
   paramChangedHandler?: QueryBuilderOnParamChangedHandler;
   explainHandler?: QueryBuilderExplainOperationHandler;
   changeTypeHandler?: (op: QueryBuilderOperation, newDef: QueryBuilderOperationDefinition<T>) => QueryBuilderOperation;
+  toggleable?: boolean;
 }
 
 type QueryBuilderAddOperationHandler<T> = (

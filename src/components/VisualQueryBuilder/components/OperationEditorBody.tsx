@@ -26,6 +26,7 @@ type Props = {
   query: VisualQuery;
   onChange: (index: number, update: QueryBuilderOperation) => void;
   onRemove: (index: number) => void;
+  onToggle: (index: number) => void;
   onRunQuery: () => void;
   datasource: DataSourceApi;
   flash?: boolean;
@@ -42,6 +43,7 @@ export function OperationEditorBody({
   queryModeller,
   onChange,
   onRemove,
+  onToggle,
   operation,
   definition,
   query,
@@ -84,7 +86,11 @@ export function OperationEditorBody({
 
   return (
     <div
-      className={cx(styles.card, (shouldFlash || highlight) && styles.cardHighlight, isConflicting && styles.cardError)}
+      className={cx(styles.card, {
+        [styles.cardHighlight]: shouldFlash || highlight,
+        [styles.cardError]: isConflicting,
+        [styles.disabled]: operation.disabled,
+      })}
       ref={provided.innerRef}
       {...provided.draggableProps}
       data-testid={`operations.${index}.wrapper`}
@@ -96,6 +102,7 @@ export function OperationEditorBody({
         index={index}
         onChange={onChange}
         onRemove={onRemove}
+        onToggle={onToggle}
         queryModeller={queryModeller}
       />
       <div className={styles.body}>
@@ -174,6 +181,10 @@ const getStyles = (theme: GrafanaTheme2, isConflicting: boolean) => {
       position: 'relative',
       transition: 'all 0.5s ease-in 0s',
       height: isConflicting ? 'auto' : '100%',
+    }),
+    disabled: css({
+      opacity: 0.5,
+      transition: 'none',
     }),
     cardError: css({
       boxShadow: `0px 0px 4px 0px ${theme.colors.warning.main}`,

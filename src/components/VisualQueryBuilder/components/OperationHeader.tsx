@@ -18,15 +18,17 @@ interface Props {
   dragHandleProps?: DraggableProvided['dragHandleProps'];
   onChange: (index: number, update: QueryBuilderOperation) => void;
   onRemove: (index: number) => void;
+  onToggle: (index: number) => void;
 }
 
 interface State {
   isOpen?: boolean;
+  disabled?: boolean;
   alternatives?: Array<SelectableValue<QueryBuilderOperationDefinition>>;
 }
 
 export const OperationHeader = React.memo<Props>(
-  ({ operation, definition, index, onChange, onRemove, queryModeller, dragHandleProps }) => {
+  ({ operation, definition, index, onChange, onRemove, onToggle, queryModeller, dragHandleProps }) => {
     const styles = useStyles2(getStyles);
     const [state, setState] = useState<State>({});
 
@@ -57,6 +59,16 @@ export const OperationHeader = React.memo<Props>(
                 title="Click to view alternative operations"
               />
               <OperationInfoButton definition={definition} operation={operation} innerQueryPlaceholder={queryModeller.innerQueryPlaceholder} />
+              {definition.toggleable && (
+                <Button
+                  icon={operation.disabled ? "eye-slash" : "eye"}
+                  size="sm"
+                  onClick={() => onToggle(index)}
+                  fill="text"
+                  variant="secondary"
+                  title={operation.disabled ? "Enable operation" : "Disable operation"}
+                />
+              )}
               <Button
                 icon="times"
                 size="sm"
