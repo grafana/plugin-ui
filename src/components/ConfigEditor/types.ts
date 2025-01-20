@@ -10,7 +10,7 @@ type DataSourceExclusiveConfig = {
 
 export type Config<JSONData extends DataSourceJsonData = any, SecureJSONData = {}> = {
   jsonData: DataSourceSettings<JSONData>['jsonData'];
-  secureJsonData: DataSourceSettings<JSONData, SecureJSONData>['secureJsonData'];
+  secureJsonData?: DataSourceSettings<JSONData, SecureJSONData>['secureJsonData'];
   secureJsonFields: DataSourceSettings['secureJsonFields'];
 } & Partial<DataSourceExclusiveConfig>;
 

@@ -1,6 +1,11 @@
 # Change Log
 
+## v0.9.6 - 2025-01-20
+
+- Fix `Config` type to be compatible with `DataSourceSettings`
+
 ## v0.9.5 - 2025-01-16
+
 - Query Builder: Add support to disable operations
 
 ## v0.9.4 - 2024-12-18
