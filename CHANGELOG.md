@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.9.7 - 2025-01-27
+
+- Relax semver ranges to prevent duplicate packages being bundled
+
 ## v0.9.6 - 2025-01-20
 
 - Fix `Config` type to be compatible with `DataSourceSettings`
