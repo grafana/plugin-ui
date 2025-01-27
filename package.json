@@ -3,11 +3,25 @@
   "version": "0.9.6",
   "repository": "git@github.com:grafana/plugin-ui.git",
   "author": "Grafana Labs",
+  "type": "module",
   "main": "dist/index.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && yarn copy-files",
-    "copy-files": "copyfiles -u 1 src/**/*.css dist/",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "spellcheck": "cspell -c cspell.config.json \"**/*.{ts,tsx,js,md,mdx,yml,yaml,json,scss,css}\"",
@@ -15,7 +29,8 @@
     "storybook:build": "storybook build",
     "lint": "eslint --cache --ignore-path ./.gitignore --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "yarn run lint --fix",
-    "typecheck": "tsc --emitDeclarationOnly false --noEmit"
+    "typecheck": "tsc",
+    "verify-types": "attw --pack ."
   },
   "dependencies": {
     "@hello-pangea/dnd": "^17.0.0",
@@ -30,6 +45,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.3",
     "@grafana/data": "^10.4.0",
     "@grafana/e2e-selectors": "^10.4.0",
     "@grafana/eslint-config": "^8.0.0",
@@ -83,7 +99,8 @@
     "rxjs": "^7.8.1",
     "storybook": "^8.5.2",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.5"
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "@grafana/data": "^10.4.0 || ^11.0.0",
@@ -95,8 +112,7 @@
     "rxjs": "^7.8.1"
   },
   "files": [
-    "dist/**/*",
-    "package.json"
+    "dist"
   ],
   "packageManager": "yarn@4.6.0"
 }

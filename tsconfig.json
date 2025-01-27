@@ -1,13 +1,22 @@
 {
-  "compilerOptions": {
-    "declarationDir": "dist/src",
-    "module": "commonjs",
-    "outDir": "dist",
-    "rootDirs": ["."],
-    "useUnknownInCatchVariables": false,
-    "declaration": true
-  },
-  "exclude": ["dist", "node_modules"],
   "extends": "@grafana/tsconfig",
-  "include": ["src/**/*.ts", "../../public/app/types/jquery/*.ts"]
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    "strict": true,
+
+    "module": "Preserve",
+    "outDir": "dist",
+    "sourceMap": true,
+
+    "noEmit": true
+  },
+  "include": ["src"]
 }
