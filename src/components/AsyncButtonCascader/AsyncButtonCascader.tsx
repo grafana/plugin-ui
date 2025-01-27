@@ -4,16 +4,16 @@ import { GrafanaTheme2 } from '@grafana/data';
 import { css, cx } from '@emotion/css';
 
 // @ts-ignore
-import RCCascader, { CascaderOption } from 'rc-cascader';
+import RCCascader, { CascaderOption, CascaderValueType } from 'rc-cascader';
 
 export interface AsyncButtonCascaderProps {
   options: CascaderOption[];
   children: string;
   disabled?: boolean;
-  value: string[];
+  value: CascaderValueType;
   fieldNames?: { label: string; value: string; children: string };
   loadData?: (selectedOptions: CascaderOption[]) => void;
-  onChange?: (value: string[], selectedOptions: CascaderOption[]) => void;
+  onChange?: (value: CascaderValueType, selectedOptions: CascaderOption[]) => void;
   onPopupVisibleChange?: (visible: boolean) => void;
   className?: string;
 }
