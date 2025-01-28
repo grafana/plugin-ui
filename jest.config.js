@@ -20,16 +20,26 @@ const grafanaESModules = [
 module.exports = {
   verbose: false,
   transform: {
-    '^.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
-    '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
+    '^.+\\.(t|j)sx?$': [
+      '@swc/jest',
+      {
+        sourceMaps: 'inline',
+        jsc: {
+          parser: {
+            syntax: 'typescript',
+            tsx: true,
+            decorators: false,
+            dynamicImport: true,
+          },
+        },
+      },
+    ],
   },
   roots: ['<rootDir>/src'],
   testRegex: '(\\.|/)(test)\\.(jsx?|tsx?)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
-  globals: { 'ts-jest': { isolatedModules: true } },
   moduleNameMapper: {
-    '^react($|/.+)': '<rootDir>/node_modules/react$1',
     '\\.css': '<rootDir>/jest/style.ts',
     'react-inlinesvg': path.resolve(__dirname, 'jest', 'react-inlinesvg.tsx'),
   },
