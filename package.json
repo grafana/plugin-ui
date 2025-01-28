@@ -19,7 +19,7 @@
       }
     }
   },
-  "sideEffects": ["dist/**/*.css"],
+  "sideEffects": ["*.css"],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
