@@ -13,13 +13,9 @@
     "spellcheck": "cspell -c cspell.config.json \"**/*.{ts,tsx,js,md,mdx,yml,yaml,json,scss,css}\"",
     "storybook": "storybook dev",
     "storybook:build": "storybook build",
-    "changeset": "ts-node src/utils/changeset/index.ts",
     "lint": "eslint --cache --ignore-path ./.gitignore --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "yarn run lint --fix",
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
-  },
-  "bin": {
-    "changeset-improved": "./dist/utils/changeset/index.js"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^17.0.0",
@@ -35,10 +31,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.2",
-    "@changesets/read": "^0.5.9",
-    "@changesets/types": "^5.2.1",
-    "@changesets/write": "^0.2.3",
     "@grafana/data": "^10.4.0",
     "@grafana/e2e-selectors": "^10.4.0",
     "@grafana/eslint-config": "^8.0.0",
