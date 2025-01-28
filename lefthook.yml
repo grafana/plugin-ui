@@ -8,4 +8,4 @@ pre-commit:
         yarn prettier --write {staged_files}
       stage_fixed: true
     spellcheck:
-      run: yarn cspell -c cspell.config.json {staged_files}
+      run: yarn cspell -c cspell.config.json --no-must-find-files {staged_files}
