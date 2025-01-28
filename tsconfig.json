@@ -1,22 +1,16 @@
 {
   "extends": "@grafana/tsconfig",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "es2022",
     "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
+    "importHelpers": false,
     "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-
-    "strict": true,
-
-    "module": "Preserve",
+    "module": "preserve",
+    "moduleDetection": "force",
+    "noEmit": true,
     "outDir": "dist",
-    "sourceMap": true,
-
-    "noEmit": true
+    "resolveJsonModule": true,
+    "target": "es2022",
+    "verbatimModuleSyntax": true
   },
   "include": ["src"]
 }
