@@ -1,5 +1,14 @@
 {
-  "ignorePaths": [".github/**", "node_modules/**", "dist/**", "yarn.lock", ".yarn/**", ".yarnrc.yml", ".gitignore"],
+  "ignorePaths": [
+    ".github/**",
+    "node_modules/**",
+    "dist/**",
+    "yarn.lock",
+    ".yarn/**",
+    ".yarnrc.yml",
+    ".gitignore",
+    ".storybook"
+  ],
   "words": [
     "APPLOCK",
     "arrowdown",
