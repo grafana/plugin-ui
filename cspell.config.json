@@ -167,6 +167,7 @@
     "TIMEFROMPARTS",
     "TIMETICKS",
     "TODATETIMEOFFSET",
+    "toggleable",
     "TRANCOUNT",
     "TSEQUAL",
     "typecheck",
