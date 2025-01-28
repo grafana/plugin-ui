@@ -9,6 +9,7 @@
     "build": "tsc -p tsconfig.build.json && yarn copy-files",
     "copy-files": "copyfiles -u 1 src/**/*.css dist/",
     "test": "jest --watch",
+    "test:ci": "jest --ci",
     "spellcheck": "cspell -c cspell.config.json \"**/*.{ts,tsx,js,md,mdx,yml,yaml,json,scss,css}\"",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
@@ -101,5 +102,6 @@
   "files": [
     "dist/**/*",
     "package.json"
-  ]
+  ],
+  "packageManager": "yarn@4.6.0"
 }
