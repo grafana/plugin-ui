@@ -1,4 +1,18 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["**/*.stories.tsx", "**/*.story.tsx", "**/*.test.ts*", "test", "dist", "node_modules", ".storybook"]
+  "compilerOptions": {
+    "declarationDir": "./compiled",
+    "emitDeclarationOnly": true,
+    "noEmit": false
+  },
+  "exclude": [
+    "**/*.stories.tsx",
+    "**/*.story.tsx",
+    "**/*.test.ts*",
+    "test",
+    "dist",
+    "compiled",
+    "node_modules",
+    ".storybook"
+  ]
 }
