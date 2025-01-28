@@ -221,18 +221,7 @@ function getCustomOperators(config: BasicConfig) {
     opDef: Operator,
     operatorOptions: OperatorOptionsI,
     fieldDef: Field
-  ) =>
-    sqlFormatInOp?.call(
-      config.ctx,
-      field,
-      op,
-      splitIfString(value),
-      valueSrc,
-      valueType,
-      opDef,
-      operatorOptions,
-      fieldDef
-    );
+  ) => sqlFormatInOp.call(this, field, op, splitIfString(value), valueSrc, valueType, opDef, operatorOptions, fieldDef);
   // NOT IN operator expects array, override NOT IN formatter for multi-value variables
   const sqlFormatNotInOp = supportedOperators[Op.NOT_IN].sqlFormatOp || noop;
   const customSqlNotInFormatter = (
@@ -245,7 +234,7 @@ function getCustomOperators(config: BasicConfig) {
     operatorOptions: OperatorOptionsI,
     fieldDef: Field
   ) =>
-    sqlFormatNotInOp?.call(
+    sqlFormatNotInOp.call(
       config.ctx,
       field,
       op,
