@@ -1,7 +1,7 @@
-import { Monaco } from '@grafana/ui';
-import { Operator, OperatorType, SQLCompletionItemProvider } from '../types';
+import { type Monaco } from '@grafana/ui';
+import { type Operator, OperatorType, type SQLCompletionItemProvider } from '../types';
 import { MACROS } from './macros';
-import { SQLMonarchLanguage } from './types';
+import { type SQLMonarchLanguage } from './types';
 
 export function getStandardSQLCompletionProvider(
   monaco: Monaco,

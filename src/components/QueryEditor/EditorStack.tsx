@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Stack } from '@grafana/ui';
-import { ThemeSpacingTokens } from '@grafana/data';
+import { type ThemeSpacingTokens } from '@grafana/data';
 
 export type Direction = 'row' | 'row-reverse' | 'column' | 'column-reverse';
 export type AlignItems =

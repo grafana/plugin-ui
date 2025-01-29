@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, IconName, PopoverContent, Tooltip } from '@grafana/ui';
+import { Button, type IconName, type PopoverContent, Tooltip } from '@grafana/ui';
 
 type RunQueryButtonProps = {
   ariaLabel?: string;

@@ -1,4 +1,4 @@
-import { QueryEditorProps, DataTopic, dateTime, LoadingState, TimeRange } from '@grafana/data';
+import { type QueryEditorProps, DataTopic, dateTime, LoadingState, type TimeRange } from '@grafana/data';
 import { Chance } from 'chance';
 
 export const mockQueryEditorProps = (): QueryEditorProps<any, any, any> => ({

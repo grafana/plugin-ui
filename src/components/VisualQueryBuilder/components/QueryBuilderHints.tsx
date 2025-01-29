@@ -1,11 +1,11 @@
 import { css } from '@emotion/css';
 import React, { useState, useEffect } from 'react';
 
-import { DataSourceApi, GrafanaTheme2, PanelData, QueryHint, DataQuery } from '@grafana/data';
+import { type DataSourceApi, type GrafanaTheme2, type PanelData, type QueryHint, type DataQuery } from '@grafana/data';
 import { reportInteraction } from '@grafana/runtime';
 import { Button, Tooltip, useStyles2 } from '@grafana/ui';
 
-import { VisualQuery, VisualQueryModeller } from '../types';
+import { type VisualQuery, type VisualQueryModeller } from '../types';
 
 interface Props<TVisualQuery extends VisualQuery, TDataQuery extends DataQuery> {
   query: TVisualQuery;
@@ -32,7 +32,7 @@ export const QueryBuilderHints = <TVisualQuery extends VisualQuery, TDataQuery e
   const styles = useStyles2(getStyles);
 
   useEffect(() => {
-    const dataQuery = buildDataQueryFromQueryString(queryModeller.renderQuery(visualQuery))
+    const dataQuery = buildDataQueryFromQueryString(queryModeller.renderQuery(visualQuery));
     // For now show only actionable hints
     const hints = datasource.getQueryHints?.(dataQuery, data?.series || []).filter((hint) => hint.fix?.action);
     setHints(hints ?? []);
@@ -53,10 +53,12 @@ export const QueryBuilderHints = <TVisualQuery extends VisualQuery, TDataQuery e
                     });
 
                     if (hint?.fix?.action) {
-                      const dataQuery = buildDataQueryFromQueryString(queryModeller.renderQuery(visualQuery))
+                      const dataQuery = buildDataQueryFromQueryString(queryModeller.renderQuery(visualQuery));
                       const newQuery = datasource.modifyQuery?.(dataQuery, hint.fix.action);
                       if (newQuery) {
-                        const newVisualQuery = buildVisualQueryFromString(buildQueryStringFromDataQuery(newQuery) ?? '');
+                        const newVisualQuery = buildVisualQueryFromString(
+                          buildQueryStringFromDataQuery(newQuery) ?? ''
+                        );
                         return onChange(newVisualQuery.query);
                       }
                     }

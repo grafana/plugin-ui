@@ -1,7 +1,7 @@
 import { StatementPosition, TokenType } from '../types';
-import { LinkedToken } from '../utils/LinkedToken';
-import { StatementPositionResolversRegistryItem } from './types';
-import { Registry } from '@grafana/data';
+import { type LinkedToken } from '../utils/LinkedToken';
+import { type StatementPositionResolversRegistryItem } from './types';
+import { type Registry } from '@grafana/data';
 
 // Given current cursor position in the SQL editor, returns the statement position.
 export function getStatementPosition(

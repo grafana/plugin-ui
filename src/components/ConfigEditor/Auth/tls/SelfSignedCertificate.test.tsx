@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SelfSignedCertificate, Props } from './SelfSignedCertificate';
+import { SelfSignedCertificate, type Props } from './SelfSignedCertificate';
 
 const getProps = (partialProps?: Partial<Props>): Props => ({
   enabled: false,

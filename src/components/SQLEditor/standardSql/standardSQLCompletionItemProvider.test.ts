@@ -1,6 +1,6 @@
-import { Monaco } from '@grafana/ui';
+import { type Monaco } from '@grafana/ui';
 import { getStandardSQLCompletionProvider } from './standardSQLCompletionItemProvider';
-import { SQLMonarchLanguage } from './types';
+import { type SQLMonarchLanguage } from './types';
 
 describe('standardSQLCompletionItemProvider', () => {
   describe('should include completion items based on the provided custom language', () => {

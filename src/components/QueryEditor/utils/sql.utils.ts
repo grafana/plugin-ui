@@ -2,12 +2,12 @@ import { isEmpty } from 'lodash';
 
 import {
   QueryEditorExpressionType,
-  QueryEditorFunctionExpression,
-  QueryEditorGroupByExpression,
-  QueryEditorPropertyExpression,
+  type QueryEditorFunctionExpression,
+  type QueryEditorGroupByExpression,
+  type QueryEditorPropertyExpression,
   QueryEditorPropertyType,
 } from '../expressions';
-import { SQLQuery, SQLExpression, DB } from '../types';
+import { type SQLQuery, type SQLExpression, type DB } from '../types';
 
 export function getRawSqlFn(db: DB) {
   return db.toRawSql ? db.toRawSql : (query: SQLQuery) => toRawSql(query, Boolean(db.disableDatasets));

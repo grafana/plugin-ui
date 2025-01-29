@@ -1,5 +1,5 @@
 import { Registry } from '@grafana/data';
-import { SuggestionKindRegistryItem } from '../standardSql/suggestionsKindRegistry';
+import { type SuggestionKindRegistryItem } from '../standardSql/suggestionsKindRegistry';
 import { getSuggestionKinds } from './getSuggestionKind';
 import { StatementPosition, SuggestionKind } from '../types';
 

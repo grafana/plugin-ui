@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SkipTLSVerification, Props } from './SkipTLSVerification';
+import { SkipTLSVerification, type Props } from './SkipTLSVerification';
 
 const getProps = (partialProps?: Partial<Props>): Props => ({
   enabled: false,

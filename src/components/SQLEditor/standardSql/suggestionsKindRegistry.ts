@@ -1,4 +1,4 @@
-import { RegistryItem } from '@grafana/data';
+import { type RegistryItem } from '@grafana/data';
 import { StatementPosition, SuggestionKind } from '../types';
 
 export interface SuggestionKindRegistryItem extends RegistryItem {

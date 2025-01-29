@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   endOfLine: 'auto',
   printWidth: 120,
   trailingComma: 'es5',

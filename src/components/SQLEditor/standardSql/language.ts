@@ -1,5 +1,5 @@
-import { monacoTypes } from '@grafana/ui';
-import { SQLMonarchLanguage } from './types';
+import { type monacoTypes } from '@grafana/ui';
+import { type SQLMonarchLanguage } from './types';
 
 // STD basic SQL
 export const SELECT = 'select';

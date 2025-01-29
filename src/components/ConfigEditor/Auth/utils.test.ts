@@ -6,9 +6,9 @@ import {
   getCustomHeaders,
   convertLegacyAuthProps,
 } from './utils';
-import { Props as AuthProps } from './Auth';
+import { type Props as AuthProps } from './Auth';
 import { AuthMethod } from './types';
-import { Config } from '../types';
+import { type Config } from '../types';
 
 describe('utils', () => {
   describe('convertLegacyAuthProps', () => {

@@ -1,13 +1,13 @@
 import { Chance } from 'chance';
 import {
-  DataSourcePluginMeta,
-  PluginMetaInfo,
-  PluginMeta,
+  type DataSourcePluginMeta,
+  type PluginMetaInfo,
+  type PluginMeta,
   PluginState,
   PluginSignatureStatus,
-  PluginInclude,
+  type PluginInclude,
   PluginIncludeType,
-  PluginDependencies,
+  type PluginDependencies,
   PluginType,
 } from '@grafana/data';
 import { generateBoolean } from './utils';

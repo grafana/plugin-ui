@@ -1,4 +1,4 @@
-import { DataSourceInstanceSettings, QueryHint } from '@grafana/data';
+import { type DataSourceInstanceSettings, type QueryHint } from '@grafana/data';
 import { DataSourceWithBackend } from '@grafana/runtime';
 import { Chance } from 'chance';
 import { mockDataSourcePluginMeta } from './Plugin';

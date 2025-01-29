@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { DB, SQLExpression, SQLQuery } from '../types';
+import { type DB, type SQLExpression, type SQLQuery } from '../types';
 
 import { getRawSqlFn } from './sql.utils';
 

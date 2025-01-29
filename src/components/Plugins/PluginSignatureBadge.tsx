@@ -1,5 +1,5 @@
-import React, { HTMLAttributes } from 'react';
-import { Badge, BadgeProps } from '@grafana/ui';
+import React, { type HTMLAttributes } from 'react';
+import { Badge, type BadgeProps } from '@grafana/ui';
 import { PluginErrorCode, PluginSignatureStatus } from '@grafana/data';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {

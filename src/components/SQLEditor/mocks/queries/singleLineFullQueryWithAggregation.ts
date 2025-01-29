@@ -1,4 +1,4 @@
-import { TestQueryModel } from '../../test-utils/types';
+import { type TestQueryModel } from '../../test-utils/types';
 
 export const singleLineFullQueryWithAggregation: TestQueryModel = {
   query: 'SELECT count(column1), FROM table1 WHERE column1 = "value1" GROUP BY column1 ORDER BY column1 DESC LIMIT 10;',

@@ -1,4 +1,4 @@
-import { Registry } from '@grafana/data';
+import { type Registry } from '@grafana/data';
 import { getTemplateSrv } from '@grafana/runtime';
 import { TRIGGER_SUGGEST } from '../utils/commands';
 import {
@@ -10,7 +10,12 @@ import {
   SuggestionKind,
 } from '../types';
 import { ASC, DESC } from './language';
-import { FunctionsRegistryItem, MacrosRegistryItem, OperatorsRegistryItem, SuggestionsRegistryItem } from './types';
+import {
+  type FunctionsRegistryItem,
+  type MacrosRegistryItem,
+  type OperatorsRegistryItem,
+  type SuggestionsRegistryItem,
+} from './types';
 
 /**
  * This registry glues particular SuggestionKind with an async function that provides completion items for it.

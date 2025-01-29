@@ -1,4 +1,4 @@
-import { monacoTypes } from '@grafana/ui';
+import { type monacoTypes } from '@grafana/ui';
 import { CompletionItemKind, CompletionItemPriority } from '../types';
 
 export const toCompletionItem = (

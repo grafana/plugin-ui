@@ -1,13 +1,18 @@
 import { Registry } from '@grafana/data';
-import { monacoTypes } from '@grafana/ui';
+import { type monacoTypes } from '@grafana/ui';
 import { getMonacoMock } from '../mocks/Monaco';
 import { singleLineFullQuery } from '../mocks/testData';
 import { TextModel } from '../mocks/TextModel';
-import { CustomSuggestion, MacroType, OperatorType, PositionContext, SuggestionKind } from '../types';
+import { type CustomSuggestion, MacroType, OperatorType, type PositionContext, SuggestionKind } from '../types';
 import { linkedTokenBuilder } from '../utils/linkedTokenBuilder';
 import { getStandardSuggestions } from './getStandardSuggestions';
 import { initStandardSuggestions } from './standardSuggestionsRegistry';
-import { FunctionsRegistryItem, MacrosRegistryItem, OperatorsRegistryItem, SuggestionsRegistryItem } from './types';
+import {
+  type FunctionsRegistryItem,
+  type MacrosRegistryItem,
+  type OperatorsRegistryItem,
+  type SuggestionsRegistryItem,
+} from './types';
 
 describe('getStandardSuggestions', () => {
   const mockQueries = new Map<string, Array<Array<Pick<monacoTypes.Token, 'language' | 'offset' | 'type'>>>>();

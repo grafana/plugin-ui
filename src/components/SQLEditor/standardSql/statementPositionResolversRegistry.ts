@@ -1,6 +1,6 @@
 import { StatementPosition, TokenType } from '../types';
 import { AND, AS, ASC, BY, DESC, FROM, GROUP, ORDER, SELECT, WHERE, WITH } from './language';
-import { StatementPositionResolversRegistryItem } from './types';
+import { type StatementPositionResolversRegistryItem } from './types';
 
 export function initStatementPositionResolvers(): StatementPositionResolversRegistryItem[] {
   return [

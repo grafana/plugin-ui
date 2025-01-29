@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import { css } from '@emotion/css';
-import { VariableSuggestion, DataSourceInstanceSettings, DataSourceJsonData } from '@grafana/data';
+import { type VariableSuggestion, type DataSourceInstanceSettings, type DataSourceJsonData } from '@grafana/data';
 import { Button, LegacyForms, DataLinkInput, stylesFactory } from '@grafana/ui';
 const { FormField, Switch } = LegacyForms;
-import { DataLinkConfig } from './types';
+import { type DataLinkConfig } from './types';
 import { usePrevious } from 'react-use';
 import { DataSourcePicker } from '../DataSourcePicker/DataSourcePicker';
 

@@ -4,12 +4,12 @@ import { useMeasure } from 'react-use';
 // @ts-ignore
 import AutoSizer from 'react-virtualized-auto-sizer';
 
-import { GrafanaTheme2 } from '@grafana/data';
+import { type GrafanaTheme2 } from '@grafana/data';
 import { Modal, useStyles2, useTheme2 } from '@grafana/ui';
 
 import { QueryEditorRaw } from './QueryEditorRaw';
 import { QueryToolbox } from './QueryToolbox';
-import { QueryEditorProps, SQLQuery } from '../types';
+import { type QueryEditorProps, type SQLQuery } from '../types';
 
 interface RawEditorProps extends Omit<QueryEditorProps, 'onChange'> {
   onRunQuery: () => void;

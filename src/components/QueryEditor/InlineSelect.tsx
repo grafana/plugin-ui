@@ -1,12 +1,12 @@
 import { css, cx } from '@emotion/css';
 import React, { useState } from 'react';
-import { GroupBase } from 'react-select';
+import { type GroupBase } from 'react-select';
 
-import { GrafanaTheme2 } from '@grafana/data';
+import { type GrafanaTheme2 } from '@grafana/data';
 import {
   Select,
-  SelectCommonProps,
-  SelectContainerProps,
+  type SelectCommonProps,
+  type SelectContainerProps,
   SelectContainer as BaseSelectContainer,
   useStyles2,
 } from '@grafana/ui';
