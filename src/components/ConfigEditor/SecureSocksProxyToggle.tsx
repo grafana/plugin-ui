@@ -1,7 +1,7 @@
 import React from 'react';
-import { InlineLabel as OriginalInlineLabel, InlineField, InlineSwitch } from '@grafana/ui';
+import { type InlineLabel as OriginalInlineLabel, InlineField, InlineSwitch } from '@grafana/ui';
 import { config } from '@grafana/runtime';
-import { DataSourceSettings } from '@grafana/data';
+import { type DataSourceSettings } from '@grafana/data';
 
 type Props = Omit<React.ComponentProps<typeof OriginalInlineLabel>, 'children'> & {
   dataSourceConfig: DataSourceSettings<any, any>;

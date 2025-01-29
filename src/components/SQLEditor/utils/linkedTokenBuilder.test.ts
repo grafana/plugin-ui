@@ -1,4 +1,4 @@
-import { monacoTypes } from '@grafana/ui';
+import { type monacoTypes } from '@grafana/ui';
 import { getMonacoMock } from '../mocks/Monaco';
 import { TextModel } from '../mocks/TextModel';
 import { multiLineFullQuery, singleLineFullQuery } from '../mocks/testData';

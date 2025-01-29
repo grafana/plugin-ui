@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { css, cx } from '@emotion/css';
-import { InlineField, Input, PopoverContent } from '@grafana/ui';
+import { InlineField, Input, type PopoverContent } from '@grafana/ui';
 import { ConfigSection } from '../ConfigSection';
-import { Config, OnChangeHandler } from '../types';
+import { type Config, type OnChangeHandler } from '../types';
 
 export type Props<C extends Config = Config> = {
   config: C;

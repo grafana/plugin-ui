@@ -1,10 +1,10 @@
 import React from 'react';
 import { css } from '@emotion/css';
-import { AuthMethod, AuthMethodSelectOption, CustomMethod, CustomMethodId } from './types';
+import { type AuthMethod, type AuthMethodSelectOption, type CustomMethod, type CustomMethodId } from './types';
 import { AuthMethodSettings } from './auth-method/AuthMethodSettings';
-import { TLSSettings, Props as TLSSettingsProps } from './tls/TLSSettings';
-import { Props as BasicAuthProps } from './auth-method/BasicAuth';
-import { CustomHeaders, Props as CustomHeadersProps } from './custom-headers/CustomHeaders';
+import { TLSSettings, type Props as TLSSettingsProps } from './tls/TLSSettings';
+import { type Props as BasicAuthProps } from './auth-method/BasicAuth';
+import { CustomHeaders, type Props as CustomHeadersProps } from './custom-headers/CustomHeaders';
 import { ConfigSection } from '../ConfigSection';
 
 export type Props = {

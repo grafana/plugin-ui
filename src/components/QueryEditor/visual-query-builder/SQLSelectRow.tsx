@@ -1,11 +1,11 @@
 import React from 'react';
 import { useAsync } from 'react-use';
 
-import { SelectableValue, toOption } from '@grafana/data';
+import { type SelectableValue, toOption } from '@grafana/data';
 
 import { SelectRow } from './SelectRow';
-import { QueryWithDefaults } from '../defaults';
-import { SQLQuery, DB } from '../types';
+import { type QueryWithDefaults } from '../defaults';
+import { type SQLQuery, type DB } from '../types';
 import { useSqlChange } from '../utils/useSqlChange';
 
 interface SQLSelectRowProps {

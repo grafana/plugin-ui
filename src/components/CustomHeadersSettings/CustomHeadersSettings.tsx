@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { css } from '@emotion/css';
 import { uniqueId } from 'lodash';
-import { DataSourceSettings } from '@grafana/data';
+import { type DataSourceSettings } from '@grafana/data';
 import { stylesFactory, LegacyForms, Button, Icon } from '@grafana/ui';
 
 export interface CustomHeader {

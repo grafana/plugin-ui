@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { CustomHeader, Props } from './CustomHeader';
+import { CustomHeader, type Props } from './CustomHeader';
 
 type PartialHeader = Partial<Props['header']>;
 type PartialProps = Partial<Omit<Props, 'header'> & { header: PartialHeader }>;

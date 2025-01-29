@@ -1,4 +1,4 @@
-import { TestQueryModel } from '../../test-utils/types';
+import { type TestQueryModel } from '../../test-utils/types';
 
 export const singleLineTwoQueriesWithAggregation: TestQueryModel = {
   query:

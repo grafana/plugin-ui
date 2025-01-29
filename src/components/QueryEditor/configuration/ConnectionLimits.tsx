@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FieldSet, InlineField } from '@grafana/ui';
 
-import { SQLConnectionLimits } from '../types';
+import { type SQLConnectionLimits } from '../types';
 import { NumberInput } from '../NumberInput';
 
 interface Props<T> {

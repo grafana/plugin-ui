@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
-import React, { CSSProperties } from 'react';
+import React, { type CSSProperties } from 'react';
 
-import { GrafanaTheme2 } from '@grafana/data';
+import { type GrafanaTheme2 } from '@grafana/data';
 import { useTheme2, stylesFactory } from '@grafana/ui';
 
 interface StackProps {

@@ -2,7 +2,7 @@ import React from 'react';
 import { css, cx } from '@emotion/css';
 import { InlineField, Input, TagsInput } from '@grafana/ui';
 import { ConfigSubSection } from '../ConfigSection';
-import { Config, OnChangeHandler } from '../types';
+import { type Config, type OnChangeHandler } from '../types';
 
 export type Props<C extends Config = Config> = {
   config: C;

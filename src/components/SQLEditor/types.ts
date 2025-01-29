@@ -1,6 +1,6 @@
-import { Monaco, monacoTypes } from '@grafana/ui';
-import { SQLMonarchLanguage, StatementPositionResolver, SuggestionsResolver } from './standardSql/types';
-import { LinkedToken } from './utils/LinkedToken';
+import { type Monaco, type monacoTypes } from '@grafana/ui';
+import { type SQLMonarchLanguage, type StatementPositionResolver, type SuggestionsResolver } from './standardSql/types';
+import { type LinkedToken } from './utils/LinkedToken';
 
 /**
  * Provides a context for suggestions resolver

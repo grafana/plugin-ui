@@ -1,6 +1,6 @@
 import { getAllByRole, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { ComponentProps } from 'react';
+import React, { type ComponentProps } from 'react';
 import { select } from 'react-select-event';
 import { LabelFilters, MISSING_LABEL_FILTER_ERROR_MESSAGE } from './LabelFilters';
 
@@ -89,7 +89,7 @@ describe('LabelFilters', () => {
     setup({ labelsFilters: [], labelFilterRequired: true });
     expect(screen.getByText(MISSING_LABEL_FILTER_ERROR_MESSAGE)).toBeInTheDocument();
   });
-  
+
   it('runs onChange after all selects are changed', async () => {
     const { onChange } = setup({ labelsFilters: [{ label: 'foo', op: '=', value: 'bar' }] });
     await userEvent.click(getAddButton());
@@ -102,9 +102,9 @@ describe('LabelFilters', () => {
     expect(onChange).not.toBeCalled();
     await selectOptionInTest(value, 'qux');
     expect(onChange).toBeCalledWith([
-      { label: "foo", op: "=", value: "bar" }, 
-      { label: "baz", op: "!=", value: "qux" }
-    ]);    
+      { label: 'foo', op: '=', value: 'bar' },
+      { label: 'baz', op: '!=', value: 'qux' },
+    ]);
   });
 });
 

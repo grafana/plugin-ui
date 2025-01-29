@@ -1,6 +1,14 @@
 import { Registry } from '@grafana/data';
 
-import { BINARY_OPERATIONS_KEY, VisualQuery, VisualQueryBinary, QueryBuilderLabelFilter, QueryBuilderOperation, VisualQueryModeller, QueryBuilderOperationDefinition } from './types';
+import {
+  BINARY_OPERATIONS_KEY,
+  type VisualQuery,
+  type VisualQueryBinary,
+  type QueryBuilderLabelFilter,
+  type QueryBuilderOperation,
+  type VisualQueryModeller,
+  type QueryBuilderOperationDefinition,
+} from './types';
 
 export abstract class QueryModellerBase implements VisualQueryModeller {
   protected operationsRegistry: Registry<QueryBuilderOperationDefinition>;
@@ -18,11 +26,11 @@ export abstract class QueryModellerBase implements VisualQueryModeller {
 
   abstract renderOperations(queryString: string, operations: QueryBuilderOperation[]): string;
 
-  abstract renderBinaryQueries(queryString: string, binaryQueries?: Array<VisualQueryBinary<VisualQuery>>): string
+  abstract renderBinaryQueries(queryString: string, binaryQueries?: Array<VisualQueryBinary<VisualQuery>>): string;
 
   abstract renderLabels(labels: QueryBuilderLabelFilter[]): string;
 
-  abstract renderQuery(query: VisualQuery, nested?: boolean): string
+  abstract renderQuery(query: VisualQuery, nested?: boolean): string;
 
   getOperationsForCategory(category: string) {
     return this.operationsRegistry.list().filter((op) => op.category === category && !op.hideFromList);

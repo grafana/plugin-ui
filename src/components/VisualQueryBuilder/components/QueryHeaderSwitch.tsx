@@ -1,8 +1,8 @@
 import { css } from '@emotion/css';
 import { uniqueId } from 'lodash';
-import React, { HTMLProps, useRef } from 'react';
+import React, { type HTMLProps, useRef } from 'react';
 
-import { GrafanaTheme2 } from '@grafana/data';
+import { type GrafanaTheme2 } from '@grafana/data';
 import { Switch, useStyles2 } from '@grafana/ui';
 
 import { EditorStack } from '../../QueryEditor';

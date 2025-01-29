@@ -1,4 +1,4 @@
-import { DataSourceSettings, DataSourceJsonData } from '@grafana/data';
+import { type DataSourceSettings, type DataSourceJsonData } from '@grafana/data';
 
 type DataSourceExclusiveConfig = {
   readOnly: DataSourceSettings['readOnly'];

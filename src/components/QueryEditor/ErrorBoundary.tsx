@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
 
-type Props = {
+type Props = PropsWithChildren<{
   fallBackComponent?: React.ReactNode;
-};
+}>;
 
 export class ErrorBoundary extends React.Component<Props, { hasError: boolean }> {
   constructor(props: Props) {

@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 
-import { SelectableValue } from '@grafana/data';
+import { type SelectableValue } from '@grafana/data';
 
 import { ConfirmModal } from './ConfirmModal';
 import { DatasetSelector } from './DatasetSelector';
 import { TableSelector } from './TableSelector';
 import { InlineSwitch, RadioButtonGroup } from '@grafana/ui';
-import { QueryWithDefaults } from './defaults';
+import { type QueryWithDefaults } from './defaults';
 import { EditorField } from './EditorField';
 import { EditorHeader } from './EditorHeader';
 import { EditorRow } from './EditorRow';
@@ -15,7 +15,7 @@ import { FlexItem } from './FlexItem';
 import { InlineSelect } from './InlineSelect';
 import { Space } from './Space';
 import { RunQueryButton } from './RunQueryButton';
-import { DB, SQLQuery, QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
+import { type DB, type SQLQuery, type QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
 import { getRawSqlFn } from './utils/sql.utils';
 
 interface QueryHeaderProps {

@@ -1,12 +1,12 @@
 import React from 'react';
-import useAsync from 'react-use/lib/useAsync';
+import { useAsync } from 'react-use';
 
-import { SelectableValue } from '@grafana/data';
+import { type SelectableValue } from '@grafana/data';
 
-import { Config } from './AwesomeQueryBuilder';
+import { type Config } from './AwesomeQueryBuilder';
 import { WhereRow } from './WhereRow';
-import { QueryWithDefaults } from '../defaults';
-import { SQLQuery, DB, SQLExpression, SQLSelectableValue } from '../types';
+import { type QueryWithDefaults } from '../defaults';
+import { type SQLQuery, type DB, type SQLExpression, type SQLSelectableValue } from '../types';
 import { useSqlChange } from '../utils/useSqlChange';
 
 interface WhereRowProps {

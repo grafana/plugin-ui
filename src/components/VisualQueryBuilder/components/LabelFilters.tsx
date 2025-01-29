@@ -1,15 +1,14 @@
 import { isEqual } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
-import { SelectableValue } from '@grafana/data';
+import { type SelectableValue } from '@grafana/data';
 
-import { QueryBuilderLabelFilter } from '../types';
+import { type QueryBuilderLabelFilter } from '../types';
 
-import { EditorField, } from '../../QueryEditor/EditorField';
+import { EditorField } from '../../QueryEditor/EditorField';
 import { EditorFieldGroup } from '../../QueryEditor/EditorFieldGroup';
 import { EditorList } from '../../QueryEditor/EditorList';
 import { LabelFilterItem } from './LabelFilterItem';
-
 
 export const MISSING_LABEL_FILTER_ERROR_MESSAGE = 'Select at least 1 label filter (label and value)';
 
@@ -46,7 +45,9 @@ export function LabelFilters({
     setItems(newItems);
 
     // Extract full label filters with both label & value
-    const newLabels = newItems.filter((item): item is QueryBuilderLabelFilter  => item.label !== undefined && item.value !== undefined);
+    const newLabels = newItems.filter(
+      (item): item is QueryBuilderLabelFilter => item.label !== undefined && item.value !== undefined
+    );
     if (!isEqual(newLabels, labelsFilters)) {
       onChange(newLabels);
     }

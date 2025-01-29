@@ -167,6 +167,7 @@
     "TIMEFROMPARTS",
     "TIMETICKS",
     "TODATETIMEOFFSET",
+    "toggleable",
     "TRANCOUNT",
     "TSEQUAL",
     "typecheck",
@@ -181,6 +182,8 @@
     "WRITETEXT",
     "XACT",
     "comparitor",
-    "pangea"
+    "pangea",
+    "attw",
+    "arethetypeswrong"
   ]
 }

@@ -2,10 +2,10 @@ import { css } from '@emotion/css';
 import React, { useState } from 'react';
 import { usePopperTooltip } from 'react-popper-tooltip';
 
-import { GrafanaTheme2, renderMarkdown } from '@grafana/data';
+import { type GrafanaTheme2, renderMarkdown } from '@grafana/data';
 import { Button, Portal, useStyles2 } from '@grafana/ui';
 
-import { QueryBuilderOperation, QueryBuilderOperationDefinition } from '../types';
+import { type QueryBuilderOperation, type QueryBuilderOperationDefinition } from '../types';
 import { FlexItem } from '../../QueryEditor/FlexItem';
 
 interface Props {
@@ -98,5 +98,5 @@ const getStyles = (theme: GrafanaTheme2) => {
   };
 };
 function getOperationDocs(def: QueryBuilderOperationDefinition, op: QueryBuilderOperation): string {
-  return renderMarkdown(def.explainHandler ? def.explainHandler(op, def) : def.documentation ?? 'no docs');
+  return renderMarkdown(def.explainHandler ? def.explainHandler(op, def) : (def.documentation ?? 'no docs'));
 }

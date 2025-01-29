@@ -1,12 +1,12 @@
-import  { uniqBy } from 'lodash';
+import { uniqBy } from 'lodash';
 import React, { useRef, useState } from 'react';
 import { v4 } from 'uuid';
 
-import { SelectableValue, toOption } from '@grafana/data';
+import { type SelectableValue, toOption } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
 import { InlineField, Select } from '@grafana/ui';
 
-import { QueryBuilderLabelFilter } from '../types';
+import { type QueryBuilderLabelFilter } from '../types';
 import { InputGroup } from '../../QueryEditor/InputGroup';
 import { AccessoryButton } from '../../QueryEditor/AccessoryButton';
 
@@ -34,7 +34,7 @@ export function LabelFilterItem({
   onGetLabelValues,
   invalidLabel,
   invalidValue,
-  multiValueSeparator = "|",
+  multiValueSeparator = '|',
 }: Props) {
   const [state, setState] = useState<{
     labelNames?: Array<SelectableValue<string>>;
@@ -118,7 +118,7 @@ export function LabelFilterItem({
                 onChange({
                   ...item,
                   op: change.value,
-                  value: isMultiSelect(change.value) ? item.value  : getSelectOptionsFromString(item?.value)[0],
+                  value: isMultiSelect(change.value) ? item.value : getSelectOptionsFromString(item?.value)[0],
                 });
               }
             }}
@@ -167,7 +167,7 @@ export function LabelFilterItem({
                     if (change.value) {
                       return change.value;
                     } else {
-                      return undefined
+                      return undefined;
                     }
                   })
                   .filter((val: string | undefined) => val !== undefined)
@@ -185,12 +185,11 @@ export function LabelFilterItem({
 }
 
 const operators = [
-   { label: '=', value: '=', description: 'Equals', isMultiValue: false },
-   { label: '!=', value: '!=', description: 'Does not equal', isMultiValue: false },
-   { label: '=~', value: '=~', description: 'Matches regex', isMultiValue: true },
-   { label: '!~', value: '!~', description: 'Does not match regex', isMultiValue: true },
-]
-
+  { label: '=', value: '=', description: 'Equals', isMultiValue: false },
+  { label: '!=', value: '!=', description: 'Does not equal', isMultiValue: false },
+  { label: '=~', value: '=~', description: 'Matches regex', isMultiValue: true },
+  { label: '!~', value: '!~', description: 'Does not match regex', isMultiValue: true },
+];
 
 export function isConflictingLabelFilter(
   newLabel: Partial<QueryBuilderLabelFilter>,

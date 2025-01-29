@@ -1,4 +1,5 @@
-const path = require('path');
+// @ts-check
+import path from 'path';
 
 /*
  * This utility function is useful in combination with jest `transformIgnorePatterns` config
@@ -17,7 +18,8 @@ const grafanaESModules = [
   'uuid',
 ];
 
-module.exports = {
+/** @type {import('jest').Config} */
+const config = {
   verbose: false,
   transform: {
     '^.+\\.(t|j)sx?$': [
@@ -41,7 +43,7 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
   moduleNameMapper: {
     '\\.css': '<rootDir>/jest/style.ts',
-    'react-inlinesvg': path.resolve(__dirname, 'jest', 'react-inlinesvg.tsx'),
+    'react-inlinesvg': path.resolve(import.meta.dirname, 'jest', 'react-inlinesvg.tsx'),
   },
   testEnvironment: 'jest-environment-jsdom',
   // Jest will throw `Cannot use import statement outside module` if it tries to load an
@@ -49,3 +51,5 @@ module.exports = {
   transformIgnorePatterns: [nodeModulesToTransform(grafanaESModules)],
   watchPathIgnorePatterns: ['<rootDir>/node_modules/'],
 };
+
+export default config;

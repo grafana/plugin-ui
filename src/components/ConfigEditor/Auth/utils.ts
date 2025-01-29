@@ -1,6 +1,6 @@
-import { Props as AuthProps } from './Auth';
-import { AuthMethod, Header, CustomMethodId } from './types';
-import { Config, OnChangeHandler } from '../types';
+import { type Props as AuthProps } from './Auth';
+import { AuthMethod, type Header, type CustomMethodId } from './types';
+import { type Config, type OnChangeHandler } from '../types';
 
 const headerNamePrefix = 'httpHeaderName';
 const headerValuePrefix = 'httpHeaderValue';

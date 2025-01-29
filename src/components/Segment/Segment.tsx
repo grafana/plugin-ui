@@ -1,6 +1,6 @@
-import React, { useEffect, ComponentProps } from 'react';
+import React, { useEffect, type ComponentProps } from 'react';
 import { Segment as GrafanaSegment } from '@grafana/ui';
-import { SelectableValue } from '@grafana/data';
+import { type SelectableValue } from '@grafana/data';
 import { useDebounce } from '../../hooks/useDebounce';
 
 export interface SegmentProps<T> extends Omit<ComponentProps<typeof GrafanaSegment<T>>, 'onChange'> {

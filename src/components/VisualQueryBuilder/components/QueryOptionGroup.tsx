@@ -2,11 +2,11 @@ import { css } from '@emotion/css';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import { getValueFormat, GrafanaTheme2 } from '@grafana/data';
+import { getValueFormat, type GrafanaTheme2 } from '@grafana/data';
 import { config } from '@grafana/runtime';
 import { Collapse, Icon, Tooltip, useStyles2 } from '@grafana/ui';
 
-import { QueryStats } from '../types';
+import { type QueryStats } from '../types';
 import { EditorStack } from '../../QueryEditor';
 
 interface Props {

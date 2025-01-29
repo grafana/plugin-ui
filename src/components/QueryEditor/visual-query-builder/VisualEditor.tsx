@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAsync } from 'react-use';
 
-import { DB, QueryEditorProps, QueryRowFilter, SQLQuery } from '../types';
+import { type DB, type QueryEditorProps, type QueryRowFilter, type SQLQuery } from '../types';
 import { QueryToolbox } from '../query-editor-raw/QueryToolbox';
 
 import { Preview } from './Preview';
@@ -9,7 +9,7 @@ import { SQLGroupByRow } from './SQLGroupByRow';
 import { SQLOrderByRow } from './SQLOrderByRow';
 import { SQLSelectRow } from './SQLSelectRow';
 import { SQLWhereRow } from './SQLWhereRow';
-import { TimeRange } from '@grafana/data';
+import { type TimeRange } from '@grafana/data';
 import { EditorRow } from './EditorRow';
 import { EditorField } from './EditorField';
 import { EditorRows } from './EditorRows';

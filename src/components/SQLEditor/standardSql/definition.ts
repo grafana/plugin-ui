@@ -1,4 +1,4 @@
-import { LanguageDefinition } from '../components/SQLEditor';
+import { type LanguageDefinition } from '../components/SQLEditor';
 import { getStandardSQLCompletionProvider } from './standardSQLCompletionItemProvider';
 
 const standardSQLLanguageDefinition: LanguageDefinition = {

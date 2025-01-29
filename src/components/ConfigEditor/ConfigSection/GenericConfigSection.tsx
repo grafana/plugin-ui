@@ -1,6 +1,6 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, type ReactNode } from 'react';
 import { css } from '@emotion/css';
-import { useTheme2, IconButton, IconName } from '@grafana/ui';
+import { useTheme2, IconButton, type IconName } from '@grafana/ui';
 
 export type Props = {
   title: string;

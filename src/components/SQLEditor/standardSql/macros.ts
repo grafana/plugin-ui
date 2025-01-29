@@ -1,5 +1,5 @@
 import { MacroType } from '../types';
-import { MacrosRegistryItem } from './types';
+import { type MacrosRegistryItem } from './types';
 
 const COLUMN = 'column',
   RELATIVE_TIME_STRING = "'5m'";

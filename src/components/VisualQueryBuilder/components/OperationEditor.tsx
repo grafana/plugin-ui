@@ -2,14 +2,10 @@ import { css, cx } from '@emotion/css';
 import React from 'react';
 import { Draggable } from '@hello-pangea/dnd';
 
-import { DataSourceApi, GrafanaTheme2, TimeRange } from '@grafana/data';
+import { type DataSourceApi, type GrafanaTheme2, type TimeRange } from '@grafana/data';
 import { InlineField, useTheme2 } from '@grafana/ui';
 
-import {
-  QueryBuilderOperation,
-  VisualQuery,
-  VisualQueryModeller,
-} from '../types';
+import { type QueryBuilderOperation, type VisualQuery, type VisualQueryModeller } from '../types';
 import { OperationEditorBody } from './OperationEditorBody';
 
 interface Props<T extends VisualQuery> {
@@ -53,7 +49,6 @@ export function OperationEditor<T extends VisualQuery>({
     return <span>Operation {operation.id} not found</span>;
   }
 
-
   const isInvalid = (isDragging: boolean) => {
     if (isDragging) {
       return undefined;
@@ -70,7 +65,7 @@ export function OperationEditor<T extends VisualQuery>({
           invalid={isInvalid(snapshot.isDragging)}
           className={cx(styles.error, styles.cardWrapper)}
         >
-          <OperationEditorBody 
+          <OperationEditorBody
             provided={provided}
             flash={flash}
             highlight={highlight}
@@ -93,7 +88,6 @@ export function OperationEditor<T extends VisualQuery>({
   );
 }
 
-
 const getStyles = (theme: GrafanaTheme2, isConflicting: boolean) => {
   return {
     cardWrapper: css({
@@ -104,4 +98,3 @@ const getStyles = (theme: GrafanaTheme2, isConflicting: boolean) => {
     }),
   };
 };
-

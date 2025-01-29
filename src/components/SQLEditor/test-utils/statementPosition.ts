@@ -1,12 +1,12 @@
 import { Registry } from '@grafana/data';
-import { monacoTypes } from '@grafana/ui';
+import { type monacoTypes } from '@grafana/ui';
 import { getMonacoMock } from '../mocks/Monaco';
 import { TextModel } from '../mocks/TextModel';
 import { getStatementPosition } from '../standardSql/getStatementPosition';
-import { StatementPositionResolversRegistryItem } from '../standardSql/types';
-import { CustomStatementPlacement, StatementPosition } from '../types';
+import { type StatementPositionResolversRegistryItem } from '../standardSql/types';
+import { type CustomStatementPlacement, type StatementPosition } from '../types';
 import { linkedTokenBuilder } from '../utils/linkedTokenBuilder';
-import { StatementPositionResolverTestCase } from './types';
+import { type StatementPositionResolverTestCase } from './types';
 
 function assertPosition(
   query: string,

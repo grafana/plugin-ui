@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BasicAuth, Props } from './BasicAuth';
+import { BasicAuth, type Props } from './BasicAuth';
 
 const getProps = (partialProps?: Partial<Props>): Props => ({
   passwordConfigured: false,
