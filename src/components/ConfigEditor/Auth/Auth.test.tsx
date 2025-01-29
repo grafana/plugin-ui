@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
-import { Auth, Props } from './Auth';
+import { Auth, type Props } from './Auth';
 import { AuthMethod } from './types';
 
 const getProps = (partialProps?: Partial<Props>): Props => ({

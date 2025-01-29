@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
-import { TLSSettings, Props } from './TLSSettings';
+import { TLSSettings, type Props } from './TLSSettings';
 
 type PartialProps = Partial<
   Omit<Props, 'selfSignedCertificate' | 'TLSClientAuth' | 'skipTLSVerification'> & {

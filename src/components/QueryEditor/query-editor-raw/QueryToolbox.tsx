@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 
 import { HorizontalGroup, Icon, IconButton, Tooltip, useTheme2 } from '@grafana/ui';
 
-import { QueryValidator, QueryValidatorProps } from './QueryValidator';
+import { QueryValidator, type QueryValidatorProps } from './QueryValidator';
 
 interface QueryToolboxProps extends Omit<QueryValidatorProps, 'onValidate'> {
   showTools?: boolean;

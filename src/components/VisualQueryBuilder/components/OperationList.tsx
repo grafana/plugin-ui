@@ -1,13 +1,13 @@
 import { css } from '@emotion/css';
 import React, { useState } from 'react';
-import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable, type DropResult } from '@hello-pangea/dnd';
 import { useMountedState, usePrevious } from 'react-use';
 
-import { DataSourceApi, GrafanaTheme2, TimeRange } from '@grafana/data';
-import { Button, Cascader, CascaderOption, useStyles2 } from '@grafana/ui';
+import { type DataSourceApi, type GrafanaTheme2, type TimeRange } from '@grafana/data';
+import { Button, Cascader, type CascaderOption, useStyles2 } from '@grafana/ui';
 
 import { OperationEditor } from './OperationEditor';
-import { QueryBuilderOperation, VisualQuery, VisualQueryModeller } from '../types';
+import { type QueryBuilderOperation, type VisualQuery, type VisualQueryModeller } from '../types';
 import { EditorStack } from '../../QueryEditor';
 
 export interface Props<T extends VisualQuery> {
@@ -51,7 +51,7 @@ export function OperationList<T extends VisualQuery>({
   };
 
   const onToggle = (index: number) => {
-    onOperationChange(index, { ...operations[index], disabled: !operations[index].disabled, });
+    onOperationChange(index, { ...operations[index], disabled: !operations[index].disabled });
   };
 
   const addOptions: CascaderOption[] = queryModeller.getCategories().map((category) => {

@@ -1,6 +1,6 @@
-import { FunctionComponent } from 'react';
+import { type FunctionComponent } from 'react';
 
-import { DataSourceApi, RegistryItem, SelectableValue, TimeRange } from '@grafana/data';
+import { type DataSourceApi, type RegistryItem, type SelectableValue, type TimeRange } from '@grafana/data';
 
 export interface QueryBuilderLabelFilter {
   label: string;
@@ -91,14 +91,14 @@ export type QueryStats = {
   bytes: number;
   // The error message displayed in the UI when we cant estimate the size of the query.
   message?: string;
-}
+};
 
 export interface VisualQueryModeller {
   getOperationsForCategory(category: string): QueryBuilderOperationDefinition[];
   getAlternativeOperations(key: string): QueryBuilderOperationDefinition[];
   getCategories(): string[];
   getOperationDefinition(id: string): QueryBuilderOperationDefinition | undefined;
-  renderQuery(query: VisualQuery, nested?: boolean): string
+  renderQuery(query: VisualQuery, nested?: boolean): string;
   renderLabels(labels: QueryBuilderLabelFilter[]): string;
   innerQueryPlaceholder: string;
 }
@@ -110,7 +110,7 @@ export interface VisualQueryBinary<T> {
   query: T;
 }
 
-export const BINARY_OPERATIONS_KEY = 'Binary operations'
+export const BINARY_OPERATIONS_KEY = 'Binary operations';
 
 export interface VisualQuery {
   metric?: string;

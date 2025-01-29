@@ -1,5 +1,5 @@
 import React from 'react';
-import { GenericConfigSection, Props as GenericConfigSectionProps } from './GenericConfigSection';
+import { GenericConfigSection, type Props as GenericConfigSectionProps } from './GenericConfigSection';
 
 type Props = Omit<GenericConfigSectionProps, 'kind'>;
 

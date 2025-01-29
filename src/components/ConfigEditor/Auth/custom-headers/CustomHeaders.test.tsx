@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { CustomHeaders, Props } from './CustomHeaders';
+import { CustomHeaders, type Props } from './CustomHeaders';
 
 const getProps = (partialProps?: Partial<Props>): Props => ({
   headers: [],

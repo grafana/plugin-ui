@@ -1,8 +1,8 @@
 import React from 'react';
 import { screen, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AuthMethodSettings, Props } from './AuthMethodSettings';
-import { AuthMethod, AuthMethodSelectOption } from '../types';
+import { AuthMethodSettings, type Props } from './AuthMethodSettings';
+import { AuthMethod, type AuthMethodSelectOption } from '../types';
 
 type PartialProps = Partial<Omit<Props, 'basicAuth'> & { basicAuth?: Partial<Props['basicAuth']> }>;
 const getProps = (partialProps?: PartialProps): Props => ({

@@ -1,16 +1,16 @@
-import { CodeEditor, Monaco, monacoTypes } from '@grafana/ui';
+import { CodeEditor, type Monaco, type monacoTypes } from '@grafana/ui';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { getStatementPosition } from '../standardSql/getStatementPosition';
 import { getStandardSuggestions } from '../standardSql/getStandardSuggestions';
-import { initSuggestionsKindRegistry, SuggestionKindRegistryItem } from '../standardSql/suggestionsKindRegistry';
+import { initSuggestionsKindRegistry, type SuggestionKindRegistryItem } from '../standardSql/suggestionsKindRegistry';
 import {
   CompletionItemInsertTextRule,
   CompletionItemKind,
   CompletionItemPriority,
-  CustomSuggestion,
-  PositionContext,
-  SQLCompletionItemProvider,
-  StatementPosition,
+  type CustomSuggestion,
+  type PositionContext,
+  type SQLCompletionItemProvider,
+  type StatementPosition,
   SuggestionKind,
 } from '../types';
 import { getSuggestionKinds } from '../utils/getSuggestionKind';
@@ -20,12 +20,12 @@ import { TRIGGER_SUGGEST } from '../utils/commands';
 import { v4 } from 'uuid';
 import { Registry } from '@grafana/data';
 import {
-  FunctionsRegistryItem,
-  MacrosRegistryItem,
-  OperatorsRegistryItem,
-  SQLMonarchLanguage,
-  StatementPositionResolversRegistryItem,
-  SuggestionsRegistryItem,
+  type FunctionsRegistryItem,
+  type MacrosRegistryItem,
+  type OperatorsRegistryItem,
+  type SQLMonarchLanguage,
+  type StatementPositionResolversRegistryItem,
+  type SuggestionsRegistryItem,
 } from '../standardSql/types';
 import { initStandardSuggestions } from '../standardSql/standardSuggestionsRegistry';
 import { initStatementPositionResolvers } from '../standardSql/statementPositionResolversRegistry';

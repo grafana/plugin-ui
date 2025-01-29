@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { DraggableProvided } from '@hello-pangea/dnd';
+import { type DraggableProvided } from '@hello-pangea/dnd';
 import { Button, Icon, Tooltip, useTheme2 } from '@grafana/ui';
 import { css, cx } from '@emotion/css';
-import { DataSourceApi, GrafanaTheme2, TimeRange } from '@grafana/data';
+import { type DataSourceApi, type GrafanaTheme2, type TimeRange } from '@grafana/data';
 import { OperationHeader } from './OperationHeader';
 import {
-  QueryBuilderOperation,
-  QueryBuilderOperationDefinition,
-  QueryBuilderOperationParamDef,
-  QueryBuilderOperationParamValue,
-  VisualQuery,
-  VisualQueryModeller,
+  type QueryBuilderOperation,
+  type QueryBuilderOperationDefinition,
+  type QueryBuilderOperationParamDef,
+  type QueryBuilderOperationParamValue,
+  type VisualQuery,
+  type VisualQueryModeller,
 } from '../types';
 import { getOperationParamEditor, getOperationParamId } from './OperationParamEditor';
 import { v4 } from 'uuid';

@@ -1,7 +1,7 @@
 import { InfoBox } from '@grafana/ui';
 import React from 'react';
 import { Segment } from './Segment';
-import { SelectableValue } from '@grafana/data';
+import { type SelectableValue } from '@grafana/data';
 
 export default {
   title: 'Forms/Segment',

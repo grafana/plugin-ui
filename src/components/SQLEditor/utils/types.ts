@@ -1,4 +1,4 @@
-import { monacoTypes } from '@grafana/ui';
+import { type monacoTypes } from '@grafana/ui';
 
 export interface Editor {
   tokenize: (value: string, languageId: string) => monacoTypes.Token[][];

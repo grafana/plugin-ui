@@ -1,6 +1,6 @@
-import { Registry } from '@grafana/data';
-import { SuggestionKindRegistryItem } from '../standardSql/suggestionsKindRegistry';
-import { StatementPosition, SuggestionKind } from '../types';
+import { type Registry } from '@grafana/data';
+import { type SuggestionKindRegistryItem } from '../standardSql/suggestionsKindRegistry';
+import { type StatementPosition, type SuggestionKind } from '../types';
 
 /**
  * Given statement positions, returns list of suggestion kinds that apply to those positions.

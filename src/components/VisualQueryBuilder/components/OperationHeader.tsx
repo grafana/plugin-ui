@@ -1,13 +1,13 @@
 import { css } from '@emotion/css';
 import React, { useState } from 'react';
-import { DraggableProvided } from '@hello-pangea/dnd';
+import { type DraggableProvided } from '@hello-pangea/dnd';
 
-import { GrafanaTheme2, SelectableValue } from '@grafana/data';
+import { type GrafanaTheme2, type SelectableValue } from '@grafana/data';
 import { Button, Select, useStyles2 } from '@grafana/ui';
 
 import { OperationInfoButton } from './OperationInfoButton';
 
-import { VisualQueryModeller, QueryBuilderOperation, QueryBuilderOperationDefinition } from '../types';
+import { type VisualQueryModeller, type QueryBuilderOperation, type QueryBuilderOperationDefinition } from '../types';
 import { FlexItem } from '../../QueryEditor/FlexItem';
 
 interface Props {
@@ -58,15 +58,19 @@ export const OperationHeader = React.memo<Props>(
                 variant="secondary"
                 title="Click to view alternative operations"
               />
-              <OperationInfoButton definition={definition} operation={operation} innerQueryPlaceholder={queryModeller.innerQueryPlaceholder} />
+              <OperationInfoButton
+                definition={definition}
+                operation={operation}
+                innerQueryPlaceholder={queryModeller.innerQueryPlaceholder}
+              />
               {definition.toggleable && (
                 <Button
-                  icon={operation.disabled ? "eye-slash" : "eye"}
+                  icon={operation.disabled ? 'eye-slash' : 'eye'}
                   size="sm"
                   onClick={() => onToggle(index)}
                   fill="text"
                   variant="secondary"
-                  title={operation.disabled ? "Enable operation" : "Disable operation"}
+                  title={operation.disabled ? 'Enable operation' : 'Disable operation'}
                 />
               )}
               <Button
@@ -103,7 +107,10 @@ export const OperationHeader = React.memo<Props>(
                   }
 
                   const changedOp = { ...operation, params: newParams, id: value.value.id };
-                  onChange(index, definition.changeTypeHandler ? definition.changeTypeHandler(changedOp, newDef) : changedOp);
+                  onChange(
+                    index,
+                    definition.changeTypeHandler ? definition.changeTypeHandler(changedOp, newDef) : changedOp
+                  );
                 }
               }}
             />

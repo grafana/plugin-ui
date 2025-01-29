@@ -2,7 +2,7 @@
 // `/public/img/icon/<icon_name>.svg` we need to mock react-inlinesvg to prevent
 // the failed fetch requests from displaying errors in console.
 
-import React, { Ref } from 'react';
+import React, { type Ref } from 'react';
 
 type Callback = (...args: any[]) => void;
 

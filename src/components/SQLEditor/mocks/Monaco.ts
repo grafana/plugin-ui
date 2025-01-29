@@ -1,4 +1,4 @@
-import { monacoTypes } from '@grafana/ui';
+import { type monacoTypes } from '@grafana/ui';
 
 // Stub for the Monaco instance. Only implements the parts that are used in cloudwatch sql
 const getMonacoMock: (

@@ -1,9 +1,9 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import { useTheme2 } from '@grafana/ui';
-import { SelfSignedCertificate, Props as SelfSignedCertificateProps } from './SelfSignedCertificate';
-import { TLSClientAuth as TLSClientAuthComponent, Props as TLSClientAuthProps } from './TLSClientAuth';
-import { SkipTLSVerification, Props as SkipTLSVerificationProps } from './SkipTLSVerification';
+import { SelfSignedCertificate, type Props as SelfSignedCertificateProps } from './SelfSignedCertificate';
+import { TLSClientAuth as TLSClientAuthComponent, type Props as TLSClientAuthProps } from './TLSClientAuth';
+import { SkipTLSVerification, type Props as SkipTLSVerificationProps } from './SkipTLSVerification';
 import { ConfigSubSection } from '../../ConfigSection';
 
 export type Props = {

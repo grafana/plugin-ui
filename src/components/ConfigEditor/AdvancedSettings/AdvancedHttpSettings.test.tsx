@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AdvancedHttpSettings, Props } from './AdvancedHttpSettings';
-import { Config } from '../types';
+import { AdvancedHttpSettings, type Props } from './AdvancedHttpSettings';
+import { type Config } from '../types';
 
 const getProps = (partialProps?: Partial<Props>): Props => ({
   config: {

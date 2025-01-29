@@ -2,28 +2,35 @@ import { lastValueFrom, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import {
-  DataFrame,
+  type DataFrame,
   DataFrameView,
-  DataSourceInstanceSettings,
-  MetricFindValue,
-  ScopedVars,
-  TimeRange,
-  VariableModel,
+  type DataSourceInstanceSettings,
+  type MetricFindValue,
+  type ScopedVars,
+  type TimeRange,
+  type VariableModel,
 } from '@grafana/data';
 import {
-  BackendDataSourceResponse,
+  type BackendDataSourceResponse,
   DataSourceWithBackend,
-  FetchResponse,
+  type FetchResponse,
   getBackendSrv,
   getTemplateSrv,
-  TemplateSrv,
+  type TemplateSrv,
   toDataQueryResponse,
 } from '@grafana/runtime';
-import { DataQuery } from '@grafana/schema';
+import { type DataQuery } from '@grafana/schema';
 
 import { MACRO_NAMES } from './constants';
 // import { toTestingStatus } from '@grafana/runtime/utils/queryResponse';
-import { SQLQuery, SQLOptions, DB, SqlQueryModel, ResponseParser, QueryFormat } from '../components/QueryEditor/types';
+import {
+  type SQLQuery,
+  type SQLOptions,
+  type DB,
+  type SqlQueryModel,
+  type ResponseParser,
+  QueryFormat,
+} from '../components/QueryEditor/types';
 
 export interface SearchFilterOptions {
   searchFilter?: string;

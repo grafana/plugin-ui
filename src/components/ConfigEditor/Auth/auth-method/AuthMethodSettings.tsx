@@ -1,10 +1,10 @@
-import React, { ReactElement, useMemo, useState } from 'react';
+import React, { type ReactElement, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
 import { useTheme2, Select, Field } from '@grafana/ui';
-import { SelectableValue } from '@grafana/data';
-import { BasicAuth, Props as BasicAuthProps } from './BasicAuth';
+import { type SelectableValue } from '@grafana/data';
+import { BasicAuth, type Props as BasicAuthProps } from './BasicAuth';
 import { ConfigSubSection } from '../../ConfigSection';
-import { AuthMethod, CustomMethod, CustomMethodId, AuthMethodSelectOption } from '../types';
+import { AuthMethod, type CustomMethod, type CustomMethodId, type AuthMethodSelectOption } from '../types';
 
 const defaultOptions: Record<AuthMethod, SelectableValue<AuthMethod>> = {
   [AuthMethod.BasicAuth]: {
@@ -119,11 +119,11 @@ export const AuthMethodSettings = ({
     AuthFieldsComponent = customMethods?.find((m) => m.id === selected)?.component ?? null;
   }
 
-  const title = hasSelect ? 'Authentication methods' : preparedOptions[0].label ?? '';
+  const title = hasSelect ? 'Authentication methods' : (preparedOptions[0].label ?? '');
 
   const description = hasSelect
     ? 'Choose an authentication method to access the data source'
-    : preparedOptions[0].description ?? '';
+    : (preparedOptions[0].description ?? '');
 
   const styles = {
     authMethods: css({

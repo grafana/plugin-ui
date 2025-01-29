@@ -1,17 +1,17 @@
-import { List } from 'immutable';
+import { type List } from 'immutable';
 import { isString } from 'lodash';
 import React from 'react';
 import {
   BasicConfig,
-  Config,
-  JsonItem,
-  JsonTree,
-  Operator,
-  Settings,
-  SimpleField,
+  type Config,
+  type JsonItem,
+  type JsonTree,
+  type Operator,
+  type Settings,
+  type SimpleField,
   Utils,
-  ValueSource,
-  Widgets,
+  type ValueSource,
+  type Widgets,
 } from 'react-awesome-query-builder';
 
 import { dateTime, toOption } from '@grafana/data';

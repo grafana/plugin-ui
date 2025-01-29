@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { TLSSettingsSection, Props } from './TLSSettingsSection';
+import { TLSSettingsSection, type Props } from './TLSSettingsSection';
 
 const getProps = (partialProps?: Partial<Props>): Props => ({
   enabled: false,

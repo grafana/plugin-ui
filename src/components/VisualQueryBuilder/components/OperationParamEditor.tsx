@@ -1,10 +1,10 @@
 import { css } from '@emotion/css';
-import React, { FunctionComponent } from 'react';
+import React, { type FunctionComponent } from 'react';
 
-import { GrafanaTheme2, SelectableValue, toOption } from '@grafana/data';
+import { type GrafanaTheme2, type SelectableValue, toOption } from '@grafana/data';
 import { AutoSizeInput, Button, Checkbox, Select, useStyles2 } from '@grafana/ui';
 
-import { QueryBuilderOperationParamDef, QueryBuilderOperationParamEditorProps } from '../types';
+import { type QueryBuilderOperationParamDef, type QueryBuilderOperationParamEditorProps } from '../types';
 
 import { EditorStack } from '../../QueryEditor';
 
