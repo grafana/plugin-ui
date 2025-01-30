@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.1 - 2025-01-30
+
+- Fix commonjs resolution errors due to incorrect paths in package.json
+
 ## v0.10.0 - 2025-01-30
 
 - Remove AsyncButtonCascader, Cascader, InlineSwitch and CertificationKey components
