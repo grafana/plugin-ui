@@ -3,6 +3,7 @@
 ## v0.10.1 - 2025-01-30
 
 - Fix commonjs resolution errors due to incorrect paths in package.json
+- Bump UUID dependency to ^11.0.0
 
 ## v0.10.0 - 2025-01-30
 
