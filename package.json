@@ -1,10 +1,10 @@
 {
   "name": "@grafana/plugin-ui",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "repository": "git@github.com:grafana/plugin-ui.git",
   "author": "Grafana Labs",
   "type": "module",
-  "main": "dist/cjs/index.cjs",
+  "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/cjs/index.d.cts",
   "exports": {
@@ -16,7 +16,7 @@
       },
       "require": {
         "types": "./dist/cjs/index.d.cts",
-        "default": "./dist/cjs/index.cjs"
+        "default": "./dist/cjs/index.js"
       }
     }
   },
