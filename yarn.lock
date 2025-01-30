@@ -1600,7 +1600,6 @@ __metadata:
     "@types/react": "npm:18.3.18"
     "@types/react-calendar": "npm:^3.1.2"
     "@types/testing-library__jest-dom": "npm:^5.9.5"
-    "@types/uuid": "npm:^8.3.2"
     "@typescript-eslint/eslint-plugin": "npm:^6.18.0"
     "@typescript-eslint/parser": "npm:^6.18.0"
     chance: "npm:^1.1.7"
@@ -1639,7 +1638,7 @@ __metadata:
     storybook: "npm:^8.5.2"
     ts-node: "npm:^10.9.1"
     typescript: "npm:^5.7.3"
-    uuid: "npm:^8.3.2"
+    uuid: "npm:^11.0.0"
   peerDependencies:
     "@grafana/data": ^10.4.0 || ^11.0.0
     "@grafana/e2e-selectors": ^10.4.0 || ^11.0.0
@@ -4237,13 +4236,6 @@ __metadata:
   version: 0.0.3
   resolution: "@types/use-sync-external-store@npm:0.0.3"
   checksum: 10c0/82824c1051ba40a00e3d47964cdf4546a224e95f172e15a9c62aa3f118acee1c7518b627a34f3aa87298a2039f982e8509f92bfcc18bea7c255c189c293ba547
-  languageName: node
-  linkType: hard
-
-"@types/uuid@npm:^8.3.2":
-  version: 8.3.4
-  resolution: "@types/uuid@npm:8.3.4"
-  checksum: 10c0/b9ac98f82fcf35962317ef7dc44d9ac9e0f6fdb68121d384c88fe12ea318487d5585d3480fa003cf28be86a3bbe213ca688ba786601dce4a97724765eb5b1cf2
   languageName: node
   linkType: hard
 
@@ -15036,12 +15028,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.2":
-  version: 8.3.2
-  resolution: "uuid@npm:8.3.2"
+"uuid@npm:^11.0.0":
+  version: 11.0.5
+  resolution: "uuid@npm:11.0.5"
   bin:
-    uuid: dist/bin/uuid
-  checksum: 10c0/bcbb807a917d374a49f475fae2e87fdca7da5e5530820ef53f65ba1d12131bd81a92ecf259cc7ce317cbe0f289e7d79fdfebcef9bfa3087c8c8a2fa304c9be54
+    uuid: dist/esm/bin/uuid
+  checksum: 10c0/6f59f0c605e02c14515401084ca124b9cb462b4dcac866916a49862bcf831874508a308588c23a7718269226ad11a92da29b39d761ad2b86e736623e3a33b6e7
   languageName: node
   linkType: hard
 
