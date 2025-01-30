@@ -1,5 +1,12 @@
 # Change Log
 
+## v0.10.0 - 2025-01-30
+
+- Remove AsyncButtonCascader, Cascader, InlineSwitch and CertificationKey components
+- Introduce ESM and CJS builds
+- Relax semver versions for various dependencies
+- Migrate to Yarn Berry
+
 ## v0.9.6 - 2025-01-20
 
 - Fix `Config` type to be compatible with `DataSourceSettings`
