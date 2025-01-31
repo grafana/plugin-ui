@@ -13,6 +13,7 @@ interface DatasetSelectorProps extends ResourceSelectorProps {
   applyDefault?: boolean;
   disabled?: boolean;
   onChange: (v: SelectableValue) => void;
+  inputId?: string | undefined;
 }
 
 export const DatasetSelector = ({
@@ -23,6 +24,7 @@ export const DatasetSelector = ({
   disabled,
   className,
   applyDefault,
+  inputId,
 }: DatasetSelectorProps) => {
   const state = useAsync(async () => {
     if (dataset) {
@@ -55,6 +57,7 @@ export const DatasetSelector = ({
 
   return (
     <Select
+      inputId={inputId}
       className={className}
       aria-label="Dataset selector"
       value={value}
