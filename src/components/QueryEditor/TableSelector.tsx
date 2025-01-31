@@ -12,7 +12,7 @@ interface TableSelectorProps extends ResourceSelectorProps {
   value: string | null;
   query: QueryWithDefaults;
   onChange: (v: SelectableValue) => void;
-  inputId?: string | undefined;
+  inputId?: string;
 }
 
 export const TableSelector = ({ db, dataset, value, className, onChange, inputId }: TableSelectorProps) => {

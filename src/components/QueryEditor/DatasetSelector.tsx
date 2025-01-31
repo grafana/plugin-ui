@@ -13,7 +13,7 @@ interface DatasetSelectorProps extends ResourceSelectorProps {
   applyDefault?: boolean;
   disabled?: boolean;
   onChange: (v: SelectableValue) => void;
-  inputId?: string | undefined;
+  inputId?: string;
 }
 
 export const DatasetSelector = ({
