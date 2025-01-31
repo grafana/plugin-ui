@@ -1,10 +1,10 @@
 import React from 'react';
 import { useAsync } from 'react-use';
 
-import { SelectableValue, toOption } from '@grafana/data';
+import { type SelectableValue, toOption } from '@grafana/data';
 import { Select } from '@grafana/ui';
-import { DB, ResourceSelectorProps } from './types';
-import { QueryWithDefaults } from './defaults';
+import { type DB, type ResourceSelectorProps } from './types';
+import { type QueryWithDefaults } from './defaults';
 
 interface TableSelectorProps extends ResourceSelectorProps {
   db: DB;
@@ -14,13 +14,13 @@ interface TableSelectorProps extends ResourceSelectorProps {
   onChange: (v: SelectableValue) => void;
 }
 
-export const TableSelector: React.FC<TableSelectorProps> = ({ db, dataset, value, className, onChange }) => {
+export const TableSelector = ({ db, dataset, value, className, onChange }: TableSelectorProps) => {
   const state = useAsync(async () => {
     if (!dataset) {
       return [];
     }
 
-    const tables = await db.tables(dataset)
+    const tables = await db.tables(dataset);
     return tables.map(toOption);
   }, [dataset]);
 

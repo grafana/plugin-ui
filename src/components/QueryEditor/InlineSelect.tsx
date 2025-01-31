@@ -1,18 +1,23 @@
 import { css, cx } from '@emotion/css';
 import React, { useState } from 'react';
-import { GroupBase } from 'react-select';
+import { type GroupBase } from 'react-select';
 
-import { GrafanaTheme2 } from '@grafana/data';
-import { Select, SelectCommonProps, SelectContainerProps, stylesFactory, useTheme2,  SelectContainer as BaseSelectContainer } from '@grafana/ui';
+import { type GrafanaTheme2 } from '@grafana/data';
+import {
+  Select,
+  type SelectCommonProps,
+  type SelectContainerProps,
+  SelectContainer as BaseSelectContainer,
+  useStyles2,
+} from '@grafana/ui';
 
 interface InlineSelectProps<T> extends SelectCommonProps<T> {
   label?: string;
 }
 
 export function InlineSelect<T>({ label: labelProp, ...props }: InlineSelectProps<T>) {
-  const theme = useTheme2();
   const [id] = useState(() => Math.random().toString(16).slice(2));
-  const styles = getSelectStyles(theme);
+  const styles = useStyles2(getSelectStyles);
   const components = {
     SelectContainer,
     ValueContainer,
@@ -37,8 +42,7 @@ const SelectContainer = <Option, isMulti extends boolean, Group extends GroupBas
 ) => {
   const { children } = props;
 
-  const theme = useTheme2();
-  const styles = getSelectStyles(theme);
+  const styles = useStyles2(getSelectStyles);
 
   return (
     <BaseSelectContainer {...props} className={cx(props.className, styles.container)}>
@@ -51,13 +55,12 @@ const ValueContainer = <Option, isMulti extends boolean, Group extends GroupBase
   props: SelectContainerProps<Option, isMulti, Group>
 ) => {
   const { className, children } = props;
-  const theme = useTheme2();
-  const styles = getSelectStyles(theme);
+  const styles = useStyles2(getSelectStyles);
 
   return <div className={cx(className, styles.valueContainer)}>{children}</div>;
 };
 
-const getSelectStyles = stylesFactory((theme: GrafanaTheme2) => ({
+const getSelectStyles = (theme: GrafanaTheme2) => ({
   root: css({
     display: 'flex',
     fontSize: 12,
@@ -81,4 +84,4 @@ const getSelectStyles = stylesFactory((theme: GrafanaTheme2) => ({
     color: theme.colors.text.secondary,
     fontSize: 12,
   }),
-}));
+});

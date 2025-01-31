@@ -1,11 +1,9 @@
 import { css } from '@emotion/css';
 import React, { useState, useMemo, useEffect } from 'react';
-import { useAsyncFn } from 'react-use';
-import useDebounce from 'react-use/lib/useDebounce';
-
-import { formattedValueToString, getValueFormat, TimeRange } from '@grafana/data';
+import { useAsyncFn, useDebounce } from 'react-use';
+import { formattedValueToString, getValueFormat, type TimeRange } from '@grafana/data';
 import { Icon, Spinner, useTheme2 } from '@grafana/ui';
-import { DB, SQLQuery, ValidationResults } from '../types';
+import { type DB, type SQLQuery, type ValidationResults } from '../types';
 
 export interface QueryValidatorProps {
   db: DB;

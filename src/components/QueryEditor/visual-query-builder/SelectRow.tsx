@@ -2,13 +2,13 @@ import { css } from '@emotion/css';
 import { uniqueId } from 'lodash';
 import React, { useCallback } from 'react';
 
-import { SelectableValue, toOption } from '@grafana/data';
+import { type SelectableValue, toOption } from '@grafana/data';
 import { Button, Select, useStyles2 } from '@grafana/ui';
 import { EditorField } from '../EditorField';
-import { QueryEditorFunctionExpression, QueryEditorExpressionType } from '../expressions';
-import { SQLExpression } from '../types';
+import { type QueryEditorFunctionExpression, QueryEditorExpressionType } from '../expressions';
+import { type SQLExpression } from '../types';
 import { createFunctionField } from '../utils/sql.utils';
-import { Stack } from '../Stack';
+import { EditorStack } from '../EditorStack';
 
 interface SelectRowProps {
   sql: SQLExpression;
@@ -79,10 +79,10 @@ export function SelectRow({ sql, columns, onSqlChange, functions }: SelectRowPro
   }, [onSqlChange, sql]);
 
   return (
-    <Stack gap={2} alignItems="end" wrap direction="column">
+    <EditorStack gap={2} alignItems="end" direction="column">
       {sql.columns?.map((item, index) => (
         <div key={index}>
-          <Stack gap={2} alignItems="end">
+          <EditorStack gap={2} alignItems="end">
             <EditorField label="Column" width={25}>
               <Select
                 value={getColumnValue(item)}
@@ -113,7 +113,7 @@ export function SelectRow({ sql, columns, onSqlChange, functions }: SelectRowPro
               size="md"
               onClick={removeColumn(index)}
             />
-          </Stack>
+          </EditorStack>
         </div>
       ))}
       <Button
@@ -125,7 +125,7 @@ export function SelectRow({ sql, columns, onSqlChange, functions }: SelectRowPro
         aria-label="Add"
         className={styles.addButton}
       />
-    </Stack>
+    </EditorStack>
   );
 }
 

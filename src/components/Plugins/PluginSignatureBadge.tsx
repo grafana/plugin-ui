@@ -1,12 +1,12 @@
-import React, { HTMLAttributes } from 'react';
-import { Badge, BadgeProps } from '@grafana/ui';
+import React, { type HTMLAttributes } from 'react';
+import { Badge, type BadgeProps } from '@grafana/ui';
 import { PluginErrorCode, PluginSignatureStatus } from '@grafana/data';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   status?: PluginSignatureStatus;
 }
 
-export const PluginSignatureBadge: React.FC<Props> = ({ status, ...otherProps }) => {
+export const PluginSignatureBadge = ({ status, ...otherProps }: Props) => {
   const display = getSignatureDisplayModel(status);
   return (
     <Badge

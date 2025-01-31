@@ -1,0 +1,35 @@
+import { type Registry } from '@grafana/data';
+import { type Monaco, type monacoTypes } from '@grafana/ui';
+import { type PositionContext, type SuggestionKind } from '../types';
+import { type LinkedToken } from '../utils/LinkedToken';
+import { toCompletionItem } from '../utils/toCompletionItem';
+import { type SuggestionsRegistryItem } from './types';
+
+// Given standard and custom registered suggestions and kinds of suggestion expected, return a list of completion items
+export const getStandardSuggestions = async (
+  monaco: Monaco,
+  currentToken: LinkedToken | null,
+  suggestionKinds: SuggestionKind[],
+  positionContext: PositionContext,
+  suggestionsRegistry: Registry<SuggestionsRegistryItem>
+): Promise<monacoTypes.languages.CompletionItem[]> => {
+  let suggestions: monacoTypes.languages.CompletionItem[] = [];
+  const invalidRangeToken =
+    currentToken?.isWhiteSpace() ||
+    currentToken?.isParenthesis() ||
+    (currentToken?.isIdentifier() && currentToken.value.endsWith('.'));
+  const range =
+    invalidRangeToken || !currentToken?.range
+      ? monaco.Range.fromPositions(positionContext.position)
+      : currentToken?.range;
+
+  // iterating over Set to deduplicate
+  for (const suggestion of [...new Set(suggestionKinds)]) {
+    const registeredSuggestions = suggestionsRegistry.getIfExists(suggestion);
+    if (registeredSuggestions) {
+      const su = await registeredSuggestions.suggestions({ ...positionContext, range }, monaco);
+      suggestions = [...suggestions, ...su.map((s) => toCompletionItem(s.label, range, { kind: s.kind, ...s }))];
+    }
+  }
+  return Promise.resolve(suggestions);
+};

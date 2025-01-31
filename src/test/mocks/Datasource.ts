@@ -1,4 +1,4 @@
-import { DataSourceInstanceSettings, QueryHint } from '@grafana/data';
+import { type DataSourceInstanceSettings, type QueryHint } from '@grafana/data';
 import { DataSourceWithBackend } from '@grafana/runtime';
 import { Chance } from 'chance';
 import { mockDataSourcePluginMeta } from './Plugin';
@@ -41,8 +41,7 @@ class DatasourceMock extends DataSourceWithBackend {
   protected getRequestHeaders = jest.fn();
 }
 
-export const mockDatasource = () =>
-  new DatasourceMock(mockDatasourceInstanceSettings());
+export const mockDatasource = () => new DatasourceMock(mockDatasourceInstanceSettings());
 
 const mockQueryHint = (): QueryHint => ({
   type: Chance().word(),
@@ -70,6 +69,6 @@ export const mockDatasourceInstanceSettings = (): DataSourceInstanceSettings => 
   database: Chance().word(),
   basicAuth: Chance().word(),
   withCredentials: generateBoolean(),
-  access: Chance().pickone(["direct", "proxy"]),
+  access: Chance().pickone(['direct', 'proxy']),
   readOnly: false,
 });

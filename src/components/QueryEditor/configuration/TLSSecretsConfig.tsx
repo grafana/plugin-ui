@@ -1,23 +1,22 @@
 import React from 'react';
 
 import {
-  DataSourceJsonData,
-  DataSourcePluginOptionsEditorProps,
-  KeyValue,
-  onUpdateDatasourceSecureJsonDataOption,
+  type DataSourceJsonData,
+  type DataSourcePluginOptionsEditorProps,
+  type KeyValue,
   updateDatasourcePluginResetOption,
 } from '@grafana/data';
 import { InlineField } from '@grafana/ui';
 import { SecretTextArea } from '../SecretTextArea';
 
-export interface Props<T, S> {
+export interface Props<T extends DataSourceJsonData, S> {
   editorProps: DataSourcePluginOptionsEditorProps<T, S>;
   showCACert?: boolean;
   secureJsonFields?: KeyValue<Boolean>;
   labelWidth?: number;
 }
 
-export const TLSSecretsConfig = <T extends DataSourceJsonData, S = {}>(props: Props<T, S>) => {
+export const TLSSecretsConfig = <T extends DataSourceJsonData, S extends {} = {}>(props: Props<T, S>) => {
   const { labelWidth, editorProps, showCACert } = props;
   const { secureJsonFields } = editorProps.options;
   return (
@@ -32,7 +31,6 @@ export const TLSSecretsConfig = <T extends DataSourceJsonData, S = {}>(props: Pr
           cols={45}
           rows={7}
           isConfigured={secureJsonFields && secureJsonFields.tlsClientCert}
-          // onChange={onUpdateDatasourceSecureJsonDataOption(editorProps, 'tlsClientCert')}
           onReset={() => {
             updateDatasourcePluginResetOption(editorProps, 'tlsClientCert');
           }}
@@ -49,7 +47,6 @@ export const TLSSecretsConfig = <T extends DataSourceJsonData, S = {}>(props: Pr
             cols={45}
             rows={7}
             isConfigured={secureJsonFields && secureJsonFields.tlsCACert}
-            // onChange={onUpdateDatasourceSecureJsonDataOption(editorProps, 'tlsCACert')}
             onReset={() => {
               updateDatasourcePluginResetOption(editorProps, 'tlsCACert');
             }}
@@ -67,7 +64,6 @@ export const TLSSecretsConfig = <T extends DataSourceJsonData, S = {}>(props: Pr
           cols={45}
           rows={7}
           isConfigured={secureJsonFields && secureJsonFields.tlsClientKey}
-          // onChange={onUpdateDatasourceSecureJsonDataOption(editorProps, 'tlsClientKey')}
           onReset={() => {
             updateDatasourcePluginResetOption(editorProps, 'tlsClientKey');
           }}

@@ -1,19 +1,21 @@
 import { css } from '@emotion/css';
 import React from 'react';
 
-import { GrafanaTheme2 } from '@grafana/data';
+import { type GrafanaTheme2 } from '@grafana/data';
 
-import { Stack } from './Stack';
 import { useStyles2 } from '@grafana/ui';
+import { EditorStack } from '../EditorStack';
 
-interface EditorRowProps {}
+interface EditorRowProps {
+  children?: React.ReactNode;
+}
 
-export const EditorRow: React.FC<EditorRowProps> = ({ children }) => {
+export const EditorRow = ({ children }: EditorRowProps) => {
   const styles = useStyles2(getStyles);
 
   return (
     <div className={styles.root}>
-      <Stack gap={2}>{children}</Stack>
+      <EditorStack gap={2}>{children}</EditorStack>
     </div>
   );
 };

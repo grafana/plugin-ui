@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import { css } from '@emotion/css';
-import { VariableSuggestion, DataSourceInstanceSettings, DataSourceJsonData } from '@grafana/data';
+import { type VariableSuggestion, type DataSourceInstanceSettings, type DataSourceJsonData } from '@grafana/data';
 import { Button, LegacyForms, DataLinkInput, stylesFactory } from '@grafana/ui';
 const { FormField, Switch } = LegacyForms;
-import { DataLinkConfig } from './types';
+import { type DataLinkConfig } from './types';
 import { usePrevious } from 'react-use';
 import { DataSourcePicker } from '../DataSourcePicker/DataSourcePicker';
 
@@ -25,7 +25,7 @@ const getStyles = stylesFactory(() => ({
 
 type Props = {
   value: DataLinkConfig;
-  datasources?: DataSourceInstanceSettings<DataSourceJsonData>[];
+  datasources?: Array<DataSourceInstanceSettings<DataSourceJsonData>>;
   onChange: (value: DataLinkConfig) => void;
   onDelete: () => void;
   suggestions: VariableSuggestion[];
@@ -61,7 +61,7 @@ export const DataLink = (props: Props) => {
           variant={'destructive'}
           title="Remove field"
           icon="times"
-          onClick={event => {
+          onClick={(event) => {
             event.preventDefault();
             onDelete();
           }}
@@ -75,9 +75,7 @@ export const DataLink = (props: Props) => {
           type="text"
           value={value.label}
           onChange={handleChange('label')}
-          tooltip={
-            'Use to provide a meaningful label to the data matched in the regex'
-          }
+          tooltip={'Use to provide a meaningful label to the data matched in the regex'}
         />
         <FormField
           className={styles.regexField}
@@ -99,7 +97,7 @@ export const DataLink = (props: Props) => {
             <DataLinkInput
               placeholder={showInternalLink ? '${__value.raw}' : 'http://example.com/${__value.raw}'}
               value={value.url || ''}
-              onChange={newValue =>
+              onChange={(newValue) =>
                 onChange({
                   ...value,
                   url: newValue,
@@ -132,7 +130,7 @@ export const DataLink = (props: Props) => {
         {showInternalLink && (
           <DataSourcePicker
             // Uid and value should be always set in the db and so in the items.
-            onChange={ds => {
+            onChange={(ds) => {
               onChange({
                 ...value,
                 datasourceUid: ds.uid,

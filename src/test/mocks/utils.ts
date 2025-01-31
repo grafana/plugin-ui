@@ -4,11 +4,9 @@ import userEvent from '@testing-library/user-event';
 
 export const generateBoolean = () => Chance().pickone([true, false]);
 
-export const undefinedOr = (fn: Function) =>
-  Chance().pickone([undefined, fn()]);
+export const undefinedOr = (fn: Function) => Chance().pickone([undefined, fn()]);
 
-export const generateArrayOf = (fn: Function, numberOf: number = 3) =>
-  Array.from(new Array(numberOf), () => fn());
+export const generateArrayOf = (fn: Function, numberOf = 3) => Array.from(new Array(numberOf), () => fn());
 
 // react-select (used by @grafana/ui) renders very differently from the native Select HTML element
 // and because they are not accessible and do not pass data-testid or aria-labels down,
@@ -39,11 +37,7 @@ export const openSelect = (container: HTMLElement, optionLabel?: string) => {
  * @param {string} optionLabel The option we want to select
  * @param {boolean} [typeOptionLabel=false] If we should type the optional label after opening - this is useful for AsyncSelect
  */
-export const selectOption = async (
-  container: HTMLElement,
-  optionLabel: string,
-  typeOptionLabel?: boolean
-) => {
+export const selectOption = async (container: HTMLElement, optionLabel: string, typeOptionLabel?: boolean) => {
   openSelect(container, typeOptionLabel ? optionLabel : undefined);
 
   // wait for the list to show

@@ -1,23 +1,22 @@
 import React, { useCallback, useState } from 'react';
 import { useCopyToClipboard } from 'react-use';
 
-import { SelectableValue } from '@grafana/data';
+import { type SelectableValue } from '@grafana/data';
 
 import { ConfirmModal } from './ConfirmModal';
 import { DatasetSelector } from './DatasetSelector';
-import { ErrorBoundary } from './ErrorBoundary';
 import { TableSelector } from './TableSelector';
-import { InlineField, Select, InlineSwitch, RadioButtonGroup } from '@grafana/ui';
-import { QueryWithDefaults } from './defaults';
+import { InlineSwitch, RadioButtonGroup } from '@grafana/ui';
+import { type QueryWithDefaults } from './defaults';
 import { EditorField } from './EditorField';
 import { EditorHeader } from './EditorHeader';
 import { EditorRow } from './EditorRow';
 import { FlexItem } from './FlexItem';
 import { InlineSelect } from './InlineSelect';
 import { Space } from './Space';
-import {RunQueryButton} from './RunQueryButton'
-import { DB, SQLQuery, QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
-import { defaultToRawSql } from './utils/sql.utils';
+import { RunQueryButton } from './RunQueryButton';
+import { type DB, type SQLQuery, type QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
+import { getRawSqlFn } from './utils/sql.utils';
 
 interface QueryHeaderProps {
   db: DB;
@@ -29,7 +28,7 @@ interface QueryHeaderProps {
   onQueryRowChange: (queryRowFilter: QueryRowFilter) => void;
   queryRowFilter: QueryRowFilter;
   isQueryRunnable: boolean;
-  labels?: Map<string,string>;
+  labels?: Map<string, string>;
 }
 
 const editorModes = [
@@ -52,7 +51,7 @@ export function QueryHeader({
   const { editorMode } = query;
   const [_, copyToClipboard] = useCopyToClipboard();
   const [showConfirm, setShowConfirm] = useState(false);
-  const toRawSql = db.toRawSql || defaultToRawSql;
+  const toRawSql = getRawSqlFn(db);
 
   const onEditorModeChange = useCallback(
     (newEditorMode: EditorMode) => {
@@ -103,29 +102,14 @@ export function QueryHeader({
   return (
     <>
       <EditorHeader>
-        {/* Backward compatibility check. Inline select uses SelectContainer that was added in 8.3 */}
-        <ErrorBoundary
-          fallBackComponent={
-            <InlineField label="Format" labelWidth={15}>
-              <Select
-                placeholder="Select format"
-                value={query.format}
-                onChange={onFormatChange}
-                options={QUERY_FORMAT_OPTIONS}
-              />
-            </InlineField>
-          }
-        >
-          <InlineSelect
-            label="Format"
-            value={query.format}
-            placeholder="Select format"
-            menuShouldPortal
-            onChange={onFormatChange}
-            options={QUERY_FORMAT_OPTIONS}
-          />
-        </ErrorBoundary>
-
+        <InlineSelect
+          label="Format"
+          value={query.format}
+          placeholder="Select format"
+          menuShouldPortal
+          onChange={onFormatChange}
+          options={QUERY_FORMAT_OPTIONS}
+        />
         {editorMode === EditorMode.Builder && (
           <>
             <InlineSwitch
@@ -176,10 +160,7 @@ export function QueryHeader({
 
         <FlexItem grow={1} />
 
-        <RunQueryButton
-          queryInvalid={isQueryRunnable}
-          onClick={() => onRunQuery()}
-        />
+        <RunQueryButton queryInvalid={!isQueryRunnable} onClick={() => onRunQuery()} />
 
         <RadioButtonGroup options={editorModes} size="sm" value={editorMode} onChange={onEditorModeChange} />
 

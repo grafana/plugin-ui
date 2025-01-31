@@ -1,10 +1,8 @@
-import { GrafanaTheme2 } from '@grafana/data';
+import { type GrafanaTheme2 } from '@grafana/data';
 import { css } from '@emotion/css';
 
-export const getStyles = ((theme: GrafanaTheme2) => {
-  const containerBorder = theme.isDark
-    ? theme.v1.palette.dark9
-    : theme.v1.palette.gray5;
+export const getStyles = (theme: GrafanaTheme2) => {
+  const containerBorder = theme.isDark ? theme.v1.palette.dark9 : theme.v1.palette.gray5;
 
   return {
     container: css`
@@ -48,12 +46,10 @@ export const getStyles = ((theme: GrafanaTheme2) => {
       text-align: center;
     `,
   };
-});
+};
 
-export const getBodyStyles = ((theme: GrafanaTheme2) => {
-  const containerBorder = theme.isDark
-    ? theme.v1.palette.dark9
-    : theme.v1.palette.gray5;
+export const getBodyStyles = (theme: GrafanaTheme2) => {
+  const containerBorder = theme.isDark ? theme.v1.palette.dark9 : theme.v1.palette.gray5;
 
   return {
     title: css`
@@ -154,4 +150,4 @@ export const getBodyStyles = ((theme: GrafanaTheme2) => {
       }
     `,
   };
-});
+};

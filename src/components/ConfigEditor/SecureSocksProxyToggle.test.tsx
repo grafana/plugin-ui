@@ -1,26 +1,25 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { SecureSocksProxyToggle } from "./SecureSocksProxyToggle";
-import  * as compat  from "../../utils/compatibility";
-import { config } from "@grafana/runtime";
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import { SecureSocksProxyToggle } from './SecureSocksProxyToggle';
+import { config } from '@grafana/runtime';
 
-describe("<SecureSocksProxyToggle />", () => {
+describe('<SecureSocksProxyToggle />', () => {
   const dataSourceConfig = {
     id: 4,
-    uid: "x",
+    uid: 'x',
     orgId: 1,
-    name: "gdev-influxdb",
-    type: "influxdb",
-    typeName: "Influxdb",
-    typeLogoUrl: "",
-    access: "direct",
-    url: "http://localhost:8086",
-    password: "",
-    user: "grafana",
-    database: "site",
+    name: 'gdev-influxdb',
+    type: 'influxdb',
+    typeName: 'Influxdb',
+    typeLogoUrl: '',
+    access: 'direct',
+    url: 'http://localhost:8086',
+    password: '',
+    user: 'grafana',
+    database: 'site',
     basicAuth: false,
-    basicAuthUser: "",
-    basicAuthPassword: "",
+    basicAuthUser: '',
+    basicAuthPassword: '',
     withCredentials: false,
     isDefault: false,
     jsonData: {
@@ -41,48 +40,24 @@ describe("<SecureSocksProxyToggle />", () => {
     jest.clearAllMocks();
   });
 
-  it("should not render when compatibility check fails", () => {
-    jest.spyOn(compat, "hasCompatibility").mockReturnValue(false);
+  it('should not render when secureSocksDSProxyEnabled is disabled in config', () => {
+    config.secureSocksDSProxyEnabled = false;
 
     const { container } = render(
-      <SecureSocksProxyToggle
-        dataSourceConfig={dataSourceConfig}
-        onChange={onChange}
-        labelWidth={labelWidth}
-      />
+      <SecureSocksProxyToggle dataSourceConfig={dataSourceConfig} onChange={onChange} labelWidth={labelWidth} />
     );
 
     expect(container.firstChild).toBeNull();
   });
 
-  it("should not render when secureSocksDSProxyEnabled is disabled in config", () => {
-    jest.spyOn(compat, "hasCompatibility").mockReturnValue(true);
-    jest.spyOn(config as any, "secureSocksDSProxyEnabled").mockReturnValue(false);
-
-    const { container } = render(
-      <SecureSocksProxyToggle
-        dataSourceConfig={dataSourceConfig}
-        onChange={onChange}
-        labelWidth={labelWidth}
-      />
-    );
-
-    expect(container.firstChild).toBeNull();
-  });
-
-  it("should render and switch json data when enabled in config", () => {
-    jest.spyOn(compat, "hasCompatibility").mockReturnValue(true);
-    jest.spyOn(config as any, "secureSocksDSProxyEnabled").mockReturnValue(true);
+  it('should render and switch json data when enabled in config', () => {
+    config.secureSocksDSProxyEnabled = true;
 
     const { getByLabelText } = render(
-      <SecureSocksProxyToggle
-        dataSourceConfig={dataSourceConfig}
-        onChange={onChange}
-        labelWidth={labelWidth}
-      />
+      <SecureSocksProxyToggle dataSourceConfig={dataSourceConfig} onChange={onChange} labelWidth={labelWidth} />
     );
 
-    const switchElement = getByLabelText("Secure Socks Proxy Enabled") as HTMLInputElement;
+    const switchElement = getByLabelText('Secure Socks Proxy Enabled') as HTMLInputElement;
     expect(switchElement).toBeInTheDocument();
     expect(switchElement.checked).toBe(false);
 

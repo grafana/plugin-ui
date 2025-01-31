@@ -1,13 +1,14 @@
 import React from 'react';
+import { EditorStack } from './EditorStack';
 
-import { Stack } from './Stack';
+interface EditorRowsProps {
+  children?: React.ReactNode;
+}
 
-interface EditorRowsProps {}
-
-export const EditorRows: React.FC<EditorRowsProps> = ({ children }) => {
+export const EditorRows = ({ children }: EditorRowsProps) => {
   return (
-    <Stack gap={0.5} direction="column">
+    <EditorStack gap={0.5} direction="column">
       {children}
-    </Stack>
+    </EditorStack>
   );
 };

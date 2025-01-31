@@ -1,6 +1,6 @@
-import React, { useEffect, ComponentProps } from 'react';
+import React, { useEffect, type ComponentProps } from 'react';
 import { Segment as GrafanaSegment } from '@grafana/ui';
-import { SelectableValue } from '@grafana/data';
+import { type SelectableValue } from '@grafana/data';
 import { useDebounce } from '../../hooks/useDebounce';
 
 export interface SegmentProps<T> extends Omit<ComponentProps<typeof GrafanaSegment<T>>, 'onChange'> {
@@ -9,12 +9,14 @@ export interface SegmentProps<T> extends Omit<ComponentProps<typeof GrafanaSegme
   delay?: number;
 }
 
-export function Segment<T> (props: SegmentProps<T>) {
+export function Segment<T>(props: SegmentProps<T>) {
   const { delay, onDebounce, value, options, ...rest } = props;
   const [input, setInput] = React.useState(value);
 
   const debouncedSegment = useDebounce(input, delay);
 
+  // TODO: We should fix the exhaustive-deps rule
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onDebounce(debouncedSegment), [debouncedSegment]);
   useEffect(() => setInput(value), [value]);
 
@@ -26,4 +28,4 @@ export function Segment<T> (props: SegmentProps<T>) {
       {...rest}
     />
   );
-};
+}

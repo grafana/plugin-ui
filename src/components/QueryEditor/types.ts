@@ -1,22 +1,23 @@
-import { JsonTree } from 'react-awesome-query-builder';
+import { type JsonTree } from 'react-awesome-query-builder';
 
 import {
-  DataFrame,
-  DataQuery,
-  DataSourceJsonData,
-  MetricFindValue,
-  SelectableValue,
-  TimeRange,
+  type DataFrame,
+  type DataSourceJsonData,
+  type MetricFindValue,
+  type SelectableValue,
+  type TimeRange,
   toOption as toOptionFromData,
 } from '@grafana/data';
 
-import { QueryWithDefaults } from './defaults';
+import { type DataQuery } from '@grafana/schema';
+
+import { type QueryWithDefaults } from './defaults';
 import {
-  QueryEditorFunctionExpression,
-  QueryEditorGroupByExpression,
-  QueryEditorPropertyExpression,
+  type QueryEditorFunctionExpression,
+  type QueryEditorGroupByExpression,
+  type QueryEditorPropertyExpression,
 } from './expressions';
-import { CompletionItemKind, LanguageCompletionProvider } from '@grafana/experimental';
+import { type CompletionItemKind, type LanguageCompletionProvider } from '../SQLEditor';
 
 export interface SqlQueryForInterpolation {
   dataset?: string;
@@ -44,9 +45,14 @@ export interface SQLOptions extends SQLConnectionLimits, DataSourceJsonData {
   timeInterval: string;
 }
 
+// Match the Enums Expected in SqlUtil and SqlDS
+// https://github.com/grafana/grafana-plugin-sdk-go/blob/main/data/sqlutil/query.go#L18-L29
 export enum QueryFormat {
-  Timeseries = 'time_series',
-  Table = 'table',
+  Timeseries,
+  Table,
+  Logs,
+  Trace,
+  OptionMulti,
 }
 
 export enum EditorMode {
@@ -145,7 +151,8 @@ export interface DB {
   getSqlCompletionProvider: () => LanguageCompletionProvider;
   toRawSql?: (query: SQLQuery) => string;
   functions: () => Promise<Aggregate[]>;
-  labels?: Map<"dataset", string>;
+  labels?: Map<'dataset', string>;
+  disableDatasets?: boolean;
 }
 
 export interface QueryEditorProps {
@@ -179,10 +186,4 @@ export interface MetaDefinition {
   name: string;
   completion?: string;
   kind: CompletionItemKind;
-}
-
-export interface SQLConnectionLimits {
-  maxOpenConns: number;
-  maxIdleConns: number;
-  connMaxLifetime: number;
 }

@@ -2,29 +2,35 @@ import { lastValueFrom, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import {
-  DataFrame,
+  type DataFrame,
   DataFrameView,
-  DataQuery,
-  DataSourceInstanceSettings,
-  DataSourceRef,
-  MetricFindValue,
-  ScopedVars,
-  TimeRange,
-  VariableModel,
+  type DataSourceInstanceSettings,
+  type MetricFindValue,
+  type ScopedVars,
+  type TimeRange,
+  type VariableModel,
 } from '@grafana/data';
 import {
-  BackendDataSourceResponse,
+  type BackendDataSourceResponse,
   DataSourceWithBackend,
-  FetchResponse,
+  type FetchResponse,
   getBackendSrv,
   getTemplateSrv,
-  TemplateSrv,
+  type TemplateSrv,
   toDataQueryResponse,
 } from '@grafana/runtime';
+import { type DataQuery } from '@grafana/schema';
 
 import { MACRO_NAMES } from './constants';
 // import { toTestingStatus } from '@grafana/runtime/utils/queryResponse';
-import { SQLQuery, SQLOptions, DB, SqlQueryModel, ResponseParser, QueryFormat } from '../components/QueryEditor/types';
+import {
+  type SQLQuery,
+  type SQLOptions,
+  type DB,
+  type SqlQueryModel,
+  type ResponseParser,
+  QueryFormat,
+} from '../components/QueryEditor/types';
 
 export interface SearchFilterOptions {
   searchFilter?: string;
@@ -117,10 +123,7 @@ export abstract class SqlDatasource extends DataSourceWithBackend<SQLQuery, SQLO
     return !query.hide;
   }
 
-  applyTemplateVariables(
-    target: SQLQuery,
-    scopedVars: ScopedVars
-  ): Record<string, string | DataSourceRef | SQLQuery['format']> {
+  applyTemplateVariables(target: SQLQuery, scopedVars: ScopedVars): SQLQuery {
     const queryModel = this.getQueryModel(target, this.templateSrv, scopedVars);
     const rawSql = this.clean(queryModel.interpolate());
     return {
@@ -153,7 +156,7 @@ export abstract class SqlDatasource extends DataSourceWithBackend<SQLQuery, SQLO
     return this.getResponseParser().transformMetricFindResponse(response);
   }
 
-  async runSql<T>(query: string, options?: RunSQLOptions) {
+  async runSql<T extends object>(query: string, options?: RunSQLOptions) {
     const frame = await this.runMetaQuery({ rawSql: query, format: QueryFormat.Table, refId: options?.refId }, options);
     return new DataFrameView<T>(frame);
   }
@@ -236,10 +239,6 @@ export const SEARCH_FILTER_VARIABLE = '__searchFilter';
 
 export const containsSearchFilter = (query: string | unknown): boolean =>
   query && typeof query === 'string' ? query.indexOf(SEARCH_FILTER_VARIABLE) !== -1 : false;
-
-export interface SearchFilterOptions {
-  searchFilter?: string;
-}
 
 export const getSearchFilterScopedVar = (args: {
   query: string;

@@ -3,13 +3,10 @@ import React, { PureComponent } from 'react';
 
 // Components
 import { HorizontalGroup, Select } from '@grafana/ui';
-import { DataSourceInstanceSettings, SelectableValue } from '@grafana/data';
+import { type DataSourceInstanceSettings, type SelectableValue } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
-import {
-  isUnsignedPluginSignature,
-  PluginSignatureBadge,
-} from '../Plugins/PluginSignatureBadge';
-import { getDataSourceSrv, DataSourceSrv } from '@grafana/runtime';
+import { isUnsignedPluginSignature, PluginSignatureBadge } from '../Plugins/PluginSignatureBadge';
+import { getDataSourceSrv, type DataSourceSrv } from '@grafana/runtime';
 
 export interface Props {
   onChange: (ds: DataSourceInstanceSettings) => void;
@@ -114,7 +111,7 @@ export class DataSourcePicker extends PureComponent<Props, State> {
     return (
       <div aria-label={selectors.components.DataSourcePicker.container}>
         <Select
-          className='ds-picker select-container'
+          className="ds-picker select-container"
           isMulti={false}
           isClearable={false}
           backspaceRemovesValue={false}
@@ -125,19 +122,14 @@ export class DataSourcePicker extends PureComponent<Props, State> {
           openMenuOnFocus={openMenuOnFocus}
           maxMenuHeight={500}
           placeholder={placeholder}
-          noOptionsMessage='No datasources found'
+          noOptionsMessage="No datasources found"
           value={value}
           invalid={!!error}
           getOptionLabel={(o) => {
-            if (
-              o.meta &&
-              isUnsignedPluginSignature(o.meta.signature) &&
-              o !== value
-            ) {
+            if (o.meta && isUnsignedPluginSignature(o.meta.signature) && o !== value) {
               return (
-                <HorizontalGroup align='center' justify='space-between'>
-                  <span>{o.label}</span>{' '}
-                  <PluginSignatureBadge status={o.meta.signature} />
+                <HorizontalGroup align="center" justify="space-between">
+                  <span>{o.label}</span> <PluginSignatureBadge status={o.meta.signature} />
                 </HorizontalGroup>
               );
             }

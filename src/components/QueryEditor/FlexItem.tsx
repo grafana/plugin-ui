@@ -5,6 +5,6 @@ interface FlexItemProps {
   shrink?: number;
 }
 
-export const FlexItem: React.FC<FlexItemProps> = ({ grow, shrink }) => {
+export const FlexItem = ({ grow, shrink }: FlexItemProps) => {
   return <div style={{ display: 'block', flexGrow: grow, flexShrink: shrink }} />;
 };

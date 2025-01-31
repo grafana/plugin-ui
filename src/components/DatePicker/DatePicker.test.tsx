@@ -14,25 +14,19 @@ describe('DatePicker', () => {
   });
 
   it('does not render calendar when isOpen is false', () => {
-    render(
-      <DatePicker isOpen={false} onChange={jest.fn()} onClose={jest.fn()} />
-    );
+    render(<DatePicker isOpen={false} onChange={jest.fn()} onClose={jest.fn()} />);
 
     expect(screen.queryByTestId('date-picker')).not.toBeInTheDocument();
   });
 
   it('renders calendar when isOpen is true', () => {
-    render(
-      <DatePicker isOpen={true} onChange={jest.fn()} onClose={jest.fn()} />
-    );
+    render(<DatePicker isOpen={true} onChange={jest.fn()} onClose={jest.fn()} />);
 
     expect(screen.getByTestId('date-picker')).toBeInTheDocument();
   });
 
   it('renders calendar with default date', () => {
-    render(
-      <DatePicker isOpen={true} onChange={jest.fn()} onClose={jest.fn()} />
-    );
+    render(<DatePicker isOpen={true} onChange={jest.fn()} onClose={jest.fn()} />);
 
     expect(screen.getByText('May 2014')).toBeInTheDocument();
   });
@@ -41,14 +35,7 @@ describe('DatePicker', () => {
     // reset the date so we can use it for the date conversion here
     MockDate.reset();
 
-    render(
-      <DatePicker
-        isOpen={true}
-        value={new Date(1607431703363)}
-        onChange={jest.fn()}
-        onClose={jest.fn()}
-      />
-    );
+    render(<DatePicker isOpen={true} value={new Date(1607431703363)} onChange={jest.fn()} onClose={jest.fn()} />);
 
     expect(screen.getByText('December 2020')).toBeInTheDocument();
   });
@@ -56,9 +43,7 @@ describe('DatePicker', () => {
   it('calls onChange when date is selected', () => {
     const onChange = jest.fn();
 
-    render(
-      <DatePicker isOpen={true} onChange={onChange} onClose={jest.fn()} />
-    );
+    render(<DatePicker isOpen={true} onChange={onChange} onClose={jest.fn()} />);
 
     expect(onChange).not.toHaveBeenCalled();
 

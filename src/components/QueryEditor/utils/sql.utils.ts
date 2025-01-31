@@ -2,25 +2,34 @@ import { isEmpty } from 'lodash';
 
 import {
   QueryEditorExpressionType,
-  QueryEditorFunctionExpression,
-  QueryEditorGroupByExpression,
-  QueryEditorPropertyExpression,
+  type QueryEditorFunctionExpression,
+  type QueryEditorGroupByExpression,
+  type QueryEditorPropertyExpression,
   QueryEditorPropertyType,
 } from '../expressions';
-import { SQLQuery, SQLExpression } from '../types';
+import { type SQLQuery, type SQLExpression, type DB } from '../types';
 
-export function defaultToRawSql({ sql, dataset, table }: SQLQuery): string {
+export function getRawSqlFn(db: DB) {
+  return db.toRawSql ? db.toRawSql : (query: SQLQuery) => toRawSql(query, Boolean(db.disableDatasets));
+}
+
+export function toRawSql({ sql, dataset, table }: SQLQuery, disableDatasets: boolean): string {
   let rawQuery = '';
 
-  // Return early with empty string if there is no sql column
   if (!sql || !haveColumns(sql.columns)) {
     return rawQuery;
   }
 
   rawQuery += createSelectClause(sql.columns);
 
-  if (dataset && table) {
-    rawQuery += `FROM ${dataset}.${table} `;
+  if (disableDatasets) {
+    if (table) {
+      rawQuery += `FROM ${table} `;
+    }
+  } else {
+    if (dataset && table) {
+      rawQuery += `FROM ${dataset}.${table} `;
+    }
   }
 
   if (sql.whereString) {
@@ -40,7 +49,6 @@ export function defaultToRawSql({ sql, dataset, table }: SQLQuery): string {
     rawQuery += `${sql.orderByDirection} `;
   }
 
-  // Altough LIMIT 0 doesn't make sense, it is still possible to have LIMIT 0
   if (sql.limit !== undefined && sql.limit >= 0) {
     rawQuery += `LIMIT ${sql.limit} `;
   }
@@ -60,7 +68,7 @@ function createSelectClause(sqlColumns: NonNullable<SQLExpression['columns']>): 
   return `SELECT ${columns.join(', ')} `;
 }
 
-export const haveColumns = (columns: SQLExpression['columns']): columns is NonNullable<SQLExpression['columns']> => {
+export function haveColumns(columns: SQLExpression['columns']): columns is NonNullable<SQLExpression['columns']> {
   if (!columns) {
     return false;
   }
@@ -68,7 +76,7 @@ export const haveColumns = (columns: SQLExpression['columns']): columns is NonNu
   const haveColumn = columns.some((c) => c.parameters?.length || c.parameters?.some((p) => p.name));
   const haveFunction = columns.some((c) => c.name);
   return haveColumn || haveFunction;
-};
+}
 
 /**
  * Creates a GroupByExpression for a specified field

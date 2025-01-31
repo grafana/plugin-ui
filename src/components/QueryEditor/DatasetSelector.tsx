@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useAsync } from 'react-use';
 
-import { SelectableValue } from '@grafana/data';
+import { type SelectableValue } from '@grafana/data';
 import { Select } from '@grafana/ui';
 
-import { DB, ResourceSelectorProps, toOption } from './types';
+import { type DB, type ResourceSelectorProps, toOption } from './types';
 
 interface DatasetSelectorProps extends ResourceSelectorProps {
   db: DB;
@@ -15,7 +15,7 @@ interface DatasetSelectorProps extends ResourceSelectorProps {
   onChange: (v: SelectableValue) => void;
 }
 
-export const DatasetSelector: React.FC<DatasetSelectorProps> = ({
+export const DatasetSelector = ({
   db,
   dataset,
   value,
@@ -23,7 +23,7 @@ export const DatasetSelector: React.FC<DatasetSelectorProps> = ({
   disabled,
   className,
   applyDefault,
-}) => {
+}: DatasetSelectorProps) => {
   const state = useAsync(async () => {
     if (dataset) {
       onChange(toOption(dataset));

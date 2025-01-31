@@ -1,8 +1,8 @@
-import React, { PureComponent } from "react";
-import { css } from "@emotion/css";
-import { uniqueId } from "lodash";
-import { DataSourceSettings } from "@grafana/data";
-import { stylesFactory, LegacyForms, Button, Icon } from "@grafana/ui";
+import React, { PureComponent } from 'react';
+import { css } from '@emotion/css';
+import { uniqueId } from 'lodash';
+import { type DataSourceSettings } from '@grafana/data';
+import { stylesFactory, LegacyForms, Button, Icon } from '@grafana/ui';
 
 export interface CustomHeader {
   id: string;
@@ -49,13 +49,7 @@ const getCustomHeaderRowStyles = stylesFactory(() => {
   };
 });
 
-const CustomHeaderRow: React.FC<CustomHeaderRowProps> = ({
-  header,
-  onBlur,
-  onChange,
-  onRemove,
-  onReset,
-}) => {
+const CustomHeaderRow = ({ header, onBlur, onChange, onRemove, onReset }: CustomHeaderRowProps) => {
   const styles = getCustomHeaderRowStyles();
   return (
     <div className={styles.layout}>
@@ -64,7 +58,7 @@ const CustomHeaderRow: React.FC<CustomHeaderRowProps> = ({
         name="name"
         placeholder="X-Custom-Header"
         labelWidth={5}
-        value={header.name || ""}
+        value={header.name || ''}
         onChange={(e) => onChange({ ...header, name: e.target.value })}
         onBlur={onBlur}
       />
@@ -94,7 +88,7 @@ const CustomHeaderRow: React.FC<CustomHeaderRowProps> = ({
   );
 };
 
-CustomHeaderRow.displayName = "CustomHeaderRow";
+CustomHeaderRow.displayName = 'CustomHeaderRow';
 
 export class CustomHeadersSettings extends PureComponent<Props, State> {
   state: State = {
@@ -103,24 +97,17 @@ export class CustomHeadersSettings extends PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const {
-      jsonData,
-      secureJsonData,
-      secureJsonFields,
-    } = this.props.dataSourceConfig;
+    const { jsonData, secureJsonData, secureJsonFields } = this.props.dataSourceConfig;
     this.state = {
       headers: Object.keys(jsonData)
         .sort()
-        .filter((key) => key.startsWith("httpHeaderName"))
+        .filter((key) => key.startsWith('httpHeaderName'))
         .map((key, index) => {
           return {
             id: uniqueId(),
             name: jsonData[key],
-            value: secureJsonData !== undefined ? secureJsonData[key] : "",
-            configured:
-              (secureJsonFields &&
-                secureJsonFields[`httpHeaderValue${index + 1}`]) ||
-              false,
+            value: secureJsonData !== undefined ? secureJsonData[key] : '',
+            configured: (secureJsonFields && secureJsonFields[`httpHeaderValue${index + 1}`]) || false,
           };
         }),
     };
@@ -131,15 +118,13 @@ export class CustomHeadersSettings extends PureComponent<Props, State> {
 
     // we remove every httpHeaderName* field
     const newJsonData = Object.fromEntries(
-      Object.entries(this.props.dataSourceConfig.jsonData).filter(
-        ([key, val]) => !key.startsWith("httpHeaderName")
-      )
+      Object.entries(this.props.dataSourceConfig.jsonData).filter(([key, val]) => !key.startsWith('httpHeaderName'))
     );
 
     // we remove every httpHeaderValue* field
     const newSecureJsonData = Object.fromEntries(
       Object.entries(this.props.dataSourceConfig.secureJsonData || {}).filter(
-        ([key, val]) => !key.startsWith("httpHeaderValue")
+        ([key, val]) => !key.startsWith('httpHeaderValue')
       )
     );
 
@@ -161,10 +146,7 @@ export class CustomHeadersSettings extends PureComponent<Props, State> {
   onHeaderAdd = () => {
     this.setState((prevState) => {
       return {
-        headers: [
-          ...prevState.headers,
-          { id: uniqueId(), name: "", value: "", configured: false },
-        ],
+        headers: [...prevState.headers, { id: uniqueId(), name: '', value: '', configured: false }],
       };
     });
   };
@@ -191,7 +173,7 @@ export class CustomHeadersSettings extends PureComponent<Props, State> {
           }
           return {
             ...h,
-            value: "",
+            value: '',
             configured: false,
           };
         }),
@@ -211,7 +193,7 @@ export class CustomHeadersSettings extends PureComponent<Props, State> {
   render() {
     const { headers } = this.state;
     return (
-      <div className={"gf-form-group"}>
+      <div className={'gf-form-group'}>
         <div className="gf-form">
           <h6>Custom HTTP Headers</h6>
         </div>

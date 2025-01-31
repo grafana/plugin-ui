@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, IconName, PopoverContent, Tooltip } from "@grafana/ui";
+import React from 'react';
+import { Button, type IconName, type PopoverContent, Tooltip } from '@grafana/ui';
 
 type RunQueryButtonProps = {
   ariaLabel?: string;
@@ -11,20 +11,18 @@ type RunQueryButtonProps = {
   dataTestId?: string;
 };
 
-export const RunQueryButton: React.FC<RunQueryButtonProps> = ({
-  ariaLabel = "Query editor Run button",
+export const RunQueryButton = ({
+  ariaLabel = 'Query editor Run button',
   queryRunning = false,
   queryInvalid = false,
   invalidQueryTooltip,
   disabled = false,
   onClick,
   dataTestId,
-}) => {
-  let icon: IconName | undefined = queryInvalid
-    ? "exclamation-triangle"
-    : undefined;
+}: RunQueryButtonProps) => {
+  let icon: IconName | undefined = queryInvalid ? 'exclamation-triangle' : undefined;
   if (queryRunning) {
-    icon = "fa fa-spinner";
+    icon = 'fa fa-spinner';
   }
 
   const RunButton = (

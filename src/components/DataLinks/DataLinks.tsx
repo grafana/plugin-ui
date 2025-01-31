@@ -1,15 +1,11 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import { Button, useTheme2 } from '@grafana/ui';
-import {
-  GrafanaTheme2,
-  VariableOrigin,
-  DataLinkBuiltInVars,
-} from '@grafana/data';
-import { DataLinkConfig } from './types';
+import { type GrafanaTheme2, VariableOrigin, DataLinkBuiltInVars } from '@grafana/data';
+import { type DataLinkConfig } from './types';
 import { DataLink } from './DataLink';
 
-const getStyles = ((theme: GrafanaTheme2) => ({
+const getStyles = (theme: GrafanaTheme2) => ({
   infoText: css`
     padding-bottom: ${theme.v1.spacing.md};
     color: ${theme.v1.colors.textWeak};
@@ -17,7 +13,7 @@ const getStyles = ((theme: GrafanaTheme2) => ({
   dataLink: css`
     margin-bottom: ${theme.v1.spacing.sm};
   `,
-}));
+});
 
 type Props = {
   value?: DataLinkConfig[];
@@ -30,14 +26,13 @@ export const DataLinks = (props: Props) => {
 
   return (
     <>
-      <h3 className='page-heading'>Data links</h3>
+      <h3 className="page-heading">Data links</h3>
 
       <div className={styles.infoText}>
-        Add links to existing fields. Links will be shown in log row details
-        next to the field value.
+        Add links to existing fields. Links will be shown in log row details next to the field value.
       </div>
 
-      <div className='gf-form-group'>
+      <div className="gf-form-group">
         {value &&
           value.map((field, index) => {
             return (
@@ -72,13 +67,10 @@ export const DataLinks = (props: Props) => {
             className={css`
               margin-right: 10px;
             `}
-            icon='plus'
+            icon="plus"
             onClick={(event) => {
               event.preventDefault();
-              const newDataLinks = [
-                ...(value || []),
-                { field: '', label: '', matcherRegex: '', url: '' },
-              ];
+              const newDataLinks = [...(value || []), { field: '', label: '', matcherRegex: '', url: '' }];
               onChange(newDataLinks);
             }}
           >

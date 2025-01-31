@@ -1,9 +1,9 @@
 import { css } from '@emotion/css';
 import { Switch } from '@grafana/ui';
-import React, { ComponentProps } from 'react';
+import React, { type ComponentProps } from 'react';
 
 // Wrapper component around <Switch /> that properly aligns it in <EditorField />
-export const EditorSwitch: React.FC<ComponentProps<typeof Switch>> = (props) => {
+export const EditorSwitch = (props: ComponentProps<typeof Switch>) => {
   const styles = getStyles();
 
   return (

@@ -1,24 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useAsync } from 'react-use';
 
-import { QueryEditorProps } from '@grafana/data';
+import { type QueryEditorProps } from '@grafana/data';
 
 import { applyQueryDefaults } from './defaults';
-import { SQLQuery, QueryRowFilter, SQLOptions, EditorMode } from './types';
+import { type SQLQuery, type QueryRowFilter, type SQLOptions, EditorMode } from './types';
 import { haveColumns } from './utils/sql.utils';
 
 import { QueryHeader } from './QueryHeader';
 import { RawEditor } from './query-editor-raw/RawEditor';
 import { VisualEditor } from './visual-query-builder/VisualEditor';
 
-import { SqlDatasource } from '../../datasource/SqlDatasource';
+import { type SqlDatasource } from '../../datasource/SqlDatasource';
 import { Space } from './Space';
 
-interface Props extends QueryEditorProps<SqlDatasource, SQLQuery, SQLOptions> {
-  enableDatasets?: boolean;
-}
+interface Props extends QueryEditorProps<SqlDatasource, SQLQuery, SQLOptions> {}
 
-export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range, enableDatasets = true }: Props) {
+export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range }: Props) {
   const [isQueryRunnable, setIsQueryRunnable] = useState(true);
   const db = datasource.getDB();
   const defaultDataset = datasource.dataset;
@@ -84,7 +82,7 @@ export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range,
       <QueryHeader
         db={db}
         defaultDataset={defaultDataset || ''}
-        enableDatasets={enableDatasets}
+        enableDatasets={!db.disableDatasets}
         onChange={onQueryHeaderChange}
         onRunQuery={onRunQuery}
         onQueryRowChange={setQueryRowFilter}

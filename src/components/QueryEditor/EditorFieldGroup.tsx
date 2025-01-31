@@ -1,9 +1,10 @@
 import React from 'react';
+import { EditorStack } from './EditorStack';
 
-import { Stack } from './Stack';
+interface EditorFieldGroupProps {
+  children?: React.ReactNode;
+}
 
-interface EditorFieldGroupProps {}
-
-export const EditorFieldGroup: React.FC<EditorFieldGroupProps> = ({ children }) => {
-  return <Stack gap={1}>{children}</Stack>;
+export const EditorFieldGroup = ({ children }: EditorFieldGroupProps) => {
+  return <EditorStack gap={1}>{children}</EditorStack>;
 };

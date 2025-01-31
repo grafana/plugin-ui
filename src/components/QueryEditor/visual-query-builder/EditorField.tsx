@@ -1,8 +1,8 @@
 import { css } from '@emotion/css';
-import React, { ComponentProps } from 'react';
+import React, { type ComponentProps } from 'react';
 
-import { GrafanaTheme2 } from '@grafana/data';
-import { Field, PopoverContent, useTheme2, ReactUtils, Tooltip, Icon, stylesFactory } from '@grafana/ui';
+import { type GrafanaTheme2 } from '@grafana/data';
+import { Field, type PopoverContent, useTheme2, ReactUtils, Tooltip, Icon, stylesFactory } from '@grafana/ui';
 import { Space } from '../Space';
 
 interface EditorFieldProps extends ComponentProps<typeof Field> {
@@ -13,7 +13,7 @@ interface EditorFieldProps extends ComponentProps<typeof Field> {
   tooltip?: PopoverContent;
 }
 
-export const EditorField: React.FC<EditorFieldProps> = (props) => {
+export const EditorField = (props: EditorFieldProps) => {
   const { label, optional, tooltip, children, width, ...fieldProps } = props;
 
   const theme = useTheme2();
