@@ -12,9 +12,10 @@ interface TableSelectorProps extends ResourceSelectorProps {
   value: string | null;
   query: QueryWithDefaults;
   onChange: (v: SelectableValue) => void;
+  inputId?: string;
 }
 
-export const TableSelector = ({ db, dataset, value, className, onChange }: TableSelectorProps) => {
+export const TableSelector = ({ db, dataset, value, className, onChange, inputId }: TableSelectorProps) => {
   const state = useAsync(async () => {
     if (!dataset) {
       return [];
@@ -26,6 +27,7 @@ export const TableSelector = ({ db, dataset, value, className, onChange }: Table
 
   return (
     <Select
+      inputId={inputId}
       className={className}
       disabled={state.loading}
       aria-label="Table selector"

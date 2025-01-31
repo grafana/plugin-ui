@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useId } from 'react';
 import { useCopyToClipboard } from 'react-use';
 
 import { type SelectableValue } from '@grafana/data';
@@ -52,6 +52,7 @@ export function QueryHeader({
   const [_, copyToClipboard] = useCopyToClipboard();
   const [showConfirm, setShowConfirm] = useState(false);
   const toRawSql = getRawSqlFn(db);
+  const htmlId = useId();
 
   const onEditorModeChange = useCallback(
     (newEditorMode: EditorMode) => {
@@ -113,7 +114,7 @@ export function QueryHeader({
         {editorMode === EditorMode.Builder && (
           <>
             <InlineSwitch
-              id="sql-filter"
+              id={`sql-filter-${htmlId}`}
               label="Filter"
               transparent={true}
               showLabel={true}
@@ -125,7 +126,7 @@ export function QueryHeader({
             />
 
             <InlineSwitch
-              id="sql-group"
+              id={`sql-group-${htmlId}`}
               label="Group"
               transparent={true}
               showLabel={true}
@@ -137,7 +138,7 @@ export function QueryHeader({
             />
 
             <InlineSwitch
-              id="sql-order"
+              id={`sql-order-${htmlId}`}
               label="Order"
               transparent={true}
               showLabel={true}
@@ -149,7 +150,7 @@ export function QueryHeader({
             />
 
             <InlineSwitch
-              id="sql-preview"
+              id={`sql-preview-${htmlId}`}
               label="Preview"
               transparent={true}
               showLabel={true}
@@ -200,6 +201,7 @@ export function QueryHeader({
               <EditorField label={labels.get('dataset') || 'Dataset'} width={25}>
                 <DatasetSelector
                   db={db}
+                  inputId={`sql-dataset-${htmlId}`}
                   dataset={defaultDataset}
                   value={query.dataset === undefined ? null : query.dataset}
                   onChange={onDatasetChange}
@@ -210,6 +212,7 @@ export function QueryHeader({
             <EditorField label="Table" width={25}>
               <TableSelector
                 db={db}
+                inputId={`sql-table-${htmlId}`}
                 dataset={query.dataset || defaultDataset}
                 query={query}
                 value={query.table === undefined ? null : query.table}
