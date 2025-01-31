@@ -37,10 +37,10 @@
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@hello-pangea/dnd": "^17.0.0",
+    "@react-awesome-query-builder/ui": "^6.6.4",
     "@types/prismjs": "^1.26.4",
     "lodash": "^4.17.21",
     "prismjs": "^1.29.0",
-    "react-awesome-query-builder": "^5.3.1",
     "react-calendar": "^4.8.0",
     "react-popper-tooltip": "^4.4.2",
     "react-use": "^17.3.1",

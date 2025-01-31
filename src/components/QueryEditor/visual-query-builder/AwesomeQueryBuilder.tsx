@@ -3,16 +3,18 @@ import { isString } from 'lodash';
 import React from 'react';
 import {
   BasicConfig,
+  Utils,
   type Config,
   type JsonItem,
   type JsonTree,
   type Operator,
   type Settings,
-  type SimpleField,
-  Utils,
+  type Field,
   type ValueSource,
+  type WidgetProps,
   type Widgets,
-} from 'react-awesome-query-builder';
+  type OperatorOptionsI,
+} from '@react-awesome-query-builder/ui';
 
 import { dateTime, toOption } from '@grafana/data';
 import { Button, DateTimePicker, Input, Select } from '@grafana/ui';
@@ -25,8 +27,9 @@ const buttonLabels = {
 export const emptyInitValue: JsonItem = {
   id: Utils.uuid(),
   type: 'group' as const,
-  children1: {
-    [Utils.uuid()]: {
+  children1: [
+    {
+      id: Utils.uuid(),
       type: 'rule',
       properties: {
         field: null,
@@ -35,14 +38,15 @@ export const emptyInitValue: JsonItem = {
         valueSrc: [],
       },
     },
-  },
+  ],
 };
 
 export const emptyInitTree: JsonTree = {
   id: Utils.uuid(),
   type: 'group' as const,
-  children1: {
-    [Utils.uuid()]: {
+  children1: [
+    {
+      id: Utils.uuid(),
       type: 'rule',
       properties: {
         field: null,
@@ -51,14 +55,14 @@ export const emptyInitTree: JsonTree = {
         valueSrc: [],
       },
     },
-  },
+  ],
 };
 
 export const widgets: Widgets = {
   ...BasicConfig.widgets,
   text: {
     ...BasicConfig.widgets.text,
-    factory: function TextInput(props) {
+    factory: function TextInput(props: WidgetProps) {
       return (
         <Input
           value={props?.value || ''}
@@ -70,7 +74,7 @@ export const widgets: Widgets = {
   },
   number: {
     ...BasicConfig.widgets.number,
-    factory: function NumberInput(props) {
+    factory: function NumberInput(props: WidgetProps) {
       return (
         <Input
           value={props?.value}
@@ -83,7 +87,7 @@ export const widgets: Widgets = {
   },
   datetime: {
     ...BasicConfig.widgets.datetime,
-    factory: function DateTimeInput(props) {
+    factory: function DateTimeInput(props: WidgetProps) {
       return (
         <DateTimePicker
           onChange={(e) => {
@@ -172,8 +176,8 @@ const enum Op {
   IN = 'select_any_in',
   NOT_IN = 'select_not_any_in',
 }
-// eslint-ignore
-const customOperators = getCustomOperators(BasicConfig) as typeof BasicConfig.operators;
+
+const customOperators = getCustomOperators(BasicConfig);
 const textWidget = BasicConfig.types.text.widgets.text;
 const opers = [...(textWidget.operators || []), Op.IN, Op.NOT_IN];
 const customTextWidget = {
@@ -206,6 +210,7 @@ function getCustomOperators(config: BasicConfig) {
   const { ...supportedOperators } = config.operators;
   const noop = () => '';
   // IN operator expects array, override IN formatter for multi-value variables
+
   const sqlFormatInOp = supportedOperators[Op.IN].sqlFormatOp || noop;
   const customSqlInFormatter = (
     field: string,
@@ -214,11 +219,20 @@ function getCustomOperators(config: BasicConfig) {
     valueSrc: ValueSource,
     valueType: string,
     opDef: Operator,
-    operatorOptions: object,
-    fieldDef: SimpleField
-  ) => {
-    return sqlFormatInOp(field, op, splitIfString(value), valueSrc, valueType, opDef, operatorOptions, fieldDef);
-  };
+    operatorOptions: OperatorOptionsI,
+    fieldDef: Field
+  ) =>
+    sqlFormatInOp.call(
+      config.ctx,
+      field,
+      op,
+      splitIfString(value),
+      valueSrc,
+      valueType,
+      opDef,
+      operatorOptions,
+      fieldDef
+    );
   // NOT IN operator expects array, override NOT IN formatter for multi-value variables
   const sqlFormatNotInOp = supportedOperators[Op.NOT_IN].sqlFormatOp || noop;
   const customSqlNotInFormatter = (
@@ -228,11 +242,20 @@ function getCustomOperators(config: BasicConfig) {
     valueSrc: ValueSource,
     valueType: string,
     opDef: Operator,
-    operatorOptions: object,
-    fieldDef: SimpleField
-  ) => {
-    return sqlFormatNotInOp(field, op, splitIfString(value), valueSrc, valueType, opDef, operatorOptions, fieldDef);
-  };
+    operatorOptions: OperatorOptionsI,
+    fieldDef: Field
+  ) =>
+    sqlFormatNotInOp.call(
+      config.ctx,
+      field,
+      op,
+      splitIfString(value),
+      valueSrc,
+      valueType,
+      opDef,
+      operatorOptions,
+      fieldDef
+    );
 
   const customOperators = {
     ...supportedOperators,

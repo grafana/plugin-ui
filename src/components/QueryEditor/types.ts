@@ -1,4 +1,4 @@
-import { type JsonTree } from 'react-awesome-query-builder';
+import { type JsonTree } from '@react-awesome-query-builder/ui';
 
 import {
   type DataFrame,
