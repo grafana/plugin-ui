@@ -13980,9 +13980,9 @@ __metadata:
   linkType: hard
 
 "store2@npm:^2.12.0":
-  version: 2.12.0
-  resolution: "store2@npm:2.12.0"
-  checksum: 10c0/ea0c9d89aa61dd0e398f55b88841a7f5f09f5179852415db861d2b134c5a779d39a9686937e4cd17fcf2866ea08a812b1a918e03d1500ef29724bd7661f46e24
+  version: 2.14.4
+  resolution: "store2@npm:2.14.4"
+  checksum: 10c0/3453c9c8c153c760e6290395a7bc23669df5dc8a6e8a49f9b3187dbb9f86d14b58705aa4f17fad6b536d4b04fe3e66ea5bde12c1352abd52c6b303bbf5757ab6
   languageName: node
   linkType: hard
 
