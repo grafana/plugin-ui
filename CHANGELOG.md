@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.2 - 2025-02-04
+
+- Re-add test mock exports
+
 ## v0.10.1 - 2025-01-30
 
 - Fix commonjs resolution errors due to incorrect paths in package.json
