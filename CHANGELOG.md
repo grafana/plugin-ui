@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.3 - 2025-02-04
+
+- Re-add `generateOptions` mock helper
+
 ## v0.10.2 - 2025-02-04
 
 - Re-add test mock exports
