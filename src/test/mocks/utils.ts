@@ -1,4 +1,4 @@
-import { SelectableValue } from '@grafana/data';
+import { type SelectableValue } from '@grafana/data';
 import { Chance } from 'chance';
 import { within, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
