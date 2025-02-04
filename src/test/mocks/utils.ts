@@ -1,6 +1,8 @@
+import { SelectableValue } from '@grafana/data';
 import { Chance } from 'chance';
 import { within, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { kebabCase } from 'lodash';
 
 export const generateBoolean = () => Chance().pickone([true, false]);
 
@@ -45,4 +47,17 @@ export const selectOption = async (container: HTMLElement, optionLabel: string, 
 
   // select the option
   userEvent.click(option);
+};
+
+export const generateOptions = (): Array<SelectableValue<string>> => {
+  const numberOfOptions = 5;
+
+  return Array.from(new Array(numberOfOptions), () => {
+    const name = Chance().name();
+
+    return {
+      label: name,
+      value: kebabCase(name),
+    };
+  });
 };
