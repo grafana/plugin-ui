@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.4 - 2025-02-19
+
+- Use `import` instead of `require` in SQL language definition
+
 ## v0.10.3 - 2025-02-04
 
 - Re-add `generateOptions` mock helper
