@@ -40,7 +40,7 @@
     "@react-awesome-query-builder/ui": "^6.6.4",
     "@types/prismjs": "^1.26.4",
     "lodash": "^4.17.21",
-    "prismjs": "^1.29.0",
+    "prismjs": "^1.30.0",
     "react-calendar": "^4.8.0",
     "react-popper-tooltip": "^4.4.2",
     "react-use": "^17.3.1",
