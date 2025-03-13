@@ -1754,7 +1754,6 @@ __metadata:
     "@types/chance": "npm:^1.1.0"
     "@types/lodash": "npm:^4.14.194"
     "@types/memoize-one": "npm:^5.1.2"
-    "@types/prismjs": "npm:^1.26.4"
     "@types/react": "npm:18.3.18"
     "@types/react-calendar": "npm:^3.1.2"
     "@types/testing-library__jest-dom": "npm:^5.9.5"
@@ -1778,7 +1777,6 @@ __metadata:
     lodash: "npm:^4.17.21"
     mockdate: "npm:^3.0.2"
     prettier: "npm:^3.3.3"
-    prismjs: "npm:^1.30.0"
     react: "npm:18.2.0"
     react-calendar: "npm:^4.8.0"
     react-dom: "npm:18.2.0"
@@ -4299,13 +4297,6 @@ __metadata:
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
   checksum: 10c0/1d3012ab2fcdad1ba313e1d065b737578f6506c8958e2a7a5bdbdef517c7e930796cb1599ee067d5dee942fb3a764df64b5eef7e9ae98548d776e86dcffba985
-  languageName: node
-  linkType: hard
-
-"@types/prismjs@npm:^1.26.4":
-  version: 1.26.4
-  resolution: "@types/prismjs@npm:1.26.4"
-  checksum: 10c0/996be7d119779c4cbe66e58342115a12d35a02226dae3aaa4a744c9652d5a3939c93c26182e18156965ac4f93575ebb309c3469c36f52e60ee5c0f8f27e874df
   languageName: node
   linkType: hard
 
@@ -12155,13 +12146,6 @@ __metadata:
   version: 1.29.0
   resolution: "prismjs@npm:1.29.0"
   checksum: 10c0/d906c4c4d01b446db549b4f57f72d5d7e6ccaca04ecc670fb85cea4d4b1acc1283e945a9cbc3d81819084a699b382f970e02f9d1378e14af9808d366d9ed7ec6
-  languageName: node
-  linkType: hard
-
-"prismjs@npm:^1.30.0":
-  version: 1.30.0
-  resolution: "prismjs@npm:1.30.0"
-  checksum: 10c0/f56205bfd58ef71ccfcbcb691fd0eb84adc96c6ff21b0b69fc6fdcf02be42d6ef972ba4aed60466310de3d67733f6a746f89f2fb79c00bf217406d465b3e8f23
   languageName: node
   linkType: hard
 
