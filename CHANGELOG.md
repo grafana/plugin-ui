@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.5 - 2025-04-07
+
+- Relax peer dependencies to work with dependencies `=> 10.4.0`
+
 ## v0.10.4 - 2025-02-19
 
 - Use `import` instead of `require` in SQL language definition
