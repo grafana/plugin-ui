@@ -2,7 +2,7 @@
 
 ## v0.10.6 - 2025-05-16
 
-- Update plugin publishing
+- Update releasing
 
 ## v0.10.5 - 2025-04-07
 
