@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.6 - 2025-05-16
+
+- Update releasing
+
 ## v0.10.5 - 2025-04-07
 
 - Relax peer dependencies to work with dependencies `=> 10.4.0`
