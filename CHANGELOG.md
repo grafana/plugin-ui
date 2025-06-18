@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.7 - 2025-06-18
+
+- Fix `onChange` type in `SecureSocksProxyToggle`
+
 ## v0.10.6 - 2025-05-16
 
 - Update releasing
