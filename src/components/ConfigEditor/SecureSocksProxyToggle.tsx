@@ -3,9 +3,9 @@ import { type InlineLabel as OriginalInlineLabel, InlineField, InlineSwitch } fr
 import { config } from '@grafana/runtime';
 import { type DataSourceSettings } from '@grafana/data';
 
-type Props = Omit<React.ComponentProps<typeof OriginalInlineLabel>, 'children'> & {
+type Props = Omit<React.ComponentProps<typeof OriginalInlineLabel>, 'children' | 'onChange'> & {
   dataSourceConfig: DataSourceSettings<any, any>;
-  onChange: (config: DataSourceSettings) => void;
+  onChange: (config: DataSourceSettings<any, any>) => void;
   labelWidth: number;
 };
 
