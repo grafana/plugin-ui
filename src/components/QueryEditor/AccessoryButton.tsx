@@ -4,7 +4,7 @@ import React from 'react';
 import { type GrafanaTheme2 } from '@grafana/data';
 import { Button, type ButtonProps, useStyles2 } from '@grafana/ui';
 
-interface AccessoryButtonProps extends ButtonProps {}
+type AccessoryButtonProps = ButtonProps & {};
 
 export const AccessoryButton = ({ className, ...props }: AccessoryButtonProps) => {
   const styles = useStyles2(getButtonStyles);
