@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.8 - 2025-08-05
+
+- Fix `AccessoryButtonProps` type
+
 ## v0.10.7 - 2025-06-18
 
 - Fix `onChange` type in `SecureSocksProxyToggle`
