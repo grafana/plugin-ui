@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import React, { useMemo } from 'react';
 
-import { type DataSourceApi, type GrafanaTheme2, type PanelData, type QueryHint, type DataQuery } from '@grafana/data';
+import { type DataSourceApi, type GrafanaTheme2, type PanelData, type DataQuery } from '@grafana/data';
 import { reportInteraction } from '@grafana/runtime';
 import { Button, Tooltip, useStyles2 } from '@grafana/ui';
 
