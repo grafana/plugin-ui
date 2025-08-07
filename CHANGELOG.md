@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.9 - 2025-08-07
+
+- Optimize `QueryBuilderHints` to not trigger a state update immediately on mount
+
 ## v0.10.8 - 2025-08-05
 
 - Fix `AccessoryButtonProps` type
