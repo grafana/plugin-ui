@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 
-import { type DataSourceApi, type GrafanaTheme2, type PanelData, type QueryHint, type DataQuery } from '@grafana/data';
+import { type DataSourceApi, type GrafanaTheme2, type PanelData, type DataQuery } from '@grafana/data';
 import { reportInteraction } from '@grafana/runtime';
 import { Button, Tooltip, useStyles2 } from '@grafana/ui';
 
@@ -28,14 +28,13 @@ export const QueryBuilderHints = <TVisualQuery extends VisualQuery, TDataQuery e
   buildDataQueryFromQueryString,
   buildQueryStringFromDataQuery,
 }: Props<TVisualQuery, TDataQuery>) => {
-  const [hints, setHints] = useState<QueryHint[]>([]);
   const styles = useStyles2(getStyles);
 
-  useEffect(() => {
+  const hints = useMemo(() => {
     const dataQuery = buildDataQueryFromQueryString(queryModeller.renderQuery(visualQuery));
     // For now show only actionable hints
     const hints = datasource.getQueryHints?.(dataQuery, data?.series || []).filter((hint) => hint.fix?.action);
-    setHints(hints ?? []);
+    return hints ?? [];
   }, [datasource, visualQuery, data, queryModeller, buildDataQueryFromQueryString]);
 
   return (
