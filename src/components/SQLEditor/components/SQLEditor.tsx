@@ -32,6 +32,7 @@ import { initStatementPositionResolvers } from '../standardSql/statementPosition
 import { sqlEditorLog } from '../utils/debugger';
 import standardSQLLanguageDefinition from '../standardSql/definition';
 import { getStandardSQLCompletionProvider } from '../standardSql/standardSQLCompletionItemProvider';
+import { useLatestCallback } from '../hooks/useLatestCallback';
 
 const STANDARD_SQL_LANGUAGE = 'sql';
 
@@ -81,6 +82,8 @@ export const SQLEditor = ({
 }: SQLEditorProps) => {
   const monacoRef = useRef<monacoTypes.editor.IStandaloneCodeEditor | null>(null);
   const langUid = useRef<string>();
+  const stableOnChange = useLatestCallback(onChange);
+
   // create unique language id for each SQLEditor instance
   const id = useMemo(() => {
     const uid = v4();
@@ -105,7 +108,7 @@ export const SQLEditor = ({
   }, []);
 
   const onSqlBlur = (text: string) => {
-    onChange && onChange(text, false);
+    stableOnChange && stableOnChange(text, false);
     onBlur && onBlur(text);
   };
 
@@ -125,15 +128,17 @@ export const SQLEditor = ({
           monacoRef.current = editor;
           editor.onDidChangeModelContent((e) => {
             const text = editor.getValue();
-            if (onChange) {
-              onChange(text, false);
+            // Use ref to get the latest onChange callback, avoiding stale closures
+            if (stableOnChange) {
+              stableOnChange(text, false);
             }
           });
 
           editor.addCommand(m.KeyMod.CtrlCmd | m.KeyCode.Enter, () => {
             const text = editor.getValue();
-            if (onChange) {
-              onChange(text, true);
+            // Use ref to get the latest onChange callback, avoiding stale closures
+            if (stableOnChange) {
+              stableOnChange(text, true);
             }
           });
 
