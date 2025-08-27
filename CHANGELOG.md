@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.10 - 2025-08-27
+
+- Fix stale closure in SQLEditor component
+
 ## v0.10.9 - 2025-08-07
 
 - Optimize `QueryBuilderHints` to not trigger a state update immediately on mount
