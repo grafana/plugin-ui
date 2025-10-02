@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { type SelectableValue } from '@grafana/data';
 

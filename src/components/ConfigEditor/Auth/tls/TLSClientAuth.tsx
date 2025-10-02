@@ -1,4 +1,3 @@
-import React from 'react';
 import { cx } from '@emotion/css';
 import { InlineField, Input, SecretTextArea } from '@grafana/ui';
 import { TLSSettingsSection } from './TLSSettingsSection';

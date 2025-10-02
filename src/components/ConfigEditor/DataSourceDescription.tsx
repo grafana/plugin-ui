@@ -1,4 +1,3 @@
-import React from 'react';
 import { cx, css } from '@emotion/css';
 import { useTheme2 } from '@grafana/ui';
 

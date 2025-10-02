@@ -1,5 +1,5 @@
 import { debounce } from 'lodash';
-import React, { PureComponent } from 'react';
+import { PureComponent, createRef } from 'react';
 
 import { Field, Input } from '@grafana/ui';
 
@@ -27,7 +27,7 @@ interface State {
 
 export class NumberInput extends PureComponent<Props, State> {
   state: State = { text: '', inputCorrected: false };
-  inputRef = React.createRef<HTMLInputElement>();
+  inputRef = createRef<HTMLInputElement>();
 
   componentDidMount() {
     this.setState({

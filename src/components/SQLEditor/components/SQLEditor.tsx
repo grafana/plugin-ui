@@ -1,5 +1,5 @@
 import { CodeEditor, type Monaco, type monacoTypes } from '@grafana/ui';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { getStatementPosition } from '../standardSql/getStatementPosition';
 import { getStandardSuggestions } from '../standardSql/getStandardSuggestions';
 import { initSuggestionsKindRegistry, type SuggestionKindRegistryItem } from '../standardSql/suggestionsKindRegistry';

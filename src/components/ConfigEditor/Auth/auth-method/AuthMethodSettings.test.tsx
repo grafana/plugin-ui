@@ -1,4 +1,3 @@
-import React from 'react';
 import { screen, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AuthMethodSettings, type Props } from './AuthMethodSettings';

@@ -1,5 +1,5 @@
 import { uniqBy } from 'lodash';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { v4 } from 'uuid';
 
 import { type SelectableValue, toOption } from '@grafana/data';

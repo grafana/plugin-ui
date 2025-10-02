@@ -1,4 +1,3 @@
-import React from 'react';
 import { css, cx } from '@emotion/css';
 import { InlineField, Input, TagsInput } from '@grafana/ui';
 import { ConfigSubSection } from '../ConfigSection';

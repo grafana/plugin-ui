@@ -1,6 +1,6 @@
 import { type List } from 'immutable';
 import { isString } from 'lodash';
-import React from 'react';
+
 import {
   BasicConfig,
   Utils,

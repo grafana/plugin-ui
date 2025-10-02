@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import { uniqueId } from 'lodash';
-import React, { type HTMLProps, useRef } from 'react';
+import { type HTMLProps, useRef } from 'react';
 
 import { type GrafanaTheme2 } from '@grafana/data';
 import { Switch, useStyles2 } from '@grafana/ui';

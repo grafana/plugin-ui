@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { type DraggableProvided } from '@hello-pangea/dnd';
 import { Button, Icon, Tooltip, useTheme2 } from '@grafana/ui';
 import { css, cx } from '@emotion/css';

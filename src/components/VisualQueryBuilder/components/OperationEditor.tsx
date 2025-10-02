@@ -1,5 +1,4 @@
 import { css, cx } from '@emotion/css';
-import React from 'react';
 import { Draggable } from '@hello-pangea/dnd';
 
 import { type DataSourceApi, type GrafanaTheme2, type TimeRange } from '@grafana/data';

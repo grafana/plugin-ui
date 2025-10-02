@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import { type SelectableValue, toOption } from '@grafana/data';
 import { type SQLExpression } from '../types';

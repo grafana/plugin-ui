@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, type IconName, type PopoverContent, Tooltip } from '@grafana/ui';
 
 type RunQueryButtonProps = {

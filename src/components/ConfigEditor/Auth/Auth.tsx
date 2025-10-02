@@ -1,4 +1,3 @@
-import React from 'react';
 import { css } from '@emotion/css';
 import { type AuthMethod, type AuthMethodSelectOption, type CustomMethod, type CustomMethodId } from './types';
 import { AuthMethodSettings } from './auth-method/AuthMethodSettings';

@@ -1,4 +1,4 @@
-import React, { type ReactElement, useMemo, useState } from 'react';
+import { type ReactElement, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
 import { useTheme2, Select, Field } from '@grafana/ui';
 import { type SelectableValue } from '@grafana/data';
