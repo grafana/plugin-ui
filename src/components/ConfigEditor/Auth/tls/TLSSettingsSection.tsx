@@ -1,4 +1,3 @@
-import React from 'react';
 import { css } from '@emotion/css';
 import { Checkbox, Tooltip, Icon, useTheme2 } from '@grafana/ui';
 

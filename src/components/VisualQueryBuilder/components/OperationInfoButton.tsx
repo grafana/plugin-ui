@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import React, { useState } from 'react';
+import { useState, memo } from 'react';
 import { usePopperTooltip } from 'react-popper-tooltip';
 
 import { type GrafanaTheme2, renderMarkdown } from '@grafana/data';
@@ -14,7 +14,7 @@ interface Props {
   innerQueryPlaceholder: string;
 }
 
-export const OperationInfoButton = React.memo<Props>(({ definition, operation, innerQueryPlaceholder }) => {
+export const OperationInfoButton = memo<Props>(({ definition, operation, innerQueryPlaceholder }) => {
   const styles = useStyles2(getStyles);
   const [show, setShow] = useState(false);
   const { getTooltipProps, setTooltipRef, setTriggerRef, visible } = usePopperTooltip({

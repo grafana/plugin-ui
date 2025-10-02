@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import Calendar from 'react-calendar';
 import { useTheme2, ClickOutsideWrapper, Icon } from '@grafana/ui';
 import { getStyles, getBodyStyles } from './styles';

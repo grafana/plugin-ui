@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAsync } from 'react-use';
 
 import { type DB, type QueryEditorProps, type QueryRowFilter, type SQLQuery } from '../types';

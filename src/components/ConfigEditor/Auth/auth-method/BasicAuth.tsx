@@ -1,4 +1,3 @@
-import React from 'react';
 import { cx, css } from '@emotion/css';
 import { InlineField, Input, type PopoverContent, SecretInput } from '@grafana/ui';
 import { useCommonStyles } from '../styles';

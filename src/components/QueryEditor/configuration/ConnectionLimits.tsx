@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FieldSet, InlineField } from '@grafana/ui';
 
 import { type SQLConnectionLimits } from '../types';

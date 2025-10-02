@@ -1,4 +1,3 @@
-import React from 'react';
 import { css } from '@emotion/css';
 import { Button, useTheme2 } from '@grafana/ui';
 import { type GrafanaTheme2, VariableOrigin, DataLinkBuiltInVars } from '@grafana/data';

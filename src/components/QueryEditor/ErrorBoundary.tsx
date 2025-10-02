@@ -1,10 +1,10 @@
-import React, { type PropsWithChildren } from 'react';
+import { type PropsWithChildren, type ReactNode, Component } from 'react';
 
 type Props = PropsWithChildren<{
-  fallBackComponent?: React.ReactNode;
+  fallBackComponent?: ReactNode;
 }>;
 
-export class ErrorBoundary extends React.Component<Props, { hasError: boolean }> {
+export class ErrorBoundary extends Component<Props, { hasError: boolean }> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };

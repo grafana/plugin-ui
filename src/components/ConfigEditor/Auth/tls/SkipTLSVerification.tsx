@@ -1,4 +1,3 @@
-import React from 'react';
 import { TLSSettingsSection } from './TLSSettingsSection';
 
 export type Props = {
