@@ -4,6 +4,7 @@
     "allowJs": true,
     "importHelpers": false,
     "isolatedModules": true,
+    "jsx": "react-jsx",
     "module": "preserve",
     "moduleDetection": "force",
     "noEmit": true,
