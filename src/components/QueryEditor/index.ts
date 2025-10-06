@@ -15,5 +15,9 @@ export { InputGroup } from './InputGroup';
 export { Space } from './Space';
 export { SqlQueryEditor } from './QueryEditor';
 export { RunQueryButton } from './RunQueryButton';
+export { DatasetSelector } from './DatasetSelector';
+export { CatalogSelector } from './CatalogSelector';
+export { SchemaSelector } from './SchemaSelector';
+export { TableSelector } from './TableSelector';
 
 export * from './types';

@@ -7,28 +7,49 @@ import { type QueryWithDefaults } from './defaults';
 
 interface TableSelectorProps extends ResourceSelectorProps {
   db: DB;
-  dataset: string;
+  dataset?: string;
+  catalog?: string | null;
+  schema?: string | null;
   value: string | null;
   query: QueryWithDefaults;
   onChange: (v: SelectableValue) => void;
   inputId?: string;
+  enableCatalogs?: boolean;
 }
 
-export const TableSelector = ({ db, dataset, value, className, onChange, inputId }: TableSelectorProps) => {
+export const TableSelector = ({
+  db,
+  dataset,
+  catalog,
+  schema,
+  value,
+  className,
+  onChange,
+  inputId,
+  enableCatalogs,
+}: TableSelectorProps) => {
   const state = useAsync(async () => {
-    if (!dataset) {
+    if (!dataset && !catalog) {
       return [];
     }
 
-    const tables = await db.tables(dataset);
+    // When catalogs are enabled, we need both catalog and schema to load tables
+    if (enableCatalogs && (!catalog || !schema)) {
+      return [];
+    }
+
+    const tables = await db.tables(dataset, catalog || undefined, schema || undefined);
     return tables.map(toOption);
-  }, [dataset]);
+  }, [dataset, catalog, schema, enableCatalogs]);
+
+  // Determine if the selector should be disabled
+  const isDisabled = state.loading || (enableCatalogs && (!catalog || !schema));
 
   return (
     <Select
       inputId={inputId}
       className={className}
-      disabled={state.loading}
+      disabled={isDisabled}
       aria-label="Table selector"
       value={value}
       options={state.value}
