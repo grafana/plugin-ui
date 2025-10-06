@@ -157,6 +157,7 @@ export interface DB {
   functions: () => Promise<Aggregate[]>;
   labels?: Map<'dataset', string>;
   disableDatasets?: boolean;
+  disableCatalogs?: boolean;
 }
 
 export interface QueryEditorProps {

@@ -114,6 +114,55 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
     jest.clearAllMocks();
   });
 
+  describe('Default Catalog Behavior', () => {
+    it('should disable catalogs by default when disableCatalogs is undefined', () => {
+      // Test with a DB that has no disableCatalogs property (undefined)
+      const dbWithUndefinedCatalogs = { ...mockDB };
+      delete (dbWithUndefinedCatalogs as any).disableCatalogs;
+
+      // Remove enableCatalogs from props to test db.disableCatalogs behavior
+      const { enableCatalogs, ...propsWithoutEnableCatalogs } = defaultProps;
+
+      render(<QueryHeader {...propsWithoutEnableCatalogs} db={dbWithUndefinedCatalogs} />);
+
+      // Should not render catalog selectors when disableCatalogs is undefined (default behavior)
+      expect(screen.queryByTestId('catalog-selector')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('schema-selector')).not.toBeInTheDocument();
+      expect(screen.queryByText('Catalog')).not.toBeInTheDocument();
+      expect(screen.queryByText('Schema')).not.toBeInTheDocument();
+    });
+
+    it('should disable catalogs when disableCatalogs is explicitly true', () => {
+      const dbWithDisabledCatalogs = { ...mockDB, disableCatalogs: true };
+
+      // Remove enableCatalogs from props to test db.disableCatalogs behavior
+      const { enableCatalogs, ...propsWithoutEnableCatalogs } = defaultProps;
+
+      render(<QueryHeader {...propsWithoutEnableCatalogs} db={dbWithDisabledCatalogs} />);
+
+      // Should not render catalog selectors when disableCatalogs is true
+      expect(screen.queryByTestId('catalog-selector')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('schema-selector')).not.toBeInTheDocument();
+      expect(screen.queryByText('Catalog')).not.toBeInTheDocument();
+      expect(screen.queryByText('Schema')).not.toBeInTheDocument();
+    });
+
+    it('should enable catalogs only when disableCatalogs is explicitly false', () => {
+      const dbWithEnabledCatalogs = { ...mockDB, disableCatalogs: false };
+
+      // Remove enableCatalogs from props to test db.disableCatalogs behavior
+      const { enableCatalogs, ...propsWithoutEnableCatalogs } = defaultProps;
+
+      render(<QueryHeader {...propsWithoutEnableCatalogs} db={dbWithEnabledCatalogs} />);
+
+      // Should render catalog selectors when disableCatalogs is explicitly false
+      expect(screen.getByTestId('catalog-selector')).toBeInTheDocument();
+      expect(screen.getByTestId('schema-selector')).toBeInTheDocument();
+      expect(screen.getByText('Catalog')).toBeInTheDocument();
+      expect(screen.getByText('Schema')).toBeInTheDocument();
+    });
+  });
+
   describe('Catalog Selector Rendering', () => {
     it('should render catalog selector when enableCatalogs is true', () => {
       render(<QueryHeader {...defaultProps} enableCatalogs={true} />);

@@ -43,7 +43,7 @@ export function QueryHeader({
   db,
   defaultDataset,
   enableDatasets,
-  enableCatalogs = false,
+  enableCatalogs,
   query,
   queryRowFilter,
   onChange,
@@ -57,6 +57,10 @@ export function QueryHeader({
   const [showConfirm, setShowConfirm] = useState(false);
   const toRawSql = getRawSqlFn(db);
   const htmlId = useId();
+
+  // Derive enableCatalogs from db.disableCatalogs when not explicitly provided
+  // Catalogs are disabled by default (when disableCatalogs is undefined or true)
+  const catalogsEnabled = enableCatalogs ?? db.disableCatalogs === false;
 
   const onEditorModeChange = useCallback(
     (newEditorMode: EditorMode) => {
@@ -232,7 +236,7 @@ export function QueryHeader({
           <Space v={0.5} />
 
           <EditorRow>
-            {enableDatasets === true && !enableCatalogs && (
+            {enableDatasets === true && !catalogsEnabled && (
               <EditorField label={labels.get('dataset') || 'Dataset'} width={25}>
                 <DatasetSelector
                   db={db}
@@ -244,7 +248,7 @@ export function QueryHeader({
               </EditorField>
             )}
 
-            {enableCatalogs && (
+            {catalogsEnabled && (
               <>
                 <EditorField label={labels.get('catalog') || 'Catalog'} width={25}>
                   <CatalogSelector
@@ -271,13 +275,13 @@ export function QueryHeader({
               <TableSelector
                 db={db}
                 inputId={`sql-table-${htmlId}`}
-                dataset={enableCatalogs ? undefined : query.dataset || defaultDataset}
-                catalog={enableCatalogs ? (query.catalog === undefined ? null : query.catalog) : undefined}
-                schema={enableCatalogs ? (query.schema === undefined ? null : query.schema) : undefined}
+                dataset={catalogsEnabled ? undefined : query.dataset || defaultDataset}
+                catalog={catalogsEnabled ? (query.catalog === undefined ? null : query.catalog) : undefined}
+                schema={catalogsEnabled ? (query.schema === undefined ? null : query.schema) : undefined}
                 query={query}
                 value={query.table === undefined ? null : query.table}
                 onChange={onTableChange}
-                enableCatalogs={enableCatalogs}
+                enableCatalogs={catalogsEnabled}
                 applyDefault
               />
             </EditorField>
