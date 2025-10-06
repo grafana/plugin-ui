@@ -263,7 +263,7 @@ export function QueryHeader({
                   <SchemaSelector
                     db={db}
                     inputId={`sql-schema-${htmlId}`}
-                    catalog={query.catalog === undefined ? null : query.catalog}
+                    catalog={query.catalog}
                     value={query.schema === undefined ? null : query.schema}
                     onChange={onSchemaChange}
                   />
@@ -276,8 +276,8 @@ export function QueryHeader({
                 db={db}
                 inputId={`sql-table-${htmlId}`}
                 dataset={catalogsEnabled ? undefined : query.dataset || defaultDataset}
-                catalog={catalogsEnabled ? (query.catalog === undefined ? null : query.catalog) : undefined}
-                schema={catalogsEnabled ? (query.schema === undefined ? null : query.schema) : undefined}
+                catalog={catalogsEnabled ? query.catalog : undefined}
+                schema={catalogsEnabled ? query.schema : undefined}
                 query={query}
                 value={query.table === undefined ? null : query.table}
                 onChange={onTableChange}

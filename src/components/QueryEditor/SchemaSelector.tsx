@@ -6,7 +6,7 @@ import { type DB } from './types';
 export interface SchemaSelectorProps {
   db: DB;
   inputId?: string;
-  catalog: string | null;
+  catalog?: string;
   value: string | null;
   onChange: (schema: string | null) => void;
 }

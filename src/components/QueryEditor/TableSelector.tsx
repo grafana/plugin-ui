@@ -8,8 +8,8 @@ import { type QueryWithDefaults } from './defaults';
 interface TableSelectorProps extends ResourceSelectorProps {
   db: DB;
   dataset?: string;
-  catalog?: string | null;
-  schema?: string | null;
+  catalog?: string;
+  schema?: string;
   value: string | null;
   query: QueryWithDefaults;
   onChange: (v: SelectableValue) => void;
@@ -38,7 +38,7 @@ export const TableSelector = ({
       return [];
     }
 
-    const tables = await db.tables(dataset, catalog || undefined, schema || undefined);
+    const tables = await db.tables(dataset, catalog, schema);
     return tables.map(toOption);
   }, [dataset, catalog, schema, enableCatalogs]);
 
