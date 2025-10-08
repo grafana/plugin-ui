@@ -1,18 +1,22 @@
 name: publish-npm
-permissions:
-  contents: read
-  id-token: write
+
+permissions: {}
 
 on:
   push:
     branches:
       - main
-      - v0.0.x
 
 jobs:
   publish:
     name: Publish to NPM Package Registry
     runs-on: ubuntu-latest
+    # Required for this workflow to have permission to publish NPM packages
+    environment: release
+    permissions:
+      contents: read
+      # id-token: write required for npm trusted publishing
+      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -42,6 +46,11 @@ jobs:
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
 
+      # npm trusted publishing requires version ^11.5.1
+      - name: Install npm version ^11.5.1
+        if: steps.version_check.outputs.changed == 'true'
+        run: npm install -g npm@^11.5.1
+
       - name: Install dependencies
         if: steps.version_check.outputs.changed == 'true'
         run: yarn install --immutable
@@ -50,15 +59,6 @@ jobs:
         if: steps.version_check.outputs.changed == 'true'
         run: yarn build
 
-      - name: Get vault secrets
-        id: vault-secrets
-        uses: grafana/shared-workflows/actions/get-vault-secrets@main # zizmor: ignore[unpinned-uses]
-        with:
-          repo_secrets: |
-            NPM_TOKEN=npm-publish:token
-
       - name: Publish package to NPM
         if: steps.version_check.outputs.changed == 'true'
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
