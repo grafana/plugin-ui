@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Select } from '@grafana/ui';
 import { type SelectableValue } from '@grafana/data';
 import { type DB } from './types';
@@ -12,10 +12,10 @@ export interface SchemaSelectorProps {
 }
 
 export const SchemaSelector = ({ db, inputId, catalog, value, onChange }: SchemaSelectorProps) => {
-  const [schemas, setSchemas] = React.useState<Array<SelectableValue<string>>>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [schemas, setSchemas] = useState<Array<SelectableValue<string>>>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const loadSchemas = async () => {
       if (!db.schemas || !catalog) {
         setSchemas([]);
