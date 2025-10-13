@@ -14,28 +14,28 @@ export const CatalogSelector = ({ db, inputId, value, onChange }: CatalogSelecto
   const [catalogs, setCatalogs] = useState<Array<SelectableValue<string>>>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const loadCatalogs = async () => {
+    if (!db.catalogs) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const catalogList = await db.catalogs();
+      const catalogOptions = catalogList.map((catalog) => ({
+        label: catalog,
+        value: catalog,
+      }));
+      setCatalogs(catalogOptions);
+    } catch (error) {
+      console.error('Error loading catalogs:', error);
+      setCatalogs([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadCatalogs = async () => {
-      if (!db.catalogs) {
-        return;
-      }
-
-      setIsLoading(true);
-      try {
-        const catalogList = await db.catalogs();
-        const catalogOptions = catalogList.map((catalog) => ({
-          label: catalog,
-          value: catalog,
-        }));
-        setCatalogs(catalogOptions);
-      } catch (error) {
-        console.error('Error loading catalogs:', error);
-        setCatalogs([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     loadCatalogs();
   }, [db]);
 
