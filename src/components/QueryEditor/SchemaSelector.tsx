@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Select } from '@grafana/ui';
 import { type SelectableValue } from '@grafana/data';
 import { type DB } from './types';
@@ -15,7 +15,7 @@ export const SchemaSelector = ({ db, inputId, catalog, value, onChange }: Schema
   const [schemas, setSchemas] = useState<Array<SelectableValue<string>>>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const loadSchemas = async () => {
+  const loadSchemas = useCallback(async () => {
     if (!db.schemas || !catalog) {
       setSchemas([]);
       return;
@@ -35,7 +35,7 @@ export const SchemaSelector = ({ db, inputId, catalog, value, onChange }: Schema
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [db, catalog]);
 
   useEffect(() => {
     loadSchemas();

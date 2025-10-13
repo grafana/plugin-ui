@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Select } from '@grafana/ui';
 import { type SelectableValue } from '@grafana/data';
 import { type DB } from './types';
@@ -14,7 +14,7 @@ export const CatalogSelector = ({ db, inputId, value, onChange }: CatalogSelecto
   const [catalogs, setCatalogs] = useState<Array<SelectableValue<string>>>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const loadCatalogs = async () => {
+  const loadCatalogs = useCallback(async () => {
     if (!db.catalogs) {
       return;
     }
@@ -33,7 +33,7 @@ export const CatalogSelector = ({ db, inputId, value, onChange }: CatalogSelecto
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [db]);
 
   useEffect(() => {
     loadCatalogs();
