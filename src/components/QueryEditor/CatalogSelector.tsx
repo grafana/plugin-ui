@@ -37,7 +37,7 @@ export const CatalogSelector = ({ db, inputId, value, onChange }: CatalogSelecto
 
   useEffect(() => {
     loadCatalogs();
-  }, [db]);
+  }, [db, loadCatalogs]);
 
   const handleChange = (selectable: SelectableValue<string>) => {
     onChange(selectable?.value || null);

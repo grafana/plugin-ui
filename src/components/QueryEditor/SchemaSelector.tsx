@@ -39,7 +39,7 @@ export const SchemaSelector = ({ db, inputId, catalog, value, onChange }: Schema
 
   useEffect(() => {
     loadSchemas();
-  }, [db, catalog]);
+  }, [db, catalog, loadSchemas]);
 
   const handleChange = (selectable: SelectableValue<string>) => {
     onChange(selectable?.value || null);
