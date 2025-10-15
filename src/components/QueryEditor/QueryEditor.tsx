@@ -83,6 +83,7 @@ export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range 
         db={db}
         defaultDataset={defaultDataset || ''}
         enableDatasets={!db.disableDatasets}
+        enableCatalogs={db.disableCatalogs === false}
         onChange={onQueryHeaderChange}
         onRunQuery={onRunQuery}
         onQueryRowChange={setQueryRowFilter}

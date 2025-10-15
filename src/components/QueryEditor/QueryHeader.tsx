@@ -5,6 +5,8 @@ import { type SelectableValue } from '@grafana/data';
 
 import { ConfirmModal } from './ConfirmModal';
 import { DatasetSelector } from './DatasetSelector';
+import { CatalogSelector } from './CatalogSelector';
+import { SchemaSelector } from './SchemaSelector';
 import { TableSelector } from './TableSelector';
 import { InlineSwitch, RadioButtonGroup } from '@grafana/ui';
 import { type QueryWithDefaults } from './defaults';
@@ -22,6 +24,7 @@ interface QueryHeaderProps {
   db: DB;
   defaultDataset: string;
   enableDatasets: boolean;
+  enableCatalogs?: boolean;
   query: QueryWithDefaults;
   onChange: (query: SQLQuery) => void;
   onRunQuery: () => void;
@@ -40,6 +43,7 @@ export function QueryHeader({
   db,
   defaultDataset,
   enableDatasets,
+  enableCatalogs,
   query,
   queryRowFilter,
   onChange,
@@ -53,6 +57,10 @@ export function QueryHeader({
   const [showConfirm, setShowConfirm] = useState(false);
   const toRawSql = getRawSqlFn(db);
   const htmlId = useId();
+
+  // Derive enableCatalogs from db.disableCatalogs when not explicitly provided
+  // Catalogs are disabled by default (when disableCatalogs is undefined or true)
+  const catalogsEnabled = enableCatalogs ?? db.disableCatalogs === false;
 
   const onEditorModeChange = useCallback(
     (newEditorMode: EditorMode) => {
@@ -83,6 +91,37 @@ export function QueryHeader({
       rawSql: '',
     };
 
+    onChange(next);
+  };
+
+  const onCatalogChange = (catalog: string | null) => {
+    if (catalog === query.catalog) {
+      return;
+    }
+
+    const next: SQLQuery = {
+      ...query,
+      catalog: catalog || undefined,
+      schema: undefined,
+      table: undefined,
+      sql: undefined,
+      rawSql: '',
+    };
+    onChange(next);
+  };
+
+  const onSchemaChange = (schema: string | null) => {
+    if (schema === query.schema) {
+      return;
+    }
+
+    const next: SQLQuery = {
+      ...query,
+      schema: schema || undefined,
+      table: undefined,
+      sql: undefined,
+      rawSql: '',
+    };
     onChange(next);
   };
 
@@ -197,7 +236,7 @@ export function QueryHeader({
           <Space v={0.5} />
 
           <EditorRow>
-            {enableDatasets === true && (
+            {enableDatasets === true && !catalogsEnabled && (
               <EditorField label={labels.get('dataset') || 'Dataset'} width={25}>
                 <DatasetSelector
                   db={db}
@@ -209,14 +248,40 @@ export function QueryHeader({
               </EditorField>
             )}
 
+            {catalogsEnabled && (
+              <>
+                <EditorField label={labels.get('catalog') || 'Catalog'} width={25}>
+                  <CatalogSelector
+                    db={db}
+                    inputId={`sql-catalog-${htmlId}`}
+                    value={query.catalog === undefined ? null : query.catalog}
+                    onChange={onCatalogChange}
+                  />
+                </EditorField>
+
+                <EditorField label={labels.get('schema') || 'Schema'} width={25}>
+                  <SchemaSelector
+                    db={db}
+                    inputId={`sql-schema-${htmlId}`}
+                    catalog={query.catalog}
+                    value={query.schema === undefined ? null : query.schema}
+                    onChange={onSchemaChange}
+                  />
+                </EditorField>
+              </>
+            )}
+
             <EditorField label="Table" width={25}>
               <TableSelector
                 db={db}
                 inputId={`sql-table-${htmlId}`}
-                dataset={query.dataset || defaultDataset}
+                dataset={catalogsEnabled ? undefined : query.dataset || defaultDataset}
+                catalog={catalogsEnabled ? query.catalog : undefined}
+                schema={catalogsEnabled ? query.schema : undefined}
                 query={query}
                 value={query.table === undefined ? null : query.table}
                 onChange={onTableChange}
+                enableCatalogs={catalogsEnabled}
                 applyDefault
               />
             </EditorField>
