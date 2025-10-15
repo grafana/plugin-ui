@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.11.0 - 2025-10-06
+
+- Add support for catalog and schema fields in `SqlQueryEditor`
+
 ## v0.10.10 - 2025-08-27
 
 - Fix stale closure in SQLEditor component
