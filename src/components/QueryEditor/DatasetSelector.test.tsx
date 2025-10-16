@@ -2,7 +2,7 @@
  * Tests for DatasetSelector component (dual-mode: dataset or schema)
  * Note: The dataset field has dual meaning - it represents schema when catalog is present, dataset otherwise.
  */
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { DatasetSelector } from './DatasetSelector';
 import { type DB } from './types';
 
@@ -63,6 +63,44 @@ describe('DatasetSelector', () => {
       await waitFor(() => {
         expect(mockDB.datasets).toHaveBeenCalledTimes(2);
       });
+    });
+  });
+
+  describe('Placeholder text', () => {
+    it('should show "Select dataset" placeholder when enableCatalogs is false', () => {
+      const mockDB = createMockDB(['dataset1', 'dataset2']);
+      const onChangeMock = jest.fn();
+
+      render(<DatasetSelector db={mockDB} dataset="" value={null} onChange={onChangeMock} enableCatalogs={false} />);
+
+      expect(screen.getByText('Select dataset')).toBeInTheDocument();
+    });
+
+    it('should show "Select dataset" placeholder when enableCatalogs is undefined', () => {
+      const mockDB = createMockDB(['dataset1', 'dataset2']);
+      const onChangeMock = jest.fn();
+
+      render(<DatasetSelector db={mockDB} dataset="" value={null} onChange={onChangeMock} />);
+
+      expect(screen.getByText('Select dataset')).toBeInTheDocument();
+    });
+
+    it('should show "Select schema" placeholder when enableCatalogs is true', () => {
+      const mockDB = createMockDB(['schema1', 'schema2']);
+      const onChangeMock = jest.fn();
+
+      render(
+        <DatasetSelector
+          db={mockDB}
+          dataset=""
+          catalog="catalog1"
+          value={null}
+          onChange={onChangeMock}
+          enableCatalogs={true}
+        />
+      );
+
+      expect(screen.getByText('Select schema')).toBeInTheDocument();
     });
   });
 });
