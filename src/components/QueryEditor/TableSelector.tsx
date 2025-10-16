@@ -42,14 +42,10 @@ export const TableSelector = ({
     return tables.map(toOption);
   }, [dataset, catalog, schema, enableCatalogs]);
 
-  // Determine if the selector should be disabled
-  const isDisabled = state.loading || (enableCatalogs && (!catalog || !schema));
-
   return (
     <Select
       inputId={inputId}
       className={className}
-      disabled={isDisabled}
       aria-label="Table selector"
       value={value}
       options={state.value}
