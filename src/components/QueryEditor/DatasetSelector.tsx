@@ -15,6 +15,7 @@ interface DatasetSelectorProps extends ResourceSelectorProps {
   disabled?: boolean;
   onChange: (v: SelectableValue) => void;
   inputId?: string;
+  enableCatalogs?: boolean;
   'data-testid'?: string;
 }
 
@@ -28,6 +29,7 @@ export const DatasetSelector = ({
   className,
   applyDefault,
   inputId,
+  enableCatalogs,
   'data-testid': dataTestId,
 }: DatasetSelectorProps) => {
   const state = useAsync(async () => {
@@ -73,6 +75,7 @@ export const DatasetSelector = ({
       isLoading={state.loading}
       menuShouldPortal={true}
       data-testid={dataTestId}
+      placeholder={enableCatalogs ? 'Select schema' : 'Select dataset'}
     />
   );
 };
