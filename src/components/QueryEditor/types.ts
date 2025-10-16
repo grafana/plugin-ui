@@ -64,7 +64,7 @@ export interface SQLQuery extends DataQuery {
   alias?: string;
   format?: QueryFormat;
   rawSql?: string;
-  dataset?: string; // When catalog is present, this represents the schema. Otherwise, it's the dataset (legacy).
+  dataset?: string; // When catalog is present, dataset represents the schema. Otherwise, it's the dataset.
   catalog?: string;
   table?: string;
   sql?: SQLExpression;

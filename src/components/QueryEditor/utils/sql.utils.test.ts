@@ -81,7 +81,7 @@ describe('sql.utils', () => {
 
         const result = toRawSql(query, false);
 
-        // With catalog, dataset acts as schema: catalog.dataset.table
+        // With catalog, dataset acts as dataset: catalog.dataset.table
         expect(result).toBe('SELECT * FROM production.analytics.users ');
       });
 
