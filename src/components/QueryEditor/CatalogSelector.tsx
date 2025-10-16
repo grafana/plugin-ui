@@ -28,7 +28,6 @@ export const CatalogSelector = ({ db, inputId, value, onChange }: CatalogSelecto
       }));
       setCatalogs(catalogOptions);
     } catch (error) {
-      console.error('Error loading catalogs:', error);
       setCatalogs([]);
     } finally {
       setIsLoading(false);

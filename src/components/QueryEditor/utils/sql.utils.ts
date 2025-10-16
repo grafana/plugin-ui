@@ -34,31 +34,17 @@ export function toRawSql({ sql, dataset, catalog, table }: SQLQuery, disableData
 
   rawQuery += createSelectClause(sql.columns);
 
-  // DEBUG
-  if (typeof window !== 'undefined') {
-    console.error('🔍 toRawSql inputs:', { catalog, dataset, table, disableDatasets });
-  }
-
   // Three-part naming: catalog.dataset.table (dataset acts as schema when catalog is present)
   if (catalog && dataset && table) {
     rawQuery += `FROM ${catalog}.${dataset}.${table} `;
-    if (typeof window !== 'undefined') {
-      console.error(`✅ Generated: FROM ${catalog}.${dataset}.${table}`);
-    }
   }
   // Two-part naming: dataset.table (legacy style, only if catalogs not used)
   else if (!disableDatasets && dataset && table) {
     rawQuery += `FROM ${dataset}.${table} `;
-    if (typeof window !== 'undefined') {
-      console.error(`✅ Generated: FROM ${dataset}.${table}`);
-    }
   }
   // Just table name (when datasets are disabled or neither catalog nor dataset is present)
   else if (table) {
     rawQuery += `FROM ${table} `;
-    if (typeof window !== 'undefined') {
-      console.error(`⚠️ Generated: FROM ${table} (catalog=${catalog}, dataset=${dataset})`);
-    }
   }
 
   if (sql.whereString) {

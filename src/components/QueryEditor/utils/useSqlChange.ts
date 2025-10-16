@@ -16,7 +16,7 @@ export function useSqlChange({ query, onQueryChange, db }: UseSqlChange) {
       const toRawSql = getRawSqlFn(db);
       const rawSql = toRawSql({
         sql,
-        catalog: query.catalog, // ✅ Added: Pass catalog for Unity Catalog support
+        catalog: query.catalog,
         dataset: query.dataset,
         table: query.table,
         refId: query.refId,

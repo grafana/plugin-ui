@@ -83,13 +83,6 @@ export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range 
   // When catalogs are enabled, datasets MUST be enabled (they act as schema selector)
   const effectiveEnableDatasets = catalogsEnabled ? true : datasetsEnabled;
 
-  // Warn if misconfigured (this should not happen in production)
-  if (catalogsEnabled && !datasetsEnabled) {
-    console.error(
-      '⚠️ WARNING: Catalogs are enabled but datasets are disabled. Forcing datasets to be enabled to act as schema selectors.'
-    );
-  }
-
   return (
     <>
       <QueryHeader
