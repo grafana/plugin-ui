@@ -60,6 +60,8 @@ export const defaultTableNameParser = (token: LinkedToken | null | undefined) =>
     return { table: parts[0] };
   } else if (parts?.length === 2) {
     return { schema: parts[0], table: parts[1] };
+  } else if (parts?.length === 3) {
+    return { catalog: parts[0], schema: parts[1], table: parts[2] };
   }
 
   return null;

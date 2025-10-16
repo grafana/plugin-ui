@@ -37,16 +37,27 @@ jest.mock('./SchemaSelector', () => ({
 }));
 
 jest.mock('./DatasetSelector', () => ({
-  DatasetSelector: ({ value, onChange }: any) => (
-    <select
-      data-testid="dataset-selector"
-      value={value || ''}
-      onChange={(e) => onChange({ value: e.target.value || null })}
-    >
-      <option value="">Select dataset</option>
-      <option value="dataset1">Dataset 1</option>
-    </select>
-  ),
+  DatasetSelector: ({ value, onChange, 'data-testid': dataTestId, catalog, inputId }: any) => {
+    const isSchema = dataTestId === 'schema-selector' || catalog !== undefined;
+    return (
+      <select
+        data-testid={dataTestId || 'dataset-selector'}
+        data-input-id={inputId}
+        value={value || ''}
+        onChange={(e) => onChange({ value: e.target.value || null })}
+      >
+        <option value="">{isSchema ? 'Select schema' : 'Select dataset'}</option>
+        {isSchema ? (
+          <>
+            <option value="schema1">Schema 1</option>
+            <option value="schema2">Schema 2</option>
+          </>
+        ) : (
+          <option value="dataset1">Dataset 1</option>
+        )}
+      </select>
+    );
+  },
 }));
 
 jest.mock('./TableSelector', () => ({

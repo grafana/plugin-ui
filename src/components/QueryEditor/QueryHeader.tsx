@@ -6,7 +6,6 @@ import { type SelectableValue } from '@grafana/data';
 import { ConfirmModal } from './ConfirmModal';
 import { DatasetSelector } from './DatasetSelector';
 import { CatalogSelector } from './CatalogSelector';
-import { SchemaSelector } from './SchemaSelector';
 import { TableSelector } from './TableSelector';
 import { InlineSwitch, RadioButtonGroup } from '@grafana/ui';
 import { type QueryWithDefaults } from './defaults';
@@ -62,6 +61,10 @@ export function QueryHeader({
   // Catalogs are disabled by default (when disableCatalogs is undefined or true)
   const catalogsEnabled = enableCatalogs ?? db.disableCatalogs === false;
 
+  // When catalogs are enabled, datasets MUST be enabled (they act as schema selector)
+  // This ensures the dataset selector is shown to select schemas
+  const effectiveEnableDatasets = catalogsEnabled ? true : enableDatasets;
+
   const onEditorModeChange = useCallback(
     (newEditorMode: EditorMode) => {
       if (editorMode === EditorMode.Code) {
@@ -79,45 +82,47 @@ export function QueryHeader({
   };
 
   const onDatasetChange = (e: SelectableValue) => {
-    if (e.value === query.dataset) {
-      return;
+    // When catalogs are enabled, dataset selector actually sets the schema field
+    if (catalogsEnabled) {
+      const schemaValue = e.value || undefined;
+      if (schemaValue === query.schema) {
+        return;
+      }
+      const next: SQLQuery = {
+        ...query,
+        schema: schemaValue,
+        table: undefined,
+        sql: undefined,
+        rawSql: '',
+      };
+      onChange(next);
+    } else {
+      // Normal dataset behavior
+      const datasetValue = e.value || undefined;
+      if (datasetValue === query.dataset) {
+        return;
+      }
+      const next = {
+        ...query,
+        dataset: datasetValue,
+        table: undefined,
+        sql: undefined,
+        rawSql: '',
+      };
+      onChange(next);
     }
-
-    const next = {
-      ...query,
-      dataset: e.value,
-      table: undefined,
-      sql: undefined,
-      rawSql: '',
-    };
-
-    onChange(next);
   };
 
   const onCatalogChange = (catalog: string | null) => {
-    if (catalog === query.catalog) {
+    const catalogValue = catalog || undefined;
+    if (catalogValue === query.catalog) {
       return;
     }
 
     const next: SQLQuery = {
       ...query,
-      catalog: catalog || undefined,
+      catalog: catalogValue,
       schema: undefined,
-      table: undefined,
-      sql: undefined,
-      rawSql: '',
-    };
-    onChange(next);
-  };
-
-  const onSchemaChange = (schema: string | null) => {
-    if (schema === query.schema) {
-      return;
-    }
-
-    const next: SQLQuery = {
-      ...query,
-      schema: schema || undefined,
       table: undefined,
       sql: undefined,
       rawSql: '',
@@ -236,42 +241,46 @@ export function QueryHeader({
           <Space v={0.5} />
 
           <EditorRow>
-            {enableDatasets === true && !catalogsEnabled && (
-              <EditorField label={labels.get('dataset') || 'Dataset'} width={25}>
-                <DatasetSelector
+            {/* Catalog selector: only when catalogs are not disabled */}
+            {catalogsEnabled && (
+              <EditorField label={labels.get('catalog') || 'Catalog'} width={25}>
+                <CatalogSelector
                   db={db}
-                  inputId={`sql-dataset-${htmlId}`}
-                  dataset={defaultDataset}
-                  value={query.dataset === undefined ? null : query.dataset}
-                  onChange={onDatasetChange}
+                  inputId={`sql-catalog-${htmlId}`}
+                  value={query.catalog === undefined ? null : query.catalog}
+                  onChange={onCatalogChange}
                 />
               </EditorField>
             )}
 
-            {catalogsEnabled && (
-              <>
-                <EditorField label={labels.get('catalog') || 'Catalog'} width={25}>
-                  <CatalogSelector
-                    db={db}
-                    inputId={`sql-catalog-${htmlId}`}
-                    value={query.catalog === undefined ? null : query.catalog}
-                    onChange={onCatalogChange}
-                  />
-                </EditorField>
-
-                <EditorField label={labels.get('schema') || 'Schema'} width={25}>
-                  <SchemaSelector
-                    db={db}
-                    inputId={`sql-schema-${htmlId}`}
-                    catalog={query.catalog}
-                    value={query.schema === undefined ? null : query.schema}
-                    onChange={onSchemaChange}
-                  />
-                </EditorField>
-              </>
+            {/* Schema selector when catalogs enabled, dataset selector otherwise */}
+            {effectiveEnableDatasets && (
+              <EditorField
+                label={catalogsEnabled ? labels.get('schema') || 'Schema' : labels.get('dataset') || 'Dataset'}
+                width={25}
+              >
+                <DatasetSelector
+                  db={db}
+                  inputId={catalogsEnabled ? `sql-schema-${htmlId}` : `sql-dataset-${htmlId}`}
+                  data-testid={catalogsEnabled ? 'schema-selector' : 'dataset-selector'}
+                  dataset={catalogsEnabled ? undefined : defaultDataset}
+                  value={
+                    catalogsEnabled
+                      ? query.schema === undefined
+                        ? null
+                        : query.schema
+                      : query.dataset === undefined
+                        ? null
+                        : query.dataset
+                  }
+                  onChange={onDatasetChange}
+                  catalog={catalogsEnabled ? query.catalog : undefined}
+                />
+              </EditorField>
             )}
 
-            <EditorField label="Table" width={25}>
+            {/* Table selector: always shown */}
+            <EditorField label={labels.get('table') || 'Table'} width={25}>
               <TableSelector
                 db={db}
                 inputId={`sql-table-${htmlId}`}

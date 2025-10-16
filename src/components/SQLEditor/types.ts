@@ -62,6 +62,7 @@ export interface Operator {
 export interface TableIdentifier {
   table?: string;
   schema?: string;
+  catalog?: string;
 }
 
 export interface SQLCompletionItemProvider
