@@ -13,9 +13,8 @@ const createMockDatasource = (disableDatasets: boolean, disableCatalogs: boolean
 });
 
 const createMockDB = (disableDatasets: boolean, disableCatalogs: boolean): DB => ({
-  datasets: jest.fn().mockResolvedValue(['schema1', 'schema2']),
+  datasets: jest.fn().mockResolvedValue(['dataset1', 'schema1', 'schema2']), // Returns datasets or schemas based on context
   catalogs: !disableCatalogs ? jest.fn().mockResolvedValue(['catalog1', 'catalog2']) : undefined,
-  schemas: !disableCatalogs ? jest.fn().mockResolvedValue(['schema1', 'schema2']) : undefined,
   tables: jest.fn().mockResolvedValue(['table1', 'table2']),
   fields: jest.fn().mockResolvedValue([]),
   validateQuery: jest.fn().mockResolvedValue({ query: {}, error: '', isError: false, isValid: true }),
@@ -95,7 +94,7 @@ describe('QueryEditor - Catalog.Schema.Table Integration', () => {
       const unityCatalogQuery: SQLQuery = {
         refId: 'A',
         catalog: 'samples',
-        schema: 'sales',
+        dataset: 'sales', // Acts as schema when catalog is present
         table: 'customer',
         format: QueryFormat.Table,
         sql: {

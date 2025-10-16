@@ -16,13 +16,16 @@ export function getRawSqlFn(db: DB) {
 /**
  * Converts a SQLQuery object into a raw SQL string.
  *
- * Table reference naming (mutually exclusive):
- * 1. catalog.schema.table - When catalogs are enabled (catalog && schema && table)
- * 2. dataset.table - When datasets are enabled but catalogs are disabled (dataset && table)
- * 3. table - When both catalogs and datasets are disabled
+ * Table reference naming:
+ * - When catalog is present: catalog.dataset.table (dataset acts as schema)
+ * - When catalog is absent: dataset.table (dataset acts as dataset/schema)
+ * - When both are disabled: just table
  *
+ * Note: Semantically, the dataset field has dual meaning:
+ *   - With catalog: dataset = schema (Unity Catalog: catalog.schema.table)
+ *   - Without catalog: dataset = dataset (Legacy: dataset.table)
  */
-export function toRawSql({ sql, dataset, catalog, schema, table }: SQLQuery, disableDatasets: boolean): string {
+export function toRawSql({ sql, dataset, catalog, table }: SQLQuery, disableDatasets: boolean): string {
   let rawQuery = '';
 
   if (!sql || !haveColumns(sql.columns)) {
@@ -31,10 +34,9 @@ export function toRawSql({ sql, dataset, catalog, schema, table }: SQLQuery, dis
 
   rawQuery += createSelectClause(sql.columns);
 
-  // Three-part naming: catalog.schema.table (Unity Catalog style)
-  // This takes precedence over everything else
-  if (catalog && schema && table) {
-    rawQuery += `FROM ${catalog}.${schema}.${table} `;
+  // Three-part naming: catalog.dataset.table (dataset acts as schema when catalog is present)
+  if (catalog && dataset && table) {
+    rawQuery += `FROM ${catalog}.${dataset}.${table} `;
   }
   // Two-part naming: dataset.table (legacy style, only if catalogs not used)
   else if (!disableDatasets && dataset && table) {

@@ -20,11 +20,11 @@ describe('sql.utils', () => {
     };
 
     describe('catalog, schema, and table handling', () => {
-      it('should generate FROM clause with catalog.schema.table when all three are provided', () => {
+      it('should generate FROM clause with catalog.dataset.table when all three are provided', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'samples',
-          schema: 'taxi',
+          dataset: 'taxi', // dataset acts as schema when catalog is present
           table: 'trips',
           sql: {
             ...baseExpression,
@@ -37,10 +37,10 @@ describe('sql.utils', () => {
         expect(result).toBe('SELECT * FROM samples.taxi.trips LIMIT 50 ');
       });
 
-      it('should generate FROM clause with only table when schema exists without catalog', () => {
+      it('should generate FROM clause with dataset.table when catalog is not present', () => {
         const query: SQLQuery = {
           refId: 'A',
-          schema: 'public', // Schema without catalog should be ignored
+          dataset: 'public',
           table: 'users',
           sql: {
             ...baseExpression,
@@ -49,8 +49,8 @@ describe('sql.utils', () => {
 
         const result = toRawSql(query, false);
 
-        // Schema is only used with catalog, so this should just use table name
-        expect(result).toBe('SELECT * FROM users ');
+        // Without catalog, dataset.table is used
+        expect(result).toBe('SELECT * FROM public.users ');
       });
 
       it('should generate FROM clause with dataset.table for backwards compatibility', () => {
@@ -68,12 +68,11 @@ describe('sql.utils', () => {
         expect(result).toBe('SELECT * FROM dataset.table ');
       });
 
-      it('should use catalog.schema.table when all three are provided (catalog takes precedence over dataset)', () => {
+      it('should use catalog.dataset.table when both catalog and dataset are provided', () => {
         const query: SQLQuery = {
           refId: 'A',
-          dataset: 'old_dataset', // This should be ignored when catalog/schema are present
-          catalog: 'new_catalog',
-          schema: 'new_schema',
+          catalog: 'production',
+          dataset: 'analytics', // Acts as schema when catalog is present
           table: 'users',
           sql: {
             ...baseExpression,
@@ -82,8 +81,8 @@ describe('sql.utils', () => {
 
         const result = toRawSql(query, false);
 
-        // Catalog.schema.table takes precedence - dataset is ignored
-        expect(result).toBe('SELECT * FROM new_catalog.new_schema.users ');
+        // With catalog, dataset acts as schema: catalog.dataset.table
+        expect(result).toBe('SELECT * FROM production.analytics.users ');
       });
 
       it('should generate FROM clause with only table when only table is provided', () => {
@@ -104,7 +103,7 @@ describe('sql.utils', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'samples',
-          schema: 'taxi',
+          dataset: 'taxi',
           sql: {
             ...baseExpression,
           },
@@ -131,11 +130,10 @@ describe('sql.utils', () => {
         expect(result).toBe('SELECT * FROM table ');
       });
 
-      it('should ignore schema when dataset is present (mutually exclusive)', () => {
+      it('should use dataset.table in legacy mode', () => {
         const query: SQLQuery = {
           refId: 'A',
           dataset: 'dataset',
-          schema: 'public', // Schema should be ignored when used without catalog
           table: 'table',
           sql: {
             ...baseExpression,
@@ -144,17 +142,17 @@ describe('sql.utils', () => {
 
         const result = toRawSql(query, false);
 
-        // Schema without catalog is ignored, dataset.table is used
+        // Legacy mode: dataset.table
         expect(result).toBe('SELECT * FROM dataset.table ');
       });
     });
 
     describe('disableDatasets flag', () => {
-      it('should use catalog.schema.table even when disableDatasets is true (catalogs take precedence)', () => {
+      it('should use catalog.dataset.table even when disableDatasets is true (catalogs take precedence)', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'samples',
-          schema: 'taxi',
+          dataset: 'taxi', // Acts as schema
           table: 'trips',
           sql: {
             ...baseExpression,
@@ -163,7 +161,7 @@ describe('sql.utils', () => {
 
         const result = toRawSql(query, true);
 
-        // Catalog.schema.table should work regardless of disableDatasets flag
+        // Catalog.dataset.table should work regardless of disableDatasets flag
         expect(result).toBe('SELECT * FROM samples.taxi.trips ');
       });
 
@@ -196,11 +194,11 @@ describe('sql.utils', () => {
         expect(result).toBe('SELECT * FROM table ');
       });
 
-      it('should use catalog.schema.table when disableDatasets is false and all are provided', () => {
+      it('should use catalog.dataset.table when disableDatasets is false and all are provided', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'samples',
-          schema: 'sales',
+          dataset: 'sales', // Acts as schema
           table: 'customer',
           sql: {
             ...baseExpression,
@@ -215,11 +213,11 @@ describe('sql.utils', () => {
     });
 
     describe('complete query generation', () => {
-      it('should generate a complete query with all clauses using catalog.schema.table', () => {
+      it('should generate a complete query with all clauses using catalog.dataset.table', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'production',
-          schema: 'analytics',
+          dataset: 'analytics', // Acts as schema
           table: 'events',
           sql: {
             columns: [
@@ -267,7 +265,7 @@ describe('sql.utils', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'db',
-          schema: 'public',
+          dataset: 'public', // Acts as schema
           table: 'users',
           sql: {
             columns: [
@@ -304,7 +302,7 @@ describe('sql.utils', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'main',
-          schema: 'public',
+          dataset: 'public', // Acts as schema
           table: 'table',
           sql: {
             ...baseExpression,
@@ -355,7 +353,7 @@ describe('sql.utils', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'samples',
-          schema: 'taxi',
+          dataset: 'taxi',
           table: 'trips',
         };
 
@@ -368,7 +366,7 @@ describe('sql.utils', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'samples',
-          schema: 'taxi',
+          dataset: 'taxi',
           table: 'trips',
           sql: {},
         };
@@ -411,7 +409,7 @@ describe('sql.utils', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'my-catalog',
-          schema: 'my_schema',
+          dataset: 'my_schema', // Acts as schema
           table: 'my.table',
           sql: {
             ...baseExpression,
@@ -429,7 +427,7 @@ describe('sql.utils', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'hive',
-          schema: 'default',
+          dataset: 'default', // Acts as schema
           table: 'customer_data',
           sql: {
             columns: [
@@ -457,7 +455,7 @@ describe('sql.utils', () => {
         const query: SQLQuery = {
           refId: 'A',
           catalog: 'project-name',
-          schema: 'dataset_name',
+          dataset: 'dataset_name', // Acts as schema
           table: 'table_name',
           sql: {
             ...baseExpression,

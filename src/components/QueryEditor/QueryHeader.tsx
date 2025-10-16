@@ -82,35 +82,21 @@ export function QueryHeader({
   };
 
   const onDatasetChange = (e: SelectableValue) => {
-    // When catalogs are enabled, dataset selector actually sets the schema field
-    if (catalogsEnabled) {
-      const schemaValue = e.value || undefined;
-      if (schemaValue === query.schema) {
-        return;
-      }
-      const next: SQLQuery = {
-        ...query,
-        schema: schemaValue,
-        table: undefined,
-        sql: undefined,
-        rawSql: '',
-      };
-      onChange(next);
-    } else {
-      // Normal dataset behavior
-      const datasetValue = e.value || undefined;
-      if (datasetValue === query.dataset) {
-        return;
-      }
-      const next = {
-        ...query,
-        dataset: datasetValue,
-        table: undefined,
-        sql: undefined,
-        rawSql: '',
-      };
-      onChange(next);
+    // dataset field has dual meaning:
+    // - When catalogs enabled: dataset = schema
+    // - When catalogs disabled: dataset = dataset
+    const datasetValue = e.value || undefined;
+    if (datasetValue === query.dataset) {
+      return;
     }
+    const next: SQLQuery = {
+      ...query,
+      dataset: datasetValue,
+      table: undefined,
+      sql: undefined,
+      rawSql: '',
+    };
+    onChange(next);
   };
 
   const onCatalogChange = (catalog: string | null) => {
@@ -122,7 +108,7 @@ export function QueryHeader({
     const next: SQLQuery = {
       ...query,
       catalog: catalogValue,
-      schema: undefined,
+      dataset: undefined, // Reset dataset (which acts as schema when catalog is present)
       table: undefined,
       sql: undefined,
       rawSql: '',
@@ -264,15 +250,7 @@ export function QueryHeader({
                   inputId={catalogsEnabled ? `sql-schema-${htmlId}` : `sql-dataset-${htmlId}`}
                   data-testid={catalogsEnabled ? 'schema-selector' : 'dataset-selector'}
                   dataset={catalogsEnabled ? undefined : defaultDataset}
-                  value={
-                    catalogsEnabled
-                      ? query.schema === undefined
-                        ? null
-                        : query.schema
-                      : query.dataset === undefined
-                        ? null
-                        : query.dataset
-                  }
+                  value={query.dataset === undefined ? null : query.dataset}
                   onChange={onDatasetChange}
                   catalog={catalogsEnabled ? query.catalog : undefined}
                 />
@@ -284,9 +262,8 @@ export function QueryHeader({
               <TableSelector
                 db={db}
                 inputId={`sql-table-${htmlId}`}
-                dataset={catalogsEnabled ? undefined : query.dataset || defaultDataset}
+                dataset={query.dataset || (catalogsEnabled ? undefined : defaultDataset)}
                 catalog={catalogsEnabled ? query.catalog : undefined}
-                schema={catalogsEnabled ? query.schema : undefined}
                 query={query}
                 value={query.table === undefined ? null : query.table}
                 onChange={onTableChange}

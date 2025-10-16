@@ -64,9 +64,8 @@ export interface SQLQuery extends DataQuery {
   alias?: string;
   format?: QueryFormat;
   rawSql?: string;
-  dataset?: string;
+  dataset?: string; // When catalog is present, this represents the schema. Otherwise, it's the dataset (legacy).
   catalog?: string;
-  schema?: string;
   table?: string;
   sql?: SQLExpression;
   editorMode?: EditorMode;
@@ -143,9 +142,8 @@ export interface Aggregate {
 
 export interface DB {
   init?: (datasourceId?: string) => Promise<boolean>;
-  datasets: () => Promise<string[]>;
+  datasets: (catalog?: string) => Promise<string[]>; // When catalog is provided, returns schemas for that catalog
   catalogs?: () => Promise<string[]>;
-  schemas?: (catalog?: string) => Promise<string[]>;
   tables: (dataset?: string, catalog?: string, schema?: string) => Promise<string[]>;
   fields: (query: SQLQuery, order?: boolean) => Promise<SQLSelectableValue[]>;
   validateQuery: (query: SQLQuery, range?: TimeRange) => Promise<ValidationResults>;
