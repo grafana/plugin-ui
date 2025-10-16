@@ -86,6 +86,12 @@ export function QueryHeader({
     // - When catalogs enabled: dataset = schema
     // - When catalogs disabled: dataset = dataset
     const datasetValue = e.value || undefined;
+    console.error('🟢 DATASET CHANGED:', {
+      from: query.dataset,
+      to: datasetValue,
+      catalogsEnabled,
+      currentCatalog: query.catalog,
+    });
     if (datasetValue === query.dataset) {
       return;
     }
@@ -96,11 +102,13 @@ export function QueryHeader({
       sql: undefined,
       rawSql: '',
     };
+    console.error('🟢 NEW QUERY AFTER DATASET CHANGE:', next);
     onChange(next);
   };
 
   const onCatalogChange = (catalog: string | null) => {
     const catalogValue = catalog || undefined;
+    console.error('🔵 CATALOG CHANGED:', { from: query.catalog, to: catalogValue });
     if (catalogValue === query.catalog) {
       return;
     }
@@ -113,10 +121,17 @@ export function QueryHeader({
       sql: undefined,
       rawSql: '',
     };
+    console.error('🔵 NEW QUERY AFTER CATALOG CHANGE:', next);
     onChange(next);
   };
 
   const onTableChange = (e: SelectableValue) => {
+    console.error('🟡 TABLE CHANGED:', {
+      from: query.table,
+      to: e.value,
+      catalog: query.catalog,
+      dataset: query.dataset,
+    });
     if (e.value === query.table) {
       return;
     }
@@ -127,6 +142,7 @@ export function QueryHeader({
       sql: undefined,
       rawSql: '',
     };
+    console.error('🟡 NEW QUERY AFTER TABLE CHANGE:', next);
     onChange(next);
   };
 
