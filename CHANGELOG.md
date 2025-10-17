@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.11.1 - 2025-10-17
+
+- Fix catalog support in `SqlQueryEditor`
+
 ## v0.11.0 - 2025-10-06
 
 - Add support for catalog and schema fields in `SqlQueryEditor`
