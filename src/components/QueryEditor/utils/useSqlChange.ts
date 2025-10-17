@@ -14,7 +14,13 @@ export function useSqlChange({ query, onQueryChange, db }: UseSqlChange) {
   const onSqlChange = useCallback(
     (sql: SQLExpression) => {
       const toRawSql = getRawSqlFn(db);
-      const rawSql = toRawSql({ sql, dataset: query.dataset, table: query.table, refId: query.refId });
+      const rawSql = toRawSql({
+        sql,
+        catalog: query.catalog,
+        dataset: query.dataset,
+        table: query.table,
+        refId: query.refId,
+      });
       const newQuery: SQLQuery = { ...query, sql, rawSql };
       onQueryChange(newQuery);
     },

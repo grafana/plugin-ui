@@ -55,7 +55,6 @@ export const CatalogSelector = ({ db, inputId, value, onChange }: CatalogSelecto
       placeholder="Select catalog"
       isClearable
       allowCustomValue
-      disabled={isLoading}
       menuShouldPortal={true}
     />
   );

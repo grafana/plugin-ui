@@ -13,7 +13,19 @@ export function getRawSqlFn(db: DB) {
   return db.toRawSql ? db.toRawSql : (query: SQLQuery) => toRawSql(query, Boolean(db.disableDatasets));
 }
 
-export function toRawSql({ sql, dataset, table }: SQLQuery, disableDatasets: boolean): string {
+/**
+ * Converts a SQLQuery object into a raw SQL string.
+ *
+ * Table reference naming:
+ * - When catalog is present: catalog.dataset.table (dataset acts as schema)
+ * - When catalog is absent: dataset.table (dataset acts as dataset/schema)
+ * - When both are disabled: just table
+ *
+ * Note: Semantically, the dataset field has dual meaning:
+ *   - With catalog: dataset = schema (Unity Catalog: catalog.schema.table)
+ *   - Without catalog: dataset = dataset (Legacy: dataset.table)
+ */
+export function toRawSql({ sql, dataset, catalog, table }: SQLQuery, disableDatasets: boolean): string {
   let rawQuery = '';
 
   if (!sql || !haveColumns(sql.columns)) {
@@ -22,14 +34,17 @@ export function toRawSql({ sql, dataset, table }: SQLQuery, disableDatasets: boo
 
   rawQuery += createSelectClause(sql.columns);
 
-  if (disableDatasets) {
-    if (table) {
-      rawQuery += `FROM ${table} `;
-    }
-  } else {
-    if (dataset && table) {
-      rawQuery += `FROM ${dataset}.${table} `;
-    }
+  // Three-part naming: catalog.dataset.table (dataset acts as schema when catalog is present)
+  if (catalog && dataset && table) {
+    rawQuery += `FROM ${catalog}.${dataset}.${table} `;
+  }
+  // Two-part naming: dataset.table (legacy style, only if catalogs not used)
+  else if (!disableDatasets && dataset && table) {
+    rawQuery += `FROM ${dataset}.${table} `;
+  }
+  // Just table name (when datasets are disabled or neither catalog nor dataset is present)
+  else if (table) {
+    rawQuery += `FROM ${table} `;
   }
 
   if (sql.whereString) {
@@ -52,6 +67,7 @@ export function toRawSql({ sql, dataset, table }: SQLQuery, disableDatasets: boo
   if (sql.limit !== undefined && sql.limit >= 0) {
     rawQuery += `LIMIT ${sql.limit} `;
   }
+
   return rawQuery;
 }
 

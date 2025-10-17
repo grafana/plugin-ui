@@ -77,13 +77,19 @@ export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range 
     return null;
   }
 
+  const catalogsEnabled = db.disableCatalogs === false;
+  const datasetsEnabled = !db.disableDatasets;
+
+  // When catalogs are enabled, datasets MUST be enabled (they act as schema selector)
+  const effectiveEnableDatasets = catalogsEnabled ? true : datasetsEnabled;
+
   return (
     <>
       <QueryHeader
         db={db}
         defaultDataset={defaultDataset || ''}
-        enableDatasets={!db.disableDatasets}
-        enableCatalogs={db.disableCatalogs === false}
+        enableDatasets={effectiveEnableDatasets}
+        enableCatalogs={catalogsEnabled}
         onChange={onQueryHeaderChange}
         onRunQuery={onRunQuery}
         onQueryRowChange={setQueryRowFilter}

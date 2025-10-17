@@ -20,33 +20,28 @@ jest.mock('./CatalogSelector', () => ({
   ),
 }));
 
-jest.mock('./SchemaSelector', () => ({
-  SchemaSelector: ({ value, onChange, catalog, inputId }: any) => (
-    <select
-      data-testid="schema-selector"
-      data-input-id={inputId}
-      value={value || ''}
-      onChange={(e) => onChange(e.target.value || null)}
-      disabled={!catalog}
-    >
-      <option value="">Select schema</option>
-      <option value="schema1">Schema 1</option>
-      <option value="schema2">Schema 2</option>
-    </select>
-  ),
-}));
-
 jest.mock('./DatasetSelector', () => ({
-  DatasetSelector: ({ value, onChange }: any) => (
-    <select
-      data-testid="dataset-selector"
-      value={value || ''}
-      onChange={(e) => onChange({ value: e.target.value || null })}
-    >
-      <option value="">Select dataset</option>
-      <option value="dataset1">Dataset 1</option>
-    </select>
-  ),
+  DatasetSelector: ({ value, onChange, 'data-testid': dataTestId, catalog, inputId }: any) => {
+    const isSchema = dataTestId === 'schema-selector' || catalog !== undefined;
+    return (
+      <select
+        data-testid={dataTestId || 'dataset-selector'}
+        data-input-id={inputId}
+        value={value || ''}
+        onChange={(e) => onChange({ value: e.target.value || null })}
+      >
+        <option value="">{isSchema ? 'Select schema' : 'Select dataset'}</option>
+        {isSchema ? (
+          <>
+            <option value="schema1">Schema 1</option>
+            <option value="schema2">Schema 2</option>
+          </>
+        ) : (
+          <option value="dataset1">Dataset 1</option>
+        )}
+      </select>
+    );
+  },
 }));
 
 jest.mock('./TableSelector', () => ({
@@ -75,9 +70,8 @@ jest.mock('./ConfirmModal', () => ({
 }));
 
 const mockDB: DB = {
-  datasets: jest.fn().mockResolvedValue(['dataset1']),
+  datasets: jest.fn().mockResolvedValue(['dataset1', 'schema1', 'schema2']), // Returns datasets or schemas based on context
   catalogs: jest.fn().mockResolvedValue(['catalog1', 'catalog2']),
-  schemas: jest.fn().mockResolvedValue(['schema1', 'schema2']),
   tables: jest.fn().mockResolvedValue(['table1']),
   fields: jest.fn().mockResolvedValue([]),
   validateQuery: jest.fn().mockResolvedValue({ isValid: true, error: '', isError: false, query: {} }),
@@ -250,11 +244,11 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       expect(inputId).toMatch(/^sql-schema-/);
     });
 
-    it('should pass current schema value to SchemaSelector', () => {
+    it('should pass current schema value to DatasetSelector (acting as schema)', () => {
       const queryWithSchema = applyQueryDefaults({
         ...defaultProps.query,
         catalog: 'catalog1',
-        schema: 'schema1',
+        dataset: 'schema1',
       });
 
       render(<QueryHeader {...defaultProps} enableCatalogs={true} query={queryWithSchema} />);
@@ -267,7 +261,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       const queryWithoutSchema = applyQueryDefaults({
         ...defaultProps.query,
         catalog: 'catalog1',
-        schema: undefined,
+        dataset: undefined,
       });
 
       render(<QueryHeader {...defaultProps} enableCatalogs={true} query={queryWithoutSchema} />);
@@ -276,7 +270,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       expect(schemaSelector).toHaveValue('');
     });
 
-    it('should pass catalog value to SchemaSelector', () => {
+    it('should pass catalog value to DatasetSelector (acting as schema)', () => {
       const queryWithCatalog = applyQueryDefaults({
         ...defaultProps.query,
         catalog: 'catalog1',
@@ -304,7 +298,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({
           catalog: 'catalog1',
-          schema: undefined,
+          dataset: undefined,
           table: undefined,
           sql: undefined,
           rawSql: '',
@@ -334,7 +328,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       const queryWithData = applyQueryDefaults({
         ...defaultProps.query,
         catalog: 'oldCatalog',
-        schema: 'oldSchema',
+        dataset: 'oldSchema',
         table: 'oldTable',
         rawSql: 'SELECT * FROM table',
       });
@@ -347,7 +341,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({
           catalog: 'catalog1',
-          schema: undefined,
+          dataset: undefined,
           table: undefined,
           sql: undefined,
           rawSql: '',
@@ -371,7 +365,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({
           catalog: undefined,
-          schema: undefined,
+          dataset: undefined,
           table: undefined,
           sql: undefined,
           rawSql: '',
@@ -396,7 +390,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
 
       expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({
-          schema: 'schema1',
+          dataset: 'schema1',
           table: undefined,
           sql: undefined,
           rawSql: '',
@@ -410,7 +404,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       const queryWithSchema = applyQueryDefaults({
         ...defaultProps.query,
         catalog: 'catalog1',
-        schema: 'schema1',
+        dataset: 'schema1',
       });
 
       render(<QueryHeader {...defaultProps} enableCatalogs={true} query={queryWithSchema} onChange={onChange} />);
@@ -427,7 +421,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       const queryWithData = applyQueryDefaults({
         ...defaultProps.query,
         catalog: 'catalog1',
-        schema: 'oldSchema',
+        dataset: 'oldSchema',
         table: 'oldTable',
         rawSql: 'SELECT * FROM table',
       });
@@ -439,7 +433,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
 
       expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({
-          schema: 'schema1',
+          dataset: 'schema1',
           table: undefined,
           sql: undefined,
           rawSql: '',
@@ -453,7 +447,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
       const queryWithSchema = applyQueryDefaults({
         ...defaultProps.query,
         catalog: 'catalog1',
-        schema: 'schema1',
+        dataset: 'schema1',
       });
 
       render(<QueryHeader {...defaultProps} enableCatalogs={true} query={queryWithSchema} onChange={onChange} />);
@@ -463,7 +457,7 @@ describe('QueryHeader - Catalog and Schema Selectors', () => {
 
       expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({
-          schema: undefined,
+          dataset: undefined,
           table: undefined,
           sql: undefined,
           rawSql: '',
