@@ -47,7 +47,7 @@ export interface LanguageDefinition extends monacoTypes.languages.ILanguageExten
   formatter?: (q: string) => string;
 }
 
-interface SQLEditorProps {
+export interface SQLEditorProps {
   query: string;
   /**
    * Use for inspecting the query as it changes. I.e. for validation.
@@ -71,7 +71,7 @@ interface LanguageRegistries {
 const LANGUAGES_CACHE = new Map<string, LanguageRegistries>();
 const INSTANCE_CACHE = new Map<string, Registry<SuggestionsRegistryItem>>();
 
-export const SQLEditor = ({
+const SQLEditor = ({
   children,
   onBlur,
   onChange,
@@ -155,6 +155,8 @@ export const SQLEditor = ({
     </div>
   );
 };
+
+export default SQLEditor;
 
 // There's three ways to define Monaco language:
 // 1. Leave language.id empty or set it to 'sql'. This will load a standard sql language definition, including syntax highlighting and tokenization for

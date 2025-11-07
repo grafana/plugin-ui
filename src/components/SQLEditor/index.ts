@@ -1,4 +1,5 @@
-export { SQLEditor, type LanguageDefinition } from './components/SQLEditor';
+export type { LanguageDefinition } from './components/SQLEditor';
+export { LazySQLEditor } from './components/LazySQLEditor';
 export { SQLEditorTestUtils, type TestQueryModel } from './test-utils';
 export { LinkedToken } from './utils/LinkedToken';
 export { language as grafanaStandardSQLLanguage, conf as grafanaStandardSQLLanguageConf } from './standardSql/language';
