@@ -40,14 +40,16 @@ export function QueryOptionGroup({ title, children, collapsedInfo, queryStats }:
       >
         <div className={styles.body}>{children}</div>
       </Collapse>
-      {/**TODO: This is Loki logic that should eventually be moved to Loki */}
-      {queryStats && config.featureToggles.lokiQuerySplitting && (
-        <Tooltip content="Note: the query will be split into multiple parts and executed in sequence. Query limits will only apply each individual part.">
-          <Icon tabIndex={0} name="info-circle" className={styles.tooltip} size="sm" />
-        </Tooltip>
-      )}
+      <div className={styles.queryStatsWrap}>
+        {/**TODO: This is Loki logic that should eventually be moved to Loki */}
+        {queryStats && config.featureToggles.lokiQuerySplitting && (
+          <Tooltip content="Note: the query will be split into multiple parts and executed in sequence. Query limits will only apply each individual part.">
+            <Icon tabIndex={0} name="info-circle" className={styles.tooltip} size="sm" />
+          </Tooltip>
+        )}
 
-      {queryStats && <p className={styles.stats}>{generateQueryStats(queryStats)}</p>}
+        {queryStats && <p className={styles.stats}>{generateQueryStats(queryStats)}</p>}
+      </div>
     </div>
   );
 }
@@ -88,6 +90,13 @@ const getStyles = (theme: GrafanaTheme2) => {
       display: 'flex',
       gap: theme.spacing(2),
       flexWrap: 'wrap',
+    }),
+    queryStatsWrap: css({
+      display: 'flex',
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      label: 'query-stats-wrap',
+      padding: theme.spacing(1),
     }),
     stats: css({
       margin: '0px',
