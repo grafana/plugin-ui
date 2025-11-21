@@ -25,7 +25,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.ts --configPlugin esbuild",
+    "build": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.ts --configPlugin esbuild --environment NODE_ENV:production",
     "dev": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.ts --configPlugin esbuild -w",
     "clean": "rm -rf ./dist ./compiled",
     "test": "jest --watch",
