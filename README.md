@@ -19,7 +19,7 @@ Replacing the --watch.onEnd command with whatever you are targeting.
 There is a better way of doing this, when you find it, please add it here so it's not so painful working with this repo.
 
 ## Deploying
-Increment the version in the package.json and make sure the [CHANGELOG.md](CHANGELOG.md) includes a message for each merged PR.
+Increment the version in the package.json and make sure the [CHANGELOG.md](CHANGELOG.md) includes a message for each merged PR. The `publish-npm` workflow should trigger on version changes, which will publish the release on npm.
 
 ## Grafana compatibility
 
