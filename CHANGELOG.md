@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.12.0 - 2025-11-21
+
+- Fix styles in `QueryOptionGroup`
+
 ## v0.11.1 - 2025-10-17
 
 - Fix catalog support in `SqlQueryEditor`
