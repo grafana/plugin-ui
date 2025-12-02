@@ -1757,7 +1757,7 @@ __metadata:
     "@types/prismjs": "npm:^1.26.4"
     "@types/react": "npm:18.3.18"
     "@types/react-calendar": "npm:^3.1.2"
-    "@types/testing-library__jest-dom": "npm:^5.9.5"
+    "@types/testing-library__jest-dom": "npm:^5.14.1"
     "@typescript-eslint/eslint-plugin": "npm:^6.18.0"
     "@typescript-eslint/parser": "npm:^6.18.0"
     chance: "npm:^1.1.7"
@@ -4400,12 +4400,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/testing-library__jest-dom@npm:^5.9.1, @types/testing-library__jest-dom@npm:^5.9.5":
-  version: 5.14.1
-  resolution: "@types/testing-library__jest-dom@npm:5.14.1"
+"@types/testing-library__jest-dom@npm:^5.14.1, @types/testing-library__jest-dom@npm:^5.9.1":
+  version: 5.14.9
+  resolution: "@types/testing-library__jest-dom@npm:5.14.9"
   dependencies:
     "@types/jest": "npm:*"
-  checksum: 10c0/c30410d3b3326fe5e1a056eb1b4dbab4635b335dc539edf05c85eb6c5d8bfe40fbee050cbfa028af48f1e441a2265ae55f7d3e899a3ed9c9786bde7a549e14eb
+  checksum: 10c0/91f7b15e8813b515912c54da44464fb60ecf21162b7cae2272fcb3918074f4e1387dc2beca1f5041667e77b76b34253c39675ea4e0b3f28f102d8cc87fdba9fa
   languageName: node
   linkType: hard
 
