@@ -1,6 +1,6 @@
 # Change Log
 
-## v0.12.1 - 2024-12-30
+## v0.12.1 - 2025-12-30
 
 - Updated dependencies
 
