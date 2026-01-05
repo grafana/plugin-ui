@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.12.1 - 2025-12-30
+
+- Updated dependencies
+
 ## v0.12.0 - 2025-11-21
 
 - Fix styles in `QueryOptionGroup`
