@@ -29,7 +29,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:^0.17.3":
+"@arethetypeswrong/cli@npm:0.17.3":
   version: 0.17.3
   resolution: "@arethetypeswrong/cli@npm:0.17.3"
   dependencies:
@@ -1468,7 +1468,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/data@npm:10.4.7, @grafana/data@npm:^10.4.0":
+"@grafana/data@npm:10.4.7":
   version: 10.4.7
   resolution: "@grafana/data@npm:10.4.7"
   dependencies:
@@ -1504,7 +1504,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/e2e-selectors@npm:10.4.7, @grafana/e2e-selectors@npm:^10.4.0":
+"@grafana/e2e-selectors@npm:10.4.7":
   version: 10.4.7
   resolution: "@grafana/e2e-selectors@npm:10.4.7"
   dependencies:
@@ -1515,7 +1515,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/eslint-config@npm:^8.0.0":
+"@grafana/eslint-config@npm:8.0.0":
   version: 8.0.0
   resolution: "@grafana/eslint-config@npm:8.0.0"
   peerDependencies:
@@ -1557,76 +1557,76 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@grafana/plugin-ui@workspace:."
   dependencies:
-    "@arethetypeswrong/cli": "npm:^0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.3"
     "@emotion/css": "npm:^11.11.2"
-    "@grafana/data": "npm:^10.4.0"
-    "@grafana/e2e-selectors": "npm:^10.4.0"
-    "@grafana/eslint-config": "npm:^8.0.0"
-    "@grafana/runtime": "npm:^10.4.0"
-    "@grafana/tsconfig": "npm:^1.3.0-rc1"
-    "@grafana/ui": "npm:^10.4.0"
+    "@grafana/data": "npm:10.4.7"
+    "@grafana/e2e-selectors": "npm:10.4.7"
+    "@grafana/eslint-config": "npm:8.0.0"
+    "@grafana/runtime": "npm:10.4.7"
+    "@grafana/tsconfig": "npm:1.3.0-rc1"
+    "@grafana/ui": "npm:10.4.7"
     "@hello-pangea/dnd": "npm:^17.0.0"
     "@react-awesome-query-builder/ui": "npm:^6.6.4"
-    "@rollup/plugin-commonjs": "npm:^28.0.2"
-    "@rollup/plugin-node-resolve": "npm:^16.0.0"
-    "@storybook/addon-actions": "npm:^8.5.2"
-    "@storybook/addon-essentials": "npm:^8.5.2"
-    "@storybook/addon-links": "npm:^8.5.2"
-    "@storybook/addon-mdx-gfm": "npm:^8.5.2"
-    "@storybook/addon-webpack5-compiler-swc": "npm:^2.0.0"
-    "@storybook/addons": "npm:^6.5.16"
-    "@storybook/react": "npm:^8.5.2"
-    "@storybook/react-webpack5": "npm:^8.5.2"
-    "@storybook/theming": "npm:^8.5.2"
-    "@stylistic/eslint-plugin-ts": "npm:^2.9.0"
-    "@swc/jest": "npm:^0.2.37"
+    "@rollup/plugin-commonjs": "npm:28.0.2"
+    "@rollup/plugin-node-resolve": "npm:16.0.0"
+    "@storybook/addon-actions": "npm:8.5.2"
+    "@storybook/addon-essentials": "npm:8.5.2"
+    "@storybook/addon-links": "npm:8.5.2"
+    "@storybook/addon-mdx-gfm": "npm:8.5.2"
+    "@storybook/addon-webpack5-compiler-swc": "npm:2.0.0"
+    "@storybook/addons": "npm:6.5.16"
+    "@storybook/react": "npm:8.5.2"
+    "@storybook/react-webpack5": "npm:8.5.2"
+    "@storybook/theming": "npm:8.6.15"
+    "@stylistic/eslint-plugin-ts": "npm:2.13.0"
+    "@swc/jest": "npm:0.2.37"
     "@testing-library/jest-dom": "npm:5.16.5"
     "@testing-library/react": "npm:15.0.2"
     "@testing-library/user-event": "npm:14.5.2"
-    "@types/chance": "npm:^1.1.0"
-    "@types/lodash": "npm:^4.14.194"
-    "@types/memoize-one": "npm:^5.1.2"
+    "@types/chance": "npm:1.1.3"
+    "@types/lodash": "npm:4.14.200"
+    "@types/memoize-one": "npm:5.1.2"
     "@types/prismjs": "npm:^1.26.4"
     "@types/react": "npm:18.3.18"
-    "@types/react-calendar": "npm:^3.1.2"
-    "@types/testing-library__jest-dom": "npm:^5.9.5"
-    "@typescript-eslint/eslint-plugin": "npm:^6.18.0"
-    "@typescript-eslint/parser": "npm:^6.18.0"
-    chance: "npm:^1.1.7"
-    copyfiles: "npm:^2.4.1"
-    cspell: "npm:^8.14.4"
-    esbuild: "npm:^0.25.3"
-    eslint: "npm:^8.52.0"
-    eslint-config-prettier: "npm:^8.8.0"
-    eslint-plugin-jsdoc: "npm:^46.8.2"
-    eslint-plugin-prettier: "npm:^5.2.1"
-    eslint-plugin-react: "npm:^7.37.4"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    fast-glob: "npm:^3.3.1"
-    jest: "npm:^29.7.0"
-    jest-environment-jsdom: "npm:^29.7.0"
-    jest-fetch-mock: "npm:^3.0.3"
-    lefthook: "npm:^1.7.18"
+    "@types/react-calendar": "npm:3.4.3"
+    "@types/testing-library__jest-dom": "npm:5.14.1"
+    "@typescript-eslint/eslint-plugin": "npm:6.21.0"
+    "@typescript-eslint/parser": "npm:6.21.0"
+    chance: "npm:1.1.12"
+    copyfiles: "npm:2.4.1"
+    cspell: "npm:8.14.4"
+    esbuild: "npm:0.25.12"
+    eslint: "npm:8.57.1"
+    eslint-config-prettier: "npm:8.10.0"
+    eslint-plugin-jsdoc: "npm:46.10.1"
+    eslint-plugin-prettier: "npm:5.2.1"
+    eslint-plugin-react: "npm:7.37.5"
+    eslint-plugin-react-hooks: "npm:4.6.2"
+    fast-glob: "npm:3.3.2"
+    jest: "npm:29.7.0"
+    jest-environment-jsdom: "npm:29.7.0"
+    jest-fetch-mock: "npm:3.0.3"
+    lefthook: "npm:1.7.18"
     lodash: "npm:^4.17.21"
-    mockdate: "npm:^3.0.2"
-    prettier: "npm:^3.3.3"
+    mockdate: "npm:3.0.5"
+    prettier: "npm:3.3.3"
     prismjs: "npm:^1.30.0"
     react: "npm:18.2.0"
     react-calendar: "npm:^4.8.0"
     react-dom: "npm:18.2.0"
     react-popper-tooltip: "npm:^4.4.2"
-    react-select-event: "npm:^5.5.1"
+    react-select-event: "npm:5.5.1"
     react-use: "npm:^17.3.1"
     react-virtualized-auto-sizer: "npm:^1.0.6"
-    rollup: "npm:^4.32.1"
-    rollup-plugin-dts: "npm:^6.1.1"
-    rollup-plugin-esbuild: "npm:^6.1.1"
-    rollup-plugin-node-externals: "npm:^8.0.0"
-    rxjs: "npm:^7.8.1"
+    rollup: "npm:4.32.1"
+    rollup-plugin-dts: "npm:6.1.1"
+    rollup-plugin-esbuild: "npm:6.1.1"
+    rollup-plugin-node-externals: "npm:8.0.0"
+    rxjs: "npm:7.8.1"
     sql-formatter-plus: "npm:^1.3.6"
-    storybook: "npm:^8.5.2"
-    ts-node: "npm:^10.9.1"
-    typescript: "npm:^5.7.3"
+    storybook: "npm:8.6.15"
+    ts-node: "npm:10.9.1"
+    typescript: "npm:5.7.3"
     uuid: "npm:^11.0.0"
   peerDependencies:
     "@grafana/data": ">=10.4.0"
@@ -1639,7 +1639,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@grafana/runtime@npm:^10.4.0":
+"@grafana/runtime@npm:10.4.7":
   version: 10.4.7
   resolution: "@grafana/runtime@npm:10.4.7"
   dependencies:
@@ -1670,6 +1670,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@grafana/tsconfig@npm:1.3.0-rc1":
+  version: 1.3.0-rc1
+  resolution: "@grafana/tsconfig@npm:1.3.0-rc1"
+  checksum: 10c0/b3a89019b279747e146db65571f2ec977a54b403528c66295c0a0339acf352f5296c9bbc7df480af56c43e41e6f6889c7effde6decc680aa724b5959f43d7888
+  languageName: node
+  linkType: hard
+
 "@grafana/tsconfig@npm:^1.2.0-rc1":
   version: 1.2.0-rc1
   resolution: "@grafana/tsconfig@npm:1.2.0-rc1"
@@ -1677,14 +1684,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/tsconfig@npm:^1.3.0-rc1":
-  version: 1.3.0-rc1
-  resolution: "@grafana/tsconfig@npm:1.3.0-rc1"
-  checksum: 10c0/b3a89019b279747e146db65571f2ec977a54b403528c66295c0a0339acf352f5296c9bbc7df480af56c43e41e6f6889c7effde6decc680aa724b5959f43d7888
-  languageName: node
-  linkType: hard
-
-"@grafana/ui@npm:10.4.7, @grafana/ui@npm:^10.4.0":
+"@grafana/ui@npm:10.4.7":
   version: 10.4.7
   resolution: "@grafana/ui@npm:10.4.7"
   dependencies:
@@ -2827,7 +2827,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-commonjs@npm:^28.0.2":
+"@rollup/plugin-commonjs@npm:28.0.2":
   version: 28.0.2
   resolution: "@rollup/plugin-commonjs@npm:28.0.2"
   dependencies:
@@ -2847,7 +2847,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-node-resolve@npm:^16.0.0":
+"@rollup/plugin-node-resolve@npm:16.0.0":
   version: 16.0.0
   resolution: "@rollup/plugin-node-resolve@npm:16.0.0"
   dependencies:
@@ -3046,7 +3046,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-actions@npm:8.5.2, @storybook/addon-actions@npm:^8.5.2":
+"@storybook/addon-actions@npm:8.5.2":
   version: 8.5.2
   resolution: "@storybook/addon-actions@npm:8.5.2"
   dependencies:
@@ -3104,7 +3104,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-essentials@npm:^8.5.2":
+"@storybook/addon-essentials@npm:8.5.2":
   version: 8.5.2
   resolution: "@storybook/addon-essentials@npm:8.5.2"
   dependencies:
@@ -3135,7 +3135,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-links@npm:^8.5.2":
+"@storybook/addon-links@npm:8.5.2":
   version: 8.5.2
   resolution: "@storybook/addon-links@npm:8.5.2"
   dependencies:
@@ -3152,7 +3152,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-mdx-gfm@npm:^8.5.2":
+"@storybook/addon-mdx-gfm@npm:8.5.2":
   version: 8.5.2
   resolution: "@storybook/addon-mdx-gfm@npm:8.5.2"
   dependencies:
@@ -3208,7 +3208,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-webpack5-compiler-swc@npm:^2.0.0":
+"@storybook/addon-webpack5-compiler-swc@npm:2.0.0":
   version: 2.0.0
   resolution: "@storybook/addon-webpack5-compiler-swc@npm:2.0.0"
   dependencies:
@@ -3218,7 +3218,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addons@npm:^6.5.16":
+"@storybook/addons@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/addons@npm:6.5.16"
   dependencies:
@@ -3518,7 +3518,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react-webpack5@npm:^8.5.2":
+"@storybook/react-webpack5@npm:8.5.2":
   version: 8.5.2
   resolution: "@storybook/react-webpack5@npm:8.5.2"
   dependencies:
@@ -3537,7 +3537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react@npm:8.5.2, @storybook/react@npm:^8.5.2":
+"@storybook/react@npm:8.5.2":
   version: 8.5.2
   resolution: "@storybook/react@npm:8.5.2"
   dependencies:
@@ -3614,7 +3614,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/theming@npm:8.6.15, @storybook/theming@npm:^8.5.2":
+"@storybook/theming@npm:8.6.15":
   version: 8.6.15
   resolution: "@storybook/theming@npm:8.6.15"
   peerDependencies:
@@ -3623,7 +3623,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stylistic/eslint-plugin-ts@npm:^2.9.0":
+"@stylistic/eslint-plugin-ts@npm:2.13.0":
   version: 2.13.0
   resolution: "@stylistic/eslint-plugin-ts@npm:2.13.0"
   dependencies:
@@ -3768,7 +3768,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/jest@npm:^0.2.37":
+"@swc/jest@npm:0.2.37":
   version: 0.2.37
   resolution: "@swc/jest@npm:0.2.37"
   dependencies:
@@ -3929,7 +3929,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chance@npm:^1.1.0":
+"@types/chance@npm:1.1.3":
   version: 1.1.3
   resolution: "@types/chance@npm:1.1.3"
   checksum: 10c0/7121293c09930f4e3bea2a886d29a1fb7ca1686adc4b6e01c1308dc3a85d8b414f5f0c969572db577c2525b0d58d7841bb325d464527bb4b8167ef54dc510fa5
@@ -4088,7 +4088,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.194":
+"@types/lodash@npm:4.14.200":
   version: 4.14.200
   resolution: "@types/lodash@npm:4.14.200"
   checksum: 10c0/7a8dac6dc866f10d1888846d6189d1faeb4f65adb139f0837a005fd1adcde62e60d7e7abb1a2733d13fc57bebb337d74182d8ad3dbd1d211dcd0c310c47e81bc
@@ -4111,7 +4111,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/memoize-one@npm:^5.1.2":
+"@types/memoize-one@npm:5.1.2":
   version: 5.1.2
   resolution: "@types/memoize-one@npm:5.1.2"
   dependencies:
@@ -4157,7 +4157,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-calendar@npm:^3.1.2":
+"@types/react-calendar@npm:3.4.3":
   version: 3.4.3
   resolution: "@types/react-calendar@npm:3.4.3"
   dependencies:
@@ -4241,7 +4241,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/testing-library__jest-dom@npm:^5.9.1, @types/testing-library__jest-dom@npm:^5.9.5":
+"@types/testing-library__jest-dom@npm:5.14.1, @types/testing-library__jest-dom@npm:^5.9.1":
   version: 5.14.1
   resolution: "@types/testing-library__jest-dom@npm:5.14.1"
   dependencies:
@@ -4308,7 +4308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^6.18.0":
+"@typescript-eslint/eslint-plugin@npm:6.21.0":
   version: 6.21.0
   resolution: "@typescript-eslint/eslint-plugin@npm:6.21.0"
   dependencies:
@@ -4333,7 +4333,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^6.18.0":
+"@typescript-eslint/parser@npm:6.21.0":
   version: 6.21.0
   resolution: "@typescript-eslint/parser@npm:6.21.0"
   dependencies:
@@ -5458,7 +5458,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chance@npm:^1.1.7":
+"chance@npm:1.1.12":
   version: 1.1.12
   resolution: "chance@npm:1.1.12"
   checksum: 10c0/96686a72df9077852993476dc4a16ec7afb797bb26d74caf4a5c6f6786d73fcd3c821ededb88b23a5c7b8762718b5cc43ce07fdd1ea3f508826ba88b57c36329
@@ -5780,7 +5780,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"copyfiles@npm:^2.4.1":
+"copyfiles@npm:2.4.1":
   version: 2.4.1
   resolution: "copyfiles@npm:2.4.1"
   dependencies:
@@ -5988,7 +5988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cspell@npm:^8.14.4":
+"cspell@npm:8.14.4":
   version: 8.14.4
   resolution: "cspell@npm:8.14.4"
   dependencies:
@@ -7150,7 +7150,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0, esbuild@npm:^0.25.3":
+"esbuild@npm:0.25.12, esbuild@npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0":
   version: 0.25.12
   resolution: "esbuild@npm:0.25.12"
   dependencies:
@@ -7286,7 +7286,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.8.0":
+"eslint-config-prettier@npm:8.10.0":
   version: 8.10.0
   resolution: "eslint-config-prettier@npm:8.10.0"
   peerDependencies:
@@ -7297,7 +7297,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^46.8.2":
+"eslint-plugin-jsdoc@npm:46.10.1":
   version: 46.10.1
   resolution: "eslint-plugin-jsdoc@npm:46.10.1"
   dependencies:
@@ -7316,7 +7316,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^5.2.1":
+"eslint-plugin-prettier@npm:5.2.1":
   version: 5.2.1
   resolution: "eslint-plugin-prettier@npm:5.2.1"
   dependencies:
@@ -7336,7 +7336,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^4.6.0":
+"eslint-plugin-react-hooks@npm:4.6.2":
   version: 4.6.2
   resolution: "eslint-plugin-react-hooks@npm:4.6.2"
   peerDependencies:
@@ -7345,7 +7345,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.37.4":
+"eslint-plugin-react@npm:7.37.5":
   version: 7.37.5
   resolution: "eslint-plugin-react@npm:7.37.5"
   dependencies:
@@ -7407,7 +7407,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.52.0":
+"eslint@npm:8.57.1":
   version: 8.57.1
   resolution: "eslint@npm:8.57.1"
   dependencies:
@@ -7635,7 +7635,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
+"fast-glob@npm:3.3.2, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -9342,7 +9342,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-environment-jsdom@npm:^29.7.0":
+"jest-environment-jsdom@npm:29.7.0":
   version: 29.7.0
   resolution: "jest-environment-jsdom@npm:29.7.0"
   dependencies:
@@ -9377,7 +9377,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-fetch-mock@npm:^3.0.3":
+"jest-fetch-mock@npm:3.0.3":
   version: 3.0.3
   resolution: "jest-fetch-mock@npm:3.0.3"
   dependencies:
@@ -9674,7 +9674,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29.7.0":
+"jest@npm:29.7.0":
   version: 29.7.0
   resolution: "jest@npm:29.7.0"
   dependencies:
@@ -9982,7 +9982,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lefthook@npm:^1.7.18":
+"lefthook@npm:1.7.18":
   version: 1.7.18
   resolution: "lefthook@npm:1.7.18"
   dependencies:
@@ -11045,7 +11045,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mockdate@npm:^3.0.2":
+"mockdate@npm:3.0.5":
   version: 3.0.5
   resolution: "mockdate@npm:3.0.5"
   checksum: 10c0/36ab00c4b94d3e3cc8b9ecec27730dcf396d47d2ba046ad96635e7f9bc4bba0fff6125dedaba7313b1cadc0cefc0eb3f3ac0d5c3655707afd3b82fa4550aae92
@@ -11841,7 +11841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.3.3":
+"prettier@npm:3.3.3":
   version: 3.3.3
   resolution: "prettier@npm:3.3.3"
   bin:
@@ -12703,7 +12703,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-select-event@npm:^5.5.1":
+"react-select-event@npm:5.5.1":
   version: 5.5.1
   resolution: "react-select-event@npm:5.5.1"
   dependencies:
@@ -13223,7 +13223,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-dts@npm:^6.1.1":
+"rollup-plugin-dts@npm:6.1.1":
   version: 6.1.1
   resolution: "rollup-plugin-dts@npm:6.1.1"
   dependencies:
@@ -13239,7 +13239,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-esbuild@npm:^6.1.1":
+"rollup-plugin-esbuild@npm:6.1.1":
   version: 6.1.1
   resolution: "rollup-plugin-esbuild@npm:6.1.1"
   dependencies:
@@ -13254,7 +13254,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-node-externals@npm:^8.0.0":
+"rollup-plugin-node-externals@npm:8.0.0":
   version: 8.0.0
   resolution: "rollup-plugin-node-externals@npm:8.0.0"
   peerDependencies:
@@ -13263,7 +13263,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^4.32.1":
+"rollup@npm:4.32.1":
   version: 4.32.1
   resolution: "rollup@npm:4.32.1"
   dependencies:
@@ -13360,7 +13360,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.8.1, rxjs@npm:^7.8.1":
+"rxjs@npm:7.8.1":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
@@ -13997,7 +13997,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook@npm:^8.5.2":
+"storybook@npm:8.6.15":
   version: 8.6.15
   resolution: "storybook@npm:8.6.15"
   dependencies:
@@ -14580,7 +14580,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.9.1":
+"ts-node@npm:10.9.1":
   version: 10.9.1
   resolution: "ts-node@npm:10.9.1"
   dependencies:
@@ -14769,7 +14769,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.7.3":
+"typescript@npm:5.7.3":
   version: 5.7.3
   resolution: "typescript@npm:5.7.3"
   bin:
@@ -14799,7 +14799,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>":
   version: 5.7.3
   resolution: "typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5786d5"
   bin:
