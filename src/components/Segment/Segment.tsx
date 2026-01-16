@@ -1,4 +1,4 @@
-import { useEffect, type ComponentProps, useState } from 'react';
+import React, { useEffect, type ComponentProps } from 'react';
 import { Segment as GrafanaSegment } from '@grafana/ui';
 import { type SelectableValue } from '@grafana/data';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -11,7 +11,7 @@ export interface SegmentProps<T> extends Omit<ComponentProps<typeof GrafanaSegme
 
 export function Segment<T>(props: SegmentProps<T>) {
   const { delay, onDebounce, value, options, ...rest } = props;
-  const [input, setInput] = useState(value);
+  const [input, setInput] = React.useState(value);
 
   const debouncedSegment = useDebounce(input, delay);
 

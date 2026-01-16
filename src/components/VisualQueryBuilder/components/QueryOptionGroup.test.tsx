@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { type ComponentProps } from 'react';
+import React, { type ComponentProps } from 'react';
 
 import { QueryOptionGroup } from './QueryOptionGroup';
 

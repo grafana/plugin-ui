@@ -1,6 +1,6 @@
 import { Input } from '@grafana/ui';
 
-import { type ComponentProps, useState } from 'react';
+import React, { type ComponentProps } from 'react';
 import { DatePicker } from '../DatePicker/DatePicker';
 import { getStyles } from './styles';
 import { cx } from '@emotion/css';
@@ -14,7 +14,7 @@ export interface DatePickerWithInputProps extends Omit<ComponentProps<typeof Inp
 
 export const DatePickerWithInput = (props: DatePickerWithInputProps) => {
   const { value, onChange, className, ...rest } = props;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const styles = getStyles();
 
   return (

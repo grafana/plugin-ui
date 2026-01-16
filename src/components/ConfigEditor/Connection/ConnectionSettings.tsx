@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { css, cx } from '@emotion/css';
 import { InlineField, Input, type PopoverContent } from '@grafana/ui';
 import { ConfigSection } from '../ConfigSection';

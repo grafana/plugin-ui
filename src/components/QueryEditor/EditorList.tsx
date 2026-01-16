@@ -1,17 +1,20 @@
-import { type ReactElement, type Ref, forwardRef } from 'react';
 import { Button } from '@grafana/ui';
-
+import React from 'react';
 import { EditorStack } from './EditorStack';
 
 interface EditorListProps<T> {
   items: Array<Partial<T>>;
-  renderItem: (item: Partial<T>, onChangeItem: (item: Partial<T>) => void, onDeleteItem: () => void) => ReactElement;
+  renderItem: (
+    item: Partial<T>,
+    onChangeItem: (item: Partial<T>) => void,
+    onDeleteItem: () => void
+  ) => React.ReactElement;
   onChange: (items: Array<Partial<T>>) => void;
 }
 
-export const EditorList = forwardRef(function EditorList<T>(
+export const EditorList = React.forwardRef(function EditorList<T>(
   { items, renderItem, onChange }: EditorListProps<T>,
-  ref: Ref<HTMLButtonElement>
+  ref: React.Ref<HTMLButtonElement>
 ) {
   const onAddItem = () => {
     const newItems = [...items, {}];

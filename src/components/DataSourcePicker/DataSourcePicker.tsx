@@ -1,5 +1,5 @@
 // Libraries
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 
 // Components
 import { HorizontalGroup, Select } from '@grafana/ui';

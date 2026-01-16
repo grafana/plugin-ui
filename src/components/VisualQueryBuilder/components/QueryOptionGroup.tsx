@@ -1,4 +1,5 @@
 import { css } from '@emotion/css';
+import React from 'react';
 import { useToggle } from 'react-use';
 
 import { getValueFormat, type GrafanaTheme2 } from '@grafana/data';

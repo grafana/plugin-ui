@@ -1,5 +1,6 @@
 import { css, cx } from '@emotion/css';
 import Prism, { type Grammar } from 'prismjs';
+import React from 'react';
 
 import { type GrafanaTheme2, textUtil } from '@grafana/data';
 import { useTheme2 } from '@grafana/ui';

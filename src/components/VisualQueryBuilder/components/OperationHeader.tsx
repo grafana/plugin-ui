@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { useState, memo } from 'react';
+import React, { useState } from 'react';
 import { type DraggableProvided } from '@hello-pangea/dnd';
 
 import { type GrafanaTheme2, type SelectableValue } from '@grafana/data';
@@ -27,7 +27,7 @@ interface State {
   alternatives?: Array<SelectableValue<QueryBuilderOperationDefinition>>;
 }
 
-export const OperationHeader = memo<Props>(
+export const OperationHeader = React.memo<Props>(
   ({ operation, definition, index, onChange, onRemove, onToggle, queryModeller, dragHandleProps }) => {
     const styles = useStyles2(getStyles);
     const [state, setState] = useState<State>({});

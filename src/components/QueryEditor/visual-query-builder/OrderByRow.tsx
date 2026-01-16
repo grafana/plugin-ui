@@ -1,5 +1,5 @@
 import { uniqueId } from 'lodash';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import { type SelectableValue, toOption } from '@grafana/data';
 import { Input, RadioButtonGroup, Select } from '@grafana/ui';

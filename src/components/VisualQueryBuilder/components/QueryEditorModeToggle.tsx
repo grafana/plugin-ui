@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { RadioButtonGroup } from '@grafana/ui';
 
 import { QueryEditorMode } from '../types';

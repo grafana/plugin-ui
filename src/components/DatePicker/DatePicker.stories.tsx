@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import { DatePicker } from './DatePicker';
 import { Button } from '@grafana/ui';
 
@@ -8,8 +8,8 @@ export default {
 };
 
 export const Basic = () => {
-  const [date, setDate] = useState<Date>(new Date());
-  const [open, setOpen] = useState(false);
+  const [date, setDate] = React.useState<Date>(new Date());
+  const [open, setOpen] = React.useState(false);
 
   return (
     <>

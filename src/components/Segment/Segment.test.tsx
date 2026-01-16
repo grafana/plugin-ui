@@ -1,4 +1,5 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
 import { Segment } from './Segment';
 import { Chance } from 'chance';
 import { DEFAULT_DELAY } from '../../hooks/useDebounce';

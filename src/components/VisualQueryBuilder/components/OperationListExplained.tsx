@@ -1,4 +1,5 @@
 import { type Grammar } from 'prismjs';
+import React from 'react';
 
 import { OperationExplainedBox } from './OperationExplainedBox';
 import { RawQuery } from './RawQuery';

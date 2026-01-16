@@ -1,4 +1,5 @@
 import { css } from '@emotion/css';
+import React from 'react';
 import { useCopyToClipboard } from 'react-use';
 
 import { type GrafanaTheme2 } from '@grafana/data';
