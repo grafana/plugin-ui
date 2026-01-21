@@ -128,7 +128,12 @@
   "resolutions": {
     "prismjs": "^1.30.0",
     "uplot": "^1.6.31",
-    "glob": "10.5.0"
+    "glob": "10.5.0",
+    "tar": "^7.5.3",
+    "@babel/helpers": "^7.26.10",
+    "brace-expansion": "^2.0.2",
+    "diff": "^4.0.4",
+    "js-yaml": "^4.1.1"
   },
   "packageManager": "yarn@4.6.0"
 }
