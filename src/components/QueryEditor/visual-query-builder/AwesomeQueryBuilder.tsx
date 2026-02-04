@@ -1,6 +1,6 @@
+import React from 'react';
 import { type List } from 'immutable';
 import { isString } from 'lodash';
-
 import {
   BasicConfig,
   Utils,
@@ -15,7 +15,6 @@ import {
   type Widgets,
   type OperatorOptionsI,
 } from '@react-awesome-query-builder/ui';
-
 import { dateTime, toOption } from '@grafana/data';
 import { Button, DateTimePicker, Input, Select } from '@grafana/ui';
 

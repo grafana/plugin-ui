@@ -1,6 +1,6 @@
+import React, { Children, cloneElement, isValidElement, type ReactElement } from 'react';
 import { css, cx } from '@emotion/css';
 import { useStyles2 } from '@grafana/ui';
-import { Children, cloneElement, isValidElement, type ReactElement } from 'react';
 
 type Child = string | undefined | ReactElement<{ className?: string; invalid?: unknown }>;
 interface InputGroupProps {

@@ -1,6 +1,5 @@
+import React, { type ComponentProps, useState } from 'react';
 import { Input } from '@grafana/ui';
-
-import { type ComponentProps, useState } from 'react';
 import { DatePicker } from '../DatePicker/DatePicker';
 import { getStyles } from './styles';
 import { cx } from '@emotion/css';

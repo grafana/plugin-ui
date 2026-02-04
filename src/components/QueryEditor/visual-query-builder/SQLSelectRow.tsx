@@ -1,7 +1,6 @@
+import React from 'react';
 import { useAsync } from 'react-use';
-
 import { type SelectableValue, toOption } from '@grafana/data';
-
 import { SelectRow } from './SelectRow';
 import { type QueryWithDefaults } from '../defaults';
 import { type SQLQuery, type DB } from '../types';

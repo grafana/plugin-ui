@@ -1,5 +1,5 @@
 import { injectGlobal } from '@emotion/css';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Builder, type Config, type ImmutableTree, Query, Utils } from '@react-awesome-query-builder/ui';
 import { type SQLExpression } from '../types';
 import { emptyInitTree, raqbConfig } from './AwesomeQueryBuilder';

@@ -1,5 +1,5 @@
+import React from 'react';
 import { css, cx } from '@emotion/css';
-
 import { type GrafanaTheme2 } from '@grafana/data';
 import { Button, type ButtonProps, useStyles2 } from '@grafana/ui';
 
