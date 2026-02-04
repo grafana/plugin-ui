@@ -21,6 +21,16 @@
         "types": "./dist/cjs/index.d.cts",
         "default": "./dist/cjs/index.cjs"
       }
+    },
+    "./test": {
+      "import": {
+        "types": "./dist/esm/test.d.ts",
+        "default": "./dist/esm/test.js"
+      },
+      "require": {
+        "types": "./dist/cjs/test.d.cts",
+        "default": "./dist/cjs/test.cjs"
+      }
     }
   },
   "sideEffects": false,
