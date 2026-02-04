@@ -13,10 +13,13 @@ import { VisualEditor } from './visual-query-builder/VisualEditor';
 
 import { type SqlDatasource } from '../../datasource/SqlDatasource';
 import { Space } from './Space';
+import type { SqlLanguage } from 'sql-formatter';
 
-interface Props extends QueryEditorProps<SqlDatasource, SQLQuery, SQLOptions> {}
+interface Props extends QueryEditorProps<SqlDatasource, SQLQuery, SQLOptions> {
+  language: SqlLanguage;
+}
 
-export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range }: Props) {
+export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range, language = 'sql' }: Props) {
   const [isQueryRunnable, setIsQueryRunnable] = useState(true);
   const db = datasource.getDB();
   const defaultDataset = datasource.dataset;
@@ -105,6 +108,7 @@ export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range 
         <VisualEditor
           db={db}
           query={queryWithDefaults}
+          language={language}
           onChange={(q: SQLQuery) => onQueryChange(q, false)}
           queryRowFilter={queryRowFilter}
           onValidate={setIsQueryRunnable}
@@ -115,6 +119,7 @@ export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range 
       {queryWithDefaults.editorMode === EditorMode.Code && (
         <RawEditor
           db={db}
+          language={language}
           query={queryWithDefaults}
           queryToValidate={queryToValidate}
           onChange={onQueryChange}

@@ -10,15 +10,26 @@ import { Modal, useStyles2, useTheme2 } from '@grafana/ui';
 import { QueryEditorRaw } from './QueryEditorRaw';
 import { QueryToolbox } from './QueryToolbox';
 import { type QueryEditorProps, type SQLQuery } from '../types';
+import type { SqlLanguage } from 'sql-formatter';
 
 interface RawEditorProps extends Omit<QueryEditorProps, 'onChange'> {
   onRunQuery: () => void;
   onChange: (q: SQLQuery, processQuery: boolean) => void;
   onValidate: (isValid: boolean) => void;
   queryToValidate: SQLQuery;
+  language: SqlLanguage;
 }
 
-export function RawEditor({ db, query, onChange, onRunQuery, onValidate, queryToValidate, range }: RawEditorProps) {
+export function RawEditor({
+  db,
+  query,
+  onChange,
+  onRunQuery,
+  onValidate,
+  queryToValidate,
+  range,
+  language,
+}: RawEditorProps) {
   const theme = useTheme2();
   const styles = useStyles2(getStyles);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -33,6 +44,7 @@ export function RawEditor({ db, query, onChange, onRunQuery, onValidate, queryTo
         completionProvider={completionProvider}
         query={query}
         width={width}
+        language={language}
         height={height ? height - toolboxMeasure.height : undefined}
         onChange={onChange}
       >
