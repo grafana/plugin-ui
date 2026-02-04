@@ -9,6 +9,9 @@ const preview: Preview = {
       theme: themes.dark,
     },
   },
+  initialGlobals: {
+    backgrounds: { value: 'dark' },
+  },
   tags: ['autodocs'],
 };
 
