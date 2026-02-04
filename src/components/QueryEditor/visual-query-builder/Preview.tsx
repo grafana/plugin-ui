@@ -9,10 +9,10 @@ import type { SqlLanguage } from 'sql-formatter';
 
 type PreviewProps = {
   rawSql: string;
-  language: SqlLanguage;
+  language?: SqlLanguage;
 };
 
-export function Preview({ rawSql, language }: PreviewProps) {
+export function Preview({ rawSql, language = 'sql' }: PreviewProps) {
   // TODO: use zero index to give feedback about copy success
   const [_, copyToClipboard] = useCopyToClipboard();
   const styles = useStyles2(getStyles);

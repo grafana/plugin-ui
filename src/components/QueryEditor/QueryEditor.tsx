@@ -16,7 +16,7 @@ import { Space } from './Space';
 import type { SqlLanguage } from 'sql-formatter';
 
 interface Props extends QueryEditorProps<SqlDatasource, SQLQuery, SQLOptions> {
-  language: SqlLanguage;
+  language?: SqlLanguage;
 }
 
 export function SqlQueryEditor({ datasource, query, onChange, onRunQuery, range, language = 'sql' }: Props) {

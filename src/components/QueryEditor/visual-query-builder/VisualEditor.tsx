@@ -20,7 +20,7 @@ interface VisualEditorProps extends QueryEditorProps {
   queryRowFilter: QueryRowFilter;
   onChange: (q: SQLQuery) => void;
   onValidate: (isValid: boolean) => void;
-  language: SqlLanguage;
+  language?: SqlLanguage;
   range?: TimeRange;
 }
 
@@ -30,7 +30,7 @@ export const VisualEditor = ({
   queryRowFilter,
   onChange,
   onValidate,
-  language,
+  language = 'sql',
   range,
 }: VisualEditorProps) => {
   const state = useAsync(async () => {

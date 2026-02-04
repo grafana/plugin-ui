@@ -17,7 +17,7 @@ interface RawEditorProps extends Omit<QueryEditorProps, 'onChange'> {
   onChange: (q: SQLQuery, processQuery: boolean) => void;
   onValidate: (isValid: boolean) => void;
   queryToValidate: SQLQuery;
-  language: SqlLanguage;
+  language?: SqlLanguage;
 }
 
 export function RawEditor({
@@ -28,7 +28,7 @@ export function RawEditor({
   onValidate,
   queryToValidate,
   range,
-  language,
+  language = 'sql',
 }: RawEditorProps) {
   const theme = useTheme2();
   const styles = useStyles2(getStyles);

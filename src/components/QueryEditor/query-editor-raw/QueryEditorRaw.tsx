@@ -13,10 +13,18 @@ type Props = {
   width?: number;
   height?: number;
   completionProvider: LanguageCompletionProvider;
-  language: SqlLanguage;
+  language?: SqlLanguage;
 };
 
-export function QueryEditorRaw({ children, onChange, query, width, height, completionProvider, language }: Props) {
+export function QueryEditorRaw({
+  children,
+  onChange,
+  query,
+  width,
+  height,
+  completionProvider,
+  language = 'sql',
+}: Props) {
   // We need to pass query via ref to SQLEditor as onChange is executed via monacoEditor.onDidChangeModelContent callback, not onChange property
   const queryRef = useRef<SQLQuery>(query);
   useEffect(() => {
