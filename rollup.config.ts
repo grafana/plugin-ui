@@ -18,7 +18,7 @@ const legacyOutputDefaults = {
   interop: 'compat',
 };
 
-const entryPoints = ['src/index.ts', 'src/test.ts'];
+const entryPoints = ['src/index.ts', 'src/test-utils.ts'];
 
 export default [
   {
@@ -65,7 +65,7 @@ export default [
     ],
   },
   {
-    input: './compiled/test.d.ts',
+    input: './compiled/test-utils.d.ts',
     plugins: [dts()],
     output: [
       {

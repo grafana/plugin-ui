@@ -24,12 +24,12 @@
     },
     "./test": {
       "import": {
-        "types": "./dist/esm/test.d.ts",
-        "default": "./dist/esm/test.js"
+        "types": "./dist/esm/test-utils.d.ts",
+        "default": "./dist/esm/test-utils.js"
       },
       "require": {
-        "types": "./dist/cjs/test.d.cts",
-        "default": "./dist/cjs/test.cjs"
+        "types": "./dist/cjs/test-utils.d.cts",
+        "default": "./dist/cjs/test-utils.cjs"
       }
     }
   },
