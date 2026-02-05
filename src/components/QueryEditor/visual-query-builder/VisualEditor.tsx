@@ -12,6 +12,7 @@ import { type TimeRange } from '@grafana/data';
 import { EditorRow } from './EditorRow';
 import { EditorField } from './EditorField';
 import { EditorRows } from './EditorRows';
+import type { SqlLanguage } from 'sql-formatter';
 
 interface VisualEditorProps extends QueryEditorProps {
   query: SQLQuery;
@@ -19,10 +20,19 @@ interface VisualEditorProps extends QueryEditorProps {
   queryRowFilter: QueryRowFilter;
   onChange: (q: SQLQuery) => void;
   onValidate: (isValid: boolean) => void;
+  language?: SqlLanguage;
   range?: TimeRange;
 }
 
-export const VisualEditor = ({ query, db, queryRowFilter, onChange, onValidate, range }: VisualEditorProps) => {
+export const VisualEditor = ({
+  query,
+  db,
+  queryRowFilter,
+  onChange,
+  onValidate,
+  language = 'sql',
+  range,
+}: VisualEditorProps) => {
   const state = useAsync(async () => {
     const fields = await db.fields(query);
     return fields;
@@ -55,7 +65,7 @@ export const VisualEditor = ({ query, db, queryRowFilter, onChange, onValidate, 
         )}
         {queryRowFilter.preview && query.rawSql && (
           <EditorRow>
-            <Preview rawSql={query.rawSql} />
+            <Preview rawSql={query.rawSql} language={language} />
           </EditorRow>
         )}
       </EditorRows>

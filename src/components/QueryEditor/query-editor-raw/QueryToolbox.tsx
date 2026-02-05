@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { HorizontalGroup, Icon, IconButton, Tooltip, useTheme2 } from '@grafana/ui';
 
 import { QueryValidator, type QueryValidatorProps } from './QueryValidator';
+import { reportInteraction } from '@grafana/runtime';
 
 interface QueryToolboxProps extends Omit<QueryValidatorProps, 'onValidate'> {
   showTools?: boolean;
@@ -52,6 +53,10 @@ export function QueryToolbox({ showTools, onFormatCode, onExpand, isExpanded, ..
   if (!showTools && validationResult === undefined) {
     style = { height: 0, padding: 0, visibility: 'hidden' };
   }
+  const onFormatClick = () => {
+    reportInteraction('grafana_sql_query_editor_format_click');
+    onFormatCode?.();
+  };
 
   return (
     <div className={styles.container} style={style}>
@@ -70,7 +75,7 @@ export function QueryToolbox({ showTools, onFormatCode, onExpand, isExpanded, ..
         <div>
           <HorizontalGroup spacing="sm">
             {onFormatCode && (
-              <IconButton onClick={onFormatCode} name="brackets-curly" size="xs" tooltip="Format query" />
+              <IconButton onClick={onFormatClick} name="brackets-curly" size="xs" tooltip="Format query" />
             )}
             {onExpand && (
               <IconButton

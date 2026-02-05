@@ -4,6 +4,7 @@ import { type SQLQuery } from '../types';
 
 import { formatSQL } from '../utils/formatSQL';
 import { type LanguageCompletionProvider, SQLEditor } from '../../SQLEditor';
+import type { SqlLanguage } from 'sql-formatter';
 
 type Props = {
   query: SQLQuery;
@@ -12,9 +13,18 @@ type Props = {
   width?: number;
   height?: number;
   completionProvider: LanguageCompletionProvider;
+  language?: SqlLanguage;
 };
 
-export function QueryEditorRaw({ children, onChange, query, width, height, completionProvider }: Props) {
+export function QueryEditorRaw({
+  children,
+  onChange,
+  query,
+  width,
+  height,
+  completionProvider,
+  language = 'sql',
+}: Props) {
   // We need to pass query via ref to SQLEditor as onChange is executed via monacoEditor.onDidChangeModelContent callback, not onChange property
   const queryRef = useRef<SQLQuery>(query);
   useEffect(() => {
@@ -39,7 +49,7 @@ export function QueryEditorRaw({ children, onChange, query, width, height, compl
       height={height}
       query={query.rawSql!}
       onChange={onRawQueryChange}
-      language={{ id: 'sql', completionProvider, formatter: formatSQL }}
+      language={{ id: 'sql', completionProvider, formatter: (q) => formatSQL(q, language) }}
     >
       {children}
     </SQLEditor>

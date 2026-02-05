@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`formatSQL formats Grafana template tokens 1`] = `
+"select
+  \${foo} as value
+where
+  $__timeFilter(time)
+  and $bar = 1
+  and \${baz} = 2"
+`;
+
+exports[`formatSQL formats complex queries 1`] = `
+"select
+  a,
+  count(*)
+from
+  my_table
+where
+  $__timeFrom()
+  and $var = 1
+group by
+  a
+order by
+  a"
+`;
