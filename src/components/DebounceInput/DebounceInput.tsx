@@ -1,4 +1,4 @@
-import { type ComponentProps, useState, useEffect } from 'react';
+import React, { type ComponentProps, useState, useEffect } from 'react';
 import { Input } from '@grafana/ui';
 import { useDebounce } from '../../hooks/useDebounce';
 

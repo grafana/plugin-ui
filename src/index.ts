@@ -5,4 +5,3 @@
  */
 export * from './components';
 export { SqlDatasource } from './datasource/SqlDatasource';
-export * from './test/mocks';

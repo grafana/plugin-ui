@@ -1,3 +1,4 @@
+import React from 'react';
 import { EditorStack } from './EditorStack';
 
 interface EditorFieldGroupProps {

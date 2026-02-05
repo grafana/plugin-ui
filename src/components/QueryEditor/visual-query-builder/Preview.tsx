@@ -1,3 +1,4 @@
+import React from 'react';
 import { css } from '@emotion/css';
 import { useCopyToClipboard } from 'react-use';
 

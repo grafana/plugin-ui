@@ -1,3 +1,4 @@
+import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { DatePickerWithInput } from './DatePickerWithInput';
 import MockDate from 'mockdate';

@@ -1,3 +1,4 @@
+import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { Segment } from './Segment';
 import { Chance } from 'chance';

@@ -1,6 +1,7 @@
 /**
  * Integration tests for QueryEditor with catalog.schema.table support
  */
+import React from 'react';
 import { render } from '@testing-library/react';
 import { SqlQueryEditor } from './QueryEditor';
 import { type DB, type SQLQuery, QueryFormat } from './types';

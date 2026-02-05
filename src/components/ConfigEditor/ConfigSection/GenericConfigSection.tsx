@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import React, { useState, type ReactNode } from 'react';
 import { css } from '@emotion/css';
 import { useTheme2, IconButton, type IconName } from '@grafana/ui';
 

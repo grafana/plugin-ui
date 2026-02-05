@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { HorizontalGroup, Icon, IconButton, Tooltip, useTheme2 } from '@grafana/ui';
 

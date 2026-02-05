@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Select } from '@grafana/ui';
 import { type SelectableValue } from '@grafana/data';
 import { type DB } from './types';
