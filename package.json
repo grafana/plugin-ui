@@ -10,6 +10,13 @@
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.js",
   "types": "dist/cjs/index.d.cts",
+  "typesVersions": {
+    "*": {
+      "test": [
+        "dist/cjs/test-utils.d.cts"
+      ]
+    }
+  },
   "exports": {
     "./package.json": "./package.json",
     ".": {
