@@ -1,5 +1,16 @@
 # Change Log
 
+## v0.13.0 - 2026-02-05
+
+- Revert jsx option in tsconfig.json for smoother upgrade path to React 19.
+- Prevent bundling @testing-library and chance.
+- Export test related mocks and utils from `@grafana/plugin-ui/test`.
+- Use publint to assert package.json and expected entrypoint files exist.
+
+### Breaking Change
+
+The test mocks and utils are no longer available for import from `@grafana/plugin-ui`. Import statements should be updated to use `@grafana/plugin-ui/test`.
+
 ## v0.12.1 - 2025-12-30
 
 - Updated dependencies
