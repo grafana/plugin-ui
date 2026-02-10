@@ -10,21 +10,21 @@ export interface SpaceProps {
 }
 
 export const Space = ({ v = 0, h = 0, layout = 'block' }: SpaceProps) => {
-  const styles = useStyles2(getStyles, { v, h, layout });
+  const styles = useStyles2(getStyles, v, h, layout);
 
   return <span className={cx(styles.wrapper)} />;
 };
 
-const getStyles = (theme: GrafanaTheme2, props: SpaceProps) => ({
+const getStyles = (theme: GrafanaTheme2, v: number, h: number, layout: 'block' | 'inline') => ({
   wrapper: css([
     {
-      paddingRight: theme.spacing(props.h ?? 0),
-      paddingBottom: theme.spacing(props.v ?? 0),
+      paddingRight: theme.spacing(h ?? 0),
+      paddingBottom: theme.spacing(v ?? 0),
     },
-    props.layout === 'inline' && {
+    layout === 'inline' && {
       display: 'inline-block',
     },
-    props.layout === 'block' && {
+    layout === 'block' && {
       display: 'block',
     },
   ]),
