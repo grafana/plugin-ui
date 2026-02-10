@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.13.1 - 2026-02-10
+
+- Replace defaultProps with es6 defaults for React 19 compatibility
+
 ## v0.13.0 - 2026-02-05
 
 - Revert jsx option in tsconfig.json for smoother upgrade path to React 19.
