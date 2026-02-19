@@ -1,5 +1,5 @@
+import React, { PureComponent, createRef } from 'react';
 import { debounce } from 'lodash';
-import { PureComponent, createRef } from 'react';
 
 import { Field, Input } from '@grafana/ui';
 

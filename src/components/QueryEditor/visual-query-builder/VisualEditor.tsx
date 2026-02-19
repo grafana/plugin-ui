@@ -1,8 +1,7 @@
+import React from 'react';
 import { useAsync } from 'react-use';
-
 import { type DB, type QueryEditorProps, type QueryRowFilter, type SQLQuery } from '../types';
 import { QueryToolbox } from '../query-editor-raw/QueryToolbox';
-
 import { Preview } from './Preview';
 import { SQLGroupByRow } from './SQLGroupByRow';
 import { SQLOrderByRow } from './SQLOrderByRow';

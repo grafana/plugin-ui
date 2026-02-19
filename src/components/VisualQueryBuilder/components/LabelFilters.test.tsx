@@ -1,6 +1,6 @@
 import { getAllByRole, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { type ComponentProps } from 'react';
+import React, { type ComponentProps } from 'react';
 import { select } from 'react-select-event';
 import { LabelFilters, MISSING_LABEL_FILTER_ERROR_MESSAGE } from './LabelFilters';
 

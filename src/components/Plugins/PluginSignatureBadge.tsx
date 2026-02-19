@@ -1,4 +1,4 @@
-import { type HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
 import { Badge, type BadgeProps } from '@grafana/ui';
 import { PluginErrorCode, PluginSignatureStatus } from '@grafana/data';
 

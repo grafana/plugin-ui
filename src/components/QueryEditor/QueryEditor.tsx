@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAsync } from 'react-use';
 
 import { type QueryEditorProps } from '@grafana/data';

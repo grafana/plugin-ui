@@ -1,3 +1,4 @@
+import React from 'react';
 interface FlexItemProps {
   grow?: number;
   shrink?: number;

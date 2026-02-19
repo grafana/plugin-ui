@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import { css, cx } from '@emotion/css';
-import { useState } from 'react';
 import { type GroupBase } from 'react-select';
 
 import { type GrafanaTheme2 } from '@grafana/data';

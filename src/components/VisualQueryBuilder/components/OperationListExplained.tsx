@@ -1,3 +1,4 @@
+import React from 'react';
 import { type Grammar } from 'prismjs';
 
 import { OperationExplainedBox } from './OperationExplainedBox';
