@@ -1763,7 +1763,7 @@ __metadata:
     "@types/memoize-one": "npm:^5.1.2"
     "@types/prismjs": "npm:^1.26.4"
     "@types/react": "npm:18.3.28"
-    "@types/react-calendar": "npm:^3.1.2"
+    "@types/react-calendar": "npm:^3.9.0"
     "@types/testing-library__jest-dom": "npm:^5.9.5"
     "@typescript-eslint/eslint-plugin": "npm:^6.18.0"
     "@typescript-eslint/parser": "npm:^6.18.0"
@@ -3998,12 +3998,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-calendar@npm:^3.1.2":
-  version: 3.4.3
-  resolution: "@types/react-calendar@npm:3.4.3"
+"@types/react-calendar@npm:^3.9.0":
+  version: 3.9.0
+  resolution: "@types/react-calendar@npm:3.9.0"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 10c0/1491f43ac3c6e99391c33536abebc147bb16e1a46a685454ffa904b4e4ce63f92772051a3390ab56c4bed20cc649c12dcc9ad00c9bd62ef07e3cef2db7eb7936
+  checksum: 10c0/5bbd86b91abd85d11cb0e4a39077e1ec8fe619e3d85153401b767668e5575d030e48bbccf45ff234b52aeefdfbd0a74bb568b2a2b8d413a0d5505a6d99d2795d
   languageName: node
   linkType: hard
 
