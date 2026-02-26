@@ -19,7 +19,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:^0.17.3":
+"@arethetypeswrong/cli@npm:0.17.3":
   version: 0.17.3
   resolution: "@arethetypeswrong/cli@npm:0.17.3"
   dependencies:
@@ -1647,7 +1647,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/data@npm:10.4.7, @grafana/data@npm:^10.4.0":
+"@grafana/data@npm:10.4.7":
   version: 10.4.7
   resolution: "@grafana/data@npm:10.4.7"
   dependencies:
@@ -1683,7 +1683,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/e2e-selectors@npm:10.4.7, @grafana/e2e-selectors@npm:^10.4.0":
+"@grafana/e2e-selectors@npm:10.4.7":
   version: 10.4.7
   resolution: "@grafana/e2e-selectors@npm:10.4.7"
   dependencies:
@@ -1694,7 +1694,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/eslint-config@npm:^8.0.0":
+"@grafana/eslint-config@npm:8.0.0":
   version: 8.0.0
   resolution: "@grafana/eslint-config@npm:8.0.0"
   peerDependencies:
@@ -1736,73 +1736,73 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@grafana/plugin-ui@workspace:."
   dependencies:
-    "@arethetypeswrong/cli": "npm:^0.17.3"
+    "@arethetypeswrong/cli": "npm:0.17.3"
     "@emotion/css": "npm:^11.11.2"
-    "@grafana/data": "npm:^10.4.0"
-    "@grafana/e2e-selectors": "npm:^10.4.0"
-    "@grafana/eslint-config": "npm:^8.0.0"
-    "@grafana/runtime": "npm:^10.4.0"
-    "@grafana/tsconfig": "npm:^1.3.0-rc1"
-    "@grafana/ui": "npm:^10.4.0"
+    "@grafana/data": "npm:10.4.7"
+    "@grafana/e2e-selectors": "npm:10.4.7"
+    "@grafana/eslint-config": "npm:8.0.0"
+    "@grafana/runtime": "npm:10.4.7"
+    "@grafana/tsconfig": "npm:1.3.0-rc1"
+    "@grafana/ui": "npm:10.4.7"
     "@hello-pangea/dnd": "npm:^17.0.0"
     "@react-awesome-query-builder/ui": "npm:^6.6.4"
-    "@rollup/plugin-commonjs": "npm:^28.0.2"
-    "@rollup/plugin-node-resolve": "npm:^16.0.0"
+    "@rollup/plugin-commonjs": "npm:28.0.2"
+    "@rollup/plugin-node-resolve": "npm:16.0.0"
     "@storybook/addon-docs": "npm:10.2.5"
     "@storybook/addon-links": "npm:10.2.5"
     "@storybook/addon-webpack5-compiler-swc": "npm:4.0.2"
     "@storybook/react-webpack5": "npm:10.2.5"
-    "@stylistic/eslint-plugin-ts": "npm:^2.9.0"
+    "@stylistic/eslint-plugin-ts": "npm:2.13.0"
     "@swc/core": "npm:1.15.11"
-    "@swc/jest": "npm:^0.2.37"
+    "@swc/jest": "npm:0.2.37"
     "@testing-library/jest-dom": "npm:5.16.5"
     "@testing-library/react": "npm:15.0.2"
     "@testing-library/user-event": "npm:14.5.2"
-    "@types/chance": "npm:^1.1.0"
-    "@types/lodash": "npm:^4.14.194"
-    "@types/memoize-one": "npm:^5.1.2"
+    "@types/chance": "npm:1.1.3"
+    "@types/lodash": "npm:4.14.200"
+    "@types/memoize-one": "npm:5.1.2"
     "@types/prismjs": "npm:^1.26.4"
     "@types/react": "npm:18.3.28"
-    "@types/react-calendar": "npm:^3.1.2"
-    "@types/testing-library__jest-dom": "npm:^5.9.5"
-    "@typescript-eslint/eslint-plugin": "npm:^6.18.0"
-    "@typescript-eslint/parser": "npm:^6.18.0"
+    "@types/react-calendar": "npm:3.4.3"
+    "@types/testing-library__jest-dom": "npm:5.14.1"
+    "@typescript-eslint/eslint-plugin": "npm:6.21.0"
+    "@typescript-eslint/parser": "npm:6.21.0"
     chance: "npm:^1.1.7"
-    copyfiles: "npm:^2.4.1"
-    cspell: "npm:^8.14.4"
-    esbuild: "npm:^0.25.3"
-    eslint: "npm:^8.52.0"
-    eslint-config-prettier: "npm:^8.8.0"
-    eslint-plugin-jsdoc: "npm:^46.8.2"
-    eslint-plugin-prettier: "npm:^5.2.1"
-    eslint-plugin-react: "npm:^7.37.4"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    fast-glob: "npm:^3.3.1"
-    jest: "npm:^29.7.0"
-    jest-environment-jsdom: "npm:^29.7.0"
-    jest-fetch-mock: "npm:^3.0.3"
-    lefthook: "npm:^1.7.18"
+    copyfiles: "npm:2.4.1"
+    cspell: "npm:8.14.4"
+    esbuild: "npm:0.25.12"
+    eslint: "npm:8.57.1"
+    eslint-config-prettier: "npm:8.10.0"
+    eslint-plugin-jsdoc: "npm:46.10.1"
+    eslint-plugin-prettier: "npm:5.2.1"
+    eslint-plugin-react: "npm:7.37.5"
+    eslint-plugin-react-hooks: "npm:4.6.2"
+    fast-glob: "npm:3.3.2"
+    jest: "npm:29.7.0"
+    jest-environment-jsdom: "npm:29.7.0"
+    jest-fetch-mock: "npm:3.0.3"
+    lefthook: "npm:1.7.18"
     lodash: "npm:^4.17.21"
-    mockdate: "npm:^3.0.2"
-    prettier: "npm:^3.3.3"
+    mockdate: "npm:3.0.5"
+    prettier: "npm:3.3.3"
     prismjs: "npm:^1.30.0"
-    publint: "npm:^0.3.12"
+    publint: "npm:0.3.17"
     react: "npm:18.3.1"
     react-calendar: "npm:^4.8.0"
     react-dom: "npm:18.3.1"
     react-popper-tooltip: "npm:^4.4.2"
-    react-select-event: "npm:^5.5.1"
+    react-select-event: "npm:5.5.1"
     react-use: "npm:^17.3.1"
     react-virtualized-auto-sizer: "npm:^1.0.6"
-    rollup: "npm:^4.32.1"
-    rollup-plugin-dts: "npm:^6.1.1"
-    rollup-plugin-esbuild: "npm:^6.1.1"
-    rollup-plugin-node-externals: "npm:^8.0.0"
-    rxjs: "npm:^7.8.1"
+    rollup: "npm:4.59.0"
+    rollup-plugin-dts: "npm:6.1.1"
+    rollup-plugin-esbuild: "npm:6.1.1"
+    rollup-plugin-node-externals: "npm:8.0.0"
+    rxjs: "npm:7.8.1"
     sql-formatter-plus: "npm:^1.3.6"
     storybook: "npm:10.2.10"
-    ts-node: "npm:^10.9.1"
-    typescript: "npm:^5.7.3"
+    ts-node: "npm:10.9.1"
+    typescript: "npm:5.7.3"
     uuid: "npm:^11.0.0"
   peerDependencies:
     "@grafana/data": ">=10.4.0"
@@ -1818,7 +1818,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@grafana/runtime@npm:^10.4.0":
+"@grafana/runtime@npm:10.4.7":
   version: 10.4.7
   resolution: "@grafana/runtime@npm:10.4.7"
   dependencies:
@@ -1849,6 +1849,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@grafana/tsconfig@npm:1.3.0-rc1":
+  version: 1.3.0-rc1
+  resolution: "@grafana/tsconfig@npm:1.3.0-rc1"
+  checksum: 10c0/b3a89019b279747e146db65571f2ec977a54b403528c66295c0a0339acf352f5296c9bbc7df480af56c43e41e6f6889c7effde6decc680aa724b5959f43d7888
+  languageName: node
+  linkType: hard
+
 "@grafana/tsconfig@npm:^1.2.0-rc1":
   version: 1.2.0-rc1
   resolution: "@grafana/tsconfig@npm:1.2.0-rc1"
@@ -1856,14 +1863,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/tsconfig@npm:^1.3.0-rc1":
-  version: 1.3.0-rc1
-  resolution: "@grafana/tsconfig@npm:1.3.0-rc1"
-  checksum: 10c0/b3a89019b279747e146db65571f2ec977a54b403528c66295c0a0339acf352f5296c9bbc7df480af56c43e41e6f6889c7effde6decc680aa724b5959f43d7888
-  languageName: node
-  linkType: hard
-
-"@grafana/ui@npm:10.4.7, @grafana/ui@npm:^10.4.0":
+"@grafana/ui@npm:10.4.7":
   version: 10.4.7
   resolution: "@grafana/ui@npm:10.4.7"
   dependencies:
@@ -3015,7 +3015,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-commonjs@npm:^28.0.2":
+"@rollup/plugin-commonjs@npm:28.0.2":
   version: 28.0.2
   resolution: "@rollup/plugin-commonjs@npm:28.0.2"
   dependencies:
@@ -3035,7 +3035,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-node-resolve@npm:^16.0.0":
+"@rollup/plugin-node-resolve@npm:16.0.0":
   version: 16.0.0
   resolution: "@rollup/plugin-node-resolve@npm:16.0.0"
   dependencies:
@@ -3491,7 +3491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stylistic/eslint-plugin-ts@npm:^2.9.0":
+"@stylistic/eslint-plugin-ts@npm:2.13.0":
   version: 2.13.0
   resolution: "@stylistic/eslint-plugin-ts@npm:2.13.0"
   dependencies:
@@ -3636,7 +3636,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/jest@npm:^0.2.37":
+"@swc/jest@npm:0.2.37":
   version: 0.2.37
   resolution: "@swc/jest@npm:0.2.37"
   dependencies:
@@ -3830,7 +3830,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chance@npm:^1.1.0":
+"@types/chance@npm:1.1.3":
   version: 1.1.3
   resolution: "@types/chance@npm:1.1.3"
   checksum: 10c0/7121293c09930f4e3bea2a886d29a1fb7ca1686adc4b6e01c1308dc3a85d8b414f5f0c969572db577c2525b0d58d7841bb325d464527bb4b8167ef54dc510fa5
@@ -3980,7 +3980,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.194":
+"@types/lodash@npm:4.14.200":
   version: 4.14.200
   resolution: "@types/lodash@npm:4.14.200"
   checksum: 10c0/7a8dac6dc866f10d1888846d6189d1faeb4f65adb139f0837a005fd1adcde62e60d7e7abb1a2733d13fc57bebb337d74182d8ad3dbd1d211dcd0c310c47e81bc
@@ -3994,7 +3994,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/memoize-one@npm:^5.1.2":
+"@types/memoize-one@npm:5.1.2":
   version: 5.1.2
   resolution: "@types/memoize-one@npm:5.1.2"
   dependencies:
@@ -4033,7 +4033,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-calendar@npm:^3.1.2":
+"@types/react-calendar@npm:3.4.3":
   version: 3.4.3
   resolution: "@types/react-calendar@npm:3.4.3"
   dependencies:
@@ -4117,7 +4117,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/testing-library__jest-dom@npm:^5.9.1, @types/testing-library__jest-dom@npm:^5.9.5":
+"@types/testing-library__jest-dom@npm:5.14.1, @types/testing-library__jest-dom@npm:^5.9.1":
   version: 5.14.1
   resolution: "@types/testing-library__jest-dom@npm:5.14.1"
   dependencies:
@@ -4163,7 +4163,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^6.18.0":
+"@typescript-eslint/eslint-plugin@npm:6.21.0":
   version: 6.21.0
   resolution: "@typescript-eslint/eslint-plugin@npm:6.21.0"
   dependencies:
@@ -4188,7 +4188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^6.18.0":
+"@typescript-eslint/parser@npm:6.21.0":
   version: 6.21.0
   resolution: "@typescript-eslint/parser@npm:6.21.0"
   dependencies:
@@ -5645,7 +5645,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"copyfiles@npm:^2.4.1":
+"copyfiles@npm:2.4.1":
   version: 2.4.1
   resolution: "copyfiles@npm:2.4.1"
   dependencies:
@@ -5863,7 +5863,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cspell@npm:^8.14.4":
+"cspell@npm:8.14.4":
   version: 8.14.4
   resolution: "cspell@npm:8.14.4"
   dependencies:
@@ -7027,6 +7027,95 @@ __metadata:
   languageName: node
   linkType: hard
 
+"esbuild@npm:0.25.12":
+  version: 0.25.12
+  resolution: "esbuild@npm:0.25.12"
+  dependencies:
+    "@esbuild/aix-ppc64": "npm:0.25.12"
+    "@esbuild/android-arm": "npm:0.25.12"
+    "@esbuild/android-arm64": "npm:0.25.12"
+    "@esbuild/android-x64": "npm:0.25.12"
+    "@esbuild/darwin-arm64": "npm:0.25.12"
+    "@esbuild/darwin-x64": "npm:0.25.12"
+    "@esbuild/freebsd-arm64": "npm:0.25.12"
+    "@esbuild/freebsd-x64": "npm:0.25.12"
+    "@esbuild/linux-arm": "npm:0.25.12"
+    "@esbuild/linux-arm64": "npm:0.25.12"
+    "@esbuild/linux-ia32": "npm:0.25.12"
+    "@esbuild/linux-loong64": "npm:0.25.12"
+    "@esbuild/linux-mips64el": "npm:0.25.12"
+    "@esbuild/linux-ppc64": "npm:0.25.12"
+    "@esbuild/linux-riscv64": "npm:0.25.12"
+    "@esbuild/linux-s390x": "npm:0.25.12"
+    "@esbuild/linux-x64": "npm:0.25.12"
+    "@esbuild/netbsd-arm64": "npm:0.25.12"
+    "@esbuild/netbsd-x64": "npm:0.25.12"
+    "@esbuild/openbsd-arm64": "npm:0.25.12"
+    "@esbuild/openbsd-x64": "npm:0.25.12"
+    "@esbuild/openharmony-arm64": "npm:0.25.12"
+    "@esbuild/sunos-x64": "npm:0.25.12"
+    "@esbuild/win32-arm64": "npm:0.25.12"
+    "@esbuild/win32-ia32": "npm:0.25.12"
+    "@esbuild/win32-x64": "npm:0.25.12"
+  dependenciesMeta:
+    "@esbuild/aix-ppc64":
+      optional: true
+    "@esbuild/android-arm":
+      optional: true
+    "@esbuild/android-arm64":
+      optional: true
+    "@esbuild/android-x64":
+      optional: true
+    "@esbuild/darwin-arm64":
+      optional: true
+    "@esbuild/darwin-x64":
+      optional: true
+    "@esbuild/freebsd-arm64":
+      optional: true
+    "@esbuild/freebsd-x64":
+      optional: true
+    "@esbuild/linux-arm":
+      optional: true
+    "@esbuild/linux-arm64":
+      optional: true
+    "@esbuild/linux-ia32":
+      optional: true
+    "@esbuild/linux-loong64":
+      optional: true
+    "@esbuild/linux-mips64el":
+      optional: true
+    "@esbuild/linux-ppc64":
+      optional: true
+    "@esbuild/linux-riscv64":
+      optional: true
+    "@esbuild/linux-s390x":
+      optional: true
+    "@esbuild/linux-x64":
+      optional: true
+    "@esbuild/netbsd-arm64":
+      optional: true
+    "@esbuild/netbsd-x64":
+      optional: true
+    "@esbuild/openbsd-arm64":
+      optional: true
+    "@esbuild/openbsd-x64":
+      optional: true
+    "@esbuild/openharmony-arm64":
+      optional: true
+    "@esbuild/sunos-x64":
+      optional: true
+    "@esbuild/win32-arm64":
+      optional: true
+    "@esbuild/win32-ia32":
+      optional: true
+    "@esbuild/win32-x64":
+      optional: true
+  bin:
+    esbuild: bin/esbuild
+  checksum: 10c0/c205357531423220a9de8e1e6c6514242bc9b1666e762cd67ccdf8fdfdc3f1d0bd76f8d9383958b97ad4c953efdb7b6e8c1f9ca5951cd2b7c5235e8755b34a6b
+  languageName: node
+  linkType: hard
+
 "esbuild@npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0 || ^0.26.0 || ^0.27.0":
   version: 0.27.2
   resolution: "esbuild@npm:0.27.2"
@@ -7116,95 +7205,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.25.3":
-  version: 0.25.12
-  resolution: "esbuild@npm:0.25.12"
-  dependencies:
-    "@esbuild/aix-ppc64": "npm:0.25.12"
-    "@esbuild/android-arm": "npm:0.25.12"
-    "@esbuild/android-arm64": "npm:0.25.12"
-    "@esbuild/android-x64": "npm:0.25.12"
-    "@esbuild/darwin-arm64": "npm:0.25.12"
-    "@esbuild/darwin-x64": "npm:0.25.12"
-    "@esbuild/freebsd-arm64": "npm:0.25.12"
-    "@esbuild/freebsd-x64": "npm:0.25.12"
-    "@esbuild/linux-arm": "npm:0.25.12"
-    "@esbuild/linux-arm64": "npm:0.25.12"
-    "@esbuild/linux-ia32": "npm:0.25.12"
-    "@esbuild/linux-loong64": "npm:0.25.12"
-    "@esbuild/linux-mips64el": "npm:0.25.12"
-    "@esbuild/linux-ppc64": "npm:0.25.12"
-    "@esbuild/linux-riscv64": "npm:0.25.12"
-    "@esbuild/linux-s390x": "npm:0.25.12"
-    "@esbuild/linux-x64": "npm:0.25.12"
-    "@esbuild/netbsd-arm64": "npm:0.25.12"
-    "@esbuild/netbsd-x64": "npm:0.25.12"
-    "@esbuild/openbsd-arm64": "npm:0.25.12"
-    "@esbuild/openbsd-x64": "npm:0.25.12"
-    "@esbuild/openharmony-arm64": "npm:0.25.12"
-    "@esbuild/sunos-x64": "npm:0.25.12"
-    "@esbuild/win32-arm64": "npm:0.25.12"
-    "@esbuild/win32-ia32": "npm:0.25.12"
-    "@esbuild/win32-x64": "npm:0.25.12"
-  dependenciesMeta:
-    "@esbuild/aix-ppc64":
-      optional: true
-    "@esbuild/android-arm":
-      optional: true
-    "@esbuild/android-arm64":
-      optional: true
-    "@esbuild/android-x64":
-      optional: true
-    "@esbuild/darwin-arm64":
-      optional: true
-    "@esbuild/darwin-x64":
-      optional: true
-    "@esbuild/freebsd-arm64":
-      optional: true
-    "@esbuild/freebsd-x64":
-      optional: true
-    "@esbuild/linux-arm":
-      optional: true
-    "@esbuild/linux-arm64":
-      optional: true
-    "@esbuild/linux-ia32":
-      optional: true
-    "@esbuild/linux-loong64":
-      optional: true
-    "@esbuild/linux-mips64el":
-      optional: true
-    "@esbuild/linux-ppc64":
-      optional: true
-    "@esbuild/linux-riscv64":
-      optional: true
-    "@esbuild/linux-s390x":
-      optional: true
-    "@esbuild/linux-x64":
-      optional: true
-    "@esbuild/netbsd-arm64":
-      optional: true
-    "@esbuild/netbsd-x64":
-      optional: true
-    "@esbuild/openbsd-arm64":
-      optional: true
-    "@esbuild/openbsd-x64":
-      optional: true
-    "@esbuild/openharmony-arm64":
-      optional: true
-    "@esbuild/sunos-x64":
-      optional: true
-    "@esbuild/win32-arm64":
-      optional: true
-    "@esbuild/win32-ia32":
-      optional: true
-    "@esbuild/win32-x64":
-      optional: true
-  bin:
-    esbuild: bin/esbuild
-  checksum: 10c0/c205357531423220a9de8e1e6c6514242bc9b1666e762cd67ccdf8fdfdc3f1d0bd76f8d9383958b97ad4c953efdb7b6e8c1f9ca5951cd2b7c5235e8755b34a6b
-  languageName: node
-  linkType: hard
-
 "escalade@npm:^3.1.1, escalade@npm:^3.2.0":
   version: 3.2.0
   resolution: "escalade@npm:3.2.0"
@@ -7245,7 +7245,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.8.0":
+"eslint-config-prettier@npm:8.10.0":
   version: 8.10.0
   resolution: "eslint-config-prettier@npm:8.10.0"
   peerDependencies:
@@ -7256,7 +7256,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^46.8.2":
+"eslint-plugin-jsdoc@npm:46.10.1":
   version: 46.10.1
   resolution: "eslint-plugin-jsdoc@npm:46.10.1"
   dependencies:
@@ -7275,7 +7275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^5.2.1":
+"eslint-plugin-prettier@npm:5.2.1":
   version: 5.2.1
   resolution: "eslint-plugin-prettier@npm:5.2.1"
   dependencies:
@@ -7295,7 +7295,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^4.6.0":
+"eslint-plugin-react-hooks@npm:4.6.2":
   version: 4.6.2
   resolution: "eslint-plugin-react-hooks@npm:4.6.2"
   peerDependencies:
@@ -7304,7 +7304,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.37.4":
+"eslint-plugin-react@npm:7.37.5":
   version: 7.37.5
   resolution: "eslint-plugin-react@npm:7.37.5"
   dependencies:
@@ -7366,7 +7366,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.52.0":
+"eslint@npm:8.57.1":
   version: 8.57.1
   resolution: "eslint@npm:8.57.1"
   dependencies:
@@ -7587,7 +7587,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
+"fast-glob@npm:3.3.2, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -9248,7 +9248,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-environment-jsdom@npm:^29.7.0":
+"jest-environment-jsdom@npm:29.7.0":
   version: 29.7.0
   resolution: "jest-environment-jsdom@npm:29.7.0"
   dependencies:
@@ -9283,7 +9283,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-fetch-mock@npm:^3.0.3":
+"jest-fetch-mock@npm:3.0.3":
   version: 3.0.3
   resolution: "jest-fetch-mock@npm:3.0.3"
   dependencies:
@@ -9580,7 +9580,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29.7.0":
+"jest@npm:29.7.0":
   version: 29.7.0
   resolution: "jest@npm:29.7.0"
   dependencies:
@@ -9869,7 +9869,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lefthook@npm:^1.7.18":
+"lefthook@npm:1.7.18":
   version: 1.7.18
   resolution: "lefthook@npm:1.7.18"
   dependencies:
@@ -10423,7 +10423,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mockdate@npm:^3.0.2":
+"mockdate@npm:3.0.5":
   version: 3.0.5
   resolution: "mockdate@npm:3.0.5"
   checksum: 10c0/36ab00c4b94d3e3cc8b9ecec27730dcf396d47d2ba046ad96635e7f9bc4bba0fff6125dedaba7313b1cadc0cefc0eb3f3ac0d5c3655707afd3b82fa4550aae92
@@ -11225,7 +11225,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.3.3":
+"prettier@npm:3.3.3":
   version: 3.3.3
   resolution: "prettier@npm:3.3.3"
   bin:
@@ -11359,7 +11359,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"publint@npm:^0.3.12":
+"publint@npm:0.3.17":
   version: 0.3.17
   resolution: "publint@npm:0.3.17"
   dependencies:
@@ -12088,7 +12088,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-select-event@npm:^5.5.1":
+"react-select-event@npm:5.5.1":
   version: 5.5.1
   resolution: "react-select-event@npm:5.5.1"
   dependencies:
@@ -12556,7 +12556,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-dts@npm:^6.1.1":
+"rollup-plugin-dts@npm:6.1.1":
   version: 6.1.1
   resolution: "rollup-plugin-dts@npm:6.1.1"
   dependencies:
@@ -12572,7 +12572,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-esbuild@npm:^6.1.1":
+"rollup-plugin-esbuild@npm:6.1.1":
   version: 6.1.1
   resolution: "rollup-plugin-esbuild@npm:6.1.1"
   dependencies:
@@ -12587,7 +12587,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-node-externals@npm:^8.0.0":
+"rollup-plugin-node-externals@npm:8.0.0":
   version: 8.0.0
   resolution: "rollup-plugin-node-externals@npm:8.0.0"
   peerDependencies:
@@ -12596,7 +12596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^4.32.1":
+"rollup@npm:4.59.0":
   version: 4.59.0
   resolution: "rollup@npm:4.59.0"
   dependencies:
@@ -12718,7 +12718,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.8.1, rxjs@npm:^7.8.1":
+"rxjs@npm:7.8.1":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
@@ -13939,7 +13939,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.9.1":
+"ts-node@npm:10.9.1":
   version: 10.9.1
   resolution: "ts-node@npm:10.9.1"
   dependencies:
@@ -14121,7 +14121,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.7.3":
+"typescript@npm:5.7.3":
   version: 5.7.3
   resolution: "typescript@npm:5.7.3"
   bin:
@@ -14151,7 +14151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>":
   version: 5.7.3
   resolution: "typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5786d5"
   bin:
