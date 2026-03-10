@@ -1782,7 +1782,7 @@ __metadata:
     jest-environment-jsdom: "npm:^29.7.0"
     jest-fetch-mock: "npm:^3.0.3"
     lefthook: "npm:^1.7.18"
-    lodash: "npm:^4.17.21"
+    lodash: "npm:^4.17.23"
     mockdate: "npm:^3.0.2"
     prettier: "npm:^3.3.3"
     prismjs: "npm:^1.30.0"
@@ -3737,10 +3737,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tootallnate/once@npm:2":
-  version: 2.0.0
-  resolution: "@tootallnate/once@npm:2.0.0"
-  checksum: 10c0/073bfa548026b1ebaf1659eb8961e526be22fa77139b10d60e712f46d2f0f05f4e6c8bec62a087d41088ee9e29faa7f54838568e475ab2f776171003c3920858
+"@tootallnate/once@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@tootallnate/once@npm:3.0.1"
+  checksum: 10c0/a66a5be492a19337be450056f0225f34abb7e88845bd1f5899211134827a0d90937d8ef161f8ce663aa8fc1505d39ad016e497963f2780d8199ce2067d2b1317
   languageName: node
   linkType: hard
 
@@ -6692,15 +6692,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^3.0.0":
-  version: 3.2.4
-  resolution: "dompurify@npm:3.2.4"
+"dompurify@npm:^3.3.2":
+  version: 3.3.2
+  resolution: "dompurify@npm:3.3.2"
   dependencies:
     "@types/trusted-types": "npm:^2.0.7"
   dependenciesMeta:
     "@types/trusted-types":
       optional: true
-  checksum: 10c0/6be56810fb7ad2776155c8fc2967af5056783c030094362c7d0cf1ad13f2129cf922d8eefab528a34bdebfb98e2f44b306a983ab93aefb9d6f24c18a3d027a05
+  checksum: 10c0/8989525f003dd062e829137982b5412143421342991b2732bd621a1efd98b2c3cdc4f37547601d0727d3bc20f1d0eb2a0ecca287d3688f168cdb54ced867ca8f
   languageName: node
   linkType: hard
 
@@ -8471,17 +8471,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immutable@npm:4.3.5":
-  version: 4.3.5
-  resolution: "immutable@npm:4.3.5"
-  checksum: 10c0/63d2d7908241a955d18c7822fd2215b6e89ff5a1a33cc72cd475b013cbbdef7a705aa5170a51ce9f84a57f62fdddfaa34e7b5a14b33d8a43c65cc6a881d6e894
-  languageName: node
-  linkType: hard
-
-"immutable@npm:^4.3.6":
-  version: 4.3.7
-  resolution: "immutable@npm:4.3.7"
-  checksum: 10c0/9b099197081b22f6433003e34929da8ecddbbdc1474cdc8aa3b7669dee4adda349c06143de22def36016d1b6de5322b043eccd7a11db1dad2ca85dad4fff5435
+"immutable@npm:^4.3.8":
+  version: 4.3.8
+  resolution: "immutable@npm:4.3.8"
+  checksum: 10c0/3de58996305a0faf6ef3fc0685f996c42653ad757760214f5aec7d4a6b59ea7abb882522c5f9a61776fae88c0b45e08eb77cbded5a4f57745ec7c63f9642e44b
   languageName: node
   linkType: hard
 
@@ -9983,14 +9976,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.21":
-  version: 4.17.21
-  resolution: "lodash@npm:4.17.21"
-  checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
-  languageName: node
-  linkType: hard
-
-"lodash@npm:^4.1.1, lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
+"lodash@npm:^4.17.23":
   version: 4.17.23
   resolution: "lodash@npm:4.17.23"
   checksum: 10c0/1264a90469f5bb95d4739c43eb6277d15b6d9e186df4ac68c3620443160fc669e2f14c11e7d8b2ccf078b81d06147c01a8ccced9aab9f9f63d50dcf8cace6bf6
