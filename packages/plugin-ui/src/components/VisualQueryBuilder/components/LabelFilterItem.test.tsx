@@ -1,4 +1,4 @@
-import { isConflictingLabelFilter } from "./LabelFilterItem";
+import { isConflictingLabelFilter } from './LabelFilterItem';
 
 describe('isConflictingSelector', () => {
   it('returns true if selector is conflicting', () => {

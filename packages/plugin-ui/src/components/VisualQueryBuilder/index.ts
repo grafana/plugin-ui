@@ -9,5 +9,16 @@ export { QueryEditorModeToggle } from './components/QueryEditorModeToggle';
 export { QueryHeaderSwitch } from './components/QueryHeaderSwitch';
 export { QueryOptionGroup } from './components/QueryOptionGroup';
 export { RawQuery } from './components/RawQuery';
-export type { QueryBuilderOperationParamEditorProps, QueryBuilderLabelFilter, QueryBuilderOperation, QueryBuilderOperationParamValue, QueryBuilderOperationDefinition, QueryBuilderOperationParamDef, VisualQueryModeller, VisualQueryBinary, VisualQuery, QueryStats } from './types';
+export type {
+  QueryBuilderOperationParamEditorProps,
+  QueryBuilderLabelFilter,
+  QueryBuilderOperation,
+  QueryBuilderOperationParamValue,
+  QueryBuilderOperationDefinition,
+  QueryBuilderOperationParamDef,
+  VisualQueryModeller,
+  VisualQueryBinary,
+  VisualQuery,
+  QueryStats,
+} from './types';
 export { QueryEditorMode, BINARY_OPERATIONS_KEY } from './types';

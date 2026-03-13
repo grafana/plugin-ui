@@ -9,7 +9,7 @@ on:
 
 jobs:
   publish:
-    name: Publish to NPM Package Registry
+    name: Publish ${{ matrix.package.name }}
     runs-on: ubuntu-latest
     # Required for this workflow to have permission to publish NPM packages
     environment: release
@@ -17,26 +17,30 @@ jobs:
       contents: read
       # id-token: write required for npm trusted publishing
       id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - name: plugin-ui
+            path: packages/plugin-ui
     steps:
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           ref: main
           persist-credentials: false
+
       # limit releases to version changes - https://github.com/EndBug/version-check
       - name: Check version changes
         uses: EndBug/version-check@5102328418c0130d66ca712d755c303e93368ce2 # v2.1.7
         id: version_check
         with:
-          # diff the commits rather than commit message for version changes
           diff-search: true
+          file-url: ${{ matrix.package.path }}/package.json
 
       - name: Version update detected
-        env:
-          OUTPUT_VERSION: ${{ steps.version_check.outputs.version }}
-          OUTPUT_TYPE: ${{ steps.version_check.outputs.type }}
         if: steps.version_check.outputs.changed == 'true'
-        run: 'echo "Version change found! New version: ${OUTPUT_VERSION} (${OUTPUT_TYPE})"'
+        run: 'echo "Version change found in ${{ matrix.package.name }}! New version: ${{ steps.version_check.outputs.version }} (${{ steps.version_check.outputs.type }})"'
 
       - name: Setup .npmrc file for NPM registry
         if: steps.version_check.outputs.changed == 'true'
@@ -61,4 +65,5 @@ jobs:
 
       - name: Publish package to NPM
         if: steps.version_check.outputs.changed == 'true'
+        working-directory: ${{ matrix.package.path }}
         run: npm publish --access public
