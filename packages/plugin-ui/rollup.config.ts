@@ -1,14 +1,13 @@
 import resolve from '@rollup/plugin-node-resolve';
 import { createRequire } from 'node:module';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
 import dts from 'rollup-plugin-dts';
 import commonjs from '@rollup/plugin-commonjs';
 import esbuild from 'rollup-plugin-esbuild';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 
-if (!process.env.PROJECT_CWD) {
-  throw new Error('PROJECT_CWD is not defined');
-}
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const rq = createRequire(import.meta.url);
 const pkg = rq('./package.json');
@@ -45,7 +44,7 @@ export default [
         sourcemap: true,
         dir: path.dirname(pkg.module),
         preserveModules: true,
-        preserveModulesRoot: path.join(process.env.PROJECT_CWD, 'src'),
+        preserveModulesRoot: path.join(__dirname, 'src'),
         ...legacyOutputDefaults,
       },
     ],

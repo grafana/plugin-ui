@@ -1,4 +1,4 @@
-import { getOperationParamId } from "./OperationParamEditor";
+import { getOperationParamId } from './OperationParamEditor';
 
 describe('getOperationParamId', () => {
   it('Generates correct id for operation param', () => {
