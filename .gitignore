@@ -139,3 +139,8 @@ compiled
 .pnp.*
 
 .idea
+
+
+# Storybook
+
+storybook-static/

@@ -3,8 +3,7 @@ import { useAsync } from 'react-use';
 import { type SelectableValue } from '@grafana/data';
 import { type Config } from './AwesomeQueryBuilder';
 import { WhereRow } from './WhereRow';
-import { type QueryWithDefaults } from '../defaults';
-import { type SQLQuery, type DB, type SQLExpression, type SQLSelectableValue } from '../types';
+import { type SQLQuery, type DB, type SQLExpression, type SQLSelectableValue, type QueryWithDefaults } from '../types';
 import { useSqlChange } from '../utils/useSqlChange';
 
 interface WhereRowProps {

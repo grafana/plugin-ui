@@ -1,8 +1,7 @@
 import React from 'react';
 import { type SelectableValue } from '@grafana/data';
 import { OrderByRow } from './OrderByRow';
-import { type QueryWithDefaults } from '../defaults';
-import { type SQLQuery, type DB } from '../types';
+import { type SQLQuery, type DB, type QueryWithDefaults } from '../types';
 import { useSqlChange } from '../utils/useSqlChange';
 
 type SQLOrderByRowProps = {

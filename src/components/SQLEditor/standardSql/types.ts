@@ -6,9 +6,12 @@ import {
   type OperatorType,
   type PositionContext,
   type StatementPosition,
+  type StatementPositionResolver,
   type SuggestionKind,
+  type SuggestionsResolver,
 } from '../types';
-import { type LinkedToken } from '../utils/LinkedToken';
+
+export type { SQLMonarchLanguage } from '../types';
 
 export interface SuggestionsRegistryItem extends RegistryItem {
   id: SuggestionKind;
@@ -27,31 +30,9 @@ export interface OperatorsRegistryItem extends RegistryItem {
   type: OperatorType;
 }
 
-export type StatementPositionResolver = (
-  currentToken: LinkedToken | null,
-  previousKeyword: LinkedToken | null,
-  previousNonWhiteSpace: LinkedToken | null,
-  previousIsSlash: Boolean
-) => Boolean;
-
 export interface StatementPositionResolversRegistryItem extends RegistryItem {
   id: StatementPosition;
   resolve: StatementPositionResolver;
 }
 
-export type SuggestionsResolver = <T extends PositionContext = PositionContext>(
-  positionContext: T
-) => Promise<CustomSuggestion[]>;
-
-export interface SQLMonarchLanguage extends monacoTypes.languages.IMonarchLanguage {
-  keywords?: string[];
-  builtinFunctions?: string[];
-
-  /* Example: AND, OR, LIKE */
-  logicalOperators?: string[];
-  /* Example: >, <>, = */
-  comparisonOperators?: string[];
-
-  /** Used by basic languages in the monaco registry **/
-  operators?: string[];
-}
+export type { StatementPositionResolver, SuggestionsResolver };
