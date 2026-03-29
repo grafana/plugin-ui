@@ -149,7 +149,7 @@
     "glob": "10.5.0",
     "tar": "^7.5.7",
     "@babel/helpers": "^7.26.10",
-    "brace-expansion": "^2.0.2",
+    "brace-expansion": "^2.0.3",
     "diff": "^4.0.4",
     "js-yaml": "^4.1.1",
     "immutable": "^4.3.8",
