@@ -168,6 +168,7 @@
     "TIMETICKS",
     "TODATETIMEOFFSET",
     "toggleable",
+    "tootallnate",
     "TRANCOUNT",
     "TSEQUAL",
     "typecheck",
@@ -184,6 +185,8 @@
     "comparitor",
     "pangea",
     "attw",
+    "packagejson",
+    "publint",
     "uplot",
     "arethetypeswrong"
   ]

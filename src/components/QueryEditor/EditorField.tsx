@@ -1,6 +1,5 @@
+import React, { type ComponentProps } from 'react';
 import { css } from '@emotion/css';
-import { type ComponentProps } from 'react';
-
 import { type GrafanaTheme2 } from '@grafana/data';
 import { Field, Icon, type PopoverContent, ReactUtils, Space, Tooltip, useStyles2 } from '@grafana/ui';
 

@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useAsyncFn, useDebounce } from 'react-use';
 import { formattedValueToString, getValueFormat, type TimeRange } from '@grafana/data';
 import { Icon, Spinner, useTheme2 } from '@grafana/ui';

@@ -2,6 +2,7 @@
  * Tests for DatasetSelector component (dual-mode: dataset or schema)
  * Note: The dataset field has dual meaning - it represents schema when catalog is present, dataset otherwise.
  */
+import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { DatasetSelector } from './DatasetSelector';
 import { type DB } from './types';

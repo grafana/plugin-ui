@@ -1,5 +1,5 @@
+import React, { useState, memo } from 'react';
 import { css } from '@emotion/css';
-import { useState, memo } from 'react';
 import { usePopperTooltip } from 'react-popper-tooltip';
 
 import { type GrafanaTheme2, renderMarkdown } from '@grafana/data';

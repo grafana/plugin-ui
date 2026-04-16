@@ -1,11 +1,9 @@
 import { uniqBy } from 'lodash';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { v4 } from 'uuid';
-
 import { type SelectableValue, toOption } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
 import { InlineField, Select } from '@grafana/ui';
-
 import { type QueryBuilderLabelFilter } from '../types';
 import { InputGroup } from '../../QueryEditor/InputGroup';
 import { AccessoryButton } from '../../QueryEditor/AccessoryButton';

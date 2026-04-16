@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { useState, memo } from 'react';
+import React, { useState, memo } from 'react';
 import { type DraggableProvided } from '@hello-pangea/dnd';
 
 import { type GrafanaTheme2, type SelectableValue } from '@grafana/data';

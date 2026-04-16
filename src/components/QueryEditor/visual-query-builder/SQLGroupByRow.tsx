@@ -1,3 +1,4 @@
+import React from 'react';
 import { type SelectableValue } from '@grafana/data';
 
 import { GroupByRow } from './GroupByRow';

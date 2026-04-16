@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { type DataSourceApi, type GrafanaTheme2, type PanelData, type DataQuery } from '@grafana/data';
 import { reportInteraction } from '@grafana/runtime';

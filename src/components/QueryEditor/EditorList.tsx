@@ -1,4 +1,4 @@
-import { type ReactElement, type Ref, forwardRef } from 'react';
+import React, { type ReactElement, type Ref, forwardRef } from 'react';
 import { Button } from '@grafana/ui';
 
 import { EditorStack } from './EditorStack';

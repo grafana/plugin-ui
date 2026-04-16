@@ -1,3 +1,4 @@
+import React from 'react';
 import { DataSourceDescription } from './DataSourceDescription';
 import { render } from '@testing-library/react';
 

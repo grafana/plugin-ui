@@ -1,3 +1,4 @@
+import React from 'react';
 import { screen, render } from '@testing-library/react';
 import { Auth, type Props } from './Auth';
 import { AuthMethod } from './types';

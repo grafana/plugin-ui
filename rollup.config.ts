@@ -18,9 +18,11 @@ const legacyOutputDefaults = {
   interop: 'compat',
 };
 
+const entryPoints = ['src/index.ts', 'src/test-utils.ts'];
+
 export default [
   {
-    input: 'src/index.ts',
+    input: entryPoints,
     plugins: [
       nodeExternals({ deps: true, peerDeps: true, packagePath: './package.json' }),
       commonjs(),
@@ -34,7 +36,8 @@ export default [
       {
         format: 'cjs',
         sourcemap: true,
-        file: pkg.main,
+        dir: path.dirname(pkg.main),
+        entryFileNames: `[name]${path.extname(pkg.main)}`,
         ...legacyOutputDefaults,
       },
       {
@@ -57,6 +60,20 @@ export default [
       },
       {
         file: pkg.exports['.'].import.types,
+        format: 'esm',
+      },
+    ],
+  },
+  {
+    input: './compiled/test-utils.d.ts',
+    plugins: [dts()],
+    output: [
+      {
+        file: pkg.exports['./test'].require.types,
+        format: 'cjs',
+      },
+      {
+        file: pkg.exports['./test'].import.types,
         format: 'esm',
       },
     ],

@@ -1,5 +1,5 @@
+import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-
 import { DebounceInput } from './DebounceInput';
 import { Chance } from 'chance';
 import { DEFAULT_DELAY } from '../../hooks/useDebounce';

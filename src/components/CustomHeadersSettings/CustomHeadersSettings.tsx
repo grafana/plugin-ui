@@ -1,4 +1,4 @@
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { css } from '@emotion/css';
 import { uniqueId } from 'lodash';
 import { type DataSourceSettings } from '@grafana/data';

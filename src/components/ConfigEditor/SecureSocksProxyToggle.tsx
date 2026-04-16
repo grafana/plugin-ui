@@ -1,3 +1,4 @@
+import React from 'react';
 import { type InlineLabel as OriginalInlineLabel, InlineField, InlineSwitch } from '@grafana/ui';
 import { config } from '@grafana/runtime';
 import { type DataSourceSettings } from '@grafana/data';

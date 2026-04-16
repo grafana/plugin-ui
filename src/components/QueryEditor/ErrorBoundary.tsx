@@ -1,4 +1,4 @@
-import { type PropsWithChildren, type ReactNode, Component } from 'react';
+import React, { type PropsWithChildren, type ReactNode, Component } from 'react';
 
 type Props = PropsWithChildren<{
   fallBackComponent?: ReactNode;

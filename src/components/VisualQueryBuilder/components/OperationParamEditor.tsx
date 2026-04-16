@@ -1,5 +1,5 @@
+import React, { type FunctionComponent } from 'react';
 import { css } from '@emotion/css';
-import { type FunctionComponent } from 'react';
 
 import { type GrafanaTheme2, type SelectableValue, toOption } from '@grafana/data';
 import { AutoSizeInput, Button, Checkbox, Select, useStyles2 } from '@grafana/ui';

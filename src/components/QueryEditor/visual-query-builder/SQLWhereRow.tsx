@@ -1,7 +1,6 @@
+import React from 'react';
 import { useAsync } from 'react-use';
-
 import { type SelectableValue } from '@grafana/data';
-
 import { type Config } from './AwesomeQueryBuilder';
 import { WhereRow } from './WhereRow';
 import { type QueryWithDefaults } from '../defaults';

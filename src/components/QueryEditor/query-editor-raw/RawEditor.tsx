@@ -1,12 +1,10 @@
+import React, { useMemo, useState } from 'react';
 import { css } from '@emotion/css';
-import { useMemo, useState } from 'react';
 import { useMeasure } from 'react-use';
 // @ts-ignore
 import AutoSizer from 'react-virtualized-auto-sizer';
-
 import { type GrafanaTheme2 } from '@grafana/data';
 import { Modal, useStyles2, useTheme2 } from '@grafana/ui';
-
 import { QueryEditorRaw } from './QueryEditorRaw';
 import { QueryToolbox } from './QueryToolbox';
 import { type QueryEditorProps, type SQLQuery } from '../types';

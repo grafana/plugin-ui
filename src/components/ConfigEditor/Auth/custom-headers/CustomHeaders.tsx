@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { css } from '@emotion/css';
 import { Button, useTheme2 } from '@grafana/ui';
 import { CustomHeader } from './CustomHeader';
