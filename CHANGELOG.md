@@ -1,5 +1,10 @@
 # Change Log
 
+## next
+
+- Replace `sql-formatter-plus` with `sql-formatter` for actively maintained SQL formatting.
+- Add `language` prop to `SqlQueryEditor`, `RawEditor`, `QueryEditorRaw`, `VisualEditor`, and `Preview` to support dialect-specific formatting (e.g. `postgresql`, `mysql`, `bigquery`). Defaults to `'sql'` for backward compatibility.
+
 ## v0.13.1 - 2026-02-10
 
 - Replace defaultProps with es6 defaults for React 19 compatibility

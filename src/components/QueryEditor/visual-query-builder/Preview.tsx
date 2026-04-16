@@ -6,12 +6,14 @@ import { type GrafanaTheme2 } from '@grafana/data';
 import { CodeEditor, Field, IconButton, useStyles2 } from '@grafana/ui';
 
 import { formatSQL } from '../utils/formatSQL';
+import type { SqlLanguage } from 'sql-formatter';
 
 type PreviewProps = {
   rawSql: string;
+  language?: SqlLanguage;
 };
 
-export function Preview({ rawSql }: PreviewProps) {
+export function Preview({ rawSql, language = 'sql' }: PreviewProps) {
   // TODO: use zero index to give feedback about copy success
   const [_, copyToClipboard] = useCopyToClipboard();
   const styles = useStyles2(getStyles);
@@ -28,7 +30,7 @@ export function Preview({ rawSql }: PreviewProps) {
       <CodeEditor
         language="sql"
         height={80}
-        value={formatSQL(rawSql)}
+        value={formatSQL(rawSql, language)}
         monacoOptions={{ scrollbar: { vertical: 'hidden' }, scrollBeyondLastLine: false }}
         readOnly={true}
         showMiniMap={false}

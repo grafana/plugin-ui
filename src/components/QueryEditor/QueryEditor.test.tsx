@@ -43,6 +43,7 @@ describe('QueryEditor - Catalog.Schema.Table Integration', () => {
           query={defaultQuery}
           onChange={jest.fn()}
           onRunQuery={jest.fn()}
+          language="sql"
         />
       );
 
@@ -60,6 +61,7 @@ describe('QueryEditor - Catalog.Schema.Table Integration', () => {
           query={defaultQuery}
           onChange={jest.fn()}
           onRunQuery={jest.fn()}
+          language="sql"
         />
       );
 
@@ -77,6 +79,7 @@ describe('QueryEditor - Catalog.Schema.Table Integration', () => {
           datasource={datasource as any}
           query={defaultQuery}
           onChange={jest.fn()}
+          language="sql"
           onRunQuery={jest.fn()}
         />
       );
@@ -114,6 +117,7 @@ describe('QueryEditor - Catalog.Schema.Table Integration', () => {
           datasource={datasource as any}
           query={unityCatalogQuery}
           onChange={onChangeMock}
+          language="sql"
           onRunQuery={jest.fn()}
         />
       );
