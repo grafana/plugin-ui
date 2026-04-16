@@ -12,4 +12,24 @@ describe('formatSQL', () => {
 
     expect(formatSQL(query)).toMatchSnapshot();
   });
+
+  it('preserves Grafana template tokens with a non-default language', () => {
+    const query = 'select ${foo} from my_table where $__timeFilter(time) and $var = 1';
+    const result = formatSQL(query, 'postgresql');
+
+    expect(result).toContain('${foo}');
+    expect(result).toContain('$__timeFilter(time)');
+    expect(result).toContain('$var');
+  });
+
+  it('handles dialect-specific syntax with the appropriate language', () => {
+    // PostgreSQL :: cast operator causes a parse error in the default 'sql' dialect.
+    // Passing language='postgresql' allows it to format correctly.
+    const query = 'SELECT id::text FROM users WHERE $__timeFilter(time)';
+
+    expect(() => formatSQL(query, 'sql')).toThrow();
+    expect(() => formatSQL(query, 'postgresql')).not.toThrow();
+    expect(formatSQL(query, 'postgresql')).toContain('id::text');
+    expect(formatSQL(query, 'postgresql')).toContain('$__timeFilter(time)');
+  });
 });
