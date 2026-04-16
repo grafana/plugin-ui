@@ -8,7 +8,6 @@ import { DatasetSelector } from './DatasetSelector';
 import { CatalogSelector } from './CatalogSelector';
 import { TableSelector } from './TableSelector';
 import { InlineSwitch, RadioButtonGroup } from '@grafana/ui';
-import { type QueryWithDefaults } from './defaults';
 import { EditorField } from './EditorField';
 import { EditorHeader } from './EditorHeader';
 import { EditorRow } from './EditorRow';
@@ -16,7 +15,15 @@ import { FlexItem } from './FlexItem';
 import { InlineSelect } from './InlineSelect';
 import { Space } from './Space';
 import { RunQueryButton } from './RunQueryButton';
-import { type DB, type SQLQuery, type QueryRowFilter, EditorMode, QueryFormat, QUERY_FORMAT_OPTIONS } from './types';
+import {
+  type DB,
+  type SQLQuery,
+  type QueryRowFilter,
+  type QueryWithDefaults,
+  EditorMode,
+  QueryFormat,
+  QUERY_FORMAT_OPTIONS,
+} from './types';
 import { getRawSqlFn } from './utils/sql.utils';
 
 interface QueryHeaderProps {

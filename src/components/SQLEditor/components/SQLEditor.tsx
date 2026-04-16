@@ -8,6 +8,7 @@ import {
   CompletionItemKind,
   CompletionItemPriority,
   type CustomSuggestion,
+  type LanguageDefinition,
   type PositionContext,
   type SQLCompletionItemProvider,
   type StatementPosition,
@@ -23,7 +24,6 @@ import {
   type FunctionsRegistryItem,
   type MacrosRegistryItem,
   type OperatorsRegistryItem,
-  type SQLMonarchLanguage,
   type StatementPositionResolversRegistryItem,
   type SuggestionsRegistryItem,
 } from '../standardSql/types';
@@ -35,17 +35,6 @@ import { getStandardSQLCompletionProvider } from '../standardSql/standardSQLComp
 import { useLatestCallback } from '../hooks/useLatestCallback';
 
 const STANDARD_SQL_LANGUAGE = 'sql';
-
-export interface LanguageDefinition extends monacoTypes.languages.ILanguageExtensionPoint {
-  loader?: (module: any) => Promise<{
-    language: SQLMonarchLanguage;
-    conf: monacoTypes.languages.LanguageConfiguration;
-  }>;
-  // Provides API for customizing the autocomplete
-  completionProvider?: (m: Monaco, language: SQLMonarchLanguage) => SQLCompletionItemProvider;
-  // Function that returns a formatted query
-  formatter?: (q: string) => string;
-}
 
 interface SQLEditorProps {
   query: string;

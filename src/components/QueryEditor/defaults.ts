@@ -24,5 +24,3 @@ export function applyQueryDefaults(q?: SQLQuery): SQLQuery {
 
   return result;
 }
-
-export type QueryWithDefaults = ReturnType<typeof applyQueryDefaults>;
