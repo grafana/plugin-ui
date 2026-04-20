@@ -1,5 +1,4 @@
 import { type Monaco, type monacoTypes } from '@grafana/ui';
-import { type SQLMonarchLanguage, type StatementPositionResolver, type SuggestionsResolver } from './standardSql/types';
 import { type LinkedToken } from './utils/LinkedToken';
 
 /**
@@ -149,7 +148,42 @@ export interface SQLCompletionItemProvider
   ) => monacoTypes.languages.CompletionList;
 }
 
+export interface SQLMonarchLanguage extends monacoTypes.languages.IMonarchLanguage {
+  keywords?: string[];
+  builtinFunctions?: string[];
+
+  /* Example: AND, OR, LIKE */
+  logicalOperators?: string[];
+  /* Example: >, <>, = */
+  comparisonOperators?: string[];
+
+  /** Used by basic languages in the monaco registry **/
+  operators?: string[];
+}
+
+export type StatementPositionResolver = (
+  currentToken: LinkedToken | null,
+  previousKeyword: LinkedToken | null,
+  previousNonWhiteSpace: LinkedToken | null,
+  previousIsSlash: Boolean
+) => Boolean;
+
+export type SuggestionsResolver = <T extends PositionContext = PositionContext>(
+  positionContext: T
+) => Promise<CustomSuggestion[]>;
+
 export type LanguageCompletionProvider = (m: Monaco, l?: SQLMonarchLanguage) => SQLCompletionItemProvider;
+
+export interface LanguageDefinition extends monacoTypes.languages.ILanguageExtensionPoint {
+  loader?: (module: any) => Promise<{
+    language: SQLMonarchLanguage;
+    conf: monacoTypes.languages.LanguageConfiguration;
+  }>;
+  // Provides API for customizing the autocomplete
+  completionProvider?: (m: Monaco, language: SQLMonarchLanguage) => SQLCompletionItemProvider;
+  // Function that returns a formatted query
+  formatter?: (q: string) => string;
+}
 
 export enum OperatorType {
   Comparison,
@@ -164,20 +198,7 @@ export enum MacroType {
   Table,
 }
 
-export enum TokenType {
-  Parenthesis = 'delimiter.parenthesis.sql',
-  Whitespace = 'white.sql',
-  Keyword = 'keyword.sql',
-  Delimiter = 'delimiter.sql',
-  Operator = 'operator.sql',
-  Identifier = 'identifier.sql',
-  IdentifierQuote = 'identifier.quote.sql',
-  Type = 'type.sql',
-  Function = 'predefined.sql',
-  Number = 'number.sql',
-  String = 'string.sql',
-  Variable = 'variable.sql',
-}
+export { TokenType } from './utils/tokenType';
 
 export enum StatementPosition {
   Unknown = 'unknown',

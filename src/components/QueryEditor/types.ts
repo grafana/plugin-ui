@@ -11,7 +11,6 @@ import {
 
 import { type DataQuery } from '@grafana/schema';
 
-import { type QueryWithDefaults } from './defaults';
 import {
   type QueryEditorFunctionExpression,
   type QueryEditorGroupByExpression,
@@ -190,3 +189,9 @@ export interface MetaDefinition {
   completion?: string;
   kind: CompletionItemKind;
 }
+
+/**
+ * Represents a query with all default values applied.
+ * This is equivalent to SQLQuery since applyQueryDefaults returns SQLQuery.
+ */
+export type QueryWithDefaults = SQLQuery;
