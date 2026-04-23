@@ -1793,7 +1793,7 @@ __metadata:
     storybook: "npm:10.2.10"
     ts-node: "npm:^10.9.1"
     typescript: "npm:^5.7.3"
-    uuid: "npm:^11.0.0"
+    uuid: "npm:^14.0.0"
   peerDependencies:
     "@grafana/data": ">=10.4.0-0"
     "@grafana/e2e-selectors": ">=10.4.0-0"
@@ -14364,12 +14364,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^11.0.0":
-  version: 11.0.5
-  resolution: "uuid@npm:11.0.5"
+"uuid@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "uuid@npm:14.0.0"
   bin:
-    uuid: dist/esm/bin/uuid
-  checksum: 10c0/6f59f0c605e02c14515401084ca124b9cb462b4dcac866916a49862bcf831874508a308588c23a7718269226ad11a92da29b39d761ad2b86e736623e3a33b6e7
+    uuid: dist-node/bin/uuid
+  checksum: 10c0/a57ae7794c45005c1a9208989196c5baf79a7679c30f43c1bee9033a2c4d113a2cea216fa6fcc9663b08b0d55635df1a7c6eb7e7f3d21c3e50688c698fa39a50
   languageName: node
   linkType: hard
 
