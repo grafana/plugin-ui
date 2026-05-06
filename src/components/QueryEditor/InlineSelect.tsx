@@ -32,7 +32,7 @@ export function InlineSelect<T>({ label: labelProp, ...props }: InlineSelectProp
           {':'}&nbsp;
         </label>
       )}
-      <Select openMenuOnFocus inputId={id} {...props} components={components} />
+      <Select inputId={id} {...props} components={components} />
     </div>
   );
 }
