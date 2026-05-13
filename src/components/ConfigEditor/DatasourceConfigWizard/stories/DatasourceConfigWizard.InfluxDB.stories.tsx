@@ -149,7 +149,7 @@ function mockBackendSrv(mocks: Record<string, Record<string, unknown>>) {
 
 export default {
   title: 'Editors/Config/InfluxDB',
-  component: DatasourceConfigWizard,
+  component: StoryModeWrapper,
   decorators: [
     (Story: React.ComponentType) => {
       mockBackendSrv(mockDatasources);
@@ -161,36 +161,36 @@ export default {
 const noop = () => {};
 
 export const FreshNoConfig = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="influx-fresh" dsName="influx-fresh" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="influx-fresh" dsName="influx-fresh" onSuccess={noop} />
 );
 FreshNoConfig.storyName = 'Default';
 
 export const Oss1InfluxQL = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="influx-oss1-influxql" dsName="influx-oss1-influxql" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="influx-oss1-influxql" dsName="influx-oss1-influxql" onSuccess={noop} />
 );
 Oss1InfluxQL.storyName = 'OSS 1.x (InfluxQL)';
 
 export const Oss2Flux = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="influx-oss2-flux" dsName="influx-oss2-flux" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="influx-oss2-flux" dsName="influx-oss2-flux" onSuccess={noop} />
 );
 Oss2Flux.storyName = 'OSS 2.x (Flux)';
 
 export const CloudDedicatedSql = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="influx-cloud-sql" dsName="influx-cloud-sql" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="influx-cloud-sql" dsName="influx-cloud-sql" onSuccess={noop} />
 );
 CloudDedicatedSql.storyName = 'Cloud Dedicated (SQL)';
 
 export const BasicAuth = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="influx-basic-auth" dsName="influx-basic-auth" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="influx-basic-auth" dsName="influx-basic-auth" onSuccess={noop} />
 );
 BasicAuth.storyName = 'Enterprise with basic auth';
 
 export const TlsAuth = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="influx-tls" dsName="influx-tls" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="influx-tls" dsName="influx-tls" onSuccess={noop} />
 );
 TlsAuth.storyName = 'TLS client auth';
 
 export const Provisioned = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="influx-provisioned" dsName="influx-provisioned" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="influx-provisioned" dsName="influx-provisioned" onSuccess={noop} />
 );
 Provisioned.storyName = 'Read-only (provisioned)';

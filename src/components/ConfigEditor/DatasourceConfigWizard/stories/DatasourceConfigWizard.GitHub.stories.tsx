@@ -98,7 +98,7 @@ function mockBackendSrv(mocks: Record<string, Record<string, unknown>>) {
 
 export default {
   title: 'Editors/Config/GitHub',
-  component: DatasourceConfigWizard,
+  component: StoryModeWrapper,
   decorators: [
     (Story: React.ComponentType) => {
       mockBackendSrv(mockDatasources);
@@ -110,26 +110,24 @@ export default {
 const noop = () => {};
 
 export const FreshNoConfig = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="gh-fresh" dsName="gh-fresh" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="gh-fresh" dsName="gh-fresh" onSuccess={noop} />
 );
 FreshNoConfig.storyName = 'Default';
 
 export const PersonalAccessToken = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="gh-pat" dsName="gh-pat" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="gh-pat" dsName="gh-pat" onSuccess={noop} />
 );
 PersonalAccessToken.storyName = 'Personal Access Token';
 
-export const GitHubApp = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="gh-app" dsName="gh-app" onSuccess={noop} />
-);
+export const GitHubApp = () => <StoryModeWrapper schema={schema} dsUid="gh-app" dsName="gh-app" onSuccess={noop} />;
 GitHubApp.storyName = 'GitHub App';
 
 export const EnterpriseServer = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="gh-enterprise" dsName="gh-enterprise" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="gh-enterprise" dsName="gh-enterprise" onSuccess={noop} />
 );
 EnterpriseServer.storyName = 'Enterprise Server';
 
 export const Provisioned = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="gh-provisioned" dsName="gh-provisioned" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="gh-provisioned" dsName="gh-provisioned" onSuccess={noop} />
 );
 Provisioned.storyName = 'Read-only (provisioned)';

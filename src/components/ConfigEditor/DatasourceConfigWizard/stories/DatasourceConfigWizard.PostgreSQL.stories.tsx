@@ -131,7 +131,7 @@ function mockBackendSrv(mocks: Record<string, Record<string, unknown>>) {
 
 export default {
   title: 'Editors/Config/PostgreSQL',
-  component: DatasourceConfigWizard,
+  component: StoryModeWrapper,
   decorators: [
     (Story: React.ComponentType) => {
       mockBackendSrv(mockDatasources);
@@ -143,31 +143,31 @@ export default {
 const noop = () => {};
 
 export const FreshNoConfig = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="pg-fresh" dsName="pg-fresh" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="pg-fresh" dsName="pg-fresh" onSuccess={noop} />
 );
 FreshNoConfig.storyName = 'Default';
 
 export const BasicConnection = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="pg-basic" dsName="pg-basic" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="pg-basic" dsName="pg-basic" onSuccess={noop} />
 );
 BasicConnection.storyName = 'Basic connection';
 
 export const SslRequired = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="pg-ssl-require" dsName="pg-ssl-require" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="pg-ssl-require" dsName="pg-ssl-require" onSuccess={noop} />
 );
 SslRequired.storyName = 'SSL required';
 
 export const SslVerifyFull = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="pg-ssl-verify" dsName="pg-ssl-verify" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="pg-ssl-verify" dsName="pg-ssl-verify" onSuccess={noop} />
 );
 SslVerifyFull.storyName = 'SSL verify-full with certs';
 
 export const TimescaleDb = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="pg-timescale" dsName="pg-timescale" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="pg-timescale" dsName="pg-timescale" onSuccess={noop} />
 );
 TimescaleDb.storyName = 'TimescaleDB with connection limits';
 
 export const Provisioned = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="pg-provisioned" dsName="pg-provisioned" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="pg-provisioned" dsName="pg-provisioned" onSuccess={noop} />
 );
 Provisioned.storyName = 'Read-only (provisioned)';

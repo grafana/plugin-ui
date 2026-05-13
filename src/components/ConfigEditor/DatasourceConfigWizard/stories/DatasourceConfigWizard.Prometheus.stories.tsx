@@ -186,7 +186,7 @@ function mockBackendSrv(mocks: Record<string, Record<string, unknown>>) {
 
 export default {
   title: 'Editors/Config/Prometheus',
-  component: DatasourceConfigWizard,
+  component: StoryModeWrapper,
   decorators: [
     (Story: React.ComponentType) => {
       mockBackendSrv(mockDatasources);
