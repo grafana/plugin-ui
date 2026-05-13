@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - dsconfig
 
 jobs:
   publish:
@@ -21,10 +22,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: main
           persist-credentials: false
-      # limit releases to version changes - https://github.com/EndBug/version-check
+
+      - name: Determine publish mode
+        id: publish_mode
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "is_main=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_main=false" >> "$GITHUB_OUTPUT"
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            BASE_VERSION=$(node -p "require('./package.json').version")
+            echo "sha_version=${BASE_VERSION}-dsconfig.${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # limit releases to version changes (main only)
       - name: Check version changes
+        if: steps.publish_mode.outputs.is_main == 'true'
         uses: EndBug/version-check@5102328418c0130d66ca712d755c303e93368ce2 # v2.1.7
         id: version_check
         with:
@@ -35,11 +49,20 @@ jobs:
         env:
           OUTPUT_VERSION: ${{ steps.version_check.outputs.version }}
           OUTPUT_TYPE: ${{ steps.version_check.outputs.type }}
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.publish_mode.outputs.is_main == 'true' && steps.version_check.outputs.changed == 'true'
         run: 'echo "Version change found! New version: ${OUTPUT_VERSION} (${OUTPUT_TYPE})"'
 
+      - name: Should publish
+        id: should_publish
+        run: |
+          if [[ "${{ steps.publish_mode.outputs.is_main }}" == "true" ]]; then
+            echo "publish=${{ steps.version_check.outputs.changed }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Setup .npmrc file for NPM registry
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.should_publish.outputs.publish == 'true'
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: '.nvmrc'
@@ -48,17 +71,27 @@ jobs:
 
       # npm trusted publishing requires version ^11.5.1
       - name: Install npm version ^11.5.1
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.should_publish.outputs.publish == 'true'
         run: npm install -g npm@^11.5.1
 
       - name: Install dependencies
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.should_publish.outputs.publish == 'true'
         run: yarn install --immutable
 
       - name: Build library
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.should_publish.outputs.publish == 'true'
         run: yarn build
 
+      # For branch builds: stamp SHA-based prerelease version
+      - name: Stamp prerelease version
+        if: steps.should_publish.outputs.publish == 'true' && steps.publish_mode.outputs.is_main != 'true'
+        run: npm version "${{ steps.publish_mode.outputs.sha_version }}" --no-git-tag-version
+
       - name: Publish package to NPM
-        if: steps.version_check.outputs.changed == 'true'
-        run: npm publish --access public
+        if: steps.should_publish.outputs.publish == 'true'
+        run: |
+          if [[ "${{ steps.publish_mode.outputs.is_main }}" == "true" ]]; then
+            npm publish --access public
+          else
+            npm publish --access public --tag dsconfig
+          fi
