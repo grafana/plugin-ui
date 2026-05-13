@@ -3,6 +3,8 @@
     ".github/**",
     "node_modules/**",
     "dist/**",
+    "src/components/DatasourceConfigWizard",
+    "compiled",
     "yarn.lock",
     ".yarn/**",
     ".yarnrc.yml",
@@ -52,6 +54,7 @@
     "DECRYPTBYKEYAUTOASYMKEY",
     "DECRYPTBYKEYAUTOCERT",
     "DECRYPTBYPASSPHRASE",
+    "DSCONFIG",
     "ENCRYPTBYASYMKEY",
     "ENCRYPTBYCERT",
     "ENCRYPTBYKEY",
@@ -188,6 +191,8 @@
     "packagejson",
     "publint",
     "uplot",
+    "unparseable",
+    "upserts",
     "arethetypeswrong"
   ]
 }
