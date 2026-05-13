@@ -2,6 +2,7 @@ import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
 import { DatasourceConfigWizard } from '../DatasourceConfigWizard';
 import type { DatasourceConfigSchema } from '../../../../datasource/schema/config';
+import { StoryModeWrapper } from './StoryModeWrapper';
 import clickhouseSchemaJson from './schemas/clickhouse.schema.json';
 
 const schema = clickhouseSchemaJson as unknown as DatasourceConfigSchema;
@@ -120,26 +121,26 @@ export default {
 const noop = () => {};
 
 export const FreshNoConfig = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="ch-fresh" dsName="ch-fresh" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="ch-fresh" dsName="ch-fresh" onSuccess={noop} />
 );
 FreshNoConfig.storyName = 'Default';
 
 export const NativeProtocol = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="ch-native" dsName="ch-native" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="ch-native" dsName="ch-native" onSuccess={noop} />
 );
 NativeProtocol.storyName = 'Native protocol';
 
 export const HttpProtocol = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="ch-http" dsName="ch-http" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="ch-http" dsName="ch-http" onSuccess={noop} />
 );
 HttpProtocol.storyName = 'HTTP protocol (secure)';
 
 export const SecureWithTls = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="ch-secure" dsName="ch-secure" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="ch-secure" dsName="ch-secure" onSuccess={noop} />
 );
 SecureWithTls.storyName = 'Secure with TLS';
 
 export const Provisioned = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="ch-provisioned" dsName="ch-provisioned" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="ch-provisioned" dsName="ch-provisioned" onSuccess={noop} />
 );
 Provisioned.storyName = 'Read-only (provisioned)';

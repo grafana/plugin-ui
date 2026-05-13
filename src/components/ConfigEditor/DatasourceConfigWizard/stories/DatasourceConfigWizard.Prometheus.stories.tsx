@@ -1,8 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
 import { Button } from '@grafana/ui';
-import { DatasourceConfigWizard } from '../DatasourceConfigWizard';
 import type { DatasourceConfigSchema } from '../../../../datasource/schema/config';
+import { StoryModeWrapper } from './StoryModeWrapper';
 import prometheusSchemaJson from './schemas/prometheus.schema.json';
 
 const schema = prometheusSchemaJson as unknown as DatasourceConfigSchema;
@@ -198,52 +198,52 @@ export default {
 const noop = () => {};
 
 export const FreshNoConfig = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="prom-fresh" dsName="prom-fresh" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="prom-fresh" dsName="prom-fresh" onSuccess={noop} />
 );
 FreshNoConfig.storyName = 'Default';
 
 export const NoAuth = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="prom-no-auth" dsName="prom-no-auth" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="prom-no-auth" dsName="prom-no-auth" onSuccess={noop} />
 );
 NoAuth.storyName = 'No auth';
 
 export const BasicAuth = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="prom-basic-auth" dsName="prom-basic-auth" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="prom-basic-auth" dsName="prom-basic-auth" onSuccess={noop} />
 );
 BasicAuth.storyName = 'Basic auth';
 
 export const OAuthForward = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="prom-oauth" dsName="prom-oauth" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="prom-oauth" dsName="prom-oauth" onSuccess={noop} />
 );
 OAuthForward.storyName = 'OAuth forward identity';
 
 export const TlsCaCert = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="prom-tls-ca" dsName="prom-tls-ca" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="prom-tls-ca" dsName="prom-tls-ca" onSuccess={noop} />
 );
 TlsCaCert.storyName = 'TLS with CA cert';
 
 export const MutualTls = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="prom-mtls" dsName="prom-mtls" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="prom-mtls" dsName="prom-mtls" onSuccess={noop} />
 );
 MutualTls.storyName = 'Mutual TLS (mTLS)';
 
 export const BearerToken = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="prom-bearer" dsName="prom-bearer" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="prom-bearer" dsName="prom-bearer" onSuccess={noop} />
 );
 BearerToken.storyName = 'Bearer token via headers';
 
 export const FullyConfigured = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="prom-full" dsName="prom-full" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="prom-full" dsName="prom-full" onSuccess={noop} />
 );
 FullyConfigured.storyName = 'Fully configured (Mimir)';
 
 export const Provisioned = () => (
-  <DatasourceConfigWizard schema={schema} dsUid="prom-provisioned" dsName="prom-provisioned" onSuccess={noop} />
+  <StoryModeWrapper schema={schema} dsUid="prom-provisioned" dsName="prom-provisioned" onSuccess={noop} />
 );
 Provisioned.storyName = 'Read-only (provisioned)';
 
 export const HealthError = () => (
-  <DatasourceConfigWizard
+  <StoryModeWrapper
     schema={schema}
     dsUid="prom-no-auth"
     dsName="prom-no-auth"
