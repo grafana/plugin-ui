@@ -11,8 +11,6 @@
     "outDir": "dist",
     "resolveJsonModule": true,
     "target": "es2022",
-    "types": ["jest"],
-
     "verbatimModuleSyntax": true
   },
   "include": ["src"]
