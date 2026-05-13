@@ -3,7 +3,7 @@
     ".github/**",
     "node_modules/**",
     "dist/**",
-    "src/components/DatasourceConfigWizard",
+    "src/components/ConfigEditor/DatasourceConfigWizard",
     "compiled",
     "yarn.lock",
     ".yarn/**",
