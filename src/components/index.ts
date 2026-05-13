@@ -14,4 +14,3 @@ export * from './ConfigEditor';
 export { CustomHeadersSettings } from './CustomHeadersSettings/CustomHeadersSettings';
 export * from './VisualQueryBuilder';
 export * from './SQLEditor';
-export * from './DatasourceConfigWizard';

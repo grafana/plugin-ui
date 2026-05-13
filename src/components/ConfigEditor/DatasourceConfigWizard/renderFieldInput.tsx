@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Select, RadioButtonGroup, Switch, TextArea } from '@grafana/ui';
-import type { ConfigField } from '../../datasource/schema/config';
-import type { IndexedPairItem } from '../../datasource/schema/datasource';
+import type { ConfigField } from '../../../datasource/schema/config';
+import type { IndexedPairItem } from '../../../datasource/schema/datasource';
 import { SecureFieldInput, type FormFieldRef } from './SecureFieldInput';
 import { StringArrayInput } from './StringArrayInput';
 import { IndexedPairEditor } from './IndexedPairEditor';

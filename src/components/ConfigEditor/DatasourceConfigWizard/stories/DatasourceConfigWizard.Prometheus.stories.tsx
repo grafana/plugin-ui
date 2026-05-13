@@ -2,7 +2,7 @@ import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
 import { Button } from '@grafana/ui';
 import { DatasourceConfigWizard } from '../DatasourceConfigWizard';
-import type { DatasourceConfigSchema } from '../../../datasource/schema/config';
+import type { DatasourceConfigSchema } from '../../../../datasource/schema/config';
 import prometheusSchemaJson from './schemas/prometheus.schema.json';
 
 const schema = prometheusSchemaJson as unknown as DatasourceConfigSchema;

@@ -9,13 +9,13 @@ import {
   formKey,
   type ConfigField,
   type DatasourceConfigSchema,
-} from '../../datasource/schema/config';
+} from '../../../datasource/schema/config';
 import {
   SECURE_FIELD_CONFIGURED,
   fetchExistingValues,
   submitDatasourceConfig,
-} from '../../datasource/schema/datasource';
-import type { FormValues } from '../../datasource/schema/types';
+} from '../../../datasource/schema/datasource';
+import type { FormValues } from '../../../datasource/schema/types';
 import { evaluateEffectCondition, isFieldRequired } from './fieldUtils';
 import { SchemaField } from './SchemaField';
 import { AuthorizationHeaderField } from './AuthorizationHeaderField';

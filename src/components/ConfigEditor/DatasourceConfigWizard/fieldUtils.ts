@@ -1,5 +1,5 @@
-import { type ConfigField, parseDependsOn, formKey } from '../../datasource/schema/config';
-import { SECURE_FIELD_CONFIGURED } from '../../datasource/schema/datasource';
+import { type ConfigField, parseDependsOn, formKey } from '../../../datasource/schema/config';
+import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
 
 /**
  * Evaluate an effect's `when` condition against a field value.
