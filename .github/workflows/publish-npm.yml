@@ -70,9 +70,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       # npm trusted publishing requires version ^11.5.1
+      # Use npx to bootstrap a working npm, avoiding MODULE_NOT_FOUND in bundled npm
       - name: Install npm version ^11.5.1
         if: steps.should_publish.outputs.publish == 'true'
-        run: npm install -g npm@^11.5.1
+        run: npx npm@^11.5.1 install -g npm@^11.5.1
 
       - name: Install dependencies
         if: steps.should_publish.outputs.publish == 'true'
