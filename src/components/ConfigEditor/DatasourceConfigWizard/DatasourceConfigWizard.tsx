@@ -1,6 +1,7 @@
 import React, { type ReactNode, useCallback, useMemo, useState } from 'react';
 import { useStyles2, Button, LinkButton, Select, Icon, Alert, Tooltip, Spinner } from '@grafana/ui';
-import { formKey, type DatasourceConfigSchema } from '../../../datasource/schema/config';
+import type { DatasourceConfigSchema } from '../../../datasource/schema/schema';
+import { formKey } from '../../../datasource/schema/config';
 import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
 import { isFieldRequired } from './fieldUtils';
 import { SchemaField } from './SchemaField';

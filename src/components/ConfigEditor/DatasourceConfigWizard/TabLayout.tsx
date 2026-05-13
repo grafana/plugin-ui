@@ -1,6 +1,7 @@
 import React, { type ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { useStyles2, Button, Icon, Alert, Spinner, LinkButton, Collapse } from '@grafana/ui';
-import { formKey, type DatasourceConfigSchema } from '../../../datasource/schema/config';
+import type { DatasourceConfigSchema } from '../../../datasource/schema/schema';
+import { formKey } from '../../../datasource/schema/config';
 import type { useDatasourceConfigForm } from './useDatasourceConfigForm';
 import { SchemaField } from './SchemaField';
 import { AuthorizationHeaderField } from './AuthorizationHeaderField';

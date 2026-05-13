@@ -1,7 +1,8 @@
 import React from 'react';
 import { type useForm, Controller } from 'react-hook-form';
 import { useStyles2, Icon, Tooltip } from '@grafana/ui';
-import { type ConfigField, resolveActiveOverride, formKey } from '../../../datasource/schema/config';
+import type { ConfigField } from '../../../datasource/schema/schema';
+import { resolveActiveOverride, formKey } from '../../../datasource/schema/config';
 import type { FormValues } from '../../../datasource/schema/types';
 import { isFieldRequired, buildValidationRules } from './fieldUtils';
 import { PdcFieldNote } from './PdcFieldNote';

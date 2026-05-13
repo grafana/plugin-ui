@@ -193,6 +193,11 @@
     "uplot",
     "unparseable",
     "upserts",
+    "keyvalue",
+    "logql",
+    "traceql",
+    "creds",
+    "pasteable",
     "arethetypeswrong"
   ]
 }

@@ -1,4 +1,4 @@
-import type { DatasourceConfigSchema } from './config';
+import type { DatasourceConfigSchema } from './schema';
 
 /**
  * Generate LLM hints for select fields (used when creating datasources).

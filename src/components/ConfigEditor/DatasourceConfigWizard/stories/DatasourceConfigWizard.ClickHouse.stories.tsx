@@ -1,7 +1,7 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
 import { DatasourceConfigWizard } from '../DatasourceConfigWizard';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/config';
+import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
 import clickhouseSchemaJson from './schemas/clickhouse.schema.json';
 

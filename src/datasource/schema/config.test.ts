@@ -1,12 +1,5 @@
-import {
-  type ConfigField,
-  type ConfigGroup,
-  type DatasourceConfigSchema,
-  resolveGroups,
-  resolveRequiredFieldsGroup,
-  formKey,
-  parseDependsOn,
-} from './config';
+import type { ConfigField, ConfigGroup, DatasourceConfigSchema } from './schema';
+import { resolveGroups, resolveRequiredFieldsGroup, formKey, parseDependsOn } from './config';
 
 // ============================================================
 // Helpers

@@ -1,12 +1,7 @@
 // @ts-expect-error — js-yaml has no bundled type declarations; used only for scalar serialization
 import yaml from 'js-yaml';
-import {
-  resolveGroups,
-  type AllowedValuesValidation,
-  type ConfigField,
-  type ConfigGroup,
-  type DatasourceConfigSchema,
-} from './config';
+import type { AllowedValuesValidationRule, ConfigField, ConfigGroup, DatasourceConfigSchema } from './schema';
+import { resolveGroups } from './config';
 
 // ============================================================
 // Provisioning YAML generation
@@ -160,7 +155,9 @@ function fieldComment(field: ConfigField, indent: string): string {
     parts.push(`${indent}# Allowed values: ${vals}`);
   }
 
-  const allowedValuesRule = field.validations?.find((v): v is AllowedValuesValidation => v.type === 'allowedValues');
+  const allowedValuesRule = field.validations?.find(
+    (v): v is AllowedValuesValidationRule => v.type === 'allowedValues'
+  );
   if (allowedValuesRule && !options) {
     const vals = allowedValuesRule.values.map((v) => String(v)).join(', ');
     parts.push(`${indent}# Allowed values: ${vals}`);

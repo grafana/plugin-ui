@@ -1,5 +1,6 @@
 import { getBackendSrv } from '@grafana/runtime';
-import { formKey, type ConfigField } from './config';
+import type { ConfigField } from './schema';
+import { formKey } from './config';
 import type { DatasourceResponse, DatasourceConfigPayload, FormValues } from './types';
 
 export const SECURE_FIELD_CONFIGURED = '__CONFIGURED__';

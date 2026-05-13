@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import type { ConfigField, ConfigGroup, DatasourceConfigSchema } from '../../../datasource/schema/schema';
 import {
   resolveGroups,
   resolveRequiredFieldsGroup,
   parseDependsOn,
   computeVirtualFieldValues,
   formKey,
-  type ConfigField,
-  type ConfigGroup,
-  type DatasourceConfigSchema,
 } from '../../../datasource/schema/config';
 import {
   SECURE_FIELD_CONFIGURED,

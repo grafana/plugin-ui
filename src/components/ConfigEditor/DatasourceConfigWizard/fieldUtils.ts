@@ -1,4 +1,5 @@
-import { type ConfigField, parseDependsOn, formKey } from '../../../datasource/schema/config';
+import type { ConfigField } from '../../../datasource/schema/schema';
+import { parseDependsOn, formKey } from '../../../datasource/schema/config';
 import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
 
 /**

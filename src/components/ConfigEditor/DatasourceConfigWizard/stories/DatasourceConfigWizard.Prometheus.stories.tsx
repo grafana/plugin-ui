@@ -1,7 +1,7 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
 import { Button } from '@grafana/ui';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/config';
+import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
 import prometheusSchemaJson from './schemas/prometheus.schema.json';
 

@@ -1,4 +1,5 @@
 {
+  "$schema": "./../../../../../datasource/schema/schema.json",
   "schemaVersion": "v1",
   "pluginType": "grafana-clickhouse-datasource",
   "pluginName": "ClickHouse",
