@@ -4,6 +4,7 @@
     "node_modules/**",
     "dist/**",
     "src/components/ConfigEditor/DatasourceConfigWizard",
+    "schemaRegistry.ts",
     "**/*.schema.json",
     "compiled",
     "yarn.lock",

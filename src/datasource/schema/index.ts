@@ -13,3 +13,4 @@ export type { FetchExistingResult, IndexedPairItem } from './datasource';
 export { generateLLMHint, generateTroubleshootingFields } from './llmHints';
 export { toProvisioningYaml, datasourceToProvisioningYaml } from './provisioningYaml';
 export type { ProvisioningYamlOptions } from './provisioningYaml';
+export * from './schemaRegistry';
