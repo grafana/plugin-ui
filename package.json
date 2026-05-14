@@ -14,6 +14,9 @@
     "*": {
       "test": [
         "dist/cjs/test-utils.d.cts"
+      ],
+      "schemas": [
+        "dist/cjs/schemas.d.cts"
       ]
     }
   },
@@ -37,6 +40,16 @@
       "require": {
         "types": "./dist/cjs/test-utils.d.cts",
         "default": "./dist/cjs/test-utils.cjs"
+      }
+    },
+    "./schemas": {
+      "import": {
+        "types": "./dist/esm/schemas.d.ts",
+        "default": "./dist/esm/schemas.js"
+      },
+      "require": {
+        "types": "./dist/cjs/schemas.d.cts",
+        "default": "./dist/cjs/schemas.cjs"
       }
     }
   },
