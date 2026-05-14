@@ -2,7 +2,7 @@ import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
 import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import influxSchemaJson from './schemas/influxdb.schema.json';
+import influxSchemaJson from '../../../../datasource/schema/datasources/influxdb.schema.json';
 
 const schema = influxSchemaJson as unknown as DatasourceConfigSchema;
 

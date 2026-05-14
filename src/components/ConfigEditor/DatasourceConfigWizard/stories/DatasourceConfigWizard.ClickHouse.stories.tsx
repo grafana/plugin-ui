@@ -1,9 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import { DatasourceConfigWizard } from '../DatasourceConfigWizard';
 import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import clickhouseSchemaJson from './schemas/clickhouse.schema.json';
+import clickhouseSchemaJson from '../../../../datasource/schema/datasources/grafana-clickhouse-datasource.schema.json';
 
 const schema = clickhouseSchemaJson as unknown as DatasourceConfigSchema;
 
@@ -109,7 +108,7 @@ function mockBackendSrv(mocks: Record<string, Record<string, unknown>>) {
 
 export default {
   title: 'Editors/Config/ClickHouse',
-  component: DatasourceConfigWizard,
+  component: StoryModeWrapper,
   decorators: [
     (Story: React.ComponentType) => {
       mockBackendSrv(mockDatasources);

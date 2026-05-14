@@ -3,7 +3,7 @@ import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
 import { Button } from '@grafana/ui';
 import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import prometheusSchemaJson from './schemas/prometheus.schema.json';
+import prometheusSchemaJson from '../../../../datasource/schema/datasources/prometheus.schema.json';
 
 const schema = prometheusSchemaJson as unknown as DatasourceConfigSchema;
 

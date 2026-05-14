@@ -2,7 +2,7 @@ import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
 import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import githubSchemaJson from './schemas/github.schema.json';
+import githubSchemaJson from '../../../../datasource/schema/datasources/grafana-github-datasource.schema.json';
 
 const schema = githubSchemaJson as unknown as DatasourceConfigSchema;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
 import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import postgresSchemaJson from './schemas/postgresql.schema.json';
+import postgresSchemaJson from '../../../../datasource/schema/datasources/grafana-clickhouse-datasource.schema.json';
 
 const schema = postgresSchemaJson as unknown as DatasourceConfigSchema;
 

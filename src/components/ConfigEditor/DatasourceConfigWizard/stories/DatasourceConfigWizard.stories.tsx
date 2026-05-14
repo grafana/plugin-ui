@@ -1,10 +1,10 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import { DatasourceConfigWizard } from '../DatasourceConfigWizard';
+import { StoryModeWrapper } from './StoryModeWrapper';
 
 export default {
   title: 'Editors/Config',
-  component: DatasourceConfigWizard,
+  component: StoryModeWrapper,
   decorators: [
     (Story: React.ComponentType) => {
       setBackendSrv({

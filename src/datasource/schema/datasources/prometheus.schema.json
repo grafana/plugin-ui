@@ -1,5 +1,5 @@
 {
-  "$schema": "./../../../../../datasource/schema/schema.json",
+  "$schema": "../schema.json",
   "schemaVersion": "v1",
   "pluginType": "prometheus",
   "pluginName": "Prometheus",
