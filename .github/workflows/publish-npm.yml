@@ -26,8 +26,10 @@ jobs:
 
       - name: Determine publish mode
         id: publish_mode
+        env:
+          REF_NAME: ${{ github.ref_name }}
         run: |
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
+          if [[ "$REF_NAME" == "main" ]]; then
             echo "is_main=true" >> "$GITHUB_OUTPUT"
           else
             echo "is_main=false" >> "$GITHUB_OUTPUT"
