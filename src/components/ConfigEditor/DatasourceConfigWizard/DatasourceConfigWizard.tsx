@@ -1,7 +1,7 @@
 import React, { type ReactNode, useCallback, useMemo, useState } from 'react';
 import { useStyles2, Button, LinkButton, Select, Icon, Alert, Tooltip, Spinner } from '@grafana/ui';
 import type { DatasourceConfigSchema } from '../../../datasource/schema/schema';
-import { formKey } from '../../../datasource/schema/config';
+import { formKey, getWatchedValue } from '../../../datasource/schema/config';
 import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
 import { isFieldRequired } from './fieldUtils';
 import { SchemaField } from './SchemaField';
@@ -138,7 +138,7 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
         return false;
       }
       if (isFieldRequired(field, watchedValues, fieldById)) {
-        const val = watchedValues[formKey(field)];
+        const val = getWatchedValue(watchedValues, formKey(field));
         if (val === SECURE_FIELD_CONFIGURED) {
           continue;
         }

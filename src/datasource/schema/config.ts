@@ -122,6 +122,30 @@ export function formKey(field: ConfigField): string {
 }
 
 /**
+ * Resolve a possibly-dotted key against watchedValues from react-hook-form.
+ * RHF's `watch()` returns nested objects for dotted Controller names
+ * (e.g. "logs.otelEnabled" → { logs: { otelEnabled: true } }),
+ * so a flat `obj["logs.otelEnabled"]` lookup misses.
+ * This helper tries the flat key first, then walks the dot path.
+ */
+export function getWatchedValue(watchedValues: Record<string, unknown>, key: string): unknown {
+  // Flat key (works for non-sectioned fields)
+  if (key in watchedValues) {
+    return watchedValues[key];
+  }
+  // Walk dot path for section-scoped fields
+  const parts = key.split('.');
+  let current: unknown = watchedValues;
+  for (const part of parts) {
+    if (current == null || typeof current !== 'object') {
+      return undefined;
+    }
+    current = (current as Record<string, unknown>)[part];
+  }
+  return current;
+}
+
+/**
  * Parse a simple CEL-like dependsOn expression: "fieldId == 'value'" or "fieldId == true".
  * Returns { field, value } or null if unparseable.
  */
@@ -153,7 +177,7 @@ export function resolveActiveOverride(
     }
     const depField = fieldById.get(parsed.field);
     const depKey = depField ? formKey(depField) : parsed.field;
-    if (String(watchedValues[depKey] ?? '') === parsed.value) {
+    if (String(getWatchedValue(watchedValues, depKey) ?? '') === parsed.value) {
       return ov;
     }
   }

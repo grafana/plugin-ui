@@ -5,9 +5,15 @@ import type { IndexedPairItem } from '../../../datasource/schema/datasource';
 import { SecureFieldInput, type FormFieldRef } from './SecureFieldInput';
 import { StringArrayInput } from './StringArrayInput';
 import { IndexedPairEditor } from './IndexedPairEditor';
+import { ObjectArrayEditor } from './ObjectArrayEditor';
 import { ComplexFieldNote } from './ComplexFieldNote';
 
-export function renderFieldInput(field: ConfigField, formField: FormFieldRef, disabled?: boolean) {
+export function renderFieldInput(
+  field: ConfigField,
+  formField: FormFieldRef,
+  disabled?: boolean,
+  errorMessage?: string
+) {
   const value = formField.value;
   const placeholder = field.ui?.placeholder;
   const label = field.label ?? field.key;
@@ -117,7 +123,20 @@ export function renderFieldInput(field: ConfigField, formField: FormFieldRef, di
     return <IndexedPairEditor value={items} onChange={formField.onChange} maxItems={maxItems} disabled={disabled} />;
   }
 
-  // Complex fields (array of objects/maps, object, map) — not editable in the wizard
+  // Array of objects with defined item fields — inline editor
+  if (field.valueType === 'array' && field.item?.valueType === 'object' && field.item.fields?.length) {
+    return (
+      <ObjectArrayEditor
+        field={field}
+        value={value}
+        onChange={formField.onChange}
+        disabled={disabled}
+        errorMessage={errorMessage}
+      />
+    );
+  }
+
+  // Complex fields (unconstrained object arrays, maps, plain objects) — not editable in the wizard
   if (
     field.valueType === 'object' ||
     field.valueType === 'map' ||

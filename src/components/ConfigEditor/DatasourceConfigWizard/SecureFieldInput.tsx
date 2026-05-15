@@ -31,7 +31,7 @@ export function SecureFieldInput({
       <div className={styles.configuredRow}>
         <span className={styles.configuredBadge}>
           <Icon name="lock" size="xs" />
-          {label} configured
+          Configured
         </span>
         {!disabled && (
           <Button variant="secondary" fill="text" size="sm" onClick={() => formField.onChange('')} type="button">
@@ -69,6 +69,7 @@ export const getSecureFieldStyles = (theme: GrafanaTheme2) => ({
     display: 'flex',
     alignItems: 'center',
     gap: theme.spacing(1),
+    whiteSpace: 'nowrap',
   }),
   configuredBadge: css({
     display: 'inline-flex',
@@ -79,5 +80,6 @@ export const getSecureFieldStyles = (theme: GrafanaTheme2) => ({
     backgroundColor: theme.colors.success.transparent,
     color: theme.colors.success.text,
     fontSize: theme.typography.bodySmall.fontSize,
+    whiteSpace: 'nowrap',
   }),
 });

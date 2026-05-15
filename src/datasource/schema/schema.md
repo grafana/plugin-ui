@@ -292,41 +292,59 @@ TypeScript types that reference themselves (e.g. `AzureCredentials.serviceCreden
 
 ### Per-item secure fields
 
-Some datasources have arrays where individual items may be secrets (e.g. Snowflake settings with a `secure: boolean` flag). Model the `secure` flag as a regular boolean item field and use a `computed` storage mapping to express the split:
+Some datasources have arrays where individual items may conditionally store their value in `secureJsonData` (e.g. ClickHouse HTTP headers with a `secure` toggle, or Grafana core headers that are always secret).
+
+Use `overrides[].secureKey` on the item field whose value needs routing. The `secureKey` is a template string with placeholders:
+
+| Placeholder  | Resolves to                       |
+| ------------ | --------------------------------- |
+| `{index}`    | 0-based array position            |
+| `{index1}`   | 1-based array position            |
+| `{item.KEY}` | Value of sibling item field `KEY` |
+
+#### Conditionally secure (ClickHouse pattern)
+
+The header value goes to `secureJsonData` only when `item.secure == true`. The key is derived from the header name:
 
 ```json
 {
-  "id": "jsonData.settings",
-  "key": "settings",
-  "valueType": "array",
-  "target": "jsonData",
-  "item": {
-    "valueType": "object",
-    "fields": [
-      {
-        "id": "settings.item.name",
-        "key": "name",
-        "valueType": "string",
-        "isItemField": true
-      },
-      {
-        "id": "settings.item.value",
-        "key": "value",
-        "valueType": "string",
-        "isItemField": true
-      },
-      {
-        "id": "settings.item.secure",
-        "key": "secure",
-        "valueType": "boolean",
-        "isItemField": true
-      }
-    ]
-  },
-  "storage": {
-    "type": "computed",
-    "write": "splitByField(settings, 'secure', jsonData.settings, secureJsonData.settings)"
-  }
+  "id": "httpHeaders.item.value",
+  "key": "value",
+  "valueType": "string",
+  "isItemField": true,
+  "overrides": [
+    {
+      "when": "item.secure == true",
+      "secureKey": "secureHttpHeaders.{item.name}"
+    }
+  ]
+}
+```
+
+On save, when `item.secure` is true:
+
+- `secureJsonData["secureHttpHeaders.Authorization"] = "secret"` (value moved here)
+- `secureJsonFields["secureHttpHeaders.Authorization"] = true`
+- `jsonData.httpHeaders[].value` is set to `""` (cleared from the array)
+
+On load, when `secureJsonFields["secureHttpHeaders.Authorization"]` is true, the UI shows a masked SecretInput with a Reset button.
+
+#### Always secure (Grafana core headers pattern)
+
+Every header value is a secret. The key uses the 1-based array index:
+
+```json
+{
+  "id": "headers.item.value",
+  "key": "value",
+  "valueType": "string",
+  "isItemField": true,
+  "overrides": [
+    {
+      "when": "true",
+      "secureKey": "httpHeaderValue{index1}"
+    }
+  ]
 }
 ```
 

@@ -1,5 +1,5 @@
 import type { ConfigField } from '../../../datasource/schema/schema';
-import { parseDependsOn, formKey } from '../../../datasource/schema/config';
+import { parseDependsOn, formKey, getWatchedValue } from '../../../datasource/schema/config';
 import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
 
 /**
@@ -43,7 +43,7 @@ export function isFieldRequired(
     if (parsed) {
       const depField = fieldById.get(parsed.field);
       const depKey = depField ? formKey(depField) : parsed.field;
-      return String(watchedValues[depKey] ?? '') === parsed.value;
+      return String(getWatchedValue(watchedValues, depKey) ?? '') === parsed.value;
     }
   }
   return false;
@@ -66,6 +66,47 @@ export function buildValidationRules(field: ConfigField, required: boolean) {
       };
     } else {
       rules.required = `${label} is required`;
+    }
+  }
+
+  // Validate required item fields inside object arrays.
+  // Returns a JSON-encoded map of {itemIndex: "message"} so ObjectArrayEditor
+  // can render errors inline per item. react-hook-form treats any non-true
+  // string as an error message.
+  if (field.valueType === 'array' && field.item?.valueType === 'object' && field.item.fields?.length) {
+    const requiredItemFields = field.item.fields.filter((f) => f.required);
+    if (requiredItemFields.length > 0) {
+      const existingValidate = rules.validate as ((v: unknown) => true | string) | undefined;
+      rules.validate = (value: unknown) => {
+        if (existingValidate) {
+          const r = existingValidate(value);
+          if (r !== true) {
+            return r;
+          }
+        }
+        if (!Array.isArray(value)) {
+          return true;
+        }
+        const itemErrors: Record<number, string> = {};
+        for (let i = 0; i < value.length; i++) {
+          const item = value[i] as Record<string, unknown>;
+          const missing: string[] = [];
+          for (const rf of requiredItemFields) {
+            const v = item[rf.key];
+            if (v === undefined || v === null || v === '') {
+              missing.push(rf.label ?? rf.key);
+            }
+          }
+          if (missing.length > 0) {
+            itemErrors[i] = `${missing.join(', ')} required`;
+          }
+        }
+        if (Object.keys(itemErrors).length === 0) {
+          return true;
+        }
+        // Encode as JSON so ObjectArrayEditor can parse and show per-item
+        return `__ITEM_ERRORS__${JSON.stringify(itemErrors)}`;
+      };
     }
   }
 
@@ -99,4 +140,20 @@ export function buildValidationRules(field: ConfigField, required: boolean) {
   }
 
   return rules;
+}
+const ITEM_ERRORS_PREFIX = '__ITEM_ERRORS__';
+
+/**
+ * Parse a per-item error message encoded by buildValidationRules.
+ * Returns a map of item index → error message, or null if not an item error.
+ */
+export function parseItemErrors(errorMessage: string | undefined): Record<number, string> | null {
+  if (!errorMessage || !errorMessage.startsWith(ITEM_ERRORS_PREFIX)) {
+    return null;
+  }
+  try {
+    return JSON.parse(errorMessage.slice(ITEM_ERRORS_PREFIX.length));
+  } catch {
+    return null;
+  }
 }

@@ -285,6 +285,15 @@ export interface FieldUI {
    * Example: "promql", "logql", "traceql", "sql", "json"
    */
   language?: string;
+
+  /**
+   * Layout row index for item fields inside object arrays.
+   * Fields with the same row number are rendered horizontally.
+   * Fields without a row number use auto-layout:
+   * - ≤3 fields: all on one row
+   * - >3 fields: each on its own row
+   */
+  row?: number;
 }
 
 // ============================================================
@@ -372,6 +381,22 @@ export interface FieldOverride {
 
   validations?: FieldValidationRule[];
   options?: FieldOption[];
+
+  /**
+   * When present on an `isItemField` field, the value is routed to
+   * `secureJsonData` under the resolved key instead of being stored
+   * inline in the parent array.
+   *
+   * The template string supports placeholders:
+   * - `{index}`  — 0-based array position
+   * - `{index1}` — 1-based array position
+   * - `{item.KEY}` — value of sibling item field `KEY`
+   *
+   * Examples:
+   * - `"secureHttpHeaders.{item.name}"` (ClickHouse)
+   * - `"httpHeaderValue{index1}"` (Grafana core headers)
+   */
+  secureKey?: string;
 }
 
 // ============================================================

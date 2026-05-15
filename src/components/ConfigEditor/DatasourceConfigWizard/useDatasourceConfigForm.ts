@@ -7,6 +7,7 @@ import {
   parseDependsOn,
   computeVirtualFieldValues,
   formKey,
+  getWatchedValue,
 } from '../../../datasource/schema/config';
 import {
   SECURE_FIELD_CONFIGURED,
@@ -131,7 +132,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
       return;
     }
     for (const { sourceKey, effects } of fieldsWithEffects) {
-      const currentVal = watchedValues[sourceKey];
+      const currentVal = getWatchedValue(watchedValues, sourceKey);
       const prevVal = prevEffectValuesRef.current[sourceKey];
       if (currentVal === prevVal) {
         continue;
@@ -188,7 +189,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
     }
     for (const { targetKey, fieldDefault, overrides } of fieldsWithOverrideDefaults) {
       for (const ov of overrides) {
-        const currentDepVal = String(watchedValues[ov.depKey] ?? '');
+        const currentDepVal = String(getWatchedValue(watchedValues, ov.depKey) ?? '');
         const trackKey = `${targetKey}::${ov.depKey}`;
         const prevDepVal = prevOverrideDepRef.current[trackKey];
         if (currentDepVal === prevDepVal) {
@@ -221,7 +222,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
       }
       const depField = fieldById.get(parsed.field);
       const depKey = depField ? formKey(depField) : parsed.field;
-      return String(watchedValues[depKey] ?? '') === parsed.value;
+      return String(getWatchedValue(watchedValues, depKey) ?? '') === parsed.value;
     },
     [watchedValues, fieldById]
   );
@@ -268,7 +269,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
           return false;
         }
         if (isFieldRequired(field, watchedValues, fieldById)) {
-          const val = watchedValues[formKey(field)];
+          const val = getWatchedValue(watchedValues, formKey(field));
           if (val === SECURE_FIELD_CONFIGURED) {
             continue;
           }
@@ -286,7 +287,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
   const groupHasData = useCallback(
     (group: ResolvedGroup): boolean => {
       for (const field of group.fields) {
-        const val = watchedValues[formKey(field)];
+        const val = getWatchedValue(watchedValues, formKey(field));
         if (val === undefined || val === null || val === '' || val === false) {
           continue;
         }

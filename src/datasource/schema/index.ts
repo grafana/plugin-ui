@@ -8,6 +8,8 @@ export {
   buildDatasourceConfigPayload,
   expandIndexedPair,
   flattenIndexedPair,
+  resolveSecureKeyTemplate,
+  findActiveSecureOverride,
 } from './datasource';
 export type { FetchExistingResult, IndexedPairItem } from './datasource';
 export { generateLLMHint, generateTroubleshootingFields } from './llmHints';

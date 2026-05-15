@@ -439,6 +439,10 @@
                 "language": {
                     "type": "string",
                     "description": "Language hint for code editor components. Example: promql, logql, traceql, sql, json."
+                },
+                "row": {
+                    "type": "number",
+                    "description": "Layout row index for item fields inside object arrays. Fields with the same row number are rendered horizontally. Auto-layout when omitted."
                 }
             }
         },
@@ -623,6 +627,10 @@
                     "items": {
                         "$ref": "#/definitions/FieldOption"
                     }
+                },
+                "secureKey": {
+                    "type": "string",
+                    "description": "Template for secureJsonData key. When present on an isItemField, the value is routed to secureJsonData under the resolved key. Placeholders: {index} (0-based), {index1} (1-based), {item.KEY} (sibling field value)."
                 }
             }
         },

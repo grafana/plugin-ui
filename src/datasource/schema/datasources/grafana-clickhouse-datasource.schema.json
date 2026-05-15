@@ -19,7 +19,7 @@
       },
       "ui": {
         "component": "input",
-        "placeholder": "Server address"
+        "placeholder": "Enter server address"
       }
     },
     {
@@ -33,14 +33,24 @@
       "defaultValue": 9000,
       "overrides": [
         {
-          "when": "jsonData.protocol == 'native'",
-          "description": "ClickHouse server port (default for native: 9000).",
+          "when": "jsonData.protocol == 'native' && jsonData.secure != true",
+          "description": "ClickHouse server port (default for Native: 9000).",
           "defaultValue": 9000
         },
         {
-          "when": "jsonData.protocol == 'http'",
-          "description": "ClickHouse server port (default for http: 8123).",
+          "when": "jsonData.protocol == 'native' && jsonData.secure == true",
+          "description": "ClickHouse server port (default for Native (secure): 9440).",
+          "defaultValue": 9440
+        },
+        {
+          "when": "jsonData.protocol == 'http' && jsonData.secure != true",
+          "description": "ClickHouse server port (default for HTTP: 8123).",
           "defaultValue": 8123
+        },
+        {
+          "when": "jsonData.protocol == 'http' && jsonData.secure == true",
+          "description": "ClickHouse server port (default for HTTPS: 8443).",
+          "defaultValue": 8443
         }
       ]
     },
@@ -48,7 +58,7 @@
       "id": "jsonData.protocol",
       "key": "protocol",
       "label": "Protocol",
-      "description": "Native or HTTP for server protocol. Native uses ClickHouse's binary TCP interface for better performance.",
+      "description": "Native is the default protocol.",
       "valueType": "string",
       "target": "jsonData",
       "required": true,
@@ -80,13 +90,24 @@
       "id": "jsonData.username",
       "key": "username",
       "label": "Username",
-      "description": "ClickHouse username. We recommend configuring a read-only user.",
+      "description": "We recommend configuring a read-only user.",
       "valueType": "string",
       "target": "jsonData",
+      "required": true,
       "ui": {
         "component": "input",
-        "placeholder": "default"
+        "placeholder": "Enter username"
       }
+    },
+    {
+      "id": "secureJsonData.password",
+      "key": "password",
+      "label": "Password",
+      "description": "ClickHouse password.",
+      "valueType": "string",
+      "required": true,
+      "semanticType": "password",
+      "target": "secureJsonData"
     },
     {
       "id": "jsonData.version",
@@ -99,8 +120,8 @@
     {
       "id": "jsonData.secure",
       "key": "secure",
-      "label": "Secure connection",
-      "description": "Enable when your ClickHouse server uses TLS. Update the port to a TLS-enabled port when enabled.",
+      "label": "Secure Connection",
+      "description": "Check to connect securely with TLS.",
       "valueType": "boolean",
       "target": "jsonData",
       "ui": {
@@ -146,7 +167,7 @@
       "id": "jsonData.tlsAuthWithCACert",
       "key": "tlsAuthWithCACert",
       "label": "With CA Cert",
-      "description": "Provide a CA certificate for TLS verification.",
+      "description": "Needed for verifying self-signed TLS Certs.",
       "valueType": "boolean",
       "target": "jsonData",
       "ui": {
@@ -253,8 +274,8 @@
     {
       "id": "jsonData.forwardGrafanaHeaders",
       "key": "forwardGrafanaHeaders",
-      "label": "Forward Grafana HTTP Headers",
-      "description": "Forward Grafana HTTP Headers to datasource.",
+      "label": "Forward Grafana HTTP Headers to data source",
+      "description": "Forward Grafana HTTP Headers to data source.",
       "valueType": "boolean",
       "target": "jsonData",
       "dependsOn": "jsonData.protocol == 'http'",
@@ -266,21 +287,12 @@
       "id": "jsonData.enableRowLimit",
       "key": "enableRowLimit",
       "label": "Enable row limit",
-      "description": "Enable using the Grafana row limit setting to limit the number of rows returned from ClickHouse. Only supported for Grafana >= 11.0.0.",
+      "description": "Enable using the Grafana row limit setting to limit the number of rows returned from ClickHouse. Ensure the appropriate permissions are set for your user. Only supported for Grafana >= 11.0.0. Defaults to false.",
       "valueType": "boolean",
       "target": "jsonData",
       "ui": {
         "component": "switch"
       }
-    },
-    {
-      "id": "secureJsonData.password",
-      "key": "password",
-      "label": "Password",
-      "description": "ClickHouse user password.",
-      "valueType": "string",
-      "semanticType": "password",
-      "target": "secureJsonData"
     },
     {
       "id": "secureJsonData.tlsCACert",
@@ -402,6 +414,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "logs",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "filter_time_column"
@@ -411,6 +424,7 @@
           "when": "jsonData.logs.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "TimestampTime",
           "placeholder": "TimestampTime"
         }
       ]
@@ -423,6 +437,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "logs",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "time_column"
@@ -432,6 +447,7 @@
           "when": "jsonData.logs.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "Timestamp",
           "placeholder": "Timestamp"
         }
       ]
@@ -444,6 +460,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "logs",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "log_level_column"
@@ -453,6 +470,7 @@
           "when": "jsonData.logs.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "SeverityText",
           "placeholder": "SeverityText"
         }
       ]
@@ -465,6 +483,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "logs",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "log_message_column"
@@ -474,6 +493,7 @@
           "when": "jsonData.logs.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "Body",
           "placeholder": "Body"
         }
       ]
@@ -596,6 +616,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "trace_id_column"
@@ -605,6 +626,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "TraceId",
           "placeholder": "TraceId"
         }
       ]
@@ -617,6 +639,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "span_id_column"
@@ -626,6 +649,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "SpanId",
           "placeholder": "SpanId"
         }
       ]
@@ -638,6 +662,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "operation_name_column"
@@ -647,6 +672,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "SpanName",
           "placeholder": "SpanName"
         }
       ]
@@ -659,6 +685,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "parent_span_id_column"
@@ -668,6 +695,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "ParentSpanId",
           "placeholder": "ParentSpanId"
         }
       ]
@@ -680,6 +708,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "service_name_column"
@@ -689,6 +718,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "ServiceName",
           "placeholder": "ServiceName"
         }
       ]
@@ -701,6 +731,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "duration_time_column"
@@ -710,6 +741,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "Duration",
           "placeholder": "Duration"
         }
       ]
@@ -754,7 +786,14 @@
             "value": "nanoseconds"
           }
         ]
-      }
+      },
+      "overrides": [
+        {
+          "when": "jsonData.traces.otelEnabled == true",
+          "readOnly": true,
+          "description": "Set by OTel schema version"
+        }
+      ]
     },
     {
       "id": "jsonData.traces.startTimeColumn",
@@ -764,6 +803,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "start_time_column"
@@ -773,6 +813,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "Timestamp",
           "placeholder": "Timestamp"
         }
       ]
@@ -785,6 +826,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "tags_column"
@@ -794,6 +836,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "SpanAttributes",
           "placeholder": "SpanAttributes"
         }
       ]
@@ -806,6 +849,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "service_tags_column"
@@ -815,6 +859,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "ResourceAttributes",
           "placeholder": "ResourceAttributes"
         }
       ]
@@ -827,6 +872,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "kind_column"
@@ -836,6 +882,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "SpanKind",
           "placeholder": "SpanKind"
         }
       ]
@@ -848,6 +895,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "status_code_column"
@@ -857,6 +905,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "StatusCode",
           "placeholder": "StatusCode"
         }
       ]
@@ -869,6 +918,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "status_message_column"
@@ -878,6 +928,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "StatusMessage",
           "placeholder": "StatusMessage"
         }
       ]
@@ -890,6 +941,7 @@
       "valueType": "string",
       "target": "jsonData",
       "section": "traces",
+      "defaultValue": "",
       "ui": {
         "component": "input",
         "placeholder": "state_column"
@@ -899,6 +951,7 @@
           "when": "jsonData.traces.otelEnabled == true",
           "readOnly": true,
           "description": "Set by OTel schema version",
+          "defaultValue": "TraceState",
           "placeholder": "TraceState"
         }
       ]
@@ -914,7 +967,14 @@
       "ui": {
         "component": "input",
         "placeholder": "library_name_column"
-      }
+      },
+      "overrides": [
+        {
+          "when": "jsonData.traces.otelEnabled == true",
+          "readOnly": true,
+          "description": "Set by OTel schema version"
+        }
+      ]
     },
     {
       "id": "jsonData.traces.instrumentationLibraryVersionColumn",
@@ -927,7 +987,14 @@
       "ui": {
         "component": "input",
         "placeholder": "library_version_column"
-      }
+      },
+      "overrides": [
+        {
+          "when": "jsonData.traces.otelEnabled == true",
+          "readOnly": true,
+          "description": "Set by OTel schema version"
+        }
+      ]
     },
     {
       "id": "jsonData.traces.flattenNested",
@@ -939,7 +1006,14 @@
       "section": "traces",
       "ui": {
         "component": "switch"
-      }
+      },
+      "overrides": [
+        {
+          "when": "jsonData.traces.otelEnabled == true",
+          "readOnly": true,
+          "description": "Set by OTel schema version"
+        }
+      ]
     },
     {
       "id": "jsonData.traces.traceEventsColumnPrefix",
@@ -953,7 +1027,15 @@
       "ui": {
         "component": "input",
         "placeholder": "events_prefix"
-      }
+      },
+      "overrides": [
+        {
+          "when": "jsonData.traces.otelEnabled == true",
+          "readOnly": true,
+          "description": "Set by OTel schema version",
+          "placeholder": "Events"
+        }
+      ]
     },
     {
       "id": "jsonData.traces.traceLinksColumnPrefix",
@@ -967,7 +1049,15 @@
       "ui": {
         "component": "input",
         "placeholder": "links_prefix"
-      }
+      },
+      "overrides": [
+        {
+          "when": "jsonData.traces.otelEnabled == true",
+          "readOnly": true,
+          "description": "Set by OTel schema version",
+          "placeholder": "Links"
+        }
+      ]
     },
     {
       "id": "jsonData.traces.showTraceLinks",
@@ -1000,7 +1090,8 @@
             "isItemField": true,
             "ui": {
               "component": "input",
-              "placeholder": "(optional)"
+              "placeholder": "(optional)",
+              "row": 1
             }
           },
           {
@@ -1012,7 +1103,8 @@
             "required": true,
             "ui": {
               "component": "input",
-              "placeholder": "Target Table"
+              "placeholder": "Target Table",
+              "row": 1
             }
           },
           {
@@ -1023,7 +1115,8 @@
             "isItemField": true,
             "ui": {
               "component": "input",
-              "placeholder": "(optional)"
+              "placeholder": "(optional)",
+              "row": 1
             }
           },
           {
@@ -1035,7 +1128,8 @@
             "required": true,
             "ui": {
               "component": "input",
-              "placeholder": "Alias Table"
+              "placeholder": "Alias Table",
+              "row": 1
             }
           }
         ]
@@ -1082,29 +1176,96 @@
       "id": "jsonData.hideTableNameInAdhocFilters",
       "key": "hideTableNameInAdhocFilters",
       "label": "Hide table name in ad hoc filters",
-      "description": "Show only column names in ad hoc filter keys instead of the full table.column format.",
+      "description": "Show only column names in ad hoc filter keys instead of the full table.column format. This simplifies the filter interface when working with schemas that have many tables. Defaults to false.",
       "valueType": "boolean",
       "target": "jsonData",
       "ui": {
         "component": "switch"
+      }
+    },
+    {
+      "id": "jsonData.enableSecureSocksProxy",
+      "key": "enableSecureSocksProxy",
+      "label": "Enable Secure Socks Proxy",
+      "description": "Enable proxying the datasource connection through the secure socks proxy to a different network.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "jsonData.httpHeaders",
+      "key": "httpHeaders",
+      "label": "Custom HTTP Headers",
+      "description": "Add custom HTTP headers when querying the database.",
+      "valueType": "array",
+      "target": "jsonData",
+      "dependsOn": "jsonData.protocol == 'http'",
+      "item": {
+        "valueType": "object",
+        "fields": [
+          {
+            "id": "httpHeaders.item.name",
+            "key": "name",
+            "label": "Header Name",
+            "valueType": "string",
+            "isItemField": true,
+            "required": true,
+            "ui": {
+              "component": "input",
+              "placeholder": "X-Custom-Header"
+            }
+          },
+          {
+            "id": "httpHeaders.item.value",
+            "key": "value",
+            "label": "Header Value",
+            "valueType": "string",
+            "isItemField": true,
+            "ui": {
+              "component": "input",
+              "placeholder": "Header Value"
+            },
+            "overrides": [
+              {
+                "when": "item.secure == true",
+                "secureKey": "secureHttpHeaders.{item.name}"
+              }
+            ]
+          },
+          {
+            "id": "httpHeaders.item.secure",
+            "key": "secure",
+            "label": "Secure",
+            "description": "When enabled, the header value is stored in Grafana's encrypted secure storage instead of plain JSON.",
+            "valueType": "boolean",
+            "isItemField": true,
+            "ui": {
+              "component": "switch"
+            }
+          }
+        ]
       }
     }
   ],
   "groups": [
     {
       "id": "server",
-      "title": "Server",
+      "title": "Server and encryption",
       "fieldRefs": [
         "jsonData.host",
         "jsonData.port",
         "jsonData.protocol",
         "jsonData.secure",
-        "jsonData.path"
+        "jsonData.path",
+        "jsonData.httpHeaders",
+        "jsonData.forwardGrafanaHeaders"
       ]
     },
     {
       "id": "credentials",
-      "title": "Credentials",
+      "title": "Database credentials",
       "fieldRefs": [
         "jsonData.username",
         "secureJsonData.password"
@@ -1112,7 +1273,8 @@
     },
     {
       "id": "tls",
-      "title": "TLS / SSL",
+      "title": "TLS/SSL settings",
+      "optional": true,
       "fieldRefs": [
         "jsonData.tlsSkipVerify",
         "jsonData.tlsAuth",
@@ -1145,7 +1307,7 @@
     {
       "id": "logs",
       "title": "Logs configuration",
-      "description": "Default settings for log queries.",
+      "description": "(Optional) Default settings for log queries.",
       "optional": true,
       "fieldRefs": [
         "jsonData.logs.defaultDatabase",
@@ -1164,7 +1326,7 @@
     {
       "id": "traces",
       "title": "Traces configuration",
-      "description": "Default settings for trace queries.",
+      "description": "(Optional) Default settings for trace queries.",
       "optional": true,
       "fieldRefs": [
         "jsonData.traces.defaultDatabase",
@@ -1207,8 +1369,8 @@
       "title": "Additional settings",
       "optional": true,
       "fieldRefs": [
-        "jsonData.forwardGrafanaHeaders",
         "jsonData.enableRowLimit",
+        "jsonData.enableSecureSocksProxy",
         "jsonData.hideTableNameInAdhocFilters",
         "jsonData.customSettings"
       ]

@@ -4,7 +4,7 @@ import { useStyles2, Icon, Tooltip } from '@grafana/ui';
 import type { ConfigField } from '../../../datasource/schema/schema';
 import { resolveActiveOverride, formKey } from '../../../datasource/schema/config';
 import type { FormValues } from '../../../datasource/schema/types';
-import { isFieldRequired, buildValidationRules } from './fieldUtils';
+import { isFieldRequired, buildValidationRules, parseItemErrors } from './fieldUtils';
 import { PdcFieldNote } from './PdcFieldNote';
 import { renderFieldInput } from './renderFieldInput';
 import { getWizardStyles } from './wizardStyles';
@@ -80,8 +80,11 @@ export function SchemaField({ field, control, errors, disabled, dsUid, watchedVa
               )}
             </div>
             <div className={styles.fieldInputCol}>
-              {renderFieldInput(effectiveField, formField, disabled || isReadOnly)}
-              {errorMessage && <span className={styles.fieldError}>{errorMessage}</span>}
+              {renderFieldInput(effectiveField, formField, disabled || isReadOnly, errorMessage)}
+              {/* Show global error only if it's NOT a per-item error (those render inline) */}
+              {errorMessage && !parseItemErrors(errorMessage) && (
+                <span className={styles.fieldError}>{errorMessage}</span>
+              )}
             </div>
           </div>
         );

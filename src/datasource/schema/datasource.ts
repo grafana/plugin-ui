@@ -1,9 +1,87 @@
 import { getBackendSrv } from '@grafana/runtime';
-import type { ConfigField } from './schema';
+import type { ConfigField, FieldOverride } from './schema';
 import { formKey } from './config';
 import type { DatasourceResponse, DatasourceConfigPayload, FormValues } from './types';
 
 export const SECURE_FIELD_CONFIGURED = '__CONFIGURED__';
+
+// ============================================================
+// secureKey helpers for per-item secure routing
+// ============================================================
+
+/**
+ * Resolve a secureKey template string by replacing placeholders.
+ *
+ * Supported placeholders:
+ * - `{index}`  — 0-based array position
+ * - `{index1}` — 1-based array position
+ * - `{item.KEY}` — value of sibling field `KEY` in the same item object
+ */
+export function resolveSecureKeyTemplate(template: string, item: Record<string, unknown>, index: number): string {
+  return template
+    .replace(/\{index1\}/g, String(index + 1))
+    .replace(/\{index\}/g, String(index))
+    .replace(/\{item\.(\w+)\}/g, (_, key) => String(item[key] ?? ''));
+}
+
+/**
+ * Evaluate a simple item-scoped condition like `item.secure == true`.
+ * Only supports `item.KEY == VALUE` and the literal `true`.
+ * Returns false for expressions it cannot evaluate.
+ */
+function evaluateItemCondition(condition: string, item: Record<string, unknown>): boolean {
+  const trimmed = condition.trim();
+  if (trimmed === 'true') {
+    return true;
+  }
+  // Match: item.KEY == VALUE (with optional quotes)
+  const match = trimmed.match(/^item\.(\w+)\s*==\s*(.+)$/);
+  if (!match) {
+    return false;
+  }
+  const [, key, rawValue] = match;
+  const actualValue = item[key];
+  // Parse the expected value
+  const expected = rawValue.trim();
+  if (expected === 'true') {
+    return actualValue === true;
+  }
+  if (expected === 'false') {
+    return actualValue === false;
+  }
+  // String comparison (strip quotes)
+  const unquoted = expected.replace(/^['"]|['"]$/g, '');
+  return String(actualValue) === unquoted;
+}
+
+/**
+ * For a given item object at a given index, find the first active secureKey
+ * override across all item fields. Returns the resolved secureJsonData key
+ * and the item field key whose value should be routed, or null if none active.
+ */
+export function findActiveSecureOverride(
+  itemFields: ConfigField[],
+  item: Record<string, unknown>,
+  index: number
+): { fieldKey: string; resolvedKey: string } | null {
+  for (const field of itemFields) {
+    if (!field.overrides) {
+      continue;
+    }
+    for (const override of field.overrides) {
+      if (!override.secureKey) {
+        continue;
+      }
+      if (evaluateItemCondition(override.when, item)) {
+        return {
+          fieldKey: field.key,
+          resolvedKey: resolveSecureKeyTemplate(override.secureKey, item, index),
+        };
+      }
+    }
+  }
+  return null;
+}
 
 export type FetchExistingResult = {
   values: FormValues;
@@ -212,6 +290,32 @@ export async function fetchExistingValues(dsUid: string, fields: ConfigField[]):
         }
       }
     }
+
+    // Post-process arrays with secureKey overrides: for each item, check
+    // whether the item's value is stored in secureJsonFields and mark it.
+    for (const field of fields) {
+      if (field.valueType !== 'array' || !field.item?.fields) {
+        continue;
+      }
+      const itemFields = field.item.fields;
+      const hasSecureOverride = itemFields.some((f) => f.overrides?.some((o) => o.secureKey));
+      if (!hasSecureOverride) {
+        continue;
+      }
+      const fk = formKey(field);
+      const arr = values[fk];
+      if (!Array.isArray(arr)) {
+        continue;
+      }
+      values[fk] = arr.map((item: Record<string, unknown>, idx: number) => {
+        const match = findActiveSecureOverride(itemFields, item, idx);
+        if (match && ds.secureJsonFields?.[match.resolvedKey]) {
+          return { ...item, [match.fieldKey]: SECURE_FIELD_CONFIGURED };
+        }
+        return item;
+      });
+    }
+
     return { values, readOnly: !!ds.readOnly };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Failed to load datasource configuration';
@@ -279,6 +383,76 @@ export function buildDatasourceConfigPayload(
           jsonData[field.key] = value;
         }
         break;
+    }
+  }
+
+  // Post-process arrays with secureKey overrides: route values to secureJsonData
+  // and clean up stale secure keys from previous saves.
+  for (const field of fields) {
+    if (field.valueType !== 'array' || !field.item?.fields || field.target !== 'jsonData') {
+      continue;
+    }
+    const itemFields = field.item.fields;
+    const hasSecureOverride = itemFields.some((f) => f.overrides?.some((o) => o.secureKey));
+    if (!hasSecureOverride) {
+      continue;
+    }
+    const arr = (
+      field.section ? (jsonData[field.section] as Record<string, unknown>)?.[field.key] : jsonData[field.key]
+    ) as Array<Record<string, unknown>> | undefined;
+    if (!Array.isArray(arr)) {
+      continue;
+    }
+
+    // Collect all secureKey patterns from this field's item overrides for cleanup
+    const secureKeyOverrides: Array<{ fieldKey: string; override: FieldOverride }> = [];
+    for (const f of itemFields) {
+      for (const o of f.overrides ?? []) {
+        if (o.secureKey) {
+          secureKeyOverrides.push({ fieldKey: f.key, override: o });
+        }
+      }
+    }
+
+    // Track which secure keys are still active so we can remove stale ones
+    const activeSecureKeys = new Set<string>();
+
+    for (let i = 0; i < arr.length; i++) {
+      const item = arr[i];
+      const match = findActiveSecureOverride(itemFields, item, i);
+      if (!match) {
+        continue;
+      }
+      const resolvedKey = match.resolvedKey;
+      activeSecureKeys.add(resolvedKey);
+      const itemValue = item[match.fieldKey];
+
+      if (itemValue === SECURE_FIELD_CONFIGURED) {
+        // Value already stored in secureJsonData, keep it
+        secureJsonFields[resolvedKey] = true;
+      } else if (itemValue && itemValue !== '') {
+        // New or updated secret value — route to secureJsonData
+        secureJsonData[resolvedKey] = String(itemValue);
+        secureJsonFields[resolvedKey] = false;
+        // Clear the value from the inline array
+        item[match.fieldKey] = '';
+      }
+    }
+
+    // Remove stale secure keys that were previously set but are no longer in the array
+    const existingSecureFields = existing.secureJsonFields ?? {};
+    for (const existingKey of Object.keys(existingSecureFields)) {
+      // Check if this key could have been produced by any of this field's secureKey templates
+      const couldBeFromThisField = secureKeyOverrides.some((sko) => {
+        // Simple heuristic: check if the existing key starts with the static prefix
+        // of the template (everything before the first placeholder)
+        const staticPrefix = sko.override.secureKey!.split('{')[0];
+        return staticPrefix && existingKey.startsWith(staticPrefix);
+      });
+      if (couldBeFromThisField && !activeSecureKeys.has(existingKey)) {
+        secureJsonFields[existingKey] = false;
+        secureJsonData[existingKey] = '';
+      }
     }
   }
 
