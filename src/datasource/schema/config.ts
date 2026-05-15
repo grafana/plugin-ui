@@ -54,7 +54,7 @@ export function resolveRequiredFieldsGroup(
 
   const requiredIds = new Set<string>();
   for (const f of schema.fields) {
-    if (f.required) {
+    if (f.required || f.tags?.includes('pinned')) {
       requiredIds.add(f.id);
     }
   }
@@ -105,7 +105,7 @@ export function resolveRequiredFieldsGroup(
   return {
     group: {
       id: '_required',
-      title: 'Required',
+      title: 'General',
       fieldRefs: virtualFields.map((f) => f.id),
     },
     fields: virtualFields,
@@ -126,35 +126,61 @@ export function formKey(field: ConfigField): string {
  * RHF's `watch()` returns nested objects for dotted Controller names
  * (e.g. "logs.otelEnabled" → { logs: { otelEnabled: true } }),
  * so a flat `obj["logs.otelEnabled"]` lookup misses.
- * This helper tries the flat key first, then walks the dot path.
+ *
+ * For dotted keys we must try the nested path **first**: react-hook-form's
+ * Controller `onChange` writes nested objects via its internal `set()`, but
+ * `reset()` may have created a flat dotted key with the same name.  After user
+ * interaction the nested value is authoritative; the stale flat key must not
+ * shadow it.  This mirrors RHF's own `get()` semantics (nested-first, flat
+ * fallback).
  */
 export function getWatchedValue(watchedValues: Record<string, unknown>, key: string): unknown {
-  // Flat key (works for non-sectioned fields)
-  if (key in watchedValues) {
+  // For dotted keys, prefer the nested path walk.
+  if (key.includes('.')) {
+    const parts = key.split('.');
+    let current: unknown = watchedValues;
+    for (const part of parts) {
+      if (current == null || typeof current !== 'object') {
+        // Nested path doesn't exist — fall back to flat key
+        return watchedValues[key];
+      }
+      current = (current as Record<string, unknown>)[part];
+    }
+    if (current !== undefined) {
+      return current;
+    }
+    // Nested walk yielded undefined — try flat key as fallback
     return watchedValues[key];
   }
-  // Walk dot path for section-scoped fields
-  const parts = key.split('.');
-  let current: unknown = watchedValues;
-  for (const part of parts) {
-    if (current == null || typeof current !== 'object') {
-      return undefined;
-    }
-    current = (current as Record<string, unknown>)[part];
-  }
-  return current;
+  // Non-dotted key: direct property access
+  return watchedValues[key];
 }
 
 /**
- * Parse a simple CEL-like dependsOn expression: "fieldId == 'value'" or "fieldId == true".
- * Returns { field, value } or null if unparseable.
+ * Parse a simple CEL-like dependsOn expression: "fieldId == 'value'" or "fieldId != 'value'".
+ * Only single comparisons are supported — no &&, ||, or parentheses.
+ * Field IDs may contain dots and underscores (e.g. "jsonData.oauth2.oauth2_type").
+ * Values may be single-quoted, double-quoted, or unquoted literals (true/false/numbers).
+ * Returns { field, value, negate } or null if unparseable.
  */
-export function parseDependsOn(expr: string): { field: string; value: string } | null {
-  const m = expr.match(/^(.+?)\s*==\s*(?:'([^']*)'|"([^"]*)"|(.+))$/);
+export function parseDependsOn(expr: string): { field: string; value: string; negate: boolean } | null {
+  // Match: fieldRef == 'value' | fieldRef == "value" | fieldRef == literal
+  // Field ref: word chars and dots, no parens/operators.
+  // Unquoted values: non-whitespace, no quotes, no logical operators.
+  const m = expr.match(/^([\w.]+)\s*(==|!=)\s*(?:'([^']*)'|"([^"]*)"|(\S+))$/);
   if (!m) {
     return null;
   }
-  return { field: m[1].trim(), value: (m[2] ?? m[3] ?? m[4]).trim() };
+  return { field: m[1], value: (m[3] ?? m[4] ?? m[5]).trim(), negate: m[2] === '!=' };
+}
+
+/**
+ * Evaluate a parsed dependsOn condition against a value.
+ * Handles both == and != operators.
+ */
+export function evaluateDependsOn(parsed: { value: string; negate: boolean }, currentValue: unknown): boolean {
+  const matches = String(currentValue ?? '') === parsed.value;
+  return parsed.negate ? !matches : matches;
 }
 
 /**
@@ -177,7 +203,7 @@ export function resolveActiveOverride(
     }
     const depField = fieldById.get(parsed.field);
     const depKey = depField ? formKey(depField) : parsed.field;
-    if (String(getWatchedValue(watchedValues, depKey) ?? '') === parsed.value) {
+    if (evaluateDependsOn(parsed, getWatchedValue(watchedValues, depKey))) {
       return ov;
     }
   }

@@ -12,6 +12,7 @@ function IndexedPairRow({
   onUpdate,
   onRemove,
   hideControls,
+  itemLabel = 'header',
 }: {
   item: IndexedPairItem;
   index: number;
@@ -19,6 +20,7 @@ function IndexedPairRow({
   onUpdate: (index: number, key: 'name' | 'value', val: string) => void;
   onRemove: (index: number) => void;
   hideControls?: boolean;
+  itemLabel?: string;
 }) {
   const styles = useStyles2(getStyles);
   const secureStyles = useStyles2(getSecureFieldStyles);
@@ -31,9 +33,14 @@ function IndexedPairRow({
       <div className={styles.inputCell}>
         <Input
           value={item.name}
-          placeholder="Header name"
+          placeholder="key"
           disabled={disabled || hideControls}
           onChange={(e) => onUpdate(index, 'name', e.currentTarget.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+            }
+          }}
         />
       </div>
       <div className={styles.inputCell}>
@@ -61,10 +68,15 @@ function IndexedPairRow({
         ) : (
           <Input
             value={item.value === SECURE_FIELD_CONFIGURED ? '' : item.value}
-            placeholder="Header value"
+            placeholder={`${itemLabel} value`}
             disabled={disabled}
             type={revealed ? 'text' : 'password'}
             onChange={(e) => onUpdate(index, 'value', e.currentTarget.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+              }
+            }}
             suffix={
               <Button
                 variant="secondary"
@@ -80,13 +92,13 @@ function IndexedPairRow({
         )}
       </div>
       {!hideControls && (
-        <Tooltip content="Remove header">
+        <Tooltip content={`Remove ${itemLabel}`}>
           <Button
             variant="secondary"
             fill="text"
             size="sm"
             icon="trash-alt"
-            aria-label="Remove header"
+            aria-label={`Remove ${itemLabel}`}
             disabled={disabled}
             onClick={() => onRemove(index)}
             type="button"
@@ -103,12 +115,14 @@ export function IndexedPairEditor({
   maxItems = 10,
   disabled,
   hideControls,
+  itemLabel = 'header',
 }: {
   value: IndexedPairItem[];
   onChange: (items: IndexedPairItem[]) => void;
   maxItems?: number;
   disabled?: boolean;
   hideControls?: boolean;
+  itemLabel?: string;
 }) {
   const styles = useStyles2(getStyles);
   const items = Array.isArray(value) ? value : [];
@@ -140,17 +154,20 @@ export function IndexedPairEditor({
           onUpdate={updateItem}
           onRemove={removeItem}
           hideControls={hideControls}
+          itemLabel={itemLabel}
         />
       ))}
       {!hideControls && items.length < maxItems && (
         <div>
           <Button variant="secondary" size="sm" icon="plus" disabled={disabled} onClick={addItem} type="button">
-            Add header
+            Add {itemLabel}
           </Button>
         </div>
       )}
       {!hideControls && items.length >= maxItems && (
-        <span className={styles.limitNote}>Maximum {maxItems} headers reached</span>
+        <span className={styles.limitNote}>
+          Maximum {maxItems} {itemLabel}s reached
+        </span>
       )}
     </Stack>
   );

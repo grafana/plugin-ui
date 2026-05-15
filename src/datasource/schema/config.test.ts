@@ -1,5 +1,12 @@
 import type { ConfigField, ConfigGroup, DatasourceConfigSchema } from './schema';
-import { resolveGroups, resolveRequiredFieldsGroup, formKey, parseDependsOn } from './config';
+import {
+  resolveGroups,
+  resolveRequiredFieldsGroup,
+  formKey,
+  parseDependsOn,
+  evaluateDependsOn,
+  getWatchedValue,
+} from './config';
 
 // ============================================================
 // Helpers
@@ -46,7 +53,7 @@ describe('resolveRequiredFieldsGroup', () => {
     const result = resolveRequiredFieldsGroup(s);
     expect(result).not.toBeNull();
     expect(result!.group.id).toBe('_required');
-    expect(result!.group.title).toBe('Required');
+    expect(result!.group.title).toBe('General');
     expect(result!.fields.map((f) => f.id)).toEqual(['url']);
   });
 
@@ -107,6 +114,34 @@ describe('resolveRequiredFieldsGroup', () => {
     expect(ids).toContain('root.basicAuthUser');
     expect(ids).toContain('secureJsonData.basicAuthPassword');
     expect(ids).not.toContain('other');
+  });
+
+  it('includes fields tagged with "pinned"', () => {
+    const s = schema([
+      field({ id: 'url', target: 'root', tags: ['pinned'] }),
+      field({ id: 'allowedHosts', target: 'jsonData', tags: ['pinned'] }),
+      field({ id: 'timeout', target: 'jsonData' }),
+    ]);
+    const result = resolveRequiredFieldsGroup(s);
+    expect(result).not.toBeNull();
+    const ids = result!.fields.map((f) => f.id);
+    expect(ids).toContain('url');
+    expect(ids).toContain('allowedHosts');
+    expect(ids).not.toContain('timeout');
+  });
+
+  it('includes child fields that depend on a pinned field', () => {
+    const s = schema([
+      field({ id: 'auth_method', target: 'jsonData', tags: ['pinned'] }),
+      field({ id: 'username', target: 'root', dependsOn: "auth_method == 'basic'" }),
+      field({ id: 'unrelated', target: 'jsonData' }),
+    ]);
+    const result = resolveRequiredFieldsGroup(s);
+    expect(result).not.toBeNull();
+    const ids = result!.fields.map((f) => f.id);
+    expect(ids).toContain('auth_method');
+    expect(ids).toContain('username');
+    expect(ids).not.toContain('unrelated');
   });
 
   it('preserves schema field order and deduplicates', () => {
@@ -290,15 +325,140 @@ describe('formKey', () => {
 // ============================================================
 
 describe('parseDependsOn', () => {
+  // Basic operators
   it('parses simple equality', () => {
-    expect(parseDependsOn("protocol == 'http'")).toEqual({ field: 'protocol', value: 'http' });
+    expect(parseDependsOn("protocol == 'http'")).toEqual({ field: 'protocol', value: 'http', negate: false });
   });
 
-  it('parses boolean equality', () => {
-    expect(parseDependsOn('tlsAuth == true')).toEqual({ field: 'tlsAuth', value: 'true' });
+  it('parses != inequality', () => {
+    expect(parseDependsOn("jsonData.auth_method != 'none'")).toEqual({
+      field: 'jsonData.auth_method',
+      value: 'none',
+      negate: true,
+    });
   });
 
-  it('returns null for invalid expressions', () => {
+  // Value formats
+  it('parses single-quoted string values', () => {
+    expect(parseDependsOn("method == 'basicAuth'")).toEqual({ field: 'method', value: 'basicAuth', negate: false });
+  });
+
+  it('parses double-quoted string values', () => {
+    expect(parseDependsOn('method == "basicAuth"')).toEqual({ field: 'method', value: 'basicAuth', negate: false });
+  });
+
+  it('parses unquoted boolean true', () => {
+    expect(parseDependsOn('tlsAuth == true')).toEqual({ field: 'tlsAuth', value: 'true', negate: false });
+  });
+
+  it('parses unquoted boolean false', () => {
+    expect(parseDependsOn('tlsAuth == false')).toEqual({ field: 'tlsAuth', value: 'false', negate: false });
+  });
+
+  // Dotted field references (target.key and target.section.key)
+  it('parses target.key field reference', () => {
+    expect(parseDependsOn("jsonData.auth_method == 'oauth2'")).toEqual({
+      field: 'jsonData.auth_method',
+      value: 'oauth2',
+      negate: false,
+    });
+  });
+
+  it('parses target.section.key field reference (3 dots)', () => {
+    expect(parseDependsOn("jsonData.oauth2.oauth2_type == 'client_credentials'")).toEqual({
+      field: 'jsonData.oauth2.oauth2_type',
+      value: 'client_credentials',
+      negate: false,
+    });
+  });
+
+  it('parses field IDs with underscores', () => {
+    expect(parseDependsOn("jsonData.proxy_type == 'url'")).toEqual({
+      field: 'jsonData.proxy_type',
+      value: 'url',
+      negate: false,
+    });
+  });
+
+  // Whitespace handling
+  it('handles extra whitespace around operator', () => {
+    expect(parseDependsOn("field   ==   'val'")).toEqual({ field: 'field', value: 'val', negate: false });
+  });
+
+  // Unsupported compound expressions
+  it('returns null for AND expressions', () => {
+    expect(parseDependsOn("field1 == 'a' && field2 == 'b'")).toBeNull();
+  });
+
+  it('returns null for OR expressions', () => {
+    expect(parseDependsOn("field1 == 'a' || field2 == 'b'")).toBeNull();
+  });
+
+  it('returns null for parenthesized expressions', () => {
+    expect(parseDependsOn("(field1 == 'a')")).toBeNull();
+  });
+
+  // Invalid input
+  it('returns null for plain text', () => {
     expect(parseDependsOn('garbage')).toBeNull();
+  });
+
+  it('returns null for empty string', () => {
+    expect(parseDependsOn('')).toBeNull();
+  });
+});
+
+describe('evaluateDependsOn', () => {
+  it('matches equality', () => {
+    expect(evaluateDependsOn({ value: 'http', negate: false }, 'http')).toBe(true);
+    expect(evaluateDependsOn({ value: 'http', negate: false }, 'https')).toBe(false);
+  });
+
+  it('matches inequality', () => {
+    expect(evaluateDependsOn({ value: 'none', negate: true }, 'apiKey')).toBe(true);
+    expect(evaluateDependsOn({ value: 'none', negate: true }, 'none')).toBe(false);
+  });
+
+  it('handles null/undefined values', () => {
+    expect(evaluateDependsOn({ value: 'none', negate: true }, undefined)).toBe(true);
+    expect(evaluateDependsOn({ value: '', negate: false }, undefined)).toBe(true);
+  });
+});
+// ============================================================
+// getWatchedValue
+// ============================================================
+
+describe('getWatchedValue', () => {
+  it('returns flat key for non-dotted key', () => {
+    expect(getWatchedValue({ auth_method: 'oauth2' }, 'auth_method')).toBe('oauth2');
+  });
+
+  it('returns undefined for missing non-dotted key', () => {
+    expect(getWatchedValue({}, 'auth_method')).toBeUndefined();
+  });
+
+  it('walks nested path for dotted key', () => {
+    expect(getWatchedValue({ oauth2: { oauth2_type: 'jwt' } }, 'oauth2.oauth2_type')).toBe('jwt');
+  });
+
+  it('falls back to flat key when nested path does not exist', () => {
+    // This happens right after reset() before any Controller interaction
+    expect(getWatchedValue({ 'oauth2.oauth2_type': 'client_credentials' }, 'oauth2.oauth2_type')).toBe(
+      'client_credentials'
+    );
+  });
+
+  it('prefers nested value over stale flat key', () => {
+    // After reset() creates a flat key AND Controller onChange creates nested,
+    // the nested value is authoritative.
+    const values: Record<string, unknown> = {
+      'oauth2.oauth2_type': 'client_credentials', // stale from reset()
+      oauth2: { oauth2_type: 'jwt' }, // current from onChange
+    };
+    expect(getWatchedValue(values, 'oauth2.oauth2_type')).toBe('jwt');
+  });
+
+  it('returns undefined when neither nested nor flat exists', () => {
+    expect(getWatchedValue({}, 'oauth2.oauth2_type')).toBeUndefined();
   });
 });

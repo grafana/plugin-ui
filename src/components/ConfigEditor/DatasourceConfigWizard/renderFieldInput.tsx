@@ -25,29 +25,8 @@ export function renderFieldInput(
     );
   }
 
-  // Boolean fields
-  if (field.valueType === 'boolean') {
-    return <Switch value={!!value} onChange={(e) => formField.onChange(e.currentTarget.checked)} disabled={disabled} />;
-  }
-
-  // Number fields
-  if (field.valueType === 'number') {
-    return (
-      <Input
-        {...formField}
-        value={value !== undefined && value !== null ? Number(value) : ''}
-        type="number"
-        placeholder={placeholder}
-        disabled={disabled}
-        onChange={(e) => {
-          const n = e.currentTarget.valueAsNumber;
-          formField.onChange(Number.isNaN(n) ? undefined : n);
-        }}
-      />
-    );
-  }
-
-  // Radio button group
+  // Radio button group — checked before type-specific branches so a field
+  // with e.g. valueType:"number" + ui.component:"radio" renders as radio.
   if (field.ui?.component === 'radio') {
     const options = (field.ui?.options ?? []).map((opt) => ({
       label: opt.label,
@@ -59,7 +38,15 @@ export function renderFieldInput(
         <RadioButtonGroup
           options={options}
           value={String(value ?? '')}
-          onChange={(v) => formField.onChange(v)}
+          onChange={(v) => {
+            // Preserve the field's native type when the radio value is selected.
+            if (field.valueType === 'number') {
+              const n = Number(v);
+              formField.onChange(Number.isNaN(n) ? v : n);
+            } else {
+              formField.onChange(v);
+            }
+          }}
           disabled={disabled}
         />
       </div>
@@ -79,6 +66,28 @@ export function renderFieldInput(
         value={options.find((o) => o.value === String(value ?? ''))}
         onChange={(v) => formField.onChange(v?.value)}
         disabled={disabled}
+      />
+    );
+  }
+
+  // Boolean fields
+  if (field.valueType === 'boolean') {
+    return <Switch value={!!value} onChange={(e) => formField.onChange(e.currentTarget.checked)} disabled={disabled} />;
+  }
+
+  // Number fields
+  if (field.valueType === 'number') {
+    return (
+      <Input
+        {...formField}
+        value={value !== undefined && value !== null ? Number(value) : ''}
+        type="number"
+        placeholder={placeholder}
+        disabled={disabled}
+        onChange={(e) => {
+          const n = e.currentTarget.valueAsNumber;
+          formField.onChange(Number.isNaN(n) ? undefined : n);
+        }}
       />
     );
   }
@@ -103,24 +112,36 @@ export function renderFieldInput(
     );
   }
 
-  // Array of strings — tag/chip input
+  // Indexed pair fields (e.g. custom HTTP headers, endpoint params) — editable key-value list.
+  // Checked before the generic string-array branch because indexedPair fields
+  // also declare valueType:"array" + item.valueType:"string".
+  if (field.storage?.type === 'indexedPair') {
+    const items = Array.isArray(value) ? (value as IndexedPairItem[]) : [];
+    const maxItems =
+      field.validations?.find((v): v is { type: 'itemCount'; max?: number } => v.type === 'itemCount')?.max ?? 10;
+    const itemLabel = field.label?.toLowerCase().replace(/s$/, '') ?? 'header';
+    return (
+      <IndexedPairEditor
+        value={items}
+        onChange={formField.onChange}
+        maxItems={maxItems}
+        disabled={disabled}
+        itemLabel={itemLabel}
+      />
+    );
+  }
+
+  // Array of strings — row-based list editor
   if (field.valueType === 'array' && field.item?.valueType === 'string') {
     return (
       <StringArrayInput
         value={Array.isArray(value) ? (value as string[]) : []}
         onChange={formField.onChange}
-        placeholder={placeholder ?? `Add ${label.toLowerCase()}…`}
+        placeholder={placeholder}
         disabled={disabled}
+        itemLabel={label.toLowerCase().replace(/s$/, '')}
       />
     );
-  }
-
-  // Indexed pair fields (e.g. custom HTTP headers) — editable key-value list
-  if (field.storage?.type === 'indexedPair') {
-    const items = Array.isArray(value) ? (value as IndexedPairItem[]) : [];
-    const maxItems =
-      field.validations?.find((v): v is { type: 'itemCount'; max?: number } => v.type === 'itemCount')?.max ?? 10;
-    return <IndexedPairEditor value={items} onChange={formField.onChange} maxItems={maxItems} disabled={disabled} />;
   }
 
   // Array of objects with defined item fields — inline editor

@@ -5,6 +5,7 @@ import {
   resolveGroups,
   resolveRequiredFieldsGroup,
   parseDependsOn,
+  evaluateDependsOn,
   computeVirtualFieldValues,
   formKey,
   getWatchedValue,
@@ -154,7 +155,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
     const result: Array<{
       targetKey: string;
       fieldDefault: unknown;
-      overrides: Array<{ depKey: string; depValue: string; defaultValue: unknown }>;
+      overrides: Array<{ depKey: string; depValue: string; negate: boolean; defaultValue: unknown }>;
     }> = [];
     for (const field of schema.fields) {
       if (!field.overrides || field.overrides.length === 0) {
@@ -171,10 +172,11 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
           return {
             depKey: depField ? formKey(depField) : parsed.field,
             depValue: parsed.value,
+            negate: parsed.negate,
             defaultValue: ov.defaultValue,
           };
         })
-        .filter(Boolean) as Array<{ depKey: string; depValue: string; defaultValue: unknown }>;
+        .filter(Boolean) as Array<{ depKey: string; depValue: string; negate: boolean; defaultValue: unknown }>;
       if (ovs.length > 0) {
         result.push({ targetKey: formKey(field), fieldDefault: field.defaultValue, overrides: ovs });
       }
@@ -196,9 +198,12 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
           continue;
         }
         prevOverrideDepRef.current[trackKey] = currentDepVal;
-        if (currentDepVal === ov.depValue) {
+        const active = evaluateDependsOn({ value: ov.depValue, negate: ov.negate }, currentDepVal);
+        const wasActive =
+          prevDepVal !== undefined && evaluateDependsOn({ value: ov.depValue, negate: ov.negate }, prevDepVal);
+        if (active) {
           setValue(targetKey, ov.defaultValue);
-        } else if (prevDepVal === ov.depValue && fieldDefault !== undefined) {
+        } else if (wasActive && fieldDefault !== undefined) {
           setValue(targetKey, fieldDefault);
         }
       }
@@ -207,22 +212,34 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
 
   const isFieldVisible = useCallback(
     (field: ConfigField): boolean => {
-      if (field.kind === 'virtual' && !field.ui) {
-        return false;
+      // Inner recursive helper with a visited set to guard against circular deps.
+      function check(f: ConfigField, visited: Set<string>): boolean {
+        if (f.kind === 'virtual' && !f.ui) {
+          return false;
+        }
+        if (f.tags?.some((t) => t.startsWith('managed-by:'))) {
+          return false;
+        }
+        if (!f.dependsOn) {
+          return true;
+        }
+        const parsed = parseDependsOn(f.dependsOn);
+        if (!parsed) {
+          return true;
+        }
+        const depField = fieldById.get(parsed.field);
+        // Transitive visibility: if the dependency field itself is hidden,
+        // this field must also be hidden.
+        if (depField && !visited.has(depField.id)) {
+          visited.add(f.id);
+          if (!check(depField, visited)) {
+            return false;
+          }
+        }
+        const depKey = depField ? formKey(depField) : parsed.field;
+        return evaluateDependsOn(parsed, getWatchedValue(watchedValues, depKey));
       }
-      if (field.tags?.some((t) => t.startsWith('managed-by:'))) {
-        return false;
-      }
-      if (!field.dependsOn) {
-        return true;
-      }
-      const parsed = parseDependsOn(field.dependsOn);
-      if (!parsed) {
-        return true;
-      }
-      const depField = fieldById.get(parsed.field);
-      const depKey = depField ? formKey(depField) : parsed.field;
-      return String(getWatchedValue(watchedValues, depKey) ?? '') === parsed.value;
+      return check(field, new Set<string>());
     },
     [watchedValues, fieldById]
   );

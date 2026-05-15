@@ -1,5 +1,5 @@
 import type { ConfigField } from '../../../datasource/schema/schema';
-import { parseDependsOn, formKey, getWatchedValue } from '../../../datasource/schema/config';
+import { parseDependsOn, evaluateDependsOn, formKey, getWatchedValue } from '../../../datasource/schema/config';
 import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
 
 /**
@@ -43,7 +43,7 @@ export function isFieldRequired(
     if (parsed) {
       const depField = fieldById.get(parsed.field);
       const depKey = depField ? formKey(depField) : parsed.field;
-      return String(getWatchedValue(watchedValues, depKey) ?? '') === parsed.value;
+      return evaluateDependsOn(parsed, getWatchedValue(watchedValues, depKey));
     }
   }
   return false;

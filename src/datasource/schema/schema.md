@@ -248,8 +248,70 @@ Many datasources have a **selector dropdown** (e.g. "Authentication method") tha
 - **`dependsOn`**: On target storage fields, controls visibility (e.g. show username only when `auth.method == 'basic-auth'`).
 - **`requiredWhen`**: On target storage fields, conditional validation.
 - **`tags: ["managed-by:auth.method"]`**: Convention for tagging fields that are driven by a selector.
+- **`tags: ["pinned"]`**: Promotes a field into the "General" virtual group so it appears in the common section at the top of both wizard and tab modes, regardless of which group it belongs to. Use for fields like Base URL or Allowed Hosts that users always need quick access to.
 
 Effects keys (`set`) reference field **IDs**, consistent with groups and relationships. They are validated against the schema's field ID set.
+
+## Condition expressions
+
+The properties `dependsOn`, `requiredWhen`, and `overrides[].when` use a minimal CEL-like expression syntax. This is intentionally limited to keep schemas declarative and machine-parseable.
+
+### Supported syntax
+
+Each expression must be a **single comparison**:
+
+```
+fieldRef == 'value'
+fieldRef != 'value'
+fieldRef == true
+fieldRef == false
+```
+
+| Feature               | Supported | Example                                   |
+| --------------------- | --------- | ----------------------------------------- |
+| Equality              | Yes       | `jsonData.auth_method == 'oauth2'`        |
+| Inequality            | Yes       | `jsonData.auth_method != 'none'`          |
+| Single-quoted strings | Yes       | `fieldRef == 'value'`                     |
+| Double-quoted strings | Yes       | `fieldRef == "value"`                     |
+| Unquoted literals     | Yes       | `fieldRef == true`, `fieldRef == 42`      |
+| `&&` (AND)            | **No**    | —                                         |
+| `\|\|` (OR)           | **No**    | —                                         |
+| Parentheses           | **No**    | —                                         |
+| Negation (`!expr`)    | **No**    | Use `!= 'value'` instead                  |
+| Multiple conditions   | **No**    | Use transitive `dependsOn` chains instead |
+
+### Field references
+
+The left-hand side of the expression is a **field ID** — the same identifier used in `groups[].fieldRefs` and `effects[].set`.
+
+| Pattern              | What it references      | Example                                |
+| -------------------- | ----------------------- | -------------------------------------- |
+| `key`                | Top-level field by key  | `tlsAuth == true`                      |
+| `target.key`         | Field by target and key | `jsonData.auth_method == 'oauth2'`     |
+| `target.section.key` | Section-scoped field    | `jsonData.oauth2.oauth2_type == 'jwt'` |
+
+**Dotted field IDs**: When a field uses `section`, its form key becomes `section.key` (e.g. `oauth2.oauth2_type`). The expression references the **field ID** (e.g. `jsonData.oauth2.oauth2_type`), not the form key.
+
+**Special characters**: Field IDs may contain dots (`.`) and underscores (`_`) but should avoid hyphens, spaces, or brackets. Use underscores for multi-word names (e.g. `oauth2_type`, not `oauth2-type`).
+
+### Transitive visibility
+
+When field B has `dependsOn: "fieldA == 'x'"`, and field C has `dependsOn: "fieldB == 'y'"`, field C is automatically hidden when field A's value hides field B. This avoids compound expressions — chain single conditions instead:
+
+```json
+// Field A: auth_method selector (always visible)
+{ "id": "jsonData.auth_method", "..." : "..." }
+
+// Field B: visible only when auth_method == 'oauth2'
+{ "id": "jsonData.oauth2.oauth2_type", "dependsOn": "jsonData.auth_method == 'oauth2'" }
+
+// Field C: visible when oauth2_type == 'jwt' — transitively hidden when auth_method != 'oauth2'
+{ "id": "jsonData.oauth2.email", "dependsOn": "jsonData.oauth2.oauth2_type == 'jwt'" }
+```
+
+### Why no compound conditions
+
+Single comparisons keep schemas parseable by tools (LLMs, code generators, provisioning scripts) without a full expression evaluator. The transitive visibility system covers the main use case for AND. If you encounter a case that genuinely needs OR/AND, consider restructuring with a virtual selector field and effects.
 
 ## Modeling patterns
 
