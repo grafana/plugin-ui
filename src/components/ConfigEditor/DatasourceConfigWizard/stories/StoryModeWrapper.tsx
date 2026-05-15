@@ -15,7 +15,7 @@ export function StoryModeWrapper(props: StoryModeWrapperProps) {
   return (
     <div>
       <div style={{ marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ fontSize: 13, fontWeight: 500 }}>Mode:</span>
+        <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>Mode:</span>
         <RadioButtonGroup options={modeOptions} value={mode} onChange={(v) => setMode(v)} />
       </div>
       <DatasourceConfigWizard key={mode} {...props} mode={mode} />

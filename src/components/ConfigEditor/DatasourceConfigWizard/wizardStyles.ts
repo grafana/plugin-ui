@@ -52,8 +52,8 @@ export const getWizardStyles = (theme: GrafanaTheme2) => ({
     color: theme.colors.text.primary,
   }),
   stepCount: css({
-    fontSize: '11px',
-    fontWeight: 'normal',
+    fontSize: theme.typography.bodySmall.fontSize,
+    fontWeight: theme.typography.fontWeightRegular,
     color: theme.colors.text.secondary,
   }),
   navActions: css({
@@ -116,7 +116,7 @@ export const getWizardStyles = (theme: GrafanaTheme2) => ({
     minWidth: 0,
   }),
   fieldError: css({
-    fontSize: '11px',
+    fontSize: theme.typography.bodySmall.fontSize,
     color: theme.colors.error.text,
   }),
 });

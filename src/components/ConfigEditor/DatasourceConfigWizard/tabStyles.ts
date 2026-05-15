@@ -50,7 +50,7 @@ export const getTabStyles = (theme: GrafanaTheme2) => ({
     width: 12,
     flexShrink: 0,
     alignSelf: 'flex-start',
-    paddingTop: 4,
+    paddingTop: theme.spacing(0.5),
   }),
   navDot: css({
     width: 10,
@@ -96,7 +96,7 @@ export const getTabStyles = (theme: GrafanaTheme2) => ({
   }),
   navLabel: css({
     fontSize: theme.typography.body.fontSize,
-    color: 'rgba(204, 204, 220, 0.65)',
+    color: theme.colors.text.secondary,
     lineHeight: 1.4,
   }),
   navLabelActive: css({
@@ -179,8 +179,8 @@ export const getTabStyles = (theme: GrafanaTheme2) => ({
     textAlign: 'left',
   }),
   sectionBadge: css({
-    fontSize: '11px',
-    fontWeight: 'normal',
+    fontSize: theme.typography.bodySmall.fontSize,
+    fontWeight: theme.typography.fontWeightRegular,
     color: theme.colors.text.disabled,
     border: `1px solid ${theme.colors.border.weak}`,
     borderRadius: theme.shape.radius.pill,
