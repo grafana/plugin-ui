@@ -12,36 +12,80 @@
       "description": "Google Cloud authentication mechanism.",
       "valueType": "string",
       "target": "jsonData",
+      "required": true,
+      "defaultValue": "jwt",
       "validations": [
         {
           "type": "allowedValues",
           "values": [
             "jwt",
-            "gce",
-            "workloadIdentityFederation"
+            "gce"
           ]
         }
       ],
       "ui": {
-        "component": "select"
+        "component": "select",
+        "options": [
+          {
+            "label": "Google JWT File",
+            "value": "jwt"
+          },
+          {
+            "label": "GCE Default Service Account",
+            "value": "gce"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "when": "value == 'jwt'",
+          "set": {
+            "virtual.jwtUpload": "upload"
+          }
+        },
+        {
+          "when": "value == 'gce'",
+          "set": {
+            "virtual.jwtUpload": "manual"
+          }
+        }
+      ]
+    },
+    {
+      "id": "virtual.jwtUpload",
+      "key": "jwtUpload",
+      "label": "JWT Token",
+      "description": "Upload or paste a Google service account JSON key file. The file contents are parsed and the relevant fields are populated automatically.",
+      "valueType": "string",
+      "kind": "virtual",
+      "defaultValue": "upload",
+      "dependsOn": "jsonData.authenticationType == 'jwt'",
+      "storage": {
+        "type": "computed",
+        "read": "jsonData.clientEmail ? 'manual' : 'upload'"
+      },
+      "ui": {
+        "component": "fileUpload",
+        "accept": [
+          ".json"
+        ],
+        "placeholder": "Paste Google JWT token here",
+        "fileMapping": {
+          "project_id": "jsonData.defaultProject",
+          "client_email": "jsonData.clientEmail",
+          "token_uri": "jsonData.tokenUri",
+          "private_key": "secureJsonData.privateKey"
+        }
       }
     },
     {
       "id": "jsonData.defaultProject",
       "key": "defaultProject",
-      "label": "Default Project",
-      "description": "GCP project ID from the service account JSON.",
-      "valueType": "string",
-      "target": "jsonData"
-    },
-    {
-      "id": "jsonData.gceDefaultProject",
-      "key": "gceDefaultProject",
-      "label": "GCE Default Project",
-      "description": "Default GCE project. Used when running on Google Compute Engine.",
+      "label": "Project ID",
+      "description": "GCP project ID. In JWT mode, auto-filled from the service account JSON.",
       "valueType": "string",
       "target": "jsonData",
-      "dependsOn": "jsonData.authenticationType == 'gce'"
+      "dependsOn": "jsonData.authenticationType == 'jwt' && virtual.jwtUpload == 'manual'"
     },
     {
       "id": "jsonData.clientEmail",
@@ -50,7 +94,7 @@
       "description": "Service account email address for JWT authentication.",
       "valueType": "string",
       "target": "jsonData",
-      "dependsOn": "jsonData.authenticationType == 'jwt'"
+      "dependsOn": "jsonData.authenticationType == 'jwt' && virtual.jwtUpload == 'manual'"
     },
     {
       "id": "jsonData.tokenUri",
@@ -60,29 +104,32 @@
       "valueType": "string",
       "target": "jsonData",
       "defaultValue": "https://oauth2.googleapis.com/token",
-      "dependsOn": "jsonData.authenticationType == 'jwt'"
+      "dependsOn": "jsonData.authenticationType == 'jwt' && virtual.jwtUpload == 'manual'"
     },
     {
-      "id": "jsonData.enableSecureSocksProxy",
-      "key": "enableSecureSocksProxy",
-      "label": "Secure Socks Proxy",
-      "description": "Enable secure SOCKS proxy.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "ui": {
-        "component": "switch"
-      }
-    },
-    {
-      "id": "jsonData.universeDomain",
-      "key": "universeDomain",
-      "label": "Universe Domain",
-      "description": "Google Cloud universe domain. Defaults to googleapis.com.",
+      "id": "virtual.privateKeyMode",
+      "key": "privateKeyMode",
+      "label": "Private key",
       "valueType": "string",
-      "target": "jsonData",
+      "kind": "virtual",
+      "defaultValue": "paste",
+      "dependsOn": "jsonData.authenticationType == 'jwt' && virtual.jwtUpload == 'manual'",
+      "storage": {
+        "type": "computed",
+        "read": "jsonData.privateKeyPath ? 'path' : 'paste'"
+      },
       "ui": {
-        "component": "input",
-        "placeholder": "googleapis.com"
+        "component": "radio",
+        "options": [
+          {
+            "label": "Paste private key",
+            "value": "paste"
+          },
+          {
+            "label": "Provide path to private key file",
+            "value": "path"
+          }
+        ]
       }
     },
     {
@@ -93,11 +140,49 @@
       "valueType": "string",
       "semanticType": "token",
       "target": "secureJsonData",
-      "dependsOn": "jsonData.authenticationType == 'jwt'",
+      "dependsOn": "virtual.privateKeyMode == 'paste'"
+    },
+    {
+      "id": "jsonData.privateKeyPath",
+      "key": "privateKeyPath",
+      "label": "Private Key Path",
+      "description": "Path to a local private key file on the Grafana server. Not supported in hosted environments.",
+      "valueType": "string",
+      "target": "jsonData",
+      "dependsOn": "virtual.privateKeyMode == 'path'",
       "ui": {
-        "component": "textarea",
-        "rows": 7
+        "component": "input",
+        "placeholder": "File location of your private key (e.g. /etc/secrets/gce.pem)"
       }
+    },
+    {
+      "id": "jsonData.defaultProjectGce",
+      "key": "defaultProject",
+      "label": "Default Project",
+      "description": "Default GCP project. Used when running on Google Compute Engine.",
+      "valueType": "string",
+      "target": "jsonData",
+      "dependsOn": "jsonData.authenticationType == 'gce'"
+    },
+    {
+      "id": "jsonData.usingImpersonation",
+      "key": "usingImpersonation",
+      "label": "Enable service account impersonation",
+      "description": "Read more about service account impersonation.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "jsonData.serviceAccountToImpersonate",
+      "key": "serviceAccountToImpersonate",
+      "label": "Service account to impersonate",
+      "description": "Email of the service account to impersonate.",
+      "valueType": "string",
+      "target": "jsonData",
+      "dependsOn": "jsonData.usingImpersonation == true"
     }
   ],
   "groups": [
@@ -106,19 +191,23 @@
       "title": "Authentication",
       "fieldRefs": [
         "jsonData.authenticationType",
+        "virtual.jwtUpload",
         "jsonData.defaultProject",
-        "jsonData.gceDefaultProject",
         "jsonData.clientEmail",
         "jsonData.tokenUri",
-        "secureJsonData.privateKey"
+        "virtual.privateKeyMode",
+        "secureJsonData.privateKey",
+        "jsonData.privateKeyPath",
+        "jsonData.defaultProjectGce"
       ]
     },
     {
-      "id": "additional",
-      "title": "Additional settings",
+      "id": "impersonation",
+      "title": "Service account impersonation",
+      "optional": true,
       "fieldRefs": [
-        "jsonData.enableSecureSocksProxy",
-        "jsonData.universeDomain"
+        "jsonData.usingImpersonation",
+        "jsonData.serviceAccountToImpersonate"
       ]
     }
   ]
