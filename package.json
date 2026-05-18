@@ -1,11 +1,12 @@
 {
   "name": "@grafana/plugin-ui",
-  "version": "0.13.1",
+  "version": "0.14.1",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/grafana/plugin-ui.git"
   },
   "author": "Grafana Labs",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.js",
@@ -14,6 +15,9 @@
     "*": {
       "test": [
         "dist/cjs/test-utils.d.cts"
+      ],
+      "schemas": [
+        "dist/cjs/schemas.d.cts"
       ]
     }
   },
@@ -38,6 +42,16 @@
         "types": "./dist/cjs/test-utils.d.cts",
         "default": "./dist/cjs/test-utils.cjs"
       }
+    },
+    "./schemas": {
+      "import": {
+        "types": "./dist/esm/schemas.d.ts",
+        "default": "./dist/esm/schemas.js"
+      },
+      "require": {
+        "types": "./dist/cjs/schemas.d.cts",
+        "default": "./dist/cjs/schemas.cjs"
+      }
     }
   },
   "sideEffects": false,
@@ -59,12 +73,15 @@
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@hello-pangea/dnd": "^17.0.0",
+    "@marcbachmann/cel-js": "^7.6.1",
     "@react-awesome-query-builder/ui": "^6.6.4",
     "@types/prismjs": "^1.26.4",
     "chance": "^1.1.7",
+    "js-yaml": "^4.1.0",
     "lodash": "^4.18.1",
     "prismjs": "^1.30.0",
     "react-calendar": "^4.8.0",
+    "react-hook-form": "^7.52.0",
     "react-popper-tooltip": "^4.4.2",
     "react-use": "^17.3.1",
     "react-virtualized-auto-sizer": "^1.0.6",
@@ -80,6 +97,7 @@
     "@grafana/tsconfig": "^2.0.0",
     "@grafana/ui": "^10.4.0",
     "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@storybook/addon-docs": "10.2.5",
     "@storybook/addon-links": "10.2.5",
@@ -92,6 +110,7 @@
     "@testing-library/react": "15.0.2",
     "@testing-library/user-event": "14.5.2",
     "@types/chance": "^1.1.0",
+    "@types/jest": "30.0.0",
     "@types/lodash": "^4.14.194",
     "@types/memoize-one": "^5.1.2",
     "@types/react": "18.3.28",

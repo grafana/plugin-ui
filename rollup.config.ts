@@ -1,3 +1,4 @@
+import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import { createRequire } from 'node:module';
 import path from 'path';
@@ -18,13 +19,14 @@ const legacyOutputDefaults = {
   interop: 'compat',
 };
 
-const entryPoints = ['src/index.ts', 'src/test-utils.ts'];
+const entryPoints = ['src/index.ts', 'src/test-utils.ts', 'src/schemas.ts'];
 
 export default [
   {
     input: entryPoints,
     plugins: [
       nodeExternals({ deps: true, peerDeps: true, packagePath: './package.json' }),
+      json(),
       commonjs(),
       resolve(),
       esbuild({
@@ -74,6 +76,20 @@ export default [
       },
       {
         file: pkg.exports['./test'].import.types,
+        format: 'esm',
+      },
+    ],
+  },
+  {
+    input: './compiled/schemas.d.ts',
+    plugins: [dts()],
+    output: [
+      {
+        file: pkg.exports['./schemas'].require.types,
+        format: 'cjs',
+      },
+      {
+        file: pkg.exports['./schemas'].import.types,
         format: 'esm',
       },
     ],
