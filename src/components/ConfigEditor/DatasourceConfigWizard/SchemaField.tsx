@@ -18,6 +18,7 @@ export type SchemaFieldProps = {
   watchedValues: Record<string, unknown>;
   fieldById: Map<string, ConfigField>;
   celContext?: Record<string, unknown>;
+  setValue?: (name: string, value: unknown) => void;
 };
 
 export function SchemaField({
@@ -29,6 +30,7 @@ export function SchemaField({
   watchedValues,
   fieldById,
   celContext,
+  setValue,
 }: SchemaFieldProps) {
   const styles = useStyles2(getWizardStyles);
 
@@ -90,7 +92,7 @@ export function SchemaField({
               )}
             </div>
             <div className={styles.fieldInputCol}>
-              {renderFieldInput(effectiveField, formField, disabled || isReadOnly, errorMessage)}
+              {renderFieldInput(effectiveField, formField, disabled || isReadOnly, errorMessage, setValue)}
               {/* Show global error only if it's NOT a per-item error (those render inline) */}
               {errorMessage && !parseItemErrors(errorMessage) && (
                 <span className={styles.fieldError}>{errorMessage}</span>

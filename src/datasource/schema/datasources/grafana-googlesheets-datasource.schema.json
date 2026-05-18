@@ -20,13 +20,12 @@
           "values": [
             "jwt",
             "key",
-            "gce",
-            "workloadIdentityFederation"
+            "gce"
           ]
         }
       ],
       "ui": {
-        "component": "radio",
+        "component": "select",
         "options": [
           {
             "label": "Google JWT File",
@@ -39,40 +38,73 @@
           {
             "label": "GCE Default Service Account",
             "value": "gce"
-          },
-          {
-            "label": "Workload Identity Federation",
-            "value": "workloadIdentityFederation"
           }
         ]
-      }
-    },
-    {
-      "id": "jsonData.authType",
-      "key": "authType",
-      "label": "Auth type (alias)",
-      "description": "Alias for authenticationType. Used by some SDK versions.",
-      "valueType": "string",
-      "target": "jsonData",
-      "validations": [
+      },
+      "effects": [
         {
-          "type": "allowedValues",
-          "values": [
-            "jwt",
-            "key",
-            "gce",
-            "workloadIdentityFederation"
-          ]
+          "when": "value == 'jwt'",
+          "set": {
+            "virtual.jwtUpload": "upload"
+          }
+        },
+        {
+          "when": "value == 'gce'",
+          "set": {
+            "virtual.jwtUpload": "manual"
+          }
+        },
+        {
+          "when": "value == 'key'",
+          "set": {
+            "virtual.jwtUpload": ""
+          }
         }
       ]
     },
     {
+      "id": "virtual.jwtUpload",
+      "key": "jwtUpload",
+      "label": "JWT Token",
+      "description": "Upload or paste a Google service account JSON key file. The file contents are parsed and the relevant fields are populated automatically.",
+      "valueType": "string",
+      "kind": "virtual",
+      "defaultValue": "upload",
+      "dependsOn": "jsonData.authenticationType == 'jwt'",
+      "storage": {
+        "type": "computed",
+        "read": "jsonData.clientEmail ? 'manual' : 'upload'"
+      },
+      "effects": [
+        {
+          "when": "value != 'manual'",
+          "set": {
+            "virtual.privateKeyMode": ""
+          }
+        }
+      ],
+      "ui": {
+        "component": "fileUpload",
+        "accept": [
+          ".json"
+        ],
+        "placeholder": "Paste Google JWT token here",
+        "fileMapping": {
+          "project_id": "jsonData.defaultProject",
+          "client_email": "jsonData.clientEmail",
+          "token_uri": "jsonData.tokenUri",
+          "private_key": "secureJsonData.privateKey"
+        }
+      }
+    },
+    {
       "id": "jsonData.defaultProject",
       "key": "defaultProject",
-      "label": "Default Project",
-      "description": "GCP project ID. In JWT mode, the project_id from the service account JSON.",
+      "label": "Project ID",
+      "description": "GCP project ID. In JWT mode, auto-filled from the service account JSON.",
       "valueType": "string",
-      "target": "jsonData"
+      "target": "jsonData",
+      "dependsOn": "virtual.jwtUpload == 'manual'"
     },
     {
       "id": "jsonData.clientEmail",
@@ -81,7 +113,7 @@
       "description": "Service account email address for JWT authentication.",
       "valueType": "string",
       "target": "jsonData",
-      "dependsOn": "jsonData.authenticationType == 'jwt'"
+      "dependsOn": "virtual.jwtUpload == 'manual'"
     },
     {
       "id": "jsonData.tokenUri",
@@ -91,62 +123,33 @@
       "valueType": "string",
       "target": "jsonData",
       "defaultValue": "https://oauth2.googleapis.com/token",
-      "dependsOn": "jsonData.authenticationType == 'jwt'"
+      "dependsOn": "virtual.jwtUpload == 'manual'"
     },
     {
-      "id": "jsonData.privateKeyPath",
-      "key": "privateKeyPath",
-      "label": "Private Key Path",
-      "description": "Path to a local private key file on the Grafana server. Alternative to providing via secureJsonData. Not supported in hosted environments.",
+      "id": "virtual.privateKeyMode",
+      "key": "privateKeyMode",
+      "label": "Private key",
       "valueType": "string",
-      "target": "jsonData",
-      "dependsOn": "jsonData.authenticationType == 'jwt'"
-    },
-    {
-      "id": "jsonData.serviceAccountToImpersonate",
-      "key": "serviceAccountToImpersonate",
-      "label": "Service Account to Impersonate",
-      "description": "Email of the service account to impersonate.",
-      "valueType": "string",
-      "target": "jsonData",
-      "dependsOn": "jsonData.usingImpersonation == true"
-    },
-    {
-      "id": "jsonData.usingImpersonation",
-      "key": "usingImpersonation",
-      "label": "Service Account Impersonation",
-      "description": "Enable service account impersonation.",
-      "valueType": "boolean",
-      "target": "jsonData",
+      "kind": "virtual",
+      "defaultValue": "paste",
+      "dependsOn": "virtual.jwtUpload == 'manual'",
+      "storage": {
+        "type": "computed",
+        "read": "jsonData.privateKeyPath ? 'path' : 'paste'"
+      },
       "ui": {
-        "component": "switch"
+        "component": "radio",
+        "options": [
+          {
+            "label": "Paste private key",
+            "value": "paste"
+          },
+          {
+            "label": "Provide path to private key file",
+            "value": "path"
+          }
+        ]
       }
-    },
-    {
-      "id": "jsonData.workloadIdentityPoolProvider",
-      "key": "workloadIdentityPoolProvider",
-      "label": "Workload Identity Pool Provider",
-      "description": "The full resource name of the WIF provider.",
-      "valueType": "string",
-      "target": "jsonData",
-      "dependsOn": "jsonData.authenticationType == 'workloadIdentityFederation'"
-    },
-    {
-      "id": "jsonData.wifServiceAccountEmail",
-      "key": "wifServiceAccountEmail",
-      "label": "WIF Service Account Email",
-      "description": "Service account email for Workload Identity Federation.",
-      "valueType": "string",
-      "target": "jsonData",
-      "dependsOn": "jsonData.authenticationType == 'workloadIdentityFederation'"
-    },
-    {
-      "id": "jsonData.defaultSheetID",
-      "key": "defaultSheetID",
-      "label": "Default Spreadsheet ID",
-      "description": "Default Google Sheets spreadsheet ID for queries.",
-      "valueType": "string",
-      "target": "jsonData"
     },
     {
       "id": "secureJsonData.privateKey",
@@ -156,10 +159,19 @@
       "valueType": "string",
       "semanticType": "token",
       "target": "secureJsonData",
-      "dependsOn": "jsonData.authenticationType == 'jwt'",
+      "dependsOn": "virtual.privateKeyMode == 'paste'"
+    },
+    {
+      "id": "jsonData.privateKeyPath",
+      "key": "privateKeyPath",
+      "label": "Private Key Path",
+      "description": "Path to a local private key file on the Grafana server. Not supported in hosted environments.",
+      "valueType": "string",
+      "target": "jsonData",
+      "dependsOn": "virtual.privateKeyMode == 'path'",
       "ui": {
-        "component": "textarea",
-        "rows": 7
+        "component": "input",
+        "placeholder": "File location of your private key (e.g. /etc/secrets/gce.pem)"
       }
     },
     {
@@ -173,14 +185,12 @@
       "dependsOn": "jsonData.authenticationType == 'key'"
     },
     {
-      "id": "secureJsonData.jwt",
-      "key": "jwt",
-      "label": "JWT Token",
-      "description": "Complete service account JSON file contents.",
+      "id": "jsonData.defaultSheetID",
+      "key": "defaultSheetID",
+      "label": "Default Spreadsheet ID",
+      "description": "Optional spreadsheet ID to use as default when creating new queries.",
       "valueType": "string",
-      "semanticType": "token",
-      "target": "secureJsonData",
-      "dependsOn": "jsonData.authenticationType == 'jwt'"
+      "target": "jsonData"
     }
   ],
   "groups": [
@@ -189,34 +199,20 @@
       "title": "Authentication",
       "fieldRefs": [
         "jsonData.authenticationType",
+        "virtual.jwtUpload",
         "jsonData.defaultProject",
         "jsonData.clientEmail",
         "jsonData.tokenUri",
-        "jsonData.privateKeyPath",
+        "virtual.privateKeyMode",
         "secureJsonData.privateKey",
-        "secureJsonData.apiKey",
-        "secureJsonData.jwt"
-      ]
-    },
-    {
-      "id": "impersonation",
-      "title": "Service Account Impersonation",
-      "fieldRefs": [
-        "jsonData.usingImpersonation",
-        "jsonData.serviceAccountToImpersonate"
-      ]
-    },
-    {
-      "id": "wif",
-      "title": "Workload Identity Federation",
-      "fieldRefs": [
-        "jsonData.workloadIdentityPoolProvider",
-        "jsonData.wifServiceAccountEmail"
+        "jsonData.privateKeyPath",
+        "secureJsonData.apiKey"
       ]
     },
     {
       "id": "sheets-defaults",
-      "title": "Sheets defaults",
+      "title": "Sheets Defaults",
+      "optional": true,
       "fieldRefs": [
         "jsonData.defaultSheetID"
       ]

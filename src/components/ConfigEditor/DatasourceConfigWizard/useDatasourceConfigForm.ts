@@ -365,5 +365,6 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
     isGroupValid,
     groupHasData,
     onSubmit,
+    setValue,
   };
 }

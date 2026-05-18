@@ -40,6 +40,7 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
     isGroupValid,
     groupHasData,
     onSubmit,
+    setValue,
   } = form;
 
   // Filter out _required synthetic group — in tab mode we show all groups from schema directly
@@ -228,6 +229,7 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
                         watchedValues={watchedValues}
                         fieldById={fieldById}
                         celContext={celContext}
+                        setValue={setValue}
                       />
                     ))}
 

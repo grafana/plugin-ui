@@ -7,16 +7,23 @@ import { StringArrayInput } from './StringArrayInput';
 import { IndexedPairEditor } from './IndexedPairEditor';
 import { ObjectArrayEditor } from './ObjectArrayEditor';
 import { ComplexFieldNote } from './ComplexFieldNote';
+import { FileUploadField } from './FileUploadField';
 
 export function renderFieldInput(
   field: ConfigField,
   formField: FormFieldRef,
   disabled?: boolean,
-  errorMessage?: string
+  errorMessage?: string,
+  setValue?: (name: string, value: unknown) => void
 ) {
   const value = formField.value;
   const placeholder = field.ui?.placeholder;
   const label = field.label ?? field.key;
+
+  // File upload with JSON parsing and cross-field distribution
+  if (field.ui?.component === 'fileUpload' && field.ui.fileMapping && setValue) {
+    return <FileUploadField field={field} formField={formField} disabled={disabled} setValue={setValue} />;
+  }
 
   // Secure fields (password/token in secureJsonData)
   if (field.target === 'secureJsonData' || field.semanticType === 'password' || field.semanticType === 'token') {

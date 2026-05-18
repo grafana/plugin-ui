@@ -87,6 +87,7 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
     readOnly,
     isFieldVisible,
     onSubmit,
+    setValue,
   } = form;
 
   const arrowSteps = useMemo(() => {
@@ -295,6 +296,7 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
               watchedValues={watchedValues}
               fieldById={fieldById}
               celContext={celContext}
+              setValue={setValue}
             />
           ))}
 

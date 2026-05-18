@@ -408,7 +408,8 @@
                         "switch",
                         "code",
                         "keyvalue",
-                        "list"
+                        "list",
+                        "fileUpload"
                     ]
                 },
                 "multiline": {
@@ -443,6 +444,20 @@
                 "row": {
                     "type": "number",
                     "description": "Layout row index for item fields inside object arrays. Fields with the same row number are rendered horizontally. Auto-layout when omitted."
+                },
+                "accept": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Accepted file types for fileUpload component. Uses HTML accept format with leading dot, e.g. [\".json\"]."
+                },
+                "fileMapping": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Maps keys in an uploaded JSON file to target field IDs for cross-field writes."
                 }
             }
         },

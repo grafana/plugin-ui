@@ -260,7 +260,8 @@ export type UIComponent =
   | 'switch'
   | 'code'
   | 'keyvalue'
-  | 'list';
+  | 'list'
+  | 'fileUpload';
 
 export type UIWidth = 'full' | 'half';
 
@@ -294,6 +295,20 @@ export interface FieldUI {
    * - >3 fields: each on its own row
    */
   row?: number;
+
+  /**
+   * Accepted file types for fileUpload component.
+   * Uses HTML accept attribute format with leading dot.
+   * Example: [".json"]
+   */
+  accept?: string[];
+
+  /**
+   * Maps keys in an uploaded JSON file to target field IDs.
+   * Used by fileUpload to distribute parsed values to other form fields.
+   * Example: { "private_key": "secureJsonData.privateKey", "client_email": "jsonData.clientEmail" }
+   */
+  fileMapping?: Record<string, string>;
 }
 
 // ============================================================
