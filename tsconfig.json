@@ -1,6 +1,7 @@
 {
   "extends": "@grafana/tsconfig",
   "compilerOptions": {
+    "ignoreDeprecations":"6.0",
     "allowJs": true,
     "importHelpers": false,
     "isolatedModules": true,

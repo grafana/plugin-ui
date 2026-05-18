@@ -254,49 +254,83 @@ Effects keys (`set`) reference field **IDs**, consistent with groups and relatio
 
 ## Condition expressions
 
-The properties `dependsOn`, `requiredWhen`, and `overrides[].when` use a minimal CEL-like expression syntax. This is intentionally limited to keep schemas declarative and machine-parseable.
+The properties `dependsOn`, `requiredWhen`, `disabledWhen`, and `overrides[].when` use [Common Expression Language (CEL)](https://github.com/google/cel-spec) syntax. The evaluator is `@marcbachmann/cel-js` (TypeScript) with `cel-go` as the Go equivalent.
 
 ### Supported syntax
 
-Each expression must be a **single comparison**:
-
 ```
-fieldRef == 'value'
-fieldRef != 'value'
-fieldRef == true
-fieldRef == false
+fieldRef == 'value'                             // simple equality
+fieldRef != 'value'                             // inequality
+fieldRef == true                                // boolean
+fieldA == 'x' && fieldB == 'y'                  // AND
+fieldA == 'x' || fieldA == 'y'                  // OR
+(fieldA == 'x' || fieldA == 'y') && fieldB      // parentheses + grouping
+!fieldRef                                       // negation
+has(config.auth)                                // field existence check
+size(items) > 0                                 // array length
+'admin' in roles                                // list membership
 ```
 
-| Feature               | Supported | Example                                   |
-| --------------------- | --------- | ----------------------------------------- |
-| Equality              | Yes       | `jsonData.auth_method == 'oauth2'`        |
-| Inequality            | Yes       | `jsonData.auth_method != 'none'`          |
-| Single-quoted strings | Yes       | `fieldRef == 'value'`                     |
-| Double-quoted strings | Yes       | `fieldRef == "value"`                     |
-| Unquoted literals     | Yes       | `fieldRef == true`, `fieldRef == 42`      |
-| `&&` (AND)            | **No**    | —                                         |
-| `\|\|` (OR)           | **No**    | —                                         |
-| Parentheses           | **No**    | —                                         |
-| Negation (`!expr`)    | **No**    | Use `!= 'value'` instead                  |
-| Multiple conditions   | **No**    | Use transitive `dependsOn` chains instead |
+| Feature               | Supported | Example                                                                       |
+| --------------------- | --------- | ----------------------------------------------------------------------------- |
+| Equality (`==`)       | Yes       | `jsonData.auth_method == 'oauth2'`                                            |
+| Inequality (`!=`)     | Yes       | `jsonData.auth_method != 'none'`                                              |
+| Logical AND (`&&`)    | Yes       | `jsonData.auth_method == 'oauth2' && jsonData.oauth2.oauth2_type == 'jwt'`    |
+| Logical OR (`\|\|`)   | Yes       | `jsonData.auth_method == 'oauth2' \|\| jsonData.auth_method == 'bearerToken'` |
+| Parentheses           | Yes       | `(method == 'basic' \|\| method == 'digest') && enabled == true`              |
+| Negation (`!`)        | Yes       | `!enabled`, `!(method == 'none')`                                             |
+| Single-quoted strings | Yes       | `fieldRef == 'value'`                                                         |
+| Double-quoted strings | Yes       | `fieldRef == "value"`                                                         |
+| Boolean literals      | Yes       | `fieldRef == true`                                                            |
+| Numeric comparison    | Yes       | `count > 5`, `count >= 0`                                                     |
+| `in` operator         | Yes       | `'admin' in roles`                                                            |
+| `has()` macro         | Yes       | `has(config.auth)`                                                            |
+| `size()` macro        | Yes       | `size(items) > 0`                                                             |
+| Ternary               | Yes       | `enabled ? 'yes' : 'no'` (in computed expressions)                            |
 
 ### Field references
 
-The left-hand side of the expression is a **field ID** — the same identifier used in `groups[].fieldRefs` and `effects[].set`.
+The left-hand side of comparisons uses **field IDs** — dotted identifiers that CEL interprets as nested property access.
 
-| Pattern              | What it references      | Example                                |
-| -------------------- | ----------------------- | -------------------------------------- |
-| `key`                | Top-level field by key  | `tlsAuth == true`                      |
-| `target.key`         | Field by target and key | `jsonData.auth_method == 'oauth2'`     |
-| `target.section.key` | Section-scoped field    | `jsonData.oauth2.oauth2_type == 'jwt'` |
+| Pattern              | What it references      | Example                                | CEL context shape                                  |
+| -------------------- | ----------------------- | -------------------------------------- | -------------------------------------------------- |
+| `key`                | Top-level field by key  | `tlsAuth == true`                      | `{ tlsAuth: true }`                                |
+| `target.key`         | Field by target and key | `jsonData.auth_method == 'oauth2'`     | `{ jsonData: { auth_method: 'oauth2' } }`          |
+| `target.section.key` | Section-scoped field    | `jsonData.oauth2.oauth2_type == 'jwt'` | `{ jsonData: { oauth2: { oauth2_type: 'jwt' } } }` |
 
-**Dotted field IDs**: When a field uses `section`, its form key becomes `section.key` (e.g. `oauth2.oauth2_type`). The expression references the **field ID** (e.g. `jsonData.oauth2.oauth2_type`), not the form key.
+**Context building**: The wizard automatically builds a nested CEL context from flat form values using field ID paths. Schema authors write expressions against field IDs; the context nesting is handled by the framework.
 
 **Special characters**: Field IDs may contain dots (`.`) and underscores (`_`) but should avoid hyphens, spaces, or brackets. Use underscores for multi-word names (e.g. `oauth2_type`, not `oauth2-type`).
 
+### Common patterns
+
+**Show field for one auth method:**
+
+```json
+{ "dependsOn": "jsonData.auth_method == 'oauth2'" }
+```
+
+**Show field for multiple auth methods (OR):**
+
+```json
+{ "dependsOn": "jsonData.auth_method == 'oauth2' || jsonData.auth_method == 'bearerToken'" }
+```
+
+**Require field only for specific grant type (compound AND):**
+
+```json
+{ "requiredWhen": "jsonData.auth_method == 'oauth2' && jsonData.oauth2.oauth2_type == 'client_credentials'" }
+```
+
+**Show field when parent is enabled AND a specific mode:**
+
+```json
+{ "dependsOn": "(jsonData.proxy_type == 'url' || jsonData.proxy_type == 'socks') && jsonData.proxyAuth == true" }
+```
+
 ### Transitive visibility
 
-When field B has `dependsOn: "fieldA == 'x'"`, and field C has `dependsOn: "fieldB == 'y'"`, field C is automatically hidden when field A's value hides field B. This avoids compound expressions — chain single conditions instead:
+When field B has `dependsOn: "fieldA == 'x'"`, and field C has `dependsOn: "fieldB == 'y'"`, field C is automatically hidden when field A's value hides field B. The evaluator checks all referenced fields in the expression and ensures their parent dependencies are also satisfied.
 
 ```json
 // Field A: auth_method selector (always visible)
@@ -309,9 +343,9 @@ When field B has `dependsOn: "fieldA == 'x'"`, and field C has `dependsOn: "fiel
 { "id": "jsonData.oauth2.email", "dependsOn": "jsonData.oauth2.oauth2_type == 'jwt'" }
 ```
 
-### Why no compound conditions
+### Go compatibility
 
-Single comparisons keep schemas parseable by tools (LLMs, code generators, provisioning scripts) without a full expression evaluator. The transitive visibility system covers the main use case for AND. If you encounter a case that genuinely needs OR/AND, consider restructuring with a virtual selector field and effects.
+The Go backend can evaluate the same expressions using [`cel-go`](https://github.com/google/cel-go) (Google's official CEL implementation). Both libraries implement the same [CEL spec](https://github.com/google/cel-spec), ensuring expression parity between frontend and backend.
 
 ## Modeling patterns
 

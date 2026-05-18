@@ -79,6 +79,7 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
     trigger,
     errors,
     watchedValues,
+    celContext,
     initializing,
     fetchError,
     submitting,
@@ -137,7 +138,7 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
       if (errors[formKey(field)]) {
         return false;
       }
-      if (isFieldRequired(field, watchedValues, fieldById)) {
+      if (isFieldRequired(field, watchedValues, fieldById, celContext)) {
         const val = getWatchedValue(watchedValues, formKey(field));
         if (val === SECURE_FIELD_CONFIGURED) {
           continue;
@@ -148,7 +149,7 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
       }
     }
     return true;
-  }, [currentResolved, errors, visibleFieldsForStep, watchedValues, fieldById]);
+  }, [currentResolved, errors, visibleFieldsForStep, watchedValues, fieldById, celContext]);
 
   const goNext = useCallback(async () => {
     if (!currentResolved) {
@@ -293,6 +294,7 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
               dsUid={dsUid}
               watchedValues={watchedValues}
               fieldById={fieldById}
+              celContext={celContext}
             />
           ))}
 

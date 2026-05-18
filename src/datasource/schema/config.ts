@@ -4,6 +4,7 @@
  * Types are defined in schema.ts — import them from there directly.
  */
 
+import { extractFieldRefs } from './cel';
 import type { DatasourceConfigSchema, ConfigField, ConfigGroup, FieldOverride } from './schema';
 
 /**
@@ -80,9 +81,10 @@ export function resolveRequiredFieldsGroup(
     includeIds.add(id);
     const f = fieldMap.get(id);
     if (f?.dependsOn) {
-      const parsed = parseDependsOn(f.dependsOn);
-      if (parsed && fieldMap.has(parsed.field)) {
-        includeIds.add(parsed.field);
+      for (const ref of extractFieldRefs(f.dependsOn)) {
+        if (fieldMap.has(ref)) {
+          includeIds.add(ref);
+        }
       }
     }
   }
@@ -90,8 +92,8 @@ export function resolveRequiredFieldsGroup(
   // Child fields that depend on any required field
   for (const f of schema.fields) {
     if (f.dependsOn && !includeIds.has(f.id)) {
-      const parsed = parseDependsOn(f.dependsOn);
-      if (parsed && requiredIds.has(parsed.field)) {
+      const refs = extractFieldRefs(f.dependsOn);
+      if (refs.some((ref) => requiredIds.has(ref))) {
         includeIds.add(f.id);
       }
     }

@@ -17,9 +17,19 @@ export type SchemaFieldProps = {
   dsUid: string;
   watchedValues: Record<string, unknown>;
   fieldById: Map<string, ConfigField>;
+  celContext?: Record<string, unknown>;
 };
 
-export function SchemaField({ field, control, errors, disabled, dsUid, watchedValues, fieldById }: SchemaFieldProps) {
+export function SchemaField({
+  field,
+  control,
+  errors,
+  disabled,
+  dsUid,
+  watchedValues,
+  fieldById,
+  celContext,
+}: SchemaFieldProps) {
   const styles = useStyles2(getWizardStyles);
 
   const activeOverride = resolveActiveOverride(field, watchedValues, fieldById);
@@ -41,7 +51,7 @@ export function SchemaField({ field, control, errors, disabled, dsUid, watchedVa
     );
   }
 
-  const required = isFieldRequired(field, watchedValues, fieldById);
+  const required = isFieldRequired(field, watchedValues, fieldById, celContext);
   const validationRules = buildValidationRules(field, required);
 
   return (

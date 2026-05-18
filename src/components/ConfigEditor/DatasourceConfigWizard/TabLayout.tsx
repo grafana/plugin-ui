@@ -30,6 +30,7 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
     handleSubmit,
     errors,
     watchedValues,
+    celContext,
     initializing,
     fetchError,
     submitting,
@@ -226,6 +227,7 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
                         dsUid={dsUid}
                         watchedValues={watchedValues}
                         fieldById={fieldById}
+                        celContext={celContext}
                       />
                     ))}
 

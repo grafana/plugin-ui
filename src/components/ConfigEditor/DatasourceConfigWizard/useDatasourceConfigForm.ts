@@ -10,6 +10,7 @@ import {
   formKey,
   getWatchedValue,
 } from '../../../datasource/schema/config';
+import { extractFieldRefs, evaluateCelExpression } from '../../../datasource/schema/cel';
 import {
   SECURE_FIELD_CONFIGURED,
   fetchExistingValues,
@@ -210,6 +211,29 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
     }
   }, [watchedValues, fieldsWithOverrideDefaults, initializing, setValue]);
 
+  // Build a CEL-compatible nested context from flat watched values + field ID mappings.
+  // Field IDs like "jsonData.auth_method" become { jsonData: { auth_method: value } }.
+  const celContext = useMemo(() => {
+    const ctx: Record<string, unknown> = {};
+    for (const f of fieldById.values()) {
+      const fk = formKey(f);
+      const val = getWatchedValue(watchedValues, fk);
+      if (val !== undefined) {
+        // Set by field ID path (e.g. "jsonData.oauth2.oauth2_type")
+        const parts = f.id.split('.');
+        let current = ctx as Record<string, unknown>;
+        for (let i = 0; i < parts.length - 1; i++) {
+          if (!(parts[i] in current) || typeof current[parts[i]] !== 'object' || current[parts[i]] === null) {
+            current[parts[i]] = {};
+          }
+          current = current[parts[i]] as Record<string, unknown>;
+        }
+        current[parts[parts.length - 1]] = val;
+      }
+    }
+    return ctx;
+  }, [watchedValues, fieldById]);
+
   const isFieldVisible = useCallback(
     (field: ConfigField): boolean => {
       // Inner recursive helper with a visited set to guard against circular deps.
@@ -223,25 +247,25 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
         if (!f.dependsOn) {
           return true;
         }
-        const parsed = parseDependsOn(f.dependsOn);
-        if (!parsed) {
-          return true;
-        }
-        const depField = fieldById.get(parsed.field);
-        // Transitive visibility: if the dependency field itself is hidden,
-        // this field must also be hidden.
-        if (depField && !visited.has(depField.id)) {
-          visited.add(f.id);
-          if (!check(depField, visited)) {
-            return false;
+
+        // Transitive visibility: all referenced dependency fields must themselves be visible.
+        const refs = extractFieldRefs(f.dependsOn);
+        for (const ref of refs) {
+          const depField = fieldById.get(ref);
+          if (depField && !visited.has(depField.id)) {
+            visited.add(f.id);
+            if (!check(depField, visited)) {
+              return false;
+            }
           }
         }
-        const depKey = depField ? formKey(depField) : parsed.field;
-        return evaluateDependsOn(parsed, getWatchedValue(watchedValues, depKey));
+
+        // Evaluate the full CEL expression
+        return evaluateCelExpression(f.dependsOn, celContext);
       }
       return check(field, new Set<string>());
     },
-    [watchedValues, fieldById]
+    [celContext, fieldById]
   );
 
   const onSubmit = useCallback(
@@ -285,7 +309,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
         if (errors[formKey(field)]) {
           return false;
         }
-        if (isFieldRequired(field, watchedValues, fieldById)) {
+        if (isFieldRequired(field, watchedValues, fieldById, celContext)) {
           const val = getWatchedValue(watchedValues, formKey(field));
           if (val === SECURE_FIELD_CONFIGURED) {
             continue;
@@ -297,7 +321,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
       }
       return true;
     },
-    [errors, watchedValues, fieldById, isFieldVisible]
+    [errors, watchedValues, fieldById, celContext, isFieldVisible]
   );
 
   /** Check if a group has any fields with non-default/non-empty values. */
@@ -329,6 +353,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
     trigger,
     errors,
     watchedValues,
+    celContext,
     // State
     initializing,
     fetchError,

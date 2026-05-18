@@ -1,5 +1,11 @@
 import type { ConfigField } from '../../../datasource/schema/schema';
-import { parseDependsOn, evaluateDependsOn, formKey, getWatchedValue } from '../../../datasource/schema/config';
+import {
+  parseDependsOn,
+  evaluateDependsOn,
+  formKey,
+  getWatchedValue,
+  evaluateCelExpression,
+} from '../../../datasource/schema/config';
 import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
 
 /**
@@ -33,12 +39,18 @@ export function evaluateEffectCondition(when: string, fieldValue: unknown): bool
 export function isFieldRequired(
   field: ConfigField,
   watchedValues: Record<string, unknown>,
-  fieldById: Map<string, ConfigField>
+  fieldById: Map<string, ConfigField>,
+  celContext?: Record<string, unknown>
 ): boolean {
   if (field.required) {
     return true;
   }
   if (field.requiredWhen) {
+    // Use CEL evaluation if context is available (supports compound expressions)
+    if (celContext) {
+      return evaluateCelExpression(field.requiredWhen, celContext);
+    }
+    // Fallback to simple parser for backward compatibility
     const parsed = parseDependsOn(field.requiredWhen);
     if (parsed) {
       const depField = fieldById.get(parsed.field);
