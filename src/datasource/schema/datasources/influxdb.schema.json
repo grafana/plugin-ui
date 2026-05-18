@@ -33,7 +33,6 @@
       "description": "Select the InfluxDB product you're connecting to. The available query languages depend on your product selection. Use InfluxDB detection to identify the product from the URL.",
       "valueType": "string",
       "target": "jsonData",
-      "required": true,
       "validations": [
         {
           "type": "allowedValues",
@@ -490,7 +489,8 @@
       "description": "Authentication token. Required for Flux and SQL query languages.",
       "valueType": "string",
       "semanticType": "token",
-      "target": "secureJsonData"
+      "target": "secureJsonData",
+      "dependsOn": "jsonData.version == 'Flux' || jsonData.version == 'SQL'"
     },
     {
       "id": "secureJsonData.password",
@@ -645,9 +645,9 @@
   ],
   "groups": [
     {
-      "id": "url-and-auth",
-      "title": "URL and authentication",
-      "description": "Enter the URL, select your product and query language, then configure authentication and HTTP settings.",
+      "id": "connection",
+      "title": "Connection & HTTP settings",
+      "description": "Enter the URL, select your product and query language, and configure HTTP options.",
       "fieldRefs": [
         "root.url",
         "jsonData.product",
@@ -655,19 +655,33 @@
         "jsonData.keepCookies",
         "jsonData.timeout",
         "httpHeaders",
+        "jsonData.pdcInjected"
+      ]
+    },
+    {
+      "id": "auth",
+      "title": "Authentication",
+      "description": "Choose an authentication method for the data source.",
+      "fieldRefs": [
         "auth.method",
         "root.basicAuth",
         "root.basicAuthUser",
         "secureJsonData.basicAuthPassword",
-        "jsonData.oauthPassThru",
+        "jsonData.oauthPassThru"
+      ]
+    },
+    {
+      "id": "tls",
+      "title": "TLS settings",
+      "description": "Configure TLS client certificates and verification.",
+      "fieldRefs": [
         "jsonData.tlsAuth",
         "jsonData.serverName",
         "secureJsonData.tlsClientCert",
         "secureJsonData.tlsClientKey",
         "jsonData.tlsAuthWithCACert",
         "secureJsonData.tlsCACert",
-        "jsonData.tlsSkipVerify",
-        "jsonData.pdcInjected"
+        "jsonData.tlsSkipVerify"
       ]
     },
     {
