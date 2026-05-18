@@ -17,7 +17,7 @@ export function FileUploadField({ field, formField, disabled, setValue }: Props)
   const [mode, setModeLocal] = useState<EntryMode>('upload');
   const [error, setError] = useState<string | null>(null);
   const theme = useTheme2();
-  const mapping = field.ui?.fileMapping ?? {};
+  const mapping = field.ui?.fileMapping;
   const accept = field.ui?.accept ?? ['.json'];
 
   // Write mode into this field's own Controller value so dependsOn can observe it.
@@ -32,19 +32,20 @@ export function FileUploadField({ field, formField, disabled, setValue }: Props)
 
   const processJson = useCallback(
     (text: string) => {
+      const fileMapping = mapping ?? {};
       try {
         const parsed = JSON.parse(text);
         if (typeof parsed !== 'object' || parsed === null) {
           setError('Invalid JSON object');
           return;
         }
-        const requiredKeys = Object.keys(mapping);
+        const requiredKeys = Object.keys(fileMapping);
         const missingKeys = requiredKeys.filter((k) => parsed[k] === undefined);
         if (missingKeys.length > 0) {
           setError(`Missing keys: ${missingKeys.join(', ')}`);
           return;
         }
-        for (const [jsonKey, targetFieldId] of Object.entries(mapping)) {
+        for (const [jsonKey, targetFieldId] of Object.entries(fileMapping)) {
           if (parsed[jsonKey] !== undefined) {
             const parts = targetFieldId.split('.');
             const fk = parts.length === 2 ? parts[1] : targetFieldId;
