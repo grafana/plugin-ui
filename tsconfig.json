@@ -1,7 +1,6 @@
 {
   "extends": "@grafana/tsconfig",
   "compilerOptions": {
-    "ignoreDeprecations":"6.0",
     "allowJs": true,
     "importHelpers": false,
     "isolatedModules": true,
@@ -12,6 +11,7 @@
     "outDir": "dist",
     "resolveJsonModule": true,
     "target": "es2022",
+    "types":["node","@types/jest","@testing-library/jest-dom"],
     "verbatimModuleSyntax": true
   },
   "include": ["src"]

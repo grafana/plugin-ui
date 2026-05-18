@@ -1,11 +1,6 @@
 import type { ConfigField } from '../../../datasource/schema/schema';
-import {
-  parseDependsOn,
-  evaluateDependsOn,
-  formKey,
-  getWatchedValue,
-  evaluateCelExpression,
-} from '../../../datasource/schema/config';
+import { parseDependsOn, evaluateDependsOn, formKey, getWatchedValue } from '../../../datasource/schema/config';
+import { evaluateCelExpression } from '../../../datasource/schema/cel';
 import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
 
 /**
