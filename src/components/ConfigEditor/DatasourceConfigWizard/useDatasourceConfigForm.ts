@@ -324,6 +324,16 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
     [errors, watchedValues, fieldById, celContext, isFieldVisible]
   );
 
+  const isFieldDisabled = useCallback(
+    (field: ConfigField): boolean => {
+      if (!field.disabledWhen) {
+        return false;
+      }
+      return evaluateCelExpression(field.disabledWhen, celContext);
+    },
+    [celContext]
+  );
+
   /** Check if a group has any fields with non-default/non-empty values. */
   const groupHasData = useCallback(
     (group: ResolvedGroup): boolean => {
@@ -362,6 +372,7 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
     readOnly,
     // Callbacks
     isFieldVisible,
+    isFieldDisabled,
     isGroupValid,
     groupHasData,
     onSubmit,

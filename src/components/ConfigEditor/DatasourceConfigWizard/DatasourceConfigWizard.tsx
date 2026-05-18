@@ -86,6 +86,7 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
     submitError,
     readOnly,
     isFieldVisible,
+    isFieldDisabled,
     onSubmit,
     setValue,
   } = form;
@@ -291,7 +292,7 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
               field={field}
               control={control}
               errors={errors}
-              disabled={allDisabled}
+              disabled={allDisabled || isFieldDisabled(field)}
               dsUid={dsUid}
               watchedValues={watchedValues}
               fieldById={fieldById}

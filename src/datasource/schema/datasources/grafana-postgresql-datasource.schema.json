@@ -318,7 +318,7 @@
       "id": "jsonData.connMaxLifetime",
       "key": "connMaxLifetime",
       "label": "Max lifetime",
-      "description": "Maximum lifetime of a connection in seconds. Default is 14400 (4 hours).",
+      "description": "Maximum lifetime of a connection in seconds. Default is 14400 (4 hours). Set to 0 to reuse connections forever.",
       "valueType": "number",
       "target": "jsonData",
       "defaultValue": 14400,

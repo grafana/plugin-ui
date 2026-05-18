@@ -37,6 +37,7 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
     submitError,
     readOnly,
     isFieldVisible,
+    isFieldDisabled,
     isGroupValid,
     groupHasData,
     onSubmit,
@@ -224,7 +225,7 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
                         field={field}
                         control={control}
                         errors={errors}
-                        disabled={allDisabled}
+                        disabled={allDisabled || isFieldDisabled(field)}
                         dsUid={dsUid}
                         watchedValues={watchedValues}
                         fieldById={fieldById}
