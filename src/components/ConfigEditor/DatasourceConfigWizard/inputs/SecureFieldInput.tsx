@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { css } from '@emotion/css';
 import type { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Button, Input, Icon } from '@grafana/ui';
-import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
+import { SECURE_FIELD_CONFIGURED } from '../../../../datasource/schema/datasource';
 
 export type FormFieldRef = {
   onChange: (v: unknown) => void;
@@ -11,17 +11,15 @@ export type FormFieldRef = {
   name: string;
 };
 
-export function SecureFieldInput({
-  formField,
-  placeholder,
-  disabled,
-  label,
-}: {
+type Props = {
   formField: FormFieldRef;
   placeholder?: string;
   disabled?: boolean;
   label: string;
-}) {
+};
+
+export function SecureFieldInput(props: Props) {
+  const { formField, placeholder, disabled } = props;
   const isConfigured = formField.value === SECURE_FIELD_CONFIGURED;
   const [revealed, setRevealed] = useState(false);
   const styles = useStyles2(getSecureFieldStyles);

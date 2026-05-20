@@ -1,22 +1,20 @@
 import React, { useMemo } from 'react';
 import { type useForm, Controller } from 'react-hook-form';
 import { useStyles2, Icon, Tooltip } from '@grafana/ui';
-import type { IndexedPairItem } from '../../../datasource/schema/datasource';
-import type { FormValues } from '../../../datasource/schema/types';
 import { IndexedPairEditor } from './IndexedPairEditor';
-import { getWizardStyles } from './wizardStyles';
+import { getWizardStyles } from '../wizardStyles';
+import { type IndexedPairItem } from '../../../../datasource/schema/datasource';
+import { type FormValues } from '../../../../datasource/schema/types';
 
-export function AuthorizationHeaderField({
-  headersFieldKey,
-  control,
-  disabled,
-  watchedValues,
-}: {
+type Props = {
   headersFieldKey: string;
   control: ReturnType<typeof useForm<FormValues>>['control'];
   disabled?: boolean;
   watchedValues: Record<string, unknown>;
-}) {
+};
+
+export const AuthorizationHeaderField = (props: Props) => {
+  const { headersFieldKey, control, disabled, watchedValues } = props;
   const styles = useStyles2(getWizardStyles);
   const items = useMemo(
     () => (Array.isArray(watchedValues[headersFieldKey]) ? watchedValues[headersFieldKey] : []) as IndexedPairItem[],
@@ -70,4 +68,4 @@ export function AuthorizationHeaderField({
       }}
     />
   );
-}
+};

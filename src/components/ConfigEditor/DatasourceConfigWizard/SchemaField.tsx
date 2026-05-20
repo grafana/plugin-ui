@@ -5,7 +5,7 @@ import type { ConfigField } from '../../../datasource/schema/schema';
 import { resolveActiveOverride, formKey } from '../../../datasource/schema/config';
 import type { FormValues } from '../../../datasource/schema/types';
 import { isFieldRequired, buildValidationRules, parseItemErrors } from './fieldUtils';
-import { PdcFieldNote } from './PdcFieldNote';
+import { PdcFieldNote } from './inputs/PdcFieldNote';
 import { renderFieldInput } from './renderFieldInput';
 import { getWizardStyles } from './wizardStyles';
 

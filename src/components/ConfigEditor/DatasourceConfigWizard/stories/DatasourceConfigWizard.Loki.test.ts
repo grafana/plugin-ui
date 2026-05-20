@@ -170,7 +170,8 @@ describe('Loki derived fields', () => {
   it('matcherType allows regex and label', () => {
     const field = schema.fields.find((f) => f.id === 'jsonData.derivedFields')!;
     const matcherType = field.item?.fields?.find((f) => f.key === 'matcherType');
-    expect(matcherType?.validations?.[0]?.values).toEqual(['label', 'regex']);
+    const rule = matcherType?.validations?.find((v) => v.type === 'allowedValues');
+    expect(rule?.values).toEqual(['label', 'regex']);
   });
 });
 

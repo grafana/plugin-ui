@@ -1,19 +1,20 @@
 import React, { useState, useCallback } from 'react';
 import { FileDropzone, TextArea, Button, useTheme2 } from '@grafana/ui';
 import { css } from '@emotion/css';
-import type { ConfigField } from '../../../datasource/schema/schema';
+import type { ConfigField } from '../../../../datasource/schema/schema';
 import type { FormFieldRef } from './SecureFieldInput';
 
 type EntryMode = 'upload' | 'paste' | 'manual';
 
-interface Props {
+type Props = {
   field: ConfigField;
   formField: FormFieldRef;
   disabled?: boolean;
   setValue: (name: string, value: unknown) => void;
-}
+};
 
-export function FileUploadField({ field, formField, disabled, setValue }: Props) {
+export function FileUploadField(props: Props) {
+  const { field, formField, disabled, setValue } = props;
   const [mode, setModeLocal] = useState<EntryMode>('upload');
   const [error, setError] = useState<string | null>(null);
   const theme = useTheme2();

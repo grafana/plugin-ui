@@ -2,18 +2,66 @@ import React, { useState } from 'react';
 import { css } from '@emotion/css';
 import type { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Button, Input, Icon, Tooltip, Stack } from '@grafana/ui';
-import { SECURE_FIELD_CONFIGURED, type IndexedPairItem } from '../../../datasource/schema/datasource';
+import { SECURE_FIELD_CONFIGURED, type IndexedPairItem } from '../../../../datasource/schema/datasource';
 import { getSecureFieldStyles } from './SecureFieldInput';
 
-function IndexedPairRow({
-  item,
-  index,
-  disabled,
-  onUpdate,
-  onRemove,
-  hideControls,
-  itemLabel = 'header',
-}: {
+type Props = {
+  value: IndexedPairItem[];
+  onChange: (items: IndexedPairItem[]) => void;
+  maxItems?: number;
+  disabled?: boolean;
+  hideControls?: boolean;
+  itemLabel?: string;
+};
+
+export const IndexedPairEditor = (props: Props) => {
+  const { value, onChange, maxItems = 10, disabled, hideControls, itemLabel = 'header' } = props;
+  const styles = useStyles2(getStyles);
+  const items = Array.isArray(value) ? value : [];
+  const addItem = () => {
+    if (items.length >= maxItems) {
+      return;
+    }
+    onChange([...items, { index: 0, name: '', value: '' }]);
+  };
+  const removeItem = (index: number) => {
+    onChange(items.filter((_, i) => i !== index));
+  };
+  const updateItem = (index: number, key: 'name' | 'value', val: string) => {
+    const updated = items.map((item, i) => (i === index ? { ...item, [key]: val } : item));
+    onChange(updated);
+  };
+  return (
+    <Stack direction="column" gap={0.5}>
+      {items.map((item, i) => (
+        <IndexedPairRow
+          key={item.index || `new-${i}`}
+          item={item}
+          index={i}
+          disabled={disabled}
+          onUpdate={updateItem}
+          onRemove={removeItem}
+          hideControls={hideControls}
+          itemLabel={itemLabel}
+        />
+      ))}
+      {!hideControls && items.length < maxItems && (
+        <div>
+          <Button variant="secondary" size="sm" icon="plus" disabled={disabled} onClick={addItem} type="button">
+            Add {itemLabel}
+          </Button>
+        </div>
+      )}
+      {!hideControls && items.length >= maxItems && (
+        <span className={styles.limitNote}>
+          Maximum {maxItems} {itemLabel}s reached
+        </span>
+      )}
+    </Stack>
+  );
+};
+
+type IndexedPairRowProps = {
   item: IndexedPairItem;
   index: number;
   disabled?: boolean;
@@ -21,13 +69,15 @@ function IndexedPairRow({
   onRemove: (index: number) => void;
   hideControls?: boolean;
   itemLabel?: string;
-}) {
+};
+
+const IndexedPairRow = (props: IndexedPairRowProps) => {
+  const { item, index, disabled, onUpdate, onRemove, hideControls, itemLabel = 'header' } = props;
   const styles = useStyles2(getStyles);
   const secureStyles = useStyles2(getSecureFieldStyles);
   const isConfigured = item.value === SECURE_FIELD_CONFIGURED;
   const [editing, setEditing] = useState(false);
   const [revealed, setRevealed] = useState(false);
-
   return (
     <Stack direction="row" gap={1}>
       <div className={styles.inputCell}>
@@ -107,71 +157,7 @@ function IndexedPairRow({
       )}
     </Stack>
   );
-}
-
-export function IndexedPairEditor({
-  value,
-  onChange,
-  maxItems = 10,
-  disabled,
-  hideControls,
-  itemLabel = 'header',
-}: {
-  value: IndexedPairItem[];
-  onChange: (items: IndexedPairItem[]) => void;
-  maxItems?: number;
-  disabled?: boolean;
-  hideControls?: boolean;
-  itemLabel?: string;
-}) {
-  const styles = useStyles2(getStyles);
-  const items = Array.isArray(value) ? value : [];
-
-  const addItem = () => {
-    if (items.length >= maxItems) {
-      return;
-    }
-    onChange([...items, { index: 0, name: '', value: '' }]);
-  };
-
-  const removeItem = (index: number) => {
-    onChange(items.filter((_, i) => i !== index));
-  };
-
-  const updateItem = (index: number, key: 'name' | 'value', val: string) => {
-    const updated = items.map((item, i) => (i === index ? { ...item, [key]: val } : item));
-    onChange(updated);
-  };
-
-  return (
-    <Stack direction="column" gap={0.5}>
-      {items.map((item, i) => (
-        <IndexedPairRow
-          key={item.index || `new-${i}`}
-          item={item}
-          index={i}
-          disabled={disabled}
-          onUpdate={updateItem}
-          onRemove={removeItem}
-          hideControls={hideControls}
-          itemLabel={itemLabel}
-        />
-      ))}
-      {!hideControls && items.length < maxItems && (
-        <div>
-          <Button variant="secondary" size="sm" icon="plus" disabled={disabled} onClick={addItem} type="button">
-            Add {itemLabel}
-          </Button>
-        </div>
-      )}
-      {!hideControls && items.length >= maxItems && (
-        <span className={styles.limitNote}>
-          Maximum {maxItems} {itemLabel}s reached
-        </span>
-      )}
-    </Stack>
-  );
-}
+};
 
 const getStyles = (theme: GrafanaTheme2) => ({
   inputCell: css({

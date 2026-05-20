@@ -1,25 +1,33 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { css } from '@emotion/css';
-import type { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Button, Input, Stack, Tooltip } from '@grafana/ui';
+import type { GrafanaTheme2 } from '@grafana/data';
 
-export function StringArrayInput({
-  value,
-  onChange,
-  placeholder,
-  disabled,
-  itemLabel = 'item',
-}: {
+type Props = {
   value: string[];
   onChange: (v: string[]) => void;
   placeholder?: string;
   disabled?: boolean;
   itemLabel?: string;
-}) {
+};
+
+export const StringArrayInput = (props: Props) => {
+  const { value, onChange, placeholder, disabled, itemLabel = 'item' } = props;
   const styles = useStyles2(getStyles);
   const items = Array.isArray(value) ? value : [];
 
+  const lastInputRef = useRef<HTMLInputElement | null>(null);
+  const shouldFocusLastRef = useRef(false);
+
+  useEffect(() => {
+    if (shouldFocusLastRef.current && lastInputRef.current) {
+      lastInputRef.current.focus();
+      shouldFocusLastRef.current = false;
+    }
+  }, [items.length]);
+
   const addItem = () => {
+    shouldFocusLastRef.current = true;
     onChange([...items, '']);
   };
 
@@ -31,12 +39,31 @@ export function StringArrayInput({
     onChange(items.map((item, i) => (i === index ? val : item)));
   };
 
+  const isItemValid = (index: number, val: string): boolean => {
+    const trimmed = val.trim();
+    if (trimmed === '') {
+      return false;
+    }
+    return !items.some((item, i) => i !== index && item.trim() === trimmed);
+  };
+
+  const handleEnter = (index: number, currentValue: string) => {
+    if (!isItemValid(index, currentValue)) {
+      return;
+    }
+    if (index === items.length - 1) {
+      shouldFocusLastRef.current = true;
+      onChange([...items, '']);
+    }
+  };
+
   return (
     <Stack direction="column" gap={0.5}>
       {items.map((item, i) => (
         <Stack direction="row" gap={1} key={i}>
           <div className={styles.inputCell}>
             <Input
+              ref={i === items.length - 1 ? lastInputRef : undefined}
               value={item}
               placeholder={placeholder ?? itemLabel}
               disabled={disabled}
@@ -44,6 +71,7 @@ export function StringArrayInput({
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
+                  handleEnter(i, e.currentTarget.value);
                 }
               }}
             />
@@ -72,7 +100,7 @@ export function StringArrayInput({
       )}
     </Stack>
   );
-}
+};
 
 const getStyles = (theme: GrafanaTheme2) => ({
   inputCell: css({

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type { ConfigField, ConfigGroup, DatasourceConfigSchema } from '../../../datasource/schema/schema';
+import type { ConfigField, ConfigGroup, DatasourceConfigSchema } from '../../../../datasource/schema/schema';
 import {
   resolveGroups,
   resolveRequiredFieldsGroup,
@@ -9,15 +9,15 @@ import {
   computeVirtualFieldValues,
   formKey,
   getWatchedValue,
-} from '../../../datasource/schema/config';
-import { extractFieldRefs, evaluateCelExpression } from '../../../datasource/schema/cel';
+} from '../../../../datasource/schema/config';
+import { extractFieldRefs, evaluateCelExpression } from '../../../../datasource/schema/cel';
 import {
   SECURE_FIELD_CONFIGURED,
   fetchExistingValues,
   submitDatasourceConfig,
-} from '../../../datasource/schema/datasource';
-import type { FormValues } from '../../../datasource/schema/types';
-import { evaluateEffectCondition, isFieldRequired } from './fieldUtils';
+} from '../../../../datasource/schema/datasource';
+import type { FormValues } from '../../../../datasource/schema/types';
+import { evaluateEffectCondition, isFieldRequired } from '../fieldUtils';
 
 export type DatasourceConfigFormOptions = {
   schema: DatasourceConfigSchema;

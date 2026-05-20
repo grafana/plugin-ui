@@ -2,9 +2,9 @@ import React, { type ReactNode, useCallback, useMemo, useRef, useState } from 'r
 import { useStyles2, Button, Icon, Alert, Spinner, LinkButton, Collapse } from '@grafana/ui';
 import type { DatasourceConfigSchema } from '../../../datasource/schema/schema';
 import { formKey } from '../../../datasource/schema/config';
-import type { useDatasourceConfigForm } from './useDatasourceConfigForm';
+import type { useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
 import { SchemaField } from './SchemaField';
-import { AuthorizationHeaderField } from './AuthorizationHeaderField';
+import { AuthorizationHeaderField } from './inputs/AuthorizationHeaderField';
 import { SidebarNav, type SectionState } from './SidebarNav';
 import { getTabStyles } from './tabStyles';
 

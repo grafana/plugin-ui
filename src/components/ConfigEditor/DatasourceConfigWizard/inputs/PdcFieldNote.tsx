@@ -3,15 +3,14 @@ import { css } from '@emotion/css';
 import type { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Icon, Tooltip, LinkButton } from '@grafana/ui';
 
-export function PdcFieldNote({
-  enabled,
-  description,
-  configUrl,
-}: {
+type Props = {
   enabled: boolean;
   description?: string;
   configUrl: string;
-}) {
+};
+
+export const PdcFieldNote = (props: Props) => {
+  const { enabled, description, configUrl } = props;
   const styles = useStyles2(getStyles);
   return (
     <div className={styles.wrapper}>
@@ -31,7 +30,7 @@ export function PdcFieldNote({
       </LinkButton>
     </div>
   );
-}
+};
 
 const getStyles = (theme: GrafanaTheme2) => ({
   wrapper: css({

@@ -6,12 +6,7 @@
  * using the same pure functions the wizard uses at runtime.
  */
 import type { ConfigField, DatasourceConfigSchema } from '../../../../datasource/schema/schema';
-import {
-  resolveGroups,
-  formKey,
-  getWatchedValue,
-  computeVirtualFieldValues,
-} from '../../../../datasource/schema/config';
+import { resolveGroups, formKey, getWatchedValue } from '../../../../datasource/schema/config';
 import { evaluateCelExpression } from '../../../../datasource/schema/cel';
 import { evaluateEffectCondition } from '../fieldUtils';
 import influxdbSchemaJson from '../../../../datasource/schema/datasources/influxdb.schema.json';

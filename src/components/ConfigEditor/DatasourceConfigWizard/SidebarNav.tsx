@@ -1,7 +1,7 @@
 import React from 'react';
 import { cx } from '@emotion/css';
 import { useStyles2 } from '@grafana/ui';
-import type { ResolvedGroup } from './useDatasourceConfigForm';
+import type { ResolvedGroup } from './hooks/useDatasourceConfigForm';
 import { getTabStyles } from './tabStyles';
 
 export type SectionState = 'active' | 'draft' | 'validated' | 'error';

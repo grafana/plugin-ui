@@ -5,10 +5,10 @@ import { formKey, getWatchedValue } from '../../../datasource/schema/config';
 import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
 import { isFieldRequired } from './fieldUtils';
 import { SchemaField } from './SchemaField';
-import { AuthorizationHeaderField } from './AuthorizationHeaderField';
+import { AuthorizationHeaderField } from './inputs/AuthorizationHeaderField';
 import { TabLayout } from './TabLayout';
 import { getWizardStyles } from './wizardStyles';
-import { useDatasourceConfigForm } from './useDatasourceConfigForm';
+import { useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
 
 export type DatasourceConfigWizardProps = {
   schema: DatasourceConfigSchema;

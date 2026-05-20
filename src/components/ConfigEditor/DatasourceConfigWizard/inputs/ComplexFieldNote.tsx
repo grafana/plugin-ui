@@ -1,9 +1,12 @@
 import React from 'react';
 import { css } from '@emotion/css';
-import type { GrafanaTheme2 } from '@grafana/data';
+import { type GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Icon } from '@grafana/ui';
 
-export function ComplexFieldNote({ count, label }: { count: number; label: string }) {
+type Props = { count: number; label: string };
+
+export const ComplexFieldNote = (props: Props) => {
+  const { count, label } = props;
   const styles = useStyles2(getStyles);
   return (
     <div className={styles.note}>
@@ -14,7 +17,7 @@ export function ComplexFieldNote({ count, label }: { count: number; label: strin
       </span>
     </div>
   );
-}
+};
 
 const getStyles = (theme: GrafanaTheme2) => ({
   note: css({
