@@ -304,7 +304,7 @@
       "description": "Sets the browser caching level for editor queries. Higher cache settings are recommended for high cardinality data sources.",
       "valueType": "string",
       "target": "jsonData",
-      "defaultValue": "High",
+      "defaultValue": "Low",
       "validations": [
         {
           "type": "allowedValues",

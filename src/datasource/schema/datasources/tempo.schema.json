@@ -165,22 +165,67 @@
       }
     },
     {
-      "id": "jsonData.spanBar.tag",
-      "key": "tag",
-      "label": "Tag",
-      "description": "Tag key to display on the span bar. Only applicable when span bar label is set to 'Tag'.",
+      "id": "jsonData.spanBar.type",
+      "key": "type",
+      "label": "Label",
+      "description": "Add additional info next to the service and operation on a span bar row in the trace view.",
       "valueType": "string",
       "target": "jsonData",
-      "section": "spanBar"
+      "section": "spanBar",
+      "validations": [
+        {
+          "type": "allowedValues",
+          "values": [
+            "None",
+            "Duration",
+            "Tag"
+          ]
+        }
+      ],
+      "ui": {
+        "component": "select",
+        "placeholder": "Duration",
+        "options": [
+          {
+            "label": "None",
+            "value": "None",
+            "description": "Adds nothing to the span bar row"
+          },
+          {
+            "label": "Duration",
+            "value": "Duration",
+            "description": "Displays the span duration on the span bar row (default)"
+          },
+          {
+            "label": "Tag",
+            "value": "Tag",
+            "description": "Displays a span tag value on the span bar row"
+          }
+        ]
+      }
+    },
+    {
+      "id": "jsonData.spanBar.tag",
+      "key": "tag",
+      "label": "Tag key",
+      "description": "Tag key used to retrieve the tag value from a span's attributes or resources. Only applies when label is set to 'Tag'.",
+      "valueType": "string",
+      "target": "jsonData",
+      "section": "spanBar",
+      "dependsOn": "jsonData.spanBar.type == 'Tag'"
     },
     {
       "id": "jsonData.tagLimit",
       "key": "tagLimit",
-      "label": "Tag limit",
-      "description": "Maximum number of tags retrieved from Tempo. Default is 100.",
+      "label": "Max tags and tag values",
+      "description": "Maximum number of tags and tag values to display in the Tempo editor. Default is 5000.",
       "valueType": "number",
       "target": "jsonData",
-      "defaultValue": 100
+      "defaultValue": 5000,
+      "ui": {
+        "component": "input",
+        "placeholder": "5000"
+      }
     },
     {
       "id": "jsonData.traceQuery.timeShiftEnabled",
@@ -574,6 +619,7 @@
       "id": "span-bar",
       "title": "Span bar",
       "fieldRefs": [
+        "jsonData.spanBar.type",
         "jsonData.spanBar.tag"
       ]
     }
