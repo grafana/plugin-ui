@@ -1,7 +1,10 @@
 // @ts-expect-error — js-yaml has no bundled type declarations; used only for scalar serialization
 import yaml from 'js-yaml';
-import type { AllowedValuesValidationRule, ConfigField, ConfigGroup, DatasourceConfigSchema } from './schema';
 import { resolveGroups } from './config';
+import { ROOT_CONFIG_FIELDS } from './dsconfig';
+import type { AllowedValuesValidationRule, ConfigField, ConfigGroup, DatasourceConfigSchema } from './schema';
+
+type YamlRenderOptions = { jsonDataKeys?: string[]; secureKeys?: string[] };
 
 // ============================================================
 // Provisioning YAML generation
@@ -464,3 +467,88 @@ export function datasourceToProvisioningYaml(
 
   return lines.join('\n');
 }
+
+function getYamlRenderOptions(ds: Record<string, unknown>): Required<YamlRenderOptions> {
+  return {
+    jsonDataKeys: Object.keys((ds.jsonData ?? {}) as Record<string, unknown>).sort(),
+    secureKeys: [
+      ...new Set([
+        ...Object.keys((ds.secureJsonData ?? {}) as Record<string, unknown>),
+        ...Object.keys((ds.secureJsonFields ?? {}) as Record<string, boolean>),
+      ]),
+    ].sort(),
+  };
+}
+
+export const configToYaml = (ds: Record<string, unknown>, options: YamlRenderOptions = {}): string => {
+  const { jsonDataKeys, secureKeys } = {
+    ...getYamlRenderOptions(ds),
+    ...options,
+  };
+  const root: Record<string, unknown> = {};
+
+  for (const key of ROOT_CONFIG_FIELDS) {
+    root[key] = ds[key] ?? '';
+  }
+
+  const jsonData = (ds.jsonData ?? {}) as Record<string, unknown>;
+  if (jsonDataKeys.length > 0) {
+    const jsonDataYaml: Record<string, unknown> = {};
+    for (const key of jsonDataKeys) {
+      jsonDataYaml[key] = jsonData[key] ?? '';
+    }
+    root.jsonData = jsonDataYaml;
+  }
+
+  if (secureKeys.length > 0) {
+    const secureJsonData: Record<string, string> = {};
+    for (const key of secureKeys) {
+      secureJsonData[key] = '********';
+    }
+    root.secureJsonData = secureJsonData;
+  }
+
+  return yaml.dump(root, { lineWidth: -1, sortKeys: false, noRefs: true }).trimEnd();
+};
+
+export const formatYamlDiff = (existing: Record<string, unknown>, body: Record<string, unknown>): string => {
+  const updated = { ...existing, ...body };
+
+  const existingJD = (existing.jsonData ?? {}) as Record<string, unknown>;
+  const updatedJD = (updated.jsonData ?? {}) as Record<string, unknown>;
+  const jsonDataKeys = [...new Set([...Object.keys(existingJD), ...Object.keys(updatedJD)])].sort();
+
+  const secureKeys = [
+    ...new Set([
+      ...Object.keys((existing.secureJsonData ?? {}) as Record<string, unknown>),
+      ...Object.keys((existing.secureJsonFields ?? {}) as Record<string, boolean>),
+      ...Object.keys((updated.secureJsonData ?? {}) as Record<string, unknown>),
+      ...Object.keys((updated.secureJsonFields ?? {}) as Record<string, boolean>),
+    ]),
+  ].sort();
+
+  const currentYaml = configToYaml(existing, { jsonDataKeys, secureKeys });
+  const updatedYaml = configToYaml(updated, { jsonDataKeys, secureKeys });
+
+  const oldLines = currentYaml.split('\n');
+  const newLines = updatedYaml.split('\n');
+  const maxLen = Math.max(oldLines.length, newLines.length);
+  const diffLines: string[] = [];
+
+  for (let i = 0; i < maxLen; i++) {
+    const oldLine = oldLines[i];
+    const newLine = newLines[i];
+    if (oldLine === newLine) {
+      diffLines.push(` ${oldLine}`);
+      continue;
+    }
+    if (oldLine !== undefined) {
+      diffLines.push(`-${oldLine}`);
+    }
+    if (newLine !== undefined) {
+      diffLines.push(`+${newLine}`);
+    }
+  }
+
+  return '```diff\n' + diffLines.join('\n') + '\n```';
+};
