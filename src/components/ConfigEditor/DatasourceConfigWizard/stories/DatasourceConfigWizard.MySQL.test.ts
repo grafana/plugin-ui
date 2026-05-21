@@ -4,10 +4,10 @@
  * These validate that the correct fields render for each TLS toggle state
  * using the same pure functions the wizard uses at runtime.
  */
-import type { ConfigField, DatasourceConfigSchema } from '../../../../datasource/schema/schema';
-import { resolveGroups, formKey, getWatchedValue } from '../../../../datasource/schema/config';
-import { evaluateCelExpression } from '../../../../datasource/schema/cel';
-import mysqlSchemaJson from '../../../../datasource/schema/datasources/mysql.schema.json';
+import type { ConfigField, DatasourceConfigSchema } from '../../../../schema/schema';
+import { resolveGroups, formKey, getWatchedValue } from './../config';
+import { evaluateCelExpression } from '../cel';
+import mysqlSchemaJson from '../../../../schema/registry/mysql.schema.json';
 
 const schema = mysqlSchemaJson as unknown as DatasourceConfigSchema;
 

@@ -4,7 +4,7 @@
  * These validate that the correct fields render in each auth mode
  * using the same pure functions the wizard uses at runtime.
  */
-import type { ConfigField, DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { ConfigField, DatasourceConfigSchema } from '../../../../schema/schema';
 import {
   resolveGroups,
   resolveRequiredFieldsGroup,
@@ -12,10 +12,10 @@ import {
   getWatchedValue,
   computeVirtualFieldValues,
   evaluateComputedRead,
-} from '../../../../datasource/schema/config';
-import { evaluateCelExpression } from '../../../../datasource/schema/cel';
+} from '../config';
+import { evaluateCelExpression } from '../cel';
 import { evaluateEffectCondition } from '../fieldUtils';
-import bigQuerySchemaJson from '../../../../datasource/schema/datasources/grafana-bigquery-datasource.schema.json';
+import bigQuerySchemaJson from '../../../../schema/registry/grafana-bigquery-datasource.schema.json';
 
 const schema = bigQuerySchemaJson as unknown as DatasourceConfigSchema;
 

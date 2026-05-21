@@ -1,8 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { DatasourceConfigSchema } from '../../../../schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import infinitySchemaJson from '../../../../datasource/schema/datasources/yesoreyeram-infinity-datasource.schema.json';
+import infinitySchemaJson from '../../../../schema/registry/yesoreyeram-infinity-datasource.schema.json';
 
 const schema = infinitySchemaJson as unknown as DatasourceConfigSchema;
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { DatasourceConfigSchema } from '../../../../schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import googleSheetsSchemaJson from '../../../../datasource/schema/datasources/grafana-googlesheets-datasource.schema.json';
+import googleSheetsSchemaJson from '../../../../schema/registry/grafana-googlesheets-datasource.schema.json';
 
 const schema = googleSheetsSchemaJson as unknown as DatasourceConfigSchema;
 

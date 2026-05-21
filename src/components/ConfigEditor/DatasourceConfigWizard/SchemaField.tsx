@@ -1,13 +1,13 @@
 import React from 'react';
 import { type useForm, Controller } from 'react-hook-form';
 import { useStyles2, Icon, Tooltip } from '@grafana/ui';
-import type { ConfigField } from '../../../datasource/schema/schema';
-import { resolveActiveOverride, formKey } from '../../../datasource/schema/config';
-import type { FormValues } from '../../../datasource/schema/types';
+import type { ConfigField } from '../../../schema/schema';
+import { resolveActiveOverride, formKey } from './config';
+import type { FormValues } from './datasource';
 import { isFieldRequired, buildValidationRules, parseItemErrors } from './fieldUtils';
 import { PdcFieldNote } from './inputs/PdcFieldNote';
 import { renderFieldInput } from './renderFieldInput';
-import { getWizardStyles } from './wizardStyles';
+import { getWizardStyles } from './styles';
 
 export type SchemaFieldProps = {
   field: ConfigField;

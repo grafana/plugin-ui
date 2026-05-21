@@ -5,4 +5,4 @@
  */
 export * from './components';
 export { SqlDatasource } from './datasource/SqlDatasource';
-export * from './datasource/schema';
+export * from './schema';

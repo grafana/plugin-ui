@@ -1,8 +1,8 @@
 // @ts-expect-error — js-yaml has no bundled type declarations; used only for scalar serialization
 import yaml from 'js-yaml';
-import { resolveGroups } from './config';
+import { resolveGroups } from '../../components/ConfigEditor/DatasourceConfigWizard/config';
 import { ROOT_CONFIG_FIELDS } from './dsconfig';
-import type { AllowedValuesValidationRule, ConfigField, ConfigGroup, DatasourceConfigSchema } from './schema';
+import type { AllowedValuesValidationRule, ConfigField, ConfigGroup, DatasourceConfigSchema } from '../schema';
 
 type YamlRenderOptions = { jsonDataKeys?: string[]; secureKeys?: string[] };
 

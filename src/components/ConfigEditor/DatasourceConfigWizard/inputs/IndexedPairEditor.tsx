@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { css } from '@emotion/css';
 import type { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Button, Input, Icon, Tooltip, Stack } from '@grafana/ui';
-import { SECURE_FIELD_CONFIGURED, type IndexedPairItem } from '../../../../datasource/schema/datasource';
+import { SECURE_FIELD_CONFIGURED, type IndexedPairItem } from '../datasource';
 import { getSecureFieldStyles } from './SecureFieldInput';
 
 type Props = {

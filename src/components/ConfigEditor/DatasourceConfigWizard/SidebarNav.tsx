@@ -2,7 +2,7 @@ import React from 'react';
 import { cx } from '@emotion/css';
 import { useStyles2 } from '@grafana/ui';
 import type { ResolvedGroup } from './hooks/useDatasourceConfigForm';
-import { getTabStyles } from './tabStyles';
+import { getTabStyles } from './styles';
 
 export type SectionState = 'active' | 'draft' | 'validated' | 'error';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { DatasourceConfigSchema } from '../../../../schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import lokiSchemaJson from '../../../../datasource/schema/datasources/loki.schema.json';
+import lokiSchemaJson from '../../../../schema/registry/loki.schema.json';
 
 const schema = lokiSchemaJson as unknown as DatasourceConfigSchema;
 

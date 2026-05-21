@@ -3,9 +3,10 @@
     ".github/**",
     "node_modules/**",
     "dist/**",
-    "src/components/ConfigEditor/DatasourceConfigWizard",
-    "schemaRegistry.ts",
+    "src/schema/registry/index.ts",
     "**/*.schema.json",
+    "**/*.stories.tsx",
+    "**/*.test.{ts,tsx}",
     "compiled",
     "yarn.lock",
     ".yarn/**",
@@ -201,6 +202,7 @@
     "creds",
     "pasteable",
     "parseable",
+    "UIDs",
     "marcbachmann",
     "arethetypeswrong"
   ]

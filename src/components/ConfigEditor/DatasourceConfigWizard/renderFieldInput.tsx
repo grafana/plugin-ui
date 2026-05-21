@@ -2,8 +2,8 @@ import React from 'react';
 import { Input, Select, RadioButtonGroup, Switch, TextArea } from '@grafana/ui';
 import { SecureFieldInput, type FormFieldRef } from './inputs/SecureFieldInput';
 import { StringArrayInput, IndexedPairEditor, FileUploadField, ObjectArrayEditor, ComplexFieldNote } from './inputs';
-import type { ConfigField } from '../../../datasource/schema/schema';
-import type { IndexedPairItem } from '../../../datasource/schema/datasource';
+import type { ConfigField } from '../../../schema/schema';
+import type { IndexedPairItem } from './datasource';
 
 export function renderFieldInput(
   field: ConfigField,

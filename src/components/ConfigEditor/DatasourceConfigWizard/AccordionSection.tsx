@@ -1,7 +1,7 @@
 import React, { forwardRef, type ReactNode } from 'react';
 import { cx } from '@emotion/css';
 import { useStyles2, Icon } from '@grafana/ui';
-import { getTabStyles } from './tabStyles';
+import { getTabStyles } from './styles';
 
 type AccordionSectionProps = {
   title: string;

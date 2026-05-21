@@ -2,9 +2,8 @@ import React, { useMemo } from 'react';
 import { type useForm, Controller } from 'react-hook-form';
 import { useStyles2, Icon, Tooltip } from '@grafana/ui';
 import { IndexedPairEditor } from './IndexedPairEditor';
-import { getWizardStyles } from '../wizardStyles';
-import { type IndexedPairItem } from '../../../../datasource/schema/datasource';
-import { type FormValues } from '../../../../datasource/schema/types';
+import { getWizardStyles } from '../styles';
+import { type IndexedPairItem, type FormValues } from '../datasource';
 
 type Props = {
   headersFieldKey: string;

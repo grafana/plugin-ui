@@ -5,11 +5,11 @@
  * These validate that the correct fields render for each query-language mode
  * using the same pure functions the wizard uses at runtime.
  */
-import type { ConfigField, DatasourceConfigSchema } from '../../../../datasource/schema/schema';
-import { resolveGroups, formKey, getWatchedValue } from '../../../../datasource/schema/config';
-import { evaluateCelExpression } from '../../../../datasource/schema/cel';
+import type { ConfigField, DatasourceConfigSchema } from '../../../../schema/schema';
+import { resolveGroups, formKey, getWatchedValue } from '../config';
+import { evaluateCelExpression } from '../cel';
 import { evaluateEffectCondition } from '../fieldUtils';
-import influxdbSchemaJson from '../../../../datasource/schema/datasources/influxdb.schema.json';
+import influxdbSchemaJson from '../../../../schema/registry/influxdb.schema.json';
 
 const schema = influxdbSchemaJson as unknown as DatasourceConfigSchema;
 

@@ -4,10 +4,10 @@
  * These validate that the correct fields render for each TLS/SSL mode
  * using the same pure functions the wizard uses at runtime.
  */
-import type { ConfigField, DatasourceConfigSchema } from '../../../../datasource/schema/schema';
-import { resolveGroups, formKey, getWatchedValue } from '../../../../datasource/schema/config';
-import { evaluateCelExpression } from '../../../../datasource/schema/cel';
-import postgresSchemaJson from '../../../../datasource/schema/datasources/grafana-postgresql-datasource.schema.json';
+import type { ConfigField, DatasourceConfigSchema } from '../../../../schema/schema';
+import { resolveGroups, formKey, getWatchedValue } from '../config';
+import { evaluateCelExpression } from '../cel';
+import postgresSchemaJson from '../../../../schema/registry/grafana-postgresql-datasource.schema.json';
 
 const schema = postgresSchemaJson as unknown as DatasourceConfigSchema;
 

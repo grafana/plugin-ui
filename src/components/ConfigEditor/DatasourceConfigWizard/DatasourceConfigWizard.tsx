@@ -1,13 +1,13 @@
 import React, { type ReactNode, useCallback, useMemo, useState } from 'react';
 import { useStyles2, Button, LinkButton, Select, Icon, Alert, Tooltip, Spinner } from '@grafana/ui';
-import type { DatasourceConfigSchema } from '../../../datasource/schema/schema';
-import { formKey, getWatchedValue } from '../../../datasource/schema/config';
-import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
+import type { DatasourceConfigSchema } from '../../../schema/schema';
+import { formKey, getWatchedValue } from './config';
+import { SECURE_FIELD_CONFIGURED } from './datasource';
 import { isFieldRequired } from './fieldUtils';
 import { SchemaField } from './SchemaField';
 import { AuthorizationHeaderField } from './inputs/AuthorizationHeaderField';
 import { TabLayout } from './TabLayout';
-import { getWizardStyles } from './wizardStyles';
+import { getWizardStyles } from './styles';
 import { useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
 
 export type DatasourceConfigWizardProps = {

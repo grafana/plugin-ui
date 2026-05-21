@@ -1,8 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { DatasourceConfigSchema } from '../../../../schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import tempoSchemaJson from '../../../../datasource/schema/datasources/tempo.schema.json';
+import tempoSchemaJson from '../../../../schema/registry/tempo.schema.json';
 
 const schema = tempoSchemaJson as unknown as DatasourceConfigSchema;
 

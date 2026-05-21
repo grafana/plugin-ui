@@ -4,10 +4,10 @@
  * Validates that the correct fields render for each configuration variant
  * using the same pure functions the wizard uses at runtime.
  */
-import type { ConfigField, DatasourceConfigSchema } from '../../../../datasource/schema/schema';
-import { resolveGroups, formKey, getWatchedValue } from '../../../../datasource/schema/config';
-import { evaluateCelExpression } from '../../../../datasource/schema/cel';
-import tempoSchemaJson from '../../../../datasource/schema/datasources/tempo.schema.json';
+import type { ConfigField, DatasourceConfigSchema } from '../../../../schema/schema';
+import { resolveGroups, formKey, getWatchedValue } from '../config';
+import { evaluateCelExpression } from '../cel';
+import tempoSchemaJson from '../../../../schema/registry/tempo.schema.json';
 
 const schema = tempoSchemaJson as unknown as DatasourceConfigSchema;
 

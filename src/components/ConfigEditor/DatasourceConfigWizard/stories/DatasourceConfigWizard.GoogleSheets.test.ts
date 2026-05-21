@@ -4,7 +4,7 @@
  * These validate that the correct fields render in each auth mode
  * using the same pure functions the wizard uses at runtime.
  */
-import type { ConfigField, DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { ConfigField, DatasourceConfigSchema } from '../../../../schema/schema';
 import {
   resolveGroups,
   formKey,
@@ -13,9 +13,9 @@ import {
   getWatchedValue,
   computeVirtualFieldValues,
   evaluateComputedRead,
-} from '../../../../datasource/schema/config';
+} from '../config';
 import { evaluateEffectCondition } from '../fieldUtils';
-import googleSheetsSchemaJson from '../../../../datasource/schema/datasources/grafana-googlesheets-datasource.schema.json';
+import googleSheetsSchemaJson from '../../../../schema/registry/grafana-googlesheets-datasource.schema.json';
 
 const schema = googleSheetsSchemaJson as unknown as DatasourceConfigSchema;
 

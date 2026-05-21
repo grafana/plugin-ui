@@ -1,7 +1,7 @@
-import type { ConfigField } from '../../../datasource/schema/schema';
-import { parseDependsOn, evaluateDependsOn, formKey, getWatchedValue } from '../../../datasource/schema/config';
-import { evaluateCelExpression } from '../../../datasource/schema/cel';
-import { SECURE_FIELD_CONFIGURED } from '../../../datasource/schema/datasource';
+import type { ConfigField } from '../../../schema/schema';
+import { parseDependsOn, evaluateDependsOn, formKey, getWatchedValue } from './config';
+import { evaluateCelExpression } from './cel';
+import { SECURE_FIELD_CONFIGURED } from './datasource';
 
 /**
  * Evaluate an effect's `when` condition against a field value.

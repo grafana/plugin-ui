@@ -5,7 +5,7 @@
  */
 
 import { extractFieldRefs } from './cel';
-import type { DatasourceConfigSchema, ConfigField, ConfigGroup, FieldOverride } from './schema';
+import type { DatasourceConfigSchema, ConfigField, ConfigGroup, FieldOverride } from '../../../schema';
 
 /**
  * Resolve a schema's groups into arrays of ConfigField objects.

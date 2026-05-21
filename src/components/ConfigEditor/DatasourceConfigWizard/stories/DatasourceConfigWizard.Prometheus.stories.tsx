@@ -1,8 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { DatasourceConfigSchema } from '../../../../schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import prometheusSchemaJson from '../../../../datasource/schema/datasources/prometheus.schema.json';
+import prometheusSchemaJson from '../../../../schema/registry/prometheus.schema.json';
 
 const schema = prometheusSchemaJson as unknown as DatasourceConfigSchema;
 

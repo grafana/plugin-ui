@@ -1,8 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { DatasourceConfigSchema } from '../../../../schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import bigQuerySchemaJson from '../../../../datasource/schema/datasources/grafana-bigquery-datasource.schema.json';
+import bigQuerySchemaJson from '../../../../schema/registry/grafana-bigquery-datasource.schema.json';
 
 const schema = bigQuerySchemaJson as unknown as DatasourceConfigSchema;
 

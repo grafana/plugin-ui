@@ -1,8 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { DatasourceConfigSchema } from '../../../../schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import stackdriverSchemaJson from '../../../../datasource/schema/datasources/stackdriver.schema.json';
+import stackdriverSchemaJson from '../../../../schema/registry/stackdriver.schema.json';
 
 const schema = stackdriverSchemaJson as unknown as DatasourceConfigSchema;
 

@@ -4,17 +4,17 @@
  * These validate that the correct fields render in each auth mode
  * using the same pure functions the wizard uses at runtime.
  */
-import type { ConfigField, DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { ConfigField, DatasourceConfigSchema } from '../../../../schema/schema';
 import {
   resolveGroups,
   resolveRequiredFieldsGroup,
   formKey,
   getWatchedValue,
   computeVirtualFieldValues,
-} from '../../../../datasource/schema/config';
-import { evaluateCelExpression } from '../../../../datasource/schema/cel';
+} from '../config';
+import { evaluateCelExpression } from '../cel';
 import { evaluateEffectCondition } from '../fieldUtils';
-import stackdriverSchemaJson from '../../../../datasource/schema/datasources/stackdriver.schema.json';
+import stackdriverSchemaJson from '../../../../schema/registry/stackdriver.schema.json';
 
 const schema = stackdriverSchemaJson as unknown as DatasourceConfigSchema;
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import type { DatasourceConfigSchema } from '../../../../datasource/schema/schema';
+import type { DatasourceConfigSchema } from '../../../../schema/schema';
 import { StoryModeWrapper } from './StoryModeWrapper';
-import postgresSchemaJson from '../../../../datasource/schema/datasources/grafana-postgresql-datasource.schema.json';
+import postgresSchemaJson from '../../../../schema/registry/grafana-postgresql-datasource.schema.json';
 
 const schema = postgresSchemaJson as unknown as DatasourceConfigSchema;
 
