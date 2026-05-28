@@ -1,0 +1,85 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": "v1",
+  "pluginType": "grafana-adobeanalytics-datasource",
+  "pluginName": "Adobe Analytics",
+  "docURL": "https://grafana.com/docs/plugins/grafana-adobeanalytics-datasource",
+  "fields": [
+    {
+      "id": "jsonData.variables.global_company_id",
+      "key": "global_company_id",
+      "label": "Global Company ID",
+      "description": "Refer to [plugin documentation](http://grafana.com/docs/plugins/grafana-adobeanalytics-datasource/#connection) for more information on where to find your Global Company ID in Adobe portal.",
+      "valueType": "string",
+      "target": "jsonData",
+      "section": "variables",
+      "required": true,
+      "ui": {
+        "placeholder": ""
+      }
+    },
+    {
+      "id": "jsonData.services.adobe_analytics.auth.clientId",
+      "key": "services.adobe_analytics.auth.clientId",
+      "label": "Client ID",
+      "description": "OAuth2 Client ID for Adobe Analytics server-to-server authentication.",
+      "valueType": "string",
+      "target": "jsonData",
+      "required": true,
+      "ui": {
+        "placeholder": "Client ID"
+      }
+    },
+    {
+      "id": "secureJsonData.adobe_analytics.clientSecret",
+      "key": "adobe_analytics.clientSecret",
+      "label": "Client Secret",
+      "description": "OAuth2 Client Secret for Adobe Analytics server-to-server authentication.",
+      "valueType": "string",
+      "target": "secureJsonData",
+      "semanticType": "token",
+      "required": true,
+      "ui": {
+        "placeholder": "Client Secret"
+      }
+    },
+    {
+      "id": "jsonData.enableSecureSocksProxy",
+      "key": "enableSecureSocksProxy",
+      "label": "Enable Secure Socks Proxy",
+      "description": "Enable proxying the datasource connection through the secure socks proxy to a different network.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "connection",
+      "title": "Connection",
+      "description": "Provide information to connect to the Adobe Analytics API.",
+      "fieldRefs": [
+        "jsonData.variables.global_company_id"
+      ]
+    },
+    {
+      "id": "auth",
+      "title": "Authentication",
+      "description": "OAuth server to server authentication via https://ims-na1.adobelogin.com/ims/token/v3.",
+      "fieldRefs": [
+        "jsonData.services.adobe_analytics.auth.clientId",
+        "secureJsonData.adobe_analytics.clientSecret"
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced",
+      "fieldRefs": [
+        "jsonData.enableSecureSocksProxy"
+      ],
+      "optional": true
+    }
+  ]
+}

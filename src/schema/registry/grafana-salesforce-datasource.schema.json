@@ -3,11 +3,12 @@
   "schemaVersion": "v1",
   "pluginType": "grafana-salesforce-datasource",
   "pluginName": "Salesforce",
+  "docURL": "https://grafana.com/docs/plugins/grafana-salesforce-datasource/latest/configure/",
   "fields": [
     {
       "id": "jsonData.authType",
       "key": "authType",
-      "label": "Authentication Type",
+      "label": "Authentication",
       "description": "Salesforce authentication method.",
       "valueType": "string",
       "target": "jsonData",
@@ -23,14 +24,14 @@
         }
       ],
       "ui": {
-        "component": "select",
+        "component": "radio",
         "options": [
           {
-            "label": "Username & Password",
+            "label": "Credentials",
             "value": "user"
           },
           {
-            "label": "JWT (Server-to-Server)",
+            "label": "JWT",
             "value": "jwt"
           }
         ]
@@ -39,50 +40,13 @@
     {
       "id": "jsonData.user",
       "key": "user",
-      "label": "Username",
+      "label": "User Name",
       "description": "Salesforce username.",
       "valueType": "string",
       "target": "jsonData",
-      "required": true
-    },
-    {
-      "id": "jsonData.sandbox",
-      "key": "sandbox",
-      "label": "Sandbox",
-      "description": "Connect to a Salesforce sandbox environment.",
-      "valueType": "boolean",
-      "target": "jsonData",
+      "required": true,
       "ui": {
-        "component": "switch"
-      }
-    },
-    {
-      "id": "jsonData.tokenUrl",
-      "key": "tokenUrl",
-      "label": "Token URL",
-      "description": "Salesforce OAuth token endpoint.",
-      "valueType": "string",
-      "semanticType": "url",
-      "target": "jsonData",
-      "validations": [
-        {
-          "type": "allowedValues",
-          "values": [
-            "https://login.salesforce.com",
-            "https://test.salesforce.com"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "jsonData.enableSecureSocksProxy",
-      "key": "enableSecureSocksProxy",
-      "label": "Secure Socks Proxy",
-      "description": "Enable secure SOCKS proxy.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "ui": {
-        "component": "switch"
+        "placeholder": "Salesforce User"
       }
     },
     {
@@ -93,7 +57,11 @@
       "valueType": "string",
       "target": "secureJsonData",
       "semanticType": "password",
-      "dependsOn": "jsonData.authType == 'user'"
+      "dependsOn": "jsonData.authType == 'user'",
+      "requiredWhen": "jsonData.authType == 'user'",
+      "ui": {
+        "placeholder": "Salesforce Password"
+      }
     },
     {
       "id": "secureJsonData.securityToken",
@@ -103,7 +71,10 @@
       "valueType": "string",
       "target": "secureJsonData",
       "semanticType": "token",
-      "dependsOn": "jsonData.authType == 'user'"
+      "dependsOn": "jsonData.authType == 'user'",
+      "ui": {
+        "placeholder": "Salesforce Security Token"
+      }
     },
     {
       "id": "secureJsonData.clientID",
@@ -112,7 +83,11 @@
       "description": "Salesforce Connected App consumer key.",
       "valueType": "string",
       "target": "secureJsonData",
-      "required": true
+      "semanticType": "token",
+      "required": true,
+      "ui": {
+        "placeholder": "Connected App Consumer Key"
+      }
     },
     {
       "id": "secureJsonData.clientSecret",
@@ -122,69 +97,140 @@
       "valueType": "string",
       "target": "secureJsonData",
       "semanticType": "token",
-      "dependsOn": "jsonData.authType == 'user'"
+      "dependsOn": "jsonData.authType == 'user'",
+      "requiredWhen": "jsonData.authType == 'user'",
+      "ui": {
+        "placeholder": "Connected App Consumer Secret"
+      }
     },
     {
       "id": "secureJsonData.cert",
       "key": "cert",
       "label": "Certificate",
-      "description": "X.509 certificate for JWT authentication.",
+      "description": "X.509 certificate for JWT authentication (PEM format).",
       "valueType": "string",
       "target": "secureJsonData",
       "dependsOn": "jsonData.authType == 'jwt'",
+      "requiredWhen": "jsonData.authType == 'jwt'",
       "ui": {
         "component": "textarea",
-        "rows": 7
+        "rows": 7,
+        "placeholder": "-----BEGIN CERTIFICATE-----"
       }
     },
     {
       "id": "secureJsonData.privateKey",
       "key": "privateKey",
       "label": "Private Key",
-      "description": "Private key for JWT signing.",
+      "description": "Private key for JWT signing (PEM format).",
       "valueType": "string",
       "target": "secureJsonData",
       "semanticType": "token",
       "dependsOn": "jsonData.authType == 'jwt'",
+      "requiredWhen": "jsonData.authType == 'jwt'",
       "ui": {
         "component": "textarea",
-        "rows": 7
+        "rows": 7,
+        "placeholder": "-----BEGIN PRIVATE KEY-----"
+      }
+    },
+    {
+      "id": "environment",
+      "key": "environment",
+      "label": "Environment",
+      "description": "Salesforce environment to connect to.",
+      "valueType": "string",
+      "kind": "virtual",
+      "defaultValue": "production",
+      "ui": {
+        "component": "select",
+        "options": [
+          {
+            "label": "Production",
+            "value": "production"
+          },
+          {
+            "label": "Sandbox",
+            "value": "sandbox"
+          }
+        ]
+      },
+      "storage": {
+        "type": "computed",
+        "read": "jsonData.tokenUrl == 'https://test.salesforce.com' ? 'sandbox' : (jsonData.sandbox == true ? 'sandbox' : 'production')"
+      },
+      "effects": [
+        {
+          "when": "value == 'production'",
+          "set": {
+            "jsonData.tokenUrl": "https://login.salesforce.com",
+            "jsonData.sandbox": false
+          }
+        },
+        {
+          "when": "value == 'sandbox'",
+          "set": {
+            "jsonData.tokenUrl": "https://test.salesforce.com",
+            "jsonData.sandbox": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "jsonData.tokenUrl",
+      "key": "tokenUrl",
+      "label": "Token URL",
+      "description": "Salesforce OAuth token endpoint.",
+      "valueType": "string",
+      "semanticType": "url",
+      "target": "jsonData",
+      "tags": [
+        "managed-by:environment"
+      ]
+    },
+    {
+      "id": "jsonData.sandbox",
+      "key": "sandbox",
+      "label": "Sandbox",
+      "description": "Legacy sandbox toggle (managed by Environment selector).",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "tags": [
+        "managed-by:environment"
+      ]
+    },
+    {
+      "id": "jsonData.enableSecureSocksProxy",
+      "key": "enableSecureSocksProxy",
+      "label": "Enable Secure Socks Proxy",
+      "description": "Enable proxying the datasource connection through the secure socks proxy to a different network.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
       }
     }
   ],
   "groups": [
     {
-      "id": "auth",
-      "title": "Authentication",
+      "id": "connection",
+      "title": "Connection Settings",
       "fieldRefs": [
         "jsonData.authType",
         "jsonData.user",
-        "secureJsonData.clientID"
-      ]
-    },
-    {
-      "id": "user-auth",
-      "title": "Username & Password",
-      "fieldRefs": [
         "secureJsonData.password",
         "secureJsonData.securityToken",
-        "secureJsonData.clientSecret"
-      ]
-    },
-    {
-      "id": "jwt-auth",
-      "title": "JWT Authentication",
-      "fieldRefs": [
+        "secureJsonData.clientID",
+        "secureJsonData.clientSecret",
         "secureJsonData.cert",
         "secureJsonData.privateKey"
       ]
     },
     {
       "id": "settings",
-      "title": "Settings",
+      "title": "Optional Settings",
       "fieldRefs": [
-        "jsonData.sandbox",
-        "jsonData.tokenUrl",
+        "environment",
         "jsonData.enableSecureSocksProxy"
       ]
     }

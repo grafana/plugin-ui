@@ -1,0 +1,53 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": "v1",
+  "pluginType": "grafana-logicmonitor-datasource",
+  "pluginName": "LogicMonitor Devices",
+  "docURL": "https://grafana.com/docs/plugins/grafana-logicmonitor-datasource",
+  "fields": [
+    {
+      "id": "jsonData.variables.account_name",
+      "key": "account_name",
+      "label": "Account Name",
+      "description": "Your LogicMonitor account name. Example: Use `foo` for the LogicMonitor URL `https://foo.logicmonitor.com/`.",
+      "valueType": "string",
+      "target": "jsonData",
+      "section": "variables",
+      "required": true,
+      "ui": {
+        "placeholder": ""
+      }
+    },
+    {
+      "id": "secureJsonData.logicmonitor.token",
+      "key": "logicmonitor.token",
+      "label": "Token",
+      "description": "Bearer token for LogicMonitor REST API v3.",
+      "valueType": "string",
+      "target": "secureJsonData",
+      "semanticType": "token",
+      "required": true,
+      "ui": {
+        "placeholder": "Token value"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "connection",
+      "title": "Connection",
+      "description": "Provide information to connect to the data source.",
+      "fieldRefs": [
+        "jsonData.variables.account_name"
+      ]
+    },
+    {
+      "id": "auth",
+      "title": "Authentication",
+      "description": "API v3 Key — Bearer token for LogicMonitor REST API v3.",
+      "fieldRefs": [
+        "secureJsonData.logicmonitor.token"
+      ]
+    }
+  ]
+}

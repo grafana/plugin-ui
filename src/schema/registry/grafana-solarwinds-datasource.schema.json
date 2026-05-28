@@ -1,0 +1,67 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": "v1",
+  "pluginType": "grafana-solarwinds-datasource",
+  "pluginName": "Solarwinds",
+  "docURL": "https://grafana.com/docs/plugins/grafana-solarwinds-datasource",
+  "fields": [
+    {
+      "id": "jsonData.variables.url",
+      "key": "url",
+      "label": "URL",
+      "description": "The URL of your SolarWinds instance, including `https://` and without trailing `/`.",
+      "valueType": "string",
+      "semanticType": "url",
+      "target": "jsonData",
+      "section": "variables",
+      "required": true,
+      "ui": {
+        "placeholder": "https://solarwinds.example.com"
+      }
+    },
+    {
+      "id": "jsonData.services.solarwinds.auth.username",
+      "key": "services.solarwinds.auth.username",
+      "label": "Username",
+      "description": "SolarWinds Username.",
+      "valueType": "string",
+      "target": "jsonData",
+      "required": true,
+      "ui": {
+        "placeholder": "Username"
+      }
+    },
+    {
+      "id": "secureJsonData.solarwinds.password",
+      "key": "solarwinds.password",
+      "label": "Password",
+      "description": "SolarWinds Password.",
+      "valueType": "string",
+      "target": "secureJsonData",
+      "semanticType": "password",
+      "required": true,
+      "ui": {
+        "placeholder": "Password"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "connection",
+      "title": "Connection",
+      "description": "Provide information to connect to the data source.",
+      "fieldRefs": [
+        "jsonData.variables.url"
+      ]
+    },
+    {
+      "id": "auth",
+      "title": "Authentication",
+      "description": "Basic Auth — SolarWinds username and password.",
+      "fieldRefs": [
+        "jsonData.services.solarwinds.auth.username",
+        "secureJsonData.solarwinds.password"
+      ]
+    }
+  ]
+}

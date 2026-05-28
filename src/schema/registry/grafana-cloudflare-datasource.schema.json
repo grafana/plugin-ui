@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": "v1",
+  "pluginType": "grafana-cloudflare-datasource",
+  "pluginName": "Cloudflare",
+  "docURL": "https://grafana.com/docs/plugins/grafana-cloudflare-datasource",
+  "fields": [
+    {
+      "id": "secureJsonData.cloudflare.token",
+      "key": "cloudflare.token",
+      "label": "Token",
+      "description": "Cloudflare API Key. Provide relevant read-only permissions.",
+      "valueType": "string",
+      "target": "secureJsonData",
+      "semanticType": "token",
+      "required": true,
+      "ui": {
+        "placeholder": "Token value"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "auth",
+      "title": "Authentication",
+      "description": "API Key — Cloudflare API Key.",
+      "fieldRefs": [
+        "secureJsonData.cloudflare.token"
+      ]
+    }
+  ]
+}

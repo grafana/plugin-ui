@@ -4,6 +4,7 @@ import alertmanagerSchema from './alertmanager.schema.json';
 import cloudwatchSchema from './cloudwatch.schema.json';
 import elasticsearchSchema from './elasticsearch.schema.json';
 import grafanaAmazonprometheusDatasourceSchema from './grafana-amazonprometheus-datasource.schema.json';
+import grafanaAdobeanalyticsDatasourceSchema from './grafana-adobeanalytics-datasource.schema.json';
 import grafanaAppdynamicsDatasourceSchema from './grafana-appdynamics-datasource.schema.json';
 import grafanaAstradbDatasourceSchema from './grafana-astradb-datasource.schema.json';
 import grafanaAthenaDatasourceSchema from './grafana-athena-datasource.schema.json';
@@ -71,6 +72,7 @@ const schemaRegistry = new Map<string, DatasourceConfigSchema>([
   ['cloudwatch', asSchema(cloudwatchSchema)],
   ['elasticsearch', asSchema(elasticsearchSchema)],
   ['grafana-amazonprometheus-datasource', asSchema(grafanaAmazonprometheusDatasourceSchema)],
+  ['grafana-adobeanalytics-datasource', asSchema(grafanaAdobeanalyticsDatasourceSchema)],
   ['grafana-appdynamics-datasource', asSchema(grafanaAppdynamicsDatasourceSchema)],
   ['grafana-astradb-datasource', asSchema(grafanaAstradbDatasourceSchema)],
   ['grafana-athena-datasource', asSchema(grafanaAthenaDatasourceSchema)],

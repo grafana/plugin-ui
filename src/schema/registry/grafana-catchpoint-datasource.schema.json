@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": "v1",
+  "pluginType": "grafana-catchpoint-datasource",
+  "pluginName": "Catchpoint",
+  "docURL": "https://grafana.com/docs/plugins/grafana-catchpoint-datasource",
+  "fields": [
+    {
+      "id": "secureJsonData.catchpoint.token",
+      "key": "catchpoint.token",
+      "label": "Token",
+      "description": "Catchpoint REST API v2 Key.",
+      "valueType": "string",
+      "target": "secureJsonData",
+      "semanticType": "token",
+      "required": true,
+      "ui": {
+        "placeholder": "Token value"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "id": "auth",
+      "title": "Authentication",
+      "description": "API v2 Key — Catchpoint REST API v2 Key.",
+      "fieldRefs": [
+        "secureJsonData.catchpoint.token"
+      ]
+    }
+  ]
+}
