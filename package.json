@@ -143,6 +143,10 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=22.22.2",
+    "yarn": ">=4.6.0"
+  },
   "resolutions": {
     "prismjs": "^1.30.0",
     "uplot": "^1.6.31",
