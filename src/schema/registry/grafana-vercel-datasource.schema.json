@@ -1,52 +1,52 @@
 {
-  "$schema": "../schema.json",
-  "schemaVersion": "v1",
-  "pluginType": "grafana-vercel-datasource",
-  "pluginName": "Vercel",
-  "docURL": "https://grafana.com/docs/plugins/grafana-vercel-datasource",
-  "fields": [
-    {
-      "id": "jsonData.variables.team_id",
-      "key": "team_id",
-      "label": "Team ID",
-      "description": "The ID of the Vercel team to query.",
-      "valueType": "string",
-      "target": "jsonData",
-      "section": "variables",
-      "ui": {
-        "placeholder": "eg: team_1a2b3c4d5e6f7g8h9i0j1k2l"
-      }
-    },
-    {
-      "id": "secureJsonData.vercel.token",
-      "key": "vercel.token",
-      "label": "Token",
-      "description": "Vercel Access Token. Tokens are either scoped to your full account or a specific team. If a token is scoped to a team, you must also provide a team ID that matches the scope of the token.",
-      "valueType": "string",
-      "target": "secureJsonData",
-      "semanticType": "token",
-      "required": true,
-      "ui": {
-        "placeholder": "Token value"
-      }
-    }
-  ],
-  "groups": [
-    {
-      "id": "connection",
-      "title": "Connection",
-      "description": "Provide information to connect to the data source.",
-      "fieldRefs": [
-        "jsonData.variables.team_id"
-      ]
-    },
-    {
-      "id": "auth",
-      "title": "Authentication",
-      "description": "Access Token — Vercel Access Token.",
-      "fieldRefs": [
-        "secureJsonData.vercel.token"
-      ]
-    }
-  ]
+    "$schema": "../schema.json",
+    "schemaVersion": "v1",
+    "pluginType": "grafana-vercel-datasource",
+    "pluginName": "Vercel",
+    "docURL": "https://grafana.com/docs/plugins/grafana-vercel-datasource",
+    "fields": [
+        {
+            "id": "jsonData.variables.team_id",
+            "key": "team_id",
+            "label": "Team ID",
+            "description": "The ID of the Vercel team to query.",
+            "valueType": "string",
+            "target": "jsonData",
+            "section": "variables",
+            "ui": {
+                "placeholder": "eg: team_1a2b3c4d5e6f7g8h9i0j1k2l"
+            }
+        },
+        {
+            "id": "secureJsonData.vercel.token",
+            "key": "vercel.token",
+            "label": "Token",
+            "description": "Vercel Access Token. Tokens are either scoped to your full account or a specific team. If a token is scoped to a team, you must also provide a team ID that matches the scope of the token.",
+            "valueType": "string",
+            "target": "secureJsonData",
+            "semanticType": "token",
+            "required": true,
+            "ui": {
+                "placeholder": "Token value"
+            }
+        }
+    ],
+    "groups": [
+        {
+            "id": "connection",
+            "title": "Connection",
+            "description": "Provide information to connect to the data source.",
+            "fieldRefs": [
+                "jsonData.variables.team_id"
+            ]
+        },
+        {
+            "id": "auth",
+            "title": "Authentication",
+            "description": "Access Token — Vercel Access Token.",
+            "fieldRefs": [
+                "secureJsonData.vercel.token"
+            ]
+        }
+    ]
 }

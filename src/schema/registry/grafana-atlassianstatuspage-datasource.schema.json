@@ -1,33 +1,33 @@
 {
-  "$schema": "../schema.json",
-  "schemaVersion": "v1",
-  "pluginType": "grafana-atlassianstatuspage-datasource",
-  "pluginName": "Atlassian Statuspage",
-  "docURL": "https://grafana.com/docs/plugins/grafana-atlassianstatuspage-datasource",
-  "fields": [
-    {
-      "id": "jsonData.variables.url",
-      "key": "url",
-      "label": "URL",
-      "description": "The URL of the Atlassian Statuspage, including `https://` and without trailing `/`.",
-      "valueType": "string",
-      "semanticType": "url",
-      "target": "jsonData",
-      "section": "variables",
-      "required": true,
-      "ui": {
-        "placeholder": "https://status.example.com"
-      }
-    }
-  ],
-  "groups": [
-    {
-      "id": "connection",
-      "title": "Connection",
-      "description": "Provide information to connect to the data source.",
-      "fieldRefs": [
-        "jsonData.variables.url"
-      ]
-    }
-  ]
+    "$schema": "../schema.json",
+    "schemaVersion": "v1",
+    "pluginType": "grafana-atlassianstatuspage-datasource",
+    "pluginName": "Atlassian Statuspage",
+    "docURL": "https://grafana.com/docs/plugins/grafana-atlassianstatuspage-datasource",
+    "fields": [
+        {
+            "id": "jsonData.variables.url",
+            "key": "url",
+            "label": "URL",
+            "description": "The URL of the Atlassian Statuspage, including `https://` and without trailing `/`.",
+            "valueType": "string",
+            "semanticType": "url",
+            "target": "jsonData",
+            "section": "variables",
+            "required": true,
+            "ui": {
+                "placeholder": "https://status.example.com"
+            }
+        }
+    ],
+    "groups": [
+        {
+            "id": "connection",
+            "title": "Connection",
+            "description": "Provide information to connect to the data source.",
+            "fieldRefs": [
+                "jsonData.variables.url"
+            ]
+        }
+    ]
 }

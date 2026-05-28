@@ -8,15 +8,19 @@ import grafanaAdobeanalyticsDatasourceSchema from './grafana-adobeanalytics-data
 import grafanaAppdynamicsDatasourceSchema from './grafana-appdynamics-datasource.schema.json';
 import grafanaAstradbDatasourceSchema from './grafana-astradb-datasource.schema.json';
 import grafanaAthenaDatasourceSchema from './grafana-athena-datasource.schema.json';
+import grafanaAtlassianstatuspageDatasourceSchema from './grafana-atlassianstatuspage-datasource.schema.json';
 import grafanaAzureDataExplorerDatasourceSchema from './grafana-azure-data-explorer-datasource.schema.json';
 import grafanaAzureMonitorDatasourceSchema from './grafana-azure-monitor-datasource.schema.json';
 import grafanaAzuredevopsDatasourceSchema from './grafana-azuredevops-datasource.schema.json';
 import grafanaAzureprometheusDatasourceSchema from './grafana-azureprometheus-datasource.schema.json';
 import grafanaBigqueryDatasourceSchema from './grafana-bigquery-datasource.schema.json';
+import grafanaCatchpointDatasourceSchema from './grafana-catchpoint-datasource.schema.json';
 import grafanaClickhouseDatasourceSchema from './grafana-clickhouse-datasource.schema.json';
+import grafanaCloudflareDatasourceSchema from './grafana-cloudflare-datasource.schema.json';
 import grafanaCockroachdbDatasourceSchema from './grafana-cockroachdb-datasource.schema.json';
 import grafanaDatabricksDatasourceSchema from './grafana-databricks-datasource.schema.json';
 import grafanaDatadogDatasourceSchema from './grafana-datadog-datasource.schema.json';
+import grafanaDroneDatasourceSchema from './grafana-drone-datasource.schema.json';
 import grafanaDynatraceDatasourceSchema from './grafana-dynatrace-datasource.schema.json';
 import grafanaFalconlogscaleDatasourceSchema from './grafana-falconlogscale-datasource.schema.json';
 import grafanaGithubDatasourceSchema from './grafana-github-datasource.schema.json';
@@ -25,9 +29,11 @@ import grafanaGooglesheetsDatasourceSchema from './grafana-googlesheets-datasour
 import grafanaHoneycombDatasourceSchema from './grafana-honeycomb-datasource.schema.json';
 import grafanaIotSitewiseDatasourceSchema from './grafana-iot-sitewise-datasource.schema.json';
 import grafanaJiraDatasourceSchema from './grafana-jira-datasource.schema.json';
+import grafanaLogicmonitorDatasourceSchema from './grafana-logicmonitor-datasource.schema.json';
 import grafanaLookerDatasourceSchema from './grafana-looker-datasource.schema.json';
 import grafanaMongodbDatasourceSchema from './grafana-mongodb-datasource.schema.json';
 import grafanaMqttDatasourceSchema from './grafana-mqtt-datasource.schema.json';
+import grafanaNetlifyDatasourceSchema from './grafana-netlify-datasource.schema.json';
 import grafanaNewrelicDatasourceSchema from './grafana-newrelic-datasource.schema.json';
 import grafanaOdbcDatasourceSchema from './grafana-odbc-datasource.schema.json';
 import grafanaOpensearchDatasourceSchema from './grafana-opensearch-datasource.schema.json';
@@ -41,15 +47,18 @@ import grafanaSaphanaDatasourceSchema from './grafana-saphana-datasource.schema.
 import grafanaSentryDatasourceSchema from './grafana-sentry-datasource.schema.json';
 import grafanaServicenowDatasourceSchema from './grafana-servicenow-datasource.schema.json';
 import grafanaSnowflakeDatasourceSchema from './grafana-snowflake-datasource.schema.json';
+import grafanaSolarwindsDatasourceSchema from './grafana-solarwinds-datasource.schema.json';
 import grafanaSplunkDatasourceSchema from './grafana-splunk-datasource.schema.json';
 import grafanaSplunkobservabilityDatasourceSchema from './grafana-splunkobservability-datasource.schema.json';
 import grafanaStravaDatasourceSchema from './grafana-strava-datasource.schema.json';
 import grafanaSumologicDatasourceSchema from './grafana-sumologic-datasource.schema.json';
 import grafanaSurrealdbDatasourceSchema from './grafana-surrealdb-datasource.schema.json';
 import grafanaTimestreamDatasourceSchema from './grafana-timestream-datasource.schema.json';
+import grafanaVercelDatasourceSchema from './grafana-vercel-datasource.schema.json';
 import grafanaWavefrontDatasourceSchema from './grafana-wavefront-datasource.schema.json';
 import grafanaXRayDatasourceSchema from './grafana-x-ray-datasource.schema.json';
 import grafanaYugabyteDatasourceSchema from './grafana-yugabyte-datasource.schema.json';
+import grafanaZendeskDatasourceSchema from './grafana-zendesk-datasource.schema.json';
 import graphiteSchema from './graphite.schema.json';
 import influxdbSchema from './influxdb.schema.json';
 import jaegerSchema from './jaeger.schema.json';
@@ -76,15 +85,19 @@ const schemaRegistry = new Map<string, DatasourceConfigSchema>([
   ['grafana-appdynamics-datasource', asSchema(grafanaAppdynamicsDatasourceSchema)],
   ['grafana-astradb-datasource', asSchema(grafanaAstradbDatasourceSchema)],
   ['grafana-athena-datasource', asSchema(grafanaAthenaDatasourceSchema)],
+  ['grafana-atlassianstatuspage-datasource', asSchema(grafanaAtlassianstatuspageDatasourceSchema)],
   ['grafana-azure-data-explorer-datasource', asSchema(grafanaAzureDataExplorerDatasourceSchema)],
   ['grafana-azure-monitor-datasource', asSchema(grafanaAzureMonitorDatasourceSchema)],
   ['grafana-azuredevops-datasource', asSchema(grafanaAzuredevopsDatasourceSchema)],
   ['grafana-azureprometheus-datasource', asSchema(grafanaAzureprometheusDatasourceSchema)],
   ['grafana-bigquery-datasource', asSchema(grafanaBigqueryDatasourceSchema)],
+  ['grafana-catchpoint-datasource', asSchema(grafanaCatchpointDatasourceSchema)],
   ['grafana-clickhouse-datasource', asSchema(grafanaClickhouseDatasourceSchema)],
+  ['grafana-cloudflare-datasource', asSchema(grafanaCloudflareDatasourceSchema)],
   ['grafana-cockroachdb-datasource', asSchema(grafanaCockroachdbDatasourceSchema)],
   ['grafana-databricks-datasource', asSchema(grafanaDatabricksDatasourceSchema)],
   ['grafana-datadog-datasource', asSchema(grafanaDatadogDatasourceSchema)],
+  ['grafana-drone-datasource', asSchema(grafanaDroneDatasourceSchema)],
   ['grafana-dynatrace-datasource', asSchema(grafanaDynatraceDatasourceSchema)],
   ['grafana-falconlogscale-datasource', asSchema(grafanaFalconlogscaleDatasourceSchema)],
   ['grafana-github-datasource', asSchema(grafanaGithubDatasourceSchema)],
@@ -93,9 +106,11 @@ const schemaRegistry = new Map<string, DatasourceConfigSchema>([
   ['grafana-honeycomb-datasource', asSchema(grafanaHoneycombDatasourceSchema)],
   ['grafana-iot-sitewise-datasource', asSchema(grafanaIotSitewiseDatasourceSchema)],
   ['grafana-jira-datasource', asSchema(grafanaJiraDatasourceSchema)],
+  ['grafana-logicmonitor-datasource', asSchema(grafanaLogicmonitorDatasourceSchema)],
   ['grafana-looker-datasource', asSchema(grafanaLookerDatasourceSchema)],
   ['grafana-mongodb-datasource', asSchema(grafanaMongodbDatasourceSchema)],
   ['grafana-mqtt-datasource', asSchema(grafanaMqttDatasourceSchema)],
+  ['grafana-netlify-datasource', asSchema(grafanaNetlifyDatasourceSchema)],
   ['grafana-newrelic-datasource', asSchema(grafanaNewrelicDatasourceSchema)],
   ['grafana-odbc-datasource', asSchema(grafanaOdbcDatasourceSchema)],
   ['grafana-opensearch-datasource', asSchema(grafanaOpensearchDatasourceSchema)],
@@ -109,15 +124,18 @@ const schemaRegistry = new Map<string, DatasourceConfigSchema>([
   ['grafana-sentry-datasource', asSchema(grafanaSentryDatasourceSchema)],
   ['grafana-servicenow-datasource', asSchema(grafanaServicenowDatasourceSchema)],
   ['grafana-snowflake-datasource', asSchema(grafanaSnowflakeDatasourceSchema)],
+  ['grafana-solarwinds-datasource', asSchema(grafanaSolarwindsDatasourceSchema)],
   ['grafana-splunk-datasource', asSchema(grafanaSplunkDatasourceSchema)],
   ['grafana-splunkobservability-datasource', asSchema(grafanaSplunkobservabilityDatasourceSchema)],
   ['grafana-strava-datasource', asSchema(grafanaStravaDatasourceSchema)],
   ['grafana-sumologic-datasource', asSchema(grafanaSumologicDatasourceSchema)],
   ['grafana-surrealdb-datasource', asSchema(grafanaSurrealdbDatasourceSchema)],
   ['grafana-timestream-datasource', asSchema(grafanaTimestreamDatasourceSchema)],
+  ['grafana-vercel-datasource', asSchema(grafanaVercelDatasourceSchema)],
   ['grafana-wavefront-datasource', asSchema(grafanaWavefrontDatasourceSchema)],
   ['grafana-x-ray-datasource', asSchema(grafanaXRayDatasourceSchema)],
   ['grafana-yugabyte-datasource', asSchema(grafanaYugabyteDatasourceSchema)],
+  ['grafana-zendesk-datasource', asSchema(grafanaZendeskDatasourceSchema)],
   ['graphite', asSchema(graphiteSchema)],
   ['influxdb', asSchema(influxdbSchema)],
   ['jaeger', asSchema(jaegerSchema)],
