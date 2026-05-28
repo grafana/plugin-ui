@@ -46,10 +46,17 @@ jobs:
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
 
-      # npm trusted publishing requires version ^11.5.1
-      - name: Install npm version ^11.5.1
+      # npm trusted publishing requires version ^11.5.1.
+      # Use corepack instead of `npm install -g npm@...` because the npm
+      # bundled with some Node 22 patch releases has a broken module tree
+      # (missing `promise-retry` in `@npmcli/arborist`) that breaks
+      # self-upgrade. Corepack manages npm versions independently.
+      - name: Install npm version ^11.5.1 via corepack
         if: steps.version_check.outputs.changed == 'true'
-        run: npm install -g npm@^11.5.1
+        run: |
+          corepack enable npm
+          corepack prepare npm@11.5.1 --activate
+          npm --version
 
       - name: Install dependencies
         if: steps.version_check.outputs.changed == 'true'
