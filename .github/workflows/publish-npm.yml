@@ -4,6 +4,11 @@ on:
     branches:
       - main
 permissions: {}
+
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
+
 jobs:
   publish:
     name: Publish to NPM Package Registry
