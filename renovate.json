@@ -2,5 +2,37 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>grafana/grafana-renovate-config//presets/data-sources/base"
+  ],
+  "minimumReleaseAge": "3 days",
+  "prConcurrentLimit": 10,
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "prPriority": 10
+  },
+  "packageRules": [
+    {
+      "description": "Disable minimum release age for @grafana/* npm packages",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@grafana/*"],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": "Disable minimum release age for grafana/* GitHub Actions",
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["grafana/*"],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": "Group all @grafana/* npm updates",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@grafana/*"],
+      "groupName": "grafana monorepo"
+    },
+    {
+      "description": "Group Storybook packages",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@storybook/*", "storybook"],
+      "groupName": "storybook"
+    }
   ]
 }
