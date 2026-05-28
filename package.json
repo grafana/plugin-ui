@@ -158,5 +158,8 @@
     "dompurify": "^3.3.2",
     "@tootallnate/once": "^3.0.1"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.15.0",
+  "engines": {
+    "node": ">=24"
+  }
 }
