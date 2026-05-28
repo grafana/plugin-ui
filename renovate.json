@@ -3,7 +3,6 @@
   "extends": [
     "github>grafana/grafana-renovate-config//presets/data-sources/base"
   ],
-  "minimumReleaseAge": "3 days",
   "prConcurrentLimit": 10,
   "vulnerabilityAlerts": {
     "labels": ["security"],
