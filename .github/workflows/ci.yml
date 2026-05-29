@@ -1,12 +1,12 @@
 name: CI
-permissions:
-  contents: read
 
 on:
   pull_request:
 
 jobs:
   test-and-build:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
 
     steps:
