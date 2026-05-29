@@ -53,8 +53,9 @@ jobs:
       # Use corepack instead of `npm install -g npm@...` because the bundled
       # npm in the runner image that built 0.13.2 had a corrupt module tree
       # (missing `promise-retry` in `@npmcli/arborist`), so the broken npm
-      # could not upgrade itself. Corepack fetches npm independently.
-      # Example failure:
+      # could not upgrade itself. Corepack fetches npm independently, which
+      # avoids the issue.
+      # An example failure is:
       # https://github.com/grafana/plugin-ui/actions/runs/26574220612/job/78289033224
       #
       # COREPACK_ENABLE_PROJECT_SPEC=0 stops corepack from refusing to run npm
