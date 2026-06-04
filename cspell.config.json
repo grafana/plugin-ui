@@ -2,6 +2,7 @@
   "ignorePaths": [
     ".github/**",
     "node_modules/**",
+    "**/*.d.ts",
     "dist/**",
     "yarn.lock",
     ".yarn/**",
@@ -186,6 +187,7 @@
     "pangea",
     "attw",
     "packagejson",
+    "trufflehog",
     "publint",
     "uplot",
     "arethetypeswrong"
