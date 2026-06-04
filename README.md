@@ -3,7 +3,9 @@
 React components for Grafana plugins
 
 ## Development
+
 Requires running a local version of Grafana from source.
+
 ### Setting up local version of @grafana/plugin-ui with app plugin
 
 1. Run `yarn install && yarn dev`
@@ -11,14 +13,17 @@ Requires running a local version of Grafana from source.
 1. Start app plugin development server.
 
 To avoid needing to manually rebuild core grafana on every change you make in this repo while developing, instead of running `yarn dev`, run
+
 ```bash
 yarn tsc -p ./tsconfig.build.json && yarn rollup -c rollup.config.ts --configPlugin esbuild -w --watch.onEnd="cd ../grafana/public/app/plugins/datasource/loki && yarn build
 ```
+
 Replacing the --watch.onEnd command with whatever you are targeting.
 
 There is a better way of doing this, when you find it, please add it here so it's not so painful working with this repo.
 
 ## Deploying
+
 Increment the version in the package.json and make sure the [CHANGELOG.md](CHANGELOG.md) includes a message for each merged PR. The `publish-npm` workflow should trigger on version changes, which will publish the release on npm.
 
 ## Grafana compatibility
@@ -29,6 +34,7 @@ When you do that, consider also incrementing your plugin's major version to make
 ## Storybook
 
 Storybook is pretty broken, components link to assets that only exist within Grafana, as such most components haven't bothered to add support for storybook.
+
 ```
 yarn storybook
 ```
