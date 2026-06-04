@@ -183,6 +183,7 @@
     "WRITETEXT",
     "XACT",
     "comparitor",
+    "trufflehog",
     "pangea",
     "attw",
     "packagejson",

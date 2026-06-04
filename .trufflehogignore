@@ -1,0 +1,5 @@
+# Trufflehog setup
+
+## [Read docs](https://github.com/grafana/security-docs/blob/main/docs/appsec/security-tools/trufflehog.md#per-repo-exclusions-trufflehogignore)
+
+^\.yarn/releases/yarn-[0-9]+\.[0-9]+\.[0-9]+\.cjs$
