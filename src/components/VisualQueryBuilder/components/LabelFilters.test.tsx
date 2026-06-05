@@ -55,7 +55,7 @@ describe('LabelFilters', () => {
     const { name, value } = getLabelSelects(1);
     await selectOptionInTest(name, 'baz');
     await selectOptionInTest(value, 'qux');
-    expect(onChange).toBeCalledWith([
+    expect(onChange).toHaveBeenCalledWith([
       { label: 'foo', op: '=', value: 'bar' },
       { label: 'baz', op: '=', value: 'qux' },
     ]);
@@ -64,7 +64,7 @@ describe('LabelFilters', () => {
   it('removes label', async () => {
     const { onChange } = setup({ labelsFilters: [{ label: 'foo', op: '=', value: 'bar' }] });
     await userEvent.click(screen.getByLabelText(/remove/));
-    expect(onChange).toBeCalledWith([]);
+    expect(onChange).toHaveBeenCalledWith([]);
   });
 
   it('renders empty input when labels are deleted from outside ', async () => {
@@ -97,11 +97,11 @@ describe('LabelFilters', () => {
     expect(screen.getAllByText('Select value')).toHaveLength(1);
     const { name, value, op } = getLabelSelects(1);
     await selectOptionInTest(name, 'baz');
-    expect(onChange).not.toBeCalled();
+    expect(onChange).not.toHaveBeenCalled();
     await selectOptionInTest(op, '!=');
-    expect(onChange).not.toBeCalled();
+    expect(onChange).not.toHaveBeenCalled();
     await selectOptionInTest(value, 'qux');
-    expect(onChange).toBeCalledWith([
+    expect(onChange).toHaveBeenCalledWith([
       { label: 'foo', op: '=', value: 'bar' },
       { label: 'baz', op: '!=', value: 'qux' },
     ]);
