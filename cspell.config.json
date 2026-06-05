@@ -188,6 +188,7 @@
     "packagejson",
     "publint",
     "uplot",
+    "trufflehog",
     "arethetypeswrong"
   ]
 }
