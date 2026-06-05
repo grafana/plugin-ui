@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.14.0 - 2026-06-05
+
+- Added/Moved components from [`@grafana/async-query-data`](https://www.npmjs.com/package/@grafana/async-query-data) package from [https://github.com/grafana/grafana-async-query-data-js](https://github.com/grafana/grafana-async-query-data-js)
+
 ## v0.13.2 - 2026-05-28
 
 - Remove unused devDependencies: `copyfiles`, `fast-glob`, `@types/memoize-one`. Reduces supply-chain surface.

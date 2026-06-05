@@ -46,8 +46,8 @@ describe('getStandardSuggestions', () => {
       suggestionsRegistry
     );
 
-    expect(resolveFunctionSpy).toBeCalledTimes(1);
-    expect(resolveFunctionSpy).toBeCalledWith({ range: token!.range }, MonacoMock);
+    expect(resolveFunctionSpy).toHaveBeenCalledTimes(1);
+    expect(resolveFunctionSpy).toHaveBeenCalledWith({ range: token!.range }, MonacoMock);
 
     expect(result).toHaveLength(1);
     expect(result[0].label).toEqual(suggestionMock.label);

@@ -11,7 +11,8 @@
     "outDir": "dist",
     "resolveJsonModule": true,
     "target": "es2022",
-    "verbatimModuleSyntax": true
+    "types": ["@types/jest","@testing-library/jest-dom"],
+    "verbatimModuleSyntax": true,
   },
   "include": ["src"]
 }

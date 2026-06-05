@@ -25,6 +25,7 @@
     "COLLATIONPROPERTY",
     "COLUMNPROPERTY",
     "Conjs",
+    "checkstate",
     "CONNECTIONPROPERTY",
     "CONTAINSTABLE",
     "copyfiles",
