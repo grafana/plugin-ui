@@ -45,7 +45,7 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.ts --configPlugin esbuild",
     "dev": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.ts --configPlugin esbuild -w",
-    "clean": "rm -rf ./dist ./compiled",
+    "clean": "rm -rf ./dist ./compiled ./storybook-static *.log .eslintcache",
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "spellcheck": "cspell -c cspell.config.json \"**/*.{ts,tsx,js,md,mdx,yml,yaml,json,scss,css}\"",
@@ -55,7 +55,8 @@
     "lint:fix": "yarn run lint --fix",
     "typecheck": "tsc",
     "verify-types": "attw --pack .",
-    "verify-packagejson": "yarn publint ."
+    "verify-packagejson": "yarn publint .",
+    "sanity-check": "yarn clean && yarn spellcheck && yarn lint && yarn typecheck && yarn test:ci && yarn build && yarn verify-types && yarn verify-packagejson && yarn storybook:build && yarn clean"
   },
   "dependencies": {
     "@emotion/css": "11.11.2",
@@ -120,11 +121,14 @@
     "mockdate": "3.0.2",
     "prettier": "3.3.3",
     "publint": "0.3.12",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-select-event": "5.5.1",
     "rollup": "4.32.1",
     "rollup-plugin-dts": "6.1.1",
     "rollup-plugin-esbuild": "6.1.1",
     "rollup-plugin-node-externals": "8.0.0",
+    "rxjs": "^7.8.1",
     "storybook": "10.2.10",
     "ts-node": "10.9.1",
     "typescript": "5.7.3"

@@ -1843,7 +1843,7 @@ __metadata:
     rollup-plugin-dts: "npm:6.1.1"
     rollup-plugin-esbuild: "npm:6.1.1"
     rollup-plugin-node-externals: "npm:8.0.0"
-    rxjs: "npm:7.8.1"
+    rxjs: "npm:^7.8.1"
     sql-formatter: "npm:15.7.0"
     storybook: "npm:10.2.10"
     ts-node: "npm:10.9.1"
@@ -12961,7 +12961,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.8.1":
+"rxjs@npm:7.8.1, rxjs@npm:^7.8.1":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
