@@ -1,7 +1,8 @@
 # Change Log
 
-## next
+## v0.13.2 - 2026-05-28
 
+- Remove unused devDependencies: `copyfiles`, `fast-glob`, `@types/memoize-one`. Reduces supply-chain surface.
 - Replace `sql-formatter-plus` with `sql-formatter` for actively maintained SQL formatting.
 - Add `language` prop to `SqlQueryEditor`, `RawEditor`, `QueryEditorRaw`, `VisualEditor`, and `Preview` to support dialect-specific formatting (e.g. `postgresql`, `mysql`, `bigquery`). Defaults to `'sql'` for backward compatibility.
 

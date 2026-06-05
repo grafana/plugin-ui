@@ -46,10 +46,29 @@ jobs:
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
 
-      # npm trusted publishing requires version ^11.5.1
-      - name: Install npm version ^11.5.1
+      # npm trusted publishing requires version ^11.5.1; we pin to an exact
+      # version here because corepack manages exact versions rather than
+      # semver ranges. Bump this pin deliberately when a newer npm is needed.
+      #
+      # Use corepack instead of `npm install -g npm@...` because the bundled
+      # npm in the runner image that built 0.13.2 had a corrupt module tree
+      # (missing `promise-retry` in `@npmcli/arborist`), so the broken npm
+      # could not upgrade itself. Corepack fetches npm independently, which
+      # avoids the issue.
+      # An example failure is:
+      # https://github.com/grafana/plugin-ui/actions/runs/26574220612/job/78289033224
+      #
+      # COREPACK_ENABLE_PROJECT_SPEC=0 stops corepack from refusing to run npm
+      # because package.json pins `packageManager: yarn@...` (yarn itself is
+      # resolved via yarnPath, not corepack, so this does not affect it).
+      - name: Install npm 11.5.1 via corepack
         if: steps.version_check.outputs.changed == 'true'
-        run: npm install -g npm@^11.5.1
+        env:
+          COREPACK_ENABLE_PROJECT_SPEC: '0'
+        run: |
+          corepack enable npm
+          corepack prepare npm@11.5.1 --activate
+          npm --version
 
       - name: Install dependencies
         if: steps.version_check.outputs.changed == 'true'
@@ -61,4 +80,8 @@ jobs:
 
       - name: Publish package to NPM
         if: steps.version_check.outputs.changed == 'true'
+        env:
+          # The corepack npm shim persists on PATH from the step above; without
+          # this it would abort with "This project is configured to use yarn".
+          COREPACK_ENABLE_PROJECT_SPEC: '0'
         run: npm publish --access public
