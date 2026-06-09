@@ -1,5 +1,10 @@
 # Change Log
 
+## v0.15.0 - 2026-06-09
+
+- Fix some `@grafana/*` dependencies incorrectly listed as `dependencies` instead of `devDependencies`
+- Remove unused dependencies
+
 ## v0.14.0 - 2026-06-05
 
 - Added/Moved components from [`@grafana/async-query-data`](https://www.npmjs.com/package/@grafana/async-query-data) package from [https://github.com/grafana/grafana-async-query-data-js](https://github.com/grafana/grafana-async-query-data-js)
