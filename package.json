@@ -67,7 +67,7 @@
     "react-calendar": "4.8.0",
     "react-popper-tooltip": "4.4.2",
     "react-use": "17.6.0",
-    "react-virtualized-auto-sizer": "1.0.6",
+    "react-virtualized-auto-sizer": "2.0.3",
     "sql-formatter": "15.7.3",
     "uuid": "14.0.0"
   },
