@@ -29,7 +29,7 @@ There is a better way of doing this, when you find it, please add it here so it'
 `react` and `react-dom` **must** be declared in `peerDependencies` and must never appear only in `devDependencies`.
 
 This package is built with Rollup using `rollup-plugin-node-externals({ deps: true, peerDeps: true })`.
-That plugin externalises packages listed in `dependencies` and `peerDependencies` — anything else gets
+That plugin externalizes packages listed in `dependencies` and `peerDependencies` — anything else gets
 bundled into the dist output.
 
 React is not imported by this package directly, but it is resolved transitively through bundled
