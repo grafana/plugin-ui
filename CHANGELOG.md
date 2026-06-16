@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.15.1 - 2026-06-16
+
+- Fix: add `react` and `react-dom` back to `peerDependencies`; omitting them caused the Rollup build to inline a second copy of React into the published bundle, breaking all hook calls in plugins that consume this package.
+
 ## v0.15.0 - 2026-06-09
 
 - Fix some `@grafana/*` dependencies incorrectly listed as `dependencies` instead of `devDependencies`

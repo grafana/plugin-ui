@@ -22,6 +22,39 @@ Replacing the --watch.onEnd command with whatever you are targeting.
 
 There is a better way of doing this, when you find it, please add it here so it's not so painful working with this repo.
 
+## Dependency structure
+
+### Why `react` and `react-dom` must stay in `peerDependencies`
+
+`react` and `react-dom` **must** be declared in `peerDependencies` and must never appear only in `devDependencies`.
+
+This package is built with Rollup using `rollup-plugin-node-externals({ deps: true, peerDeps: true })`.
+That plugin externalizes packages listed in `dependencies` and `peerDependencies` — anything else gets
+bundled into the dist output.
+
+React is not imported by this package directly, but it is resolved transitively through bundled
+dependencies (`react-use`, `react-calendar`, `react-popper-tooltip`, etc.). Because Rollup resolves
+CJS packages via `@rollup/plugin-commonjs`, any transitively-resolved React that is not marked
+external ends up inlined as `dist/esm/node_modules/react/` in the published bundle.
+
+When a Grafana plugin consumes this package, its webpack build follows those relative-path imports
+(`_virtual/index.js → node_modules/react/index.js`) and produces **two React instances** in the
+final bundle:
+
+1. Grafana's host React — loaded as an AMD external by `react-dom`
+2. The inlined copy from this package
+
+React's hook dispatcher is a singleton on the React instance. `react-dom` renders against instance 1,
+but hooks called from this package's components use instance 2's dispatcher, which is `null` at
+runtime. Every hook call (`useState`, `useEffect`, …) throws:
+
+```
+Cannot read properties of null (reading 'useState')
+```
+
+Keeping `react` and `react-dom` in `peerDependencies` is what causes `rollup-plugin-node-externals`
+to externalize them, producing a clean dist with no inlined React.
+
 ## Deploying
 
 Increment the version in the package.json and make sure the [CHANGELOG.md](CHANGELOG.md) includes a message for each merged PR. The `publish-npm` workflow should trigger on version changes, which will publish the release on npm.
