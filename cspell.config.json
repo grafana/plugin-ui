@@ -29,6 +29,7 @@
     "COLLATIONPROPERTY",
     "COLUMNPROPERTY",
     "Conjs",
+    "checkstate",
     "CONNECTIONPROPERTY",
     "CONTAINSTABLE",
     "copyfiles",
@@ -197,6 +198,7 @@
     "marcbachmann",
     "publint",
     "uplot",
+    "trufflehog",
     "arethetypeswrong"
   ]
 }
