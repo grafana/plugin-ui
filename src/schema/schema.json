@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://grafana.com/schemas/datasource-config-schema.json",
+    "$id": "https://raw.githubusercontent.com/grafana/dsconfig/refs/heads/main/schema/schema.json",
     "title": "Datasource Configuration Schema",
     "description": "Declarative schema for Grafana datasource configuration including UI, validation, behavior, relationships, and storage mapping.",
     "type": "object",
@@ -14,9 +14,8 @@
         "schemaVersion": {
             "type": "string",
             "description": "Version of this schema specification",
-            "examples": [
-                "v1",
-                "v2"
+            "enum": [
+                "v1"
             ]
         },
         "pluginType": {
@@ -91,18 +90,6 @@
                         "any"
                     ]
                 },
-                "semanticType": {
-                    "type": "string",
-                    "enum": [
-                        "url",
-                        "password",
-                        "token",
-                        "hostname",
-                        "duration",
-                        "datasourceUid",
-                        "query"
-                    ]
-                },
                 "target": {
                     "type": "string",
                     "enum": [
@@ -127,14 +114,6 @@
                 "isItemField": {
                     "type": "boolean",
                     "description": "Must be true for fields inside array item schemas"
-                },
-                "lifecycle": {
-                    "type": "string",
-                    "enum": [
-                        "stable",
-                        "deprecated",
-                        "experimental"
-                    ]
                 },
                 "ui": {
                     "$ref": "#/definitions/FieldUI"
@@ -440,24 +419,6 @@
                 "language": {
                     "type": "string",
                     "description": "Language hint for code editor components. Example: promql, logql, traceql, sql, json."
-                },
-                "row": {
-                    "type": "number",
-                    "description": "Layout row index for item fields inside object arrays. Fields with the same row number are rendered horizontally. Auto-layout when omitted."
-                },
-                "accept": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Accepted file types for fileUpload component. Uses HTML accept format with leading dot, e.g. [\".json\"]."
-                },
-                "fileMapping": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Maps keys in an uploaded JSON file to target field IDs for cross-field writes."
                 }
             }
         },
@@ -642,10 +603,6 @@
                     "items": {
                         "$ref": "#/definitions/FieldOption"
                     }
-                },
-                "secureKey": {
-                    "type": "string",
-                    "description": "Template for secureJsonData key. When present on an isItemField, the value is routed to secureJsonData under the resolved key. Placeholders: {index} (0-based), {index1} (1-based), {item.KEY} (sibling field value)."
                 }
             }
         },
