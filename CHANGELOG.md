@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.16.0 - 2026-06-18
+
+- Added schema for datasource configuration
+
 ## v0.15.1 - 2026-06-16
 
 - Fix: add `react` and `react-dom` back to `peerDependencies`; omitting them caused the Rollup build to inline a second copy of React into the published bundle, breaking all hook calls in plugins that consume this package.

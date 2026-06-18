@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import path from 'path';
 import dts from 'rollup-plugin-dts';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import esbuild from 'rollup-plugin-esbuild';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 
@@ -25,6 +26,7 @@ export default [
     input: entryPoints,
     plugins: [
       nodeExternals({ deps: true, peerDeps: true, packagePath: './package.json' }),
+      json(),
       commonjs(),
       resolve(),
       esbuild({

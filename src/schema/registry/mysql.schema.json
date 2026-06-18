@@ -1,0 +1,293 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": "v1",
+  "pluginType": "mysql",
+  "pluginName": "MySQL",
+  "docURL": "https://grafana.com/docs/grafana/latest/datasources/mysql/",
+  "fields": [
+    {
+      "id": "root.url",
+      "key": "url",
+      "label": "Host URL",
+      "description": "MySQL host and port.",
+      "valueType": "string",
+      "target": "root",
+      "required": true,
+      "ui": {
+        "component": "input",
+        "placeholder": "localhost:3306"
+      }
+    },
+    {
+      "id": "jsonData.database",
+      "key": "database",
+      "label": "Database name",
+      "description": "MySQL database name.",
+      "valueType": "string",
+      "target": "jsonData",
+      "storage": {
+        "type": "computed",
+        "read": "root.database"
+      },
+      "ui": {
+        "component": "input",
+        "placeholder": "Database"
+      }
+    },
+    {
+      "id": "root.user",
+      "key": "user",
+      "label": "Username",
+      "description": "Database username.",
+      "valueType": "string",
+      "target": "root",
+      "required": true,
+      "ui": {
+        "component": "input",
+        "placeholder": "Username"
+      }
+    },
+    {
+      "id": "secureJsonData.password",
+      "key": "password",
+      "label": "Password",
+      "description": "Database password.",
+      "valueType": "string",
+      "semanticType": "password",
+      "target": "secureJsonData"
+    },
+    {
+      "id": "jsonData.tlsAuth",
+      "key": "tlsAuth",
+      "label": "Use TLS Client Auth",
+      "description": "Enables TLS authentication using client cert configured in secure json data.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "jsonData.tlsAuthWithCACert",
+      "key": "tlsAuthWithCACert",
+      "label": "With CA Cert",
+      "description": "Needed for verifying self-signed TLS Certs.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "jsonData.tlsSkipVerify",
+      "key": "tlsSkipVerify",
+      "label": "Skip TLS Verification",
+      "description": "When enabled, skips verification of the MySQL server's TLS certificate chain and host name.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "jsonData.allowCleartextPasswords",
+      "key": "allowCleartextPasswords",
+      "label": "Allow Cleartext Passwords",
+      "description": "Allows using the cleartext client side plugin if required by an account.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "secureJsonData.tlsCACert",
+      "key": "tlsCACert",
+      "label": "CA Cert",
+      "description": "PEM-encoded CA certificate for TLS verification.",
+      "valueType": "string",
+      "target": "secureJsonData",
+      "dependsOn": "jsonData.tlsAuthWithCACert == true",
+      "ui": {
+        "component": "textarea",
+        "rows": 7
+      }
+    },
+    {
+      "id": "secureJsonData.tlsClientCert",
+      "key": "tlsClientCert",
+      "label": "Client Cert",
+      "description": "PEM-encoded client certificate for TLS authentication.",
+      "valueType": "string",
+      "target": "secureJsonData",
+      "dependsOn": "jsonData.tlsAuth == true",
+      "ui": {
+        "component": "textarea",
+        "rows": 7
+      }
+    },
+    {
+      "id": "secureJsonData.tlsClientKey",
+      "key": "tlsClientKey",
+      "label": "Client Key",
+      "description": "PEM-encoded client private key for TLS authentication.",
+      "valueType": "string",
+      "semanticType": "token",
+      "target": "secureJsonData",
+      "dependsOn": "jsonData.tlsAuth == true",
+      "ui": {
+        "component": "textarea",
+        "rows": 7
+      }
+    },
+    {
+      "id": "jsonData.timezone",
+      "key": "timezone",
+      "label": "Session timezone",
+      "description": "Specify the timezone used in the database session, such as Europe/Berlin or +02:00.",
+      "valueType": "string",
+      "target": "jsonData",
+      "ui": {
+        "component": "input",
+        "placeholder": "Europe/Berlin or +02:00"
+      }
+    },
+    {
+      "id": "jsonData.timeInterval",
+      "key": "timeInterval",
+      "label": "Min time interval",
+      "description": "A lower limit for the auto group-by time interval. Recommended to be set to write frequency, for example 1m if your data is written every minute.",
+      "valueType": "string",
+      "semanticType": "duration",
+      "target": "jsonData",
+      "ui": {
+        "component": "input",
+        "placeholder": "1m"
+      }
+    },
+    {
+      "id": "jsonData.maxOpenConns",
+      "key": "maxOpenConns",
+      "label": "Max open",
+      "description": "Maximum number of open connections to the database. Default is 100.",
+      "valueType": "number",
+      "target": "jsonData",
+      "defaultValue": 100,
+      "validations": [
+        {
+          "type": "range",
+          "min": 0
+        }
+      ]
+    },
+    {
+      "id": "jsonData.maxIdleConns",
+      "key": "maxIdleConns",
+      "label": "Max idle",
+      "description": "Maximum number of idle connections in the pool. When Auto max idle is enabled, this is automatically set to match Max open.",
+      "valueType": "number",
+      "target": "jsonData",
+      "defaultValue": 100,
+      "disabledWhen": "jsonData.maxIdleConnsAuto == true",
+      "validations": [
+        {
+          "type": "range",
+          "min": 0
+        }
+      ]
+    },
+    {
+      "id": "jsonData.maxIdleConnsAuto",
+      "key": "maxIdleConnsAuto",
+      "label": "Auto max idle",
+      "description": "If enabled, the maximum number of idle connections is set to the same value as max open connections.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "jsonData.connMaxLifetime",
+      "key": "connMaxLifetime",
+      "label": "Max lifetime",
+      "description": "Maximum lifetime of a connection in seconds. Default is 14400 (4 hours).",
+      "valueType": "number",
+      "target": "jsonData",
+      "defaultValue": 14400,
+      "validations": [
+        {
+          "type": "range",
+          "min": 0
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "id": "connection",
+      "title": "Connection",
+      "fieldRefs": [
+        "root.url",
+        "jsonData.database"
+      ]
+    },
+    {
+      "id": "auth",
+      "title": "Authentication",
+      "fieldRefs": [
+        "root.user",
+        "secureJsonData.password"
+      ]
+    },
+    {
+      "id": "tls",
+      "title": "TLS/SSL Settings",
+      "fieldRefs": [
+        "jsonData.tlsAuth",
+        "jsonData.tlsAuthWithCACert",
+        "jsonData.tlsSkipVerify",
+        "jsonData.allowCleartextPasswords",
+        "secureJsonData.tlsCACert",
+        "secureJsonData.tlsClientCert",
+        "secureJsonData.tlsClientKey"
+      ]
+    },
+    {
+      "id": "mysql-options",
+      "title": "MySQL Options",
+      "fieldRefs": [
+        "jsonData.timezone",
+        "jsonData.timeInterval"
+      ]
+    },
+    {
+      "id": "connection-limits",
+      "title": "Connection limits",
+      "fieldRefs": [
+        "jsonData.maxOpenConns",
+        "jsonData.maxIdleConns",
+        "jsonData.maxIdleConnsAuto",
+        "jsonData.connMaxLifetime"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "type": "pair",
+      "fields": [
+        "root.user",
+        "secureJsonData.password"
+      ],
+      "description": "Database credentials"
+    },
+    {
+      "type": "pair",
+      "fields": [
+        "secureJsonData.tlsClientCert",
+        "secureJsonData.tlsClientKey"
+      ],
+      "description": "TLS client certificate and key"
+    }
+  ]
+}
