@@ -419,6 +419,24 @@
                 "language": {
                     "type": "string",
                     "description": "Language hint for code editor components. Example: promql, logql, traceql, sql, json."
+                },
+                "row": {
+                    "type": "number",
+                    "description": "Layout row index for item fields inside object arrays. Fields with the same row number are rendered horizontally."
+                },
+                "accept": {
+                    "type": "array",
+                    "description": "Accepted file types for fileUpload component. Uses HTML accept attribute format with leading dot. Example: [\".json\"].",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "fileMapping": {
+                    "type": "object",
+                    "description": "Maps keys in an uploaded JSON file to target field IDs. Used by fileUpload to distribute parsed values to other form fields.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -603,6 +621,10 @@
                     "items": {
                         "$ref": "#/definitions/FieldOption"
                     }
+                },
+                "secureKey": {
+                    "type": "string",
+                    "description": "When present on an isItemField field, the value is routed to secureJsonData under the resolved key instead of being stored inline in the parent array. Supports placeholders: {index}, {index1}, {item.KEY}."
                 }
             }
         },

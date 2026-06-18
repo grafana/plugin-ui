@@ -495,16 +495,6 @@ Set `"optional": true` on groups that can be collapsed or hidden by default (e.g
 
 Groups and relationships are metadata — they do not affect storage or validation.
 
-## Lifecycle
-
-Fields can be marked with a lifecycle stage:
-
-| Value          | Meaning                             |
-| -------------- | ----------------------------------- |
-| `stable`       | Production-ready                    |
-| `deprecated`   | Will be removed in a future version |
-| `experimental` | Subject to change                   |
-
 ## Expression language
 
 Expression fields (`dependsOn`, `requiredWhen`, `disabledWhen`, `overrides[].when`, `storage.computed.read/write`, `custom` validation `expression`) are **opaque strings** in v1. The intended language is CEL. This PR stores expressions but **does not evaluate them**. Runtime evaluation is follow-up work.
