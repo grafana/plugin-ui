@@ -1,5 +1,5 @@
 {
-  "$schema": "../schema.json",
+  "$schema": "https://raw.githubusercontent.com/grafana/dsconfig/refs/heads/main/dsconfig/schema.json",
   "schemaVersion": "v1",
   "pluginType": "prometheus",
   "pluginName": "Prometheus",
@@ -11,7 +11,7 @@
       "label": "Prometheus server URL",
       "description": "URL of your Prometheus server. If Prometheus is running locally, use http://localhost:9090.",
       "valueType": "string",
-      "semanticType": "url",
+      "role": "endpoint.baseUrl",
       "target": "root",
       "required": true,
       "ui": {
@@ -34,9 +34,7 @@
       "valueType": "boolean",
       "target": "root",
       "defaultValue": false,
-      "tags": [
-        "managed-by:auth.method"
-      ]
+      "tags": ["managed-by:auth.method"]
     },
     {
       "id": "auth.method",
@@ -49,11 +47,7 @@
       "validations": [
         {
           "type": "allowedValues",
-          "values": [
-            "no-auth",
-            "basic-auth",
-            "forward-oauth"
-          ]
+          "values": ["no-auth", "basic-auth", "forward-oauth"]
         }
       ],
       "ui": {
@@ -120,7 +114,7 @@
       "label": "Scrape interval",
       "description": "Sets the standard scrape and evaluation interval. Set it to match the typical scrape interval in your Prometheus configuration. Default is 15s.",
       "valueType": "string",
-      "semanticType": "duration",
+      "role": "request.interval",
       "target": "jsonData",
       "defaultValue": "15s",
       "ui": {
@@ -134,7 +128,7 @@
       "label": "Query timeout",
       "description": "Sets the Prometheus query timeout. Default is 60s. Without a timeout, complex queries can run indefinitely.",
       "valueType": "string",
-      "semanticType": "duration",
+      "role": "http.query.timeout",
       "target": "jsonData",
       "defaultValue": "60s",
       "ui": {
@@ -153,10 +147,7 @@
       "validations": [
         {
           "type": "allowedValues",
-          "values": [
-            "GET",
-            "POST"
-          ]
+          "values": ["GET", "POST"]
         }
       ],
       "ui": {
@@ -222,7 +213,7 @@
             "label": "URL",
             "description": "External link URL. Interpolate the value using ${__value.raw}.",
             "valueType": "string",
-            "semanticType": "url",
+            "role": "endpoint.baseUrl",
             "isItemField": true
           },
           {
@@ -239,7 +230,7 @@
             "label": "Internal link",
             "description": "Data source UID for internal link to a tracing backend.",
             "valueType": "string",
-            "semanticType": "datasourceUid",
+            "role": "query.data.link",
             "isItemField": true
           }
         ]
@@ -255,12 +246,7 @@
       "validations": [
         {
           "type": "allowedValues",
-          "values": [
-            "Cortex",
-            "Mimir",
-            "Prometheus",
-            "Thanos"
-          ]
+          "values": ["Cortex", "Mimir", "Prometheus", "Thanos"]
         }
       ],
       "ui": {
@@ -308,12 +294,7 @@
       "validations": [
         {
           "type": "allowedValues",
-          "values": [
-            "Low",
-            "Medium",
-            "High",
-            "None"
-          ]
+          "values": ["Low", "Medium", "High", "None"]
         }
       ],
       "ui": {
@@ -349,10 +330,7 @@
       "validations": [
         {
           "type": "allowedValues",
-          "values": [
-            "code",
-            "builder"
-          ]
+          "values": ["code", "builder"]
         }
       ],
       "ui": {
@@ -377,7 +355,7 @@
       "valueType": "boolean",
       "target": "jsonData",
       "defaultValue": false,
-      "lifecycle": "experimental",
+      "tags": ["experimental"],
       "ui": {
         "component": "switch"
       }
@@ -388,11 +366,10 @@
       "label": "Query overlap window",
       "description": "Buffer of time added to incremental queries. Default is 10m.",
       "valueType": "string",
-      "semanticType": "duration",
       "target": "jsonData",
       "defaultValue": "10m",
       "dependsOn": "jsonData.incrementalQuerying == true",
-      "lifecycle": "experimental",
+      "tags": ["experimental"],
       "ui": {
         "component": "input",
         "placeholder": "10m"
@@ -406,7 +383,7 @@
       "valueType": "boolean",
       "target": "jsonData",
       "defaultValue": false,
-      "lifecycle": "experimental",
+      "tags": ["experimental"],
       "ui": {
         "component": "switch"
       }
@@ -443,9 +420,7 @@
       "valueType": "boolean",
       "target": "jsonData",
       "defaultValue": false,
-      "tags": [
-        "managed-by:auth.method"
-      ]
+      "tags": ["managed-by:auth.method"]
     },
     {
       "id": "jsonData.seriesEndpoint",
@@ -496,7 +471,7 @@
       "label": "TLS server name",
       "description": "Controls the server name used for certificate common name/subject alternative name verification. Defaults to using the data source URL.",
       "valueType": "string",
-      "semanticType": "hostname",
+      "role": "tls.serverName",
       "target": "jsonData",
       "dependsOn": "jsonData.tlsAuth == true"
     },
@@ -615,7 +590,7 @@
       "label": "Password",
       "description": "Password for basic authentication.",
       "valueType": "string",
-      "semanticType": "password",
+      "role": "auth.basic.password",
       "target": "secureJsonData",
       "dependsOn": "auth.method == 'basic-auth'"
     },
@@ -653,7 +628,7 @@
       "label": "Client Key",
       "description": "PEM-encoded client private key for TLS client authentication.",
       "valueType": "string",
-      "semanticType": "token",
+      "role": "tls.clientKey",
       "target": "secureJsonData",
       "dependsOn": "jsonData.tlsAuth == true",
       "ui": {
@@ -667,18 +642,12 @@
     {
       "id": "connection",
       "title": "Connection",
-      "fieldRefs": [
-        "root.url"
-      ]
+      "fieldRefs": ["root.url"]
     },
     {
       "id": "auth",
       "title": "Authentication",
-      "fieldRefs": [
-        "auth.method",
-        "root.basicAuthUser",
-        "secureJsonData.basicAuthPassword"
-      ]
+      "fieldRefs": ["auth.method", "root.basicAuthUser", "secureJsonData.basicAuthPassword"]
     },
     {
       "id": "http-network",
@@ -702,26 +671,17 @@
     {
       "id": "alerting",
       "title": "Alerting",
-      "fieldRefs": [
-        "jsonData.manageAlerts",
-        "jsonData.allowAsRecordingRulesTarget"
-      ]
+      "fieldRefs": ["jsonData.manageAlerts", "jsonData.allowAsRecordingRulesTarget"]
     },
     {
       "id": "interval-behaviour",
       "title": "Interval behaviour",
-      "fieldRefs": [
-        "jsonData.timeInterval",
-        "jsonData.queryTimeout"
-      ]
+      "fieldRefs": ["jsonData.timeInterval", "jsonData.queryTimeout"]
     },
     {
       "id": "query-editor",
       "title": "Query editor",
-      "fieldRefs": [
-        "jsonData.defaultEditor",
-        "jsonData.disableMetricsLookup"
-      ]
+      "fieldRefs": ["jsonData.defaultEditor", "jsonData.disableMetricsLookup"]
     },
     {
       "id": "performance",
@@ -738,35 +698,30 @@
     {
       "id": "other",
       "title": "Other settings",
-      "fieldRefs": [
-        "jsonData.seriesEndpoint",
-        "jsonData.seriesLimit"
-      ]
+      "fieldRefs": ["jsonData.seriesEndpoint", "jsonData.seriesLimit"]
     },
     {
       "id": "exemplars",
       "title": "Exemplars",
-      "fieldRefs": [
-        "jsonData.exemplarTraceIdDestinations"
-      ]
+      "fieldRefs": ["jsonData.exemplarTraceIdDestinations"]
     }
   ],
   "relationships": [
     {
       "type": "pair",
-      "fields": [
-        "root.basicAuthUser",
-        "secureJsonData.basicAuthPassword"
-      ],
+      "fields": ["root.basicAuthUser", "secureJsonData.basicAuthPassword"],
       "description": "Basic auth credentials"
     },
     {
       "type": "pair",
-      "fields": [
-        "secureJsonData.tlsClientCert",
-        "secureJsonData.tlsClientKey"
-      ],
+      "fields": ["secureJsonData.tlsClientCert", "secureJsonData.tlsClientKey"],
       "description": "TLS client certificate and key"
+    }
+  ],
+  "instructions": [
+    {
+      "msg": "Supports no auth (no-auth), basic auth (basic-auth), and forward OAuth identity (forward-oauth) — ask which. TLS client certificate auth and custom HTTP headers can additionally be enabled. But never ask for credentials, certificates, or secrets themselves. Those should be entered in the UI.",
+      "tags": ["llm"]
     }
   ]
 }
