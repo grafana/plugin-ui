@@ -717,5 +717,11 @@
       "fields": ["secureJsonData.tlsClientCert", "secureJsonData.tlsClientKey"],
       "description": "TLS client certificate and key"
     }
+  ],
+  "instructions": [
+    {
+      "msg": "Supports no auth (no-auth), basic auth (basic-auth), and forward OAuth identity (forward-oauth) — ask which. TLS client certificate auth and custom HTTP headers can additionally be enabled. But never ask for credentials, certificates, or secrets themselves. Those should be entered in the UI.",
+      "tags": ["llm"]
+    }
   ]
 }
