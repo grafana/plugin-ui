@@ -1,9 +1,9 @@
-import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import { createRequire } from 'node:module';
 import path from 'path';
 import dts from 'rollup-plugin-dts';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import esbuild from 'rollup-plugin-esbuild';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 
@@ -19,7 +19,7 @@ const legacyOutputDefaults = {
   interop: 'compat',
 };
 
-const entryPoints = ['src/index.ts', 'src/test-utils.ts', 'src/schemas.ts'];
+const entryPoints = ['src/index.ts', 'src/test-utils.ts'];
 
 export default [
   {
@@ -76,20 +76,6 @@ export default [
       },
       {
         file: pkg.exports['./test'].import.types,
-        format: 'esm',
-      },
-    ],
-  },
-  {
-    input: './compiled/schemas.d.ts',
-    plugins: [dts()],
-    output: [
-      {
-        file: pkg.exports['./schemas'].require.types,
-        format: 'cjs',
-      },
-      {
-        file: pkg.exports['./schemas'].import.types,
         format: 'esm',
       },
     ],

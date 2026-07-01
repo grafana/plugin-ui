@@ -5,7 +5,6 @@ import path from 'path';
  * This utility function is useful in combination with jest `transformIgnorePatterns` config
  * to transform specific packages (e.g.ES modules) in a projects node_modules folder.
  */
-// @ts-ignore: ignore typecheck
 const nodeModulesToTransform = (moduleNames) => `node_modules\/(?!(${moduleNames.join('|')})\/)`;
 
 const grafanaESModules = [
@@ -17,7 +16,6 @@ const grafanaESModules = [
   'ol',
   'react-colorful',
   'uuid',
-  '@marcbachmann/cel-js',
 ];
 
 /** @type {import('jest').Config} */
