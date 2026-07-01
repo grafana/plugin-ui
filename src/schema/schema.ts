@@ -43,6 +43,14 @@ export interface DatasourceConfigSchema {
   docURL?: string;
 
   /**
+   * SDK field packs to merge into this schema before validation.
+   * Pack fields are prepended to `fields` in declaration order.
+   * Plugin-declared fields with a matching ID take precedence over pack fields.
+   * Call `resolveBaseFields()` before consuming the schema.
+   */
+  baseFields?: BaseFieldRef[];
+
+  /**
    * Source of truth for configuration
    */
   fields: ConfigField[];
@@ -53,9 +61,81 @@ export interface DatasourceConfigSchema {
   groups?: ConfigGroup[];
 
   /**
+   * Optional instructions rendered alongside the config form.
+   */
+  instructions?: Instruction[];
+
+  /**
    * Relationships between fields
    */
   relationships?: FieldRelationship[];
+}
+
+// ============================================================
+// Instructions
+// ============================================================
+
+export interface Instruction {
+  msg: string;
+  tags?: string[];
+}
+
+// ============================================================
+// Base Field Packs
+// ============================================================
+
+/**
+ * Identifier of a built-in field pack defined by grafana/dsconfig.
+ * Convention: `<sdk_name>_settings`.
+ */
+export type FieldPackID =
+  | 'plugin_sdk_settings'
+  | 'aws_sdk_settings'
+  | 'azure_sdk_settings'
+  | 'google_sdk_settings'
+  | 'sqleng_settings';
+
+/**
+ * Declares a single field pack to compose into the schema.
+ */
+export interface BaseFieldRef {
+  /** Identifier of a built-in field pack. */
+  from: FieldPackID;
+
+  /**
+   * Field IDs from the pack to omit entirely.
+   * Each ID must exist in the pack (else resolution fails).
+   */
+  exclude?: string[];
+
+  /**
+   * Presentation-only overrides keyed by pack field ID.
+   * Structural properties (id, key, valueType, target, role) cannot be patched.
+   */
+  patch?: Record<string, FieldPatch>;
+}
+
+/**
+ * Safe-to-override presentation properties for a pack field.
+ * Only non-undefined values are applied.
+ */
+export interface FieldPatch {
+  label?: string;
+  description?: string;
+  placeholder?: string;
+  defaultValue?: unknown;
+  required?: boolean;
+  /** When true, the field is dropped from the resolved schema. */
+  hidden?: boolean;
+}
+
+/**
+ * Named set of ConfigField definitions provided by an SDK.
+ * Pack field IDs are namespaced with the pack ID, e.g. `plugin_sdk_settings.url`.
+ */
+export interface FieldPack {
+  id: FieldPackID;
+  fields: ConfigField[];
 }
 
 // ============================================================
@@ -91,6 +171,12 @@ export interface ConfigField {
    * Storage location (required for storage fields)
    */
   target?: TargetLocation;
+
+  /**
+   * Semantic role identifying what a field represents to the SDK.
+   * Field packs annotate their fields with roles (e.g. `endpoint.baseUrl`).
+   */
+  role?: Role;
 
   /**
    * Dotted path prefix within the target for nested objects.
@@ -223,6 +309,17 @@ export type FieldKind = 'storage' | 'virtual';
 // ============================================================
 
 export type TargetLocation = 'root' | 'jsonData' | 'secureJsonData';
+
+// ============================================================
+// Roles
+// ============================================================
+
+/**
+ * Semantic role identifying what a field represents to the SDK.
+ * Kept as `string` for forward compatibility with newer packs from
+ * grafana/dsconfig; see that repo for the canonical role list.
+ */
+export type Role = string;
 
 // ============================================================
 // UI Components

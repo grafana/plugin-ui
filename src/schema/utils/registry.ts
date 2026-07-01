@@ -1,5 +1,6 @@
 import { getBackendSrv } from '@grafana/runtime';
-
+import { resolveBaseFields } from './packs';
+import { DSCONFIG_STATIC_URL } from './constants';
 import type { DatasourceConfigSchema } from '../schema';
 
 const schemaCache = new Map<string, DatasourceConfigSchema | null>();
@@ -13,12 +14,21 @@ export async function getConfigSchema(pluginType: string): Promise<DatasourceCon
   let schema: DatasourceConfigSchema | null;
   try {
     schema = await getBackendSrv().get<DatasourceConfigSchema>(
-      '/public/plugins/{pluginType}/schema/dsconfig.json'.replaceAll('{pluginType}', pluginType)
+      DSCONFIG_STATIC_URL.replaceAll('{pluginType}', pluginType)
     );
   } catch {
     console.warn(`no schema available for ${pluginType}`);
     schema = {} as DatasourceConfigSchema;
   }
+  if (schema) {
+    try {
+      schema = await resolveBaseFields(schema);
+    } catch (err) {
+      console.error(`failed to resolve baseFields for ${pluginType}:`, err);
+      // Cache the raw schema so unrelated fields still render.
+    }
+  }
+
   schemaCache.set(pluginType, schema);
   return schema;
 }
