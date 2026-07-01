@@ -24,252 +24,38 @@
       "target": "jsonData"
     },
     {
-      "id": "root.basicAuth",
-      "key": "basicAuth",
-      "label": "Basic Auth",
-      "description": "Enable basic authentication.",
-      "valueType": "boolean",
-      "target": "root",
-      "defaultValue": false,
-      "tags": [
-        "managed-by:auth.method"
-      ]
-    },
-    {
-      "id": "auth.method",
-      "key": "authMethod",
-      "label": "Authentication method",
-      "description": "Choose an authentication method to access the data source.",
+      "id": "jsonData.authType",
+      "key": "authType",
+      "label": "Authentication Type",
+      "description": "Splunk authentication method.",
       "valueType": "string",
-      "kind": "virtual",
-      "defaultValue": "basic-auth",
+      "target": "jsonData",
+      "defaultValue": "basicAuth",
       "validations": [
         {
           "type": "allowedValues",
           "values": [
-            "basic-auth",
-            "token"
+            "basicAuth",
+            "token",
+            "oauth"
           ]
         }
-      ],
-      "ui": {
-        "component": "select",
-        "options": [
-          {
-            "label": "Basic authentication",
-            "value": "basic-auth",
-            "description": "Authenticate with your Splunk username and password"
-          },
-          {
-            "label": "Token authentication",
-            "value": "token",
-            "description": "Use an authentication token generated in Splunk dashboard"
-          }
-        ]
-      },
-      "storage": {
-        "type": "computed",
-        "read": "jsonData.authType == 'custom-splunk' ? 'token' : 'basic-auth'"
-      },
-      "effects": [
-        {
-          "when": "value == 'basic-auth'",
-          "set": {
-            "root.basicAuth": true,
-            "jsonData.authType": "BasicAuth",
-            "jsonData.oauthPassThru": false
-          }
-        },
-        {
-          "when": "value == 'token'",
-          "set": {
-            "root.basicAuth": false,
-            "jsonData.authType": "custom-splunk",
-            "jsonData.oauthPassThru": false
-          }
-        }
       ]
     },
     {
-      "id": "jsonData.authType",
-      "key": "authType",
-      "label": "Auth Type",
-      "description": "Splunk authentication type stored value.",
+      "id": "jsonData.username",
+      "key": "username",
+      "label": "Username",
+      "description": "Splunk username for basic authentication.",
       "valueType": "string",
       "target": "jsonData",
-      "tags": [
-        "managed-by:auth.method"
-      ]
-    },
-    {
-      "id": "root.basicAuthUser",
-      "key": "basicAuthUser",
-      "label": "User",
-      "description": "Username for basic authentication.",
-      "valueType": "string",
-      "target": "root",
-      "dependsOn": "auth.method == 'basic-auth'",
-      "requiredWhen": "auth.method == 'basic-auth'"
+      "dependsOn": "jsonData.authType == 'basicAuth'"
     },
     {
       "id": "jsonData.oauthPassThru",
       "key": "oauthPassThru",
-      "label": "Forward OAuth Identity",
-      "description": "Forward the OAuth access token of the user querying the data source.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "defaultValue": false,
-      "tags": [
-        "managed-by:auth.method"
-      ]
-    },
-    {
-      "id": "jsonData.tlsAuthWithCACert",
-      "key": "tlsAuthWithCACert",
-      "label": "With CA Cert",
-      "description": "Verify self-signed TLS certificates using a CA certificate.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "ui": {
-        "component": "switch"
-      }
-    },
-    {
-      "id": "jsonData.tlsAuth",
-      "key": "tlsAuth",
-      "label": "TLS Client Auth",
-      "description": "Enable TLS client certificate authentication.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "ui": {
-        "component": "switch"
-      }
-    },
-    {
-      "id": "jsonData.serverName",
-      "key": "serverName",
-      "label": "TLS server name",
-      "description": "Controls the server name used for certificate common name/subject alternative name verification.",
-      "valueType": "string",
-      "semanticType": "hostname",
-      "target": "jsonData",
-      "dependsOn": "jsonData.tlsAuth == true"
-    },
-    {
-      "id": "jsonData.tlsSkipVerify",
-      "key": "tlsSkipVerify",
-      "label": "Skip TLS Verify",
-      "description": "Skip TLS certificate verification. Use only for testing.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "ui": {
-        "component": "switch"
-      }
-    },
-    {
-      "id": "httpHeaders",
-      "key": "httpHeaders",
-      "label": "Custom HTTP Headers",
-      "description": "Additional headers sent with every request to the data source.",
-      "valueType": "array",
-      "target": "jsonData",
-      "item": {
-        "valueType": "object",
-        "fields": [
-          {
-            "id": "httpHeaders.item.name",
-            "key": "name",
-            "label": "Header Name",
-            "valueType": "string",
-            "isItemField": true,
-            "validations": [
-              {
-                "type": "pattern",
-                "pattern": "^[A-Za-z][A-Za-z0-9-]*$",
-                "message": "Must be a valid HTTP header name"
-              }
-            ]
-          },
-          {
-            "id": "httpHeaders.item.value",
-            "key": "value",
-            "label": "Header Value",
-            "valueType": "string",
-            "isItemField": true
-          }
-        ]
-      },
-      "storage": {
-        "type": "indexedPair",
-        "key": {
-          "target": "jsonData",
-          "pattern": "httpHeaderName{index}"
-        },
-        "value": {
-          "target": "secureJsonData",
-          "pattern": "httpHeaderValue{index}"
-        },
-        "startIndex": 1
-      },
-      "validations": [
-        {
-          "type": "itemCount",
-          "max": 10,
-          "message": "Maximum 10 custom headers"
-        }
-      ]
-    },
-    {
-      "id": "jsonData.keepCookies",
-      "key": "keepCookies",
-      "label": "Allowed cookies",
-      "description": "Grafana proxy deletes forwarded cookies by default. Specify cookies by name that should be forwarded to the data source.",
-      "valueType": "array",
-      "target": "jsonData",
-      "item": {
-        "valueType": "string"
-      },
-      "ui": {
-        "component": "list",
-        "placeholder": "New cookie (hit enter to add)"
-      }
-    },
-    {
-      "id": "jsonData.timeout",
-      "key": "timeout",
-      "label": "HTTP request timeout",
-      "description": "HTTP request timeout in seconds. Overrides the global dataproxy.timeout setting.",
-      "valueType": "number",
-      "target": "jsonData",
-      "ui": {
-        "component": "input",
-        "placeholder": "Timeout in seconds"
-      },
-      "validations": [
-        {
-          "type": "range",
-          "min": 0
-        }
-      ]
-    },
-    {
-      "id": "jsonData.maxResultCount",
-      "key": "maxResultCount",
-      "label": "Results limit",
-      "description": "Maximum number of results to return from each data request. Set to 0 for no limit.",
-      "valueType": "number",
-      "target": "jsonData",
-      "defaultValue": 0,
-      "ui": {
-        "component": "input",
-        "placeholder": "0"
-      }
-    },
-    {
-      "id": "jsonData.previewMode",
-      "key": "previewMode",
-      "label": "Preview Mode",
-      "description": "Displays events as soon as the event is returned, instead of waiting until all of the events are returned.",
+      "label": "OAuth Pass-thru",
+      "description": "Forward the user's OAuth token to Splunk.",
       "valueType": "boolean",
       "target": "jsonData",
       "ui": {
@@ -279,178 +65,12 @@
     {
       "id": "jsonData.pollSearchResult",
       "key": "pollSearchResult",
-      "label": "Async queries",
-      "description": "Run query and periodically check for results.",
+      "label": "Poll Search Results",
+      "description": "Poll for search results instead of blocking.",
       "valueType": "boolean",
       "target": "jsonData",
       "ui": {
         "component": "switch"
-      }
-    },
-    {
-      "id": "jsonData.minPollInterval",
-      "key": "minPollInterval",
-      "label": "Min Poll Interval (ms)",
-      "description": "Minimum async query poll interval in milliseconds.",
-      "valueType": "number",
-      "target": "jsonData",
-      "dependsOn": "jsonData.pollSearchResult == true || jsonData.previewMode == true",
-      "ui": {
-        "component": "input",
-        "placeholder": "500"
-      }
-    },
-    {
-      "id": "jsonData.maxPollInterval",
-      "key": "maxPollInterval",
-      "label": "Max Poll Interval (ms)",
-      "description": "Maximum async query poll interval in milliseconds.",
-      "valueType": "number",
-      "target": "jsonData",
-      "dependsOn": "jsonData.pollSearchResult == true || jsonData.previewMode == true",
-      "ui": {
-        "component": "input",
-        "placeholder": "3000"
-      }
-    },
-    {
-      "id": "jsonData.autoCancel",
-      "key": "autoCancel",
-      "label": "Auto cancel timeout",
-      "description": "Jobs automatically cancel after this many seconds of inactivity. Set to 0 to never auto cancel.",
-      "valueType": "string",
-      "target": "jsonData",
-      "ui": {
-        "component": "input",
-        "placeholder": "30"
-      }
-    },
-    {
-      "id": "jsonData.timeoutInSeconds",
-      "key": "timeoutInSeconds",
-      "label": "Timeout (seconds)",
-      "description": "Grafana request timeout. Maximum time in seconds that a query can run before it is killed. Minimum value is 1.",
-      "valueType": "number",
-      "target": "jsonData",
-      "defaultValue": 30,
-      "validations": [
-        {
-          "type": "range",
-          "min": 1
-        }
-      ],
-      "ui": {
-        "component": "input",
-        "placeholder": "30"
-      }
-    },
-    {
-      "id": "jsonData.statusBuckets",
-      "key": "statusBuckets",
-      "label": "Maximum status buckets",
-      "description": "Maximum number of timeline status buckets generated per query. Set to 0 to disable timelines.",
-      "valueType": "string",
-      "target": "jsonData",
-      "ui": {
-        "component": "input",
-        "placeholder": "30"
-      }
-    },
-    {
-      "id": "jsonData.internalFieldsFiltration",
-      "key": "internalFieldsFiltration",
-      "label": "Filter internal fields",
-      "description": "By default hides fields with names that start with '_'. This filter can be customized using the Internal field pattern option.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "ui": {
-        "component": "switch"
-      }
-    },
-    {
-      "id": "jsonData.internalFieldPattern",
-      "key": "internalFieldPattern",
-      "label": "Internal field pattern",
-      "description": "Regular expression defining the filter for filtering out internal fields.",
-      "valueType": "string",
-      "target": "jsonData",
-      "dependsOn": "jsonData.internalFieldsFiltration == true",
-      "ui": {
-        "component": "input",
-        "placeholder": "^_.+"
-      }
-    },
-    {
-      "id": "jsonData.tsField",
-      "key": "tsField",
-      "label": "Timestamp field",
-      "description": "Field used by Grafana to determine event timestamps.",
-      "valueType": "string",
-      "target": "jsonData",
-      "defaultValue": "_time",
-      "ui": {
-        "component": "input",
-        "placeholder": "_time"
-      }
-    },
-    {
-      "id": "jsonData.fieldSearchType",
-      "key": "fieldSearchType",
-      "label": "Fields search mode",
-      "description": "Set the search mode for fields.",
-      "valueType": "string",
-      "target": "jsonData",
-      "defaultValue": "quick",
-      "ui": {
-        "component": "select",
-        "options": [
-          {
-            "label": "quick",
-            "value": "quick"
-          },
-          {
-            "label": "full",
-            "value": "full"
-          }
-        ]
-      }
-    },
-    {
-      "id": "jsonData.variableSearchLevel",
-      "key": "variableSearchLevel",
-      "label": "Variables search mode",
-      "description": "Set the search mode for template variables.",
-      "valueType": "string",
-      "target": "jsonData",
-      "defaultValue": "fast",
-      "ui": {
-        "component": "select",
-        "options": [
-          {
-            "label": "fast",
-            "value": "fast"
-          },
-          {
-            "label": "smart",
-            "value": "smart"
-          },
-          {
-            "label": "verbose",
-            "value": "verbose"
-          }
-        ]
-      }
-    },
-    {
-      "id": "jsonData.defaultEarliestTime",
-      "key": "defaultEarliestTime",
-      "label": "Default earliest time",
-      "description": "Earliest time for searches without time range (such as template variable queries).",
-      "valueType": "string",
-      "target": "jsonData",
-      "ui": {
-        "component": "input",
-        "placeholder": "-1hr"
       }
     },
     {
@@ -465,10 +85,10 @@
       }
     },
     {
-      "id": "jsonData.enableSecureSocksProxy",
-      "key": "enableSecureSocksProxy",
-      "label": "Secure Socks Proxy",
-      "description": "Enable proxying the datasource connection through the secure socks proxy to a different network.",
+      "id": "jsonData.previewMode",
+      "key": "previewMode",
+      "label": "Preview Mode",
+      "description": "Use preview results for running searches.",
       "valueType": "boolean",
       "target": "jsonData",
       "ui": {
@@ -476,61 +96,137 @@
       }
     },
     {
+      "id": "jsonData.autoCancel",
+      "key": "autoCancel",
+      "label": "Auto Cancel",
+      "description": "Auto-cancel searches after this duration.",
+      "valueType": "string",
+      "target": "jsonData"
+    },
+    {
+      "id": "jsonData.statusBuckets",
+      "key": "statusBuckets",
+      "label": "Status Buckets",
+      "description": "Number of status buckets for search job.",
+      "valueType": "string",
+      "target": "jsonData"
+    },
+    {
+      "id": "jsonData.defaultEarliestTime",
+      "key": "defaultEarliestTime",
+      "label": "Default Earliest Time",
+      "description": "Default earliest time for searches (e.g. -24h).",
+      "valueType": "string",
+      "target": "jsonData"
+    },
+    {
+      "id": "jsonData.internalFieldsFiltration",
+      "key": "internalFieldsFiltration",
+      "label": "Filter Internal Fields",
+      "description": "Filter out Splunk internal fields from results.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "jsonData.internalFieldPattern",
+      "key": "internalFieldPattern",
+      "label": "Internal Field Pattern",
+      "description": "Regex pattern to identify internal fields.",
+      "valueType": "string",
+      "target": "jsonData",
+      "dependsOn": "jsonData.internalFieldsFiltration == true"
+    },
+    {
+      "id": "jsonData.minPollInterval",
+      "key": "minPollInterval",
+      "label": "Min Poll Interval (ms)",
+      "description": "Minimum poll interval in milliseconds.",
+      "valueType": "number",
+      "target": "jsonData"
+    },
+    {
+      "id": "jsonData.maxPollInterval",
+      "key": "maxPollInterval",
+      "label": "Max Poll Interval (ms)",
+      "description": "Maximum poll interval in milliseconds.",
+      "valueType": "number",
+      "target": "jsonData"
+    },
+    {
+      "id": "jsonData.tsField",
+      "key": "tsField",
+      "label": "Timestamp Field",
+      "description": "Name of the timestamp field.",
+      "valueType": "string",
+      "target": "jsonData",
+      "defaultValue": "_time"
+    },
+    {
+      "id": "jsonData.fieldSearchType",
+      "key": "fieldSearchType",
+      "label": "Field Search Type",
+      "description": "Type of field search to use.",
+      "valueType": "string",
+      "target": "jsonData"
+    },
+    {
+      "id": "jsonData.variableSearchLevel",
+      "key": "variableSearchLevel",
+      "label": "Variable Search Level",
+      "description": "Search level for template variables.",
+      "valueType": "string",
+      "target": "jsonData"
+    },
+    {
+      "id": "jsonData.maxResultCount",
+      "key": "maxResultCount",
+      "label": "Max Result Count",
+      "description": "Maximum number of results to return.",
+      "valueType": "number",
+      "target": "jsonData"
+    },
+    {
+      "id": "jsonData.timeoutInSeconds",
+      "key": "timeoutInSeconds",
+      "label": "Timeout (seconds)",
+      "description": "Request timeout in seconds.",
+      "valueType": "number",
+      "target": "jsonData"
+    },
+    {
       "id": "jsonData.dataLinks",
       "key": "dataLinks",
-      "label": "Data links",
-      "description": "Add links to existing fields. Links will be shown in log row details next to the field value.",
+      "label": "Data Links",
+      "description": "Custom data links configuration.",
       "valueType": "array",
       "target": "jsonData",
       "item": {
-        "valueType": "object",
-        "fields": [
-          {
-            "id": "dataLinks.item.field",
-            "key": "field",
-            "label": "Field",
-            "description": "Field name to attach the link to.",
-            "valueType": "string",
-            "isItemField": true
-          },
-          {
-            "id": "dataLinks.item.matcherRegex",
-            "key": "matcherRegex",
-            "label": "Regex",
-            "description": "Regex pattern to match field value.",
-            "valueType": "string",
-            "isItemField": true
-          },
-          {
-            "id": "dataLinks.item.url",
-            "key": "url",
-            "label": "URL",
-            "description": "URL for the data link. Use ${__value.raw} to interpolate field value.",
-            "valueType": "string",
-            "isItemField": true,
-            "ui": {
-              "component": "input",
-              "placeholder": "http://example.com/${__value.raw}"
-            }
-          },
-          {
-            "id": "dataLinks.item.urlDisplayLabel",
-            "key": "urlDisplayLabel",
-            "label": "URL Label",
-            "description": "Override the button label when this link is shown.",
-            "valueType": "string",
-            "isItemField": true
-          },
-          {
-            "id": "dataLinks.item.datasourceUid",
-            "key": "datasourceUid",
-            "label": "Internal link",
-            "description": "Data source UID for internal link.",
-            "valueType": "string",
-            "semanticType": "datasourceUid",
-            "isItemField": true
-          }
-        ]
+        "valueType": "object"
+      }
+    },
+    {
+      "id": "jsonData.keepCookies",
+      "key": "keepCookies",
+      "label": "Keep Cookies",
+      "description": "Cookie names to forward to Splunk.",
+      "valueType": "array",
+      "target": "jsonData",
+      "item": {
+        "valueType": "string"
+      }
+    },
+    {
+      "id": "jsonData.enableSecureSocksProxy",
+      "key": "enableSecureSocksProxy",
+      "label": "Secure Socks Proxy",
+      "description": "Enable secure SOCKS proxy.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
       }
     },
     {
@@ -539,62 +235,19 @@
       "label": "Password",
       "description": "Splunk password for basic authentication.",
       "valueType": "string",
-      "semanticType": "password",
       "target": "secureJsonData",
-      "dependsOn": "auth.method == 'basic-auth'"
+      "semanticType": "password",
+      "dependsOn": "jsonData.authType == 'basicAuth'"
     },
     {
       "id": "secureJsonData.authToken",
       "key": "authToken",
-      "label": "Authentication token",
-      "description": "Splunk authentication token generated in Splunk dashboard.",
+      "label": "Auth Token",
+      "description": "Splunk authentication token.",
       "valueType": "string",
       "target": "secureJsonData",
       "semanticType": "token",
-      "dependsOn": "auth.method == 'token'"
-    },
-    {
-      "id": "secureJsonData.tlsCACert",
-      "key": "tlsCACert",
-      "label": "CA Cert",
-      "description": "PEM-encoded CA certificate to verify the Splunk server's TLS certificate.",
-      "valueType": "string",
-      "target": "secureJsonData",
-      "dependsOn": "jsonData.tlsAuthWithCACert == true",
-      "ui": {
-        "component": "textarea",
-        "rows": 7,
-        "placeholder": "Begins with -----BEGIN CERTIFICATE-----"
-      }
-    },
-    {
-      "id": "secureJsonData.tlsClientCert",
-      "key": "tlsClientCert",
-      "label": "Client Cert",
-      "description": "PEM-encoded client certificate for TLS client authentication.",
-      "valueType": "string",
-      "target": "secureJsonData",
-      "dependsOn": "jsonData.tlsAuth == true",
-      "ui": {
-        "component": "textarea",
-        "rows": 7,
-        "placeholder": "Begins with -----BEGIN CERTIFICATE-----"
-      }
-    },
-    {
-      "id": "secureJsonData.tlsClientKey",
-      "key": "tlsClientKey",
-      "label": "Client Key",
-      "description": "PEM-encoded client private key for TLS client authentication.",
-      "valueType": "string",
-      "semanticType": "token",
-      "target": "secureJsonData",
-      "dependsOn": "jsonData.tlsAuth == true",
-      "ui": {
-        "component": "textarea",
-        "rows": 7,
-        "placeholder": "Begins with -----BEGIN RSA PRIVATE KEY-----"
-      }
+      "dependsOn": "jsonData.authType == 'token'"
     }
   ],
   "groups": [
@@ -610,26 +263,11 @@
       "id": "auth",
       "title": "Authentication",
       "fieldRefs": [
-        "auth.method",
-        "root.basicAuthUser",
+        "jsonData.authType",
+        "jsonData.username",
         "secureJsonData.basicAuthPassword",
-        "secureJsonData.authToken"
-      ]
-    },
-    {
-      "id": "http-network",
-      "title": "HTTP / Network Settings",
-      "fieldRefs": [
-        "jsonData.tlsAuthWithCACert",
-        "secureJsonData.tlsCACert",
-        "jsonData.tlsAuth",
-        "jsonData.serverName",
-        "secureJsonData.tlsClientCert",
-        "secureJsonData.tlsClientKey",
-        "jsonData.tlsSkipVerify",
-        "httpHeaders",
-        "jsonData.keepCookies",
-        "jsonData.timeout"
+        "secureJsonData.authToken",
+        "jsonData.oauthPassThru"
       ]
     },
     {
@@ -637,10 +275,8 @@
       "title": "Search Settings",
       "fieldRefs": [
         "jsonData.pollSearchResult",
-        "jsonData.minPollInterval",
-        "jsonData.maxPollInterval",
-        "jsonData.previewMode",
         "jsonData.streamMode",
+        "jsonData.previewMode",
         "jsonData.autoCancel",
         "jsonData.statusBuckets",
         "jsonData.defaultEarliestTime"
@@ -661,19 +297,13 @@
       "id": "advanced",
       "title": "Advanced",
       "fieldRefs": [
+        "jsonData.minPollInterval",
+        "jsonData.maxPollInterval",
         "jsonData.maxResultCount",
         "jsonData.timeoutInSeconds",
-        "jsonData.enableSecureSocksProxy",
-        "jsonData.dataLinks"
-      ]
-    }
-  ],
-  "relationships": [
-    {
-      "type": "pair",
-      "fields": [
-        "secureJsonData.tlsClientCert",
-        "secureJsonData.tlsClientKey"
+        "jsonData.dataLinks",
+        "jsonData.keepCookies",
+        "jsonData.enableSecureSocksProxy"
       ]
     }
   ]

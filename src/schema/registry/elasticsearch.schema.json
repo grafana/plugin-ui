@@ -6,335 +6,6 @@
   "docURL": "https://grafana.com/docs/grafana/latest/datasources/elasticsearch/configure/",
   "fields": [
     {
-      "id": "root.url",
-      "key": "url",
-      "label": "URL",
-      "description": "HTTP URL of the Elasticsearch server.",
-      "valueType": "string",
-      "semanticType": "url",
-      "target": "root",
-      "required": true,
-      "ui": {
-        "component": "input",
-        "placeholder": "http://localhost:9200"
-      }
-    },
-    {
-      "id": "auth.method",
-      "key": "authMethod",
-      "label": "Authentication method",
-      "description": "Choose an authentication method to access the data source.",
-      "valueType": "string",
-      "kind": "virtual",
-      "defaultValue": "no-auth",
-      "ui": {
-        "component": "select",
-        "options": [
-          {
-            "label": "No Authentication",
-            "value": "no-auth"
-          },
-          {
-            "label": "Basic authentication",
-            "value": "basic-auth"
-          },
-          {
-            "label": "Forward OAuth Identity",
-            "value": "forward-oauth"
-          },
-          {
-            "label": "Cross-site credentials",
-            "value": "cross-site"
-          },
-          {
-            "label": "API Key",
-            "value": "api-key"
-          },
-          {
-            "label": "SigV4 auth",
-            "value": "sigv4",
-            "description": "AWS Signature Version 4 authentication"
-          }
-        ]
-      },
-      "storage": {
-        "type": "computed",
-        "read": "jsonData.sigV4Auth == true ? 'sigv4' : (jsonData.apiKeyAuth == true ? 'api-key' : (root.basicAuth == true ? 'basic-auth' : (jsonData.oauthPassThru == true ? 'forward-oauth' : (root.withCredentials == true ? 'cross-site' : 'no-auth'))))"
-      },
-      "effects": [
-        {
-          "when": "value == 'no-auth'",
-          "set": {
-            "root.basicAuth": false,
-            "jsonData.oauthPassThru": false,
-            "root.withCredentials": false,
-            "jsonData.apiKeyAuth": false,
-            "jsonData.sigV4Auth": false
-          }
-        },
-        {
-          "when": "value == 'basic-auth'",
-          "set": {
-            "root.basicAuth": true,
-            "jsonData.oauthPassThru": false,
-            "root.withCredentials": false,
-            "jsonData.apiKeyAuth": false,
-            "jsonData.sigV4Auth": false
-          }
-        },
-        {
-          "when": "value == 'forward-oauth'",
-          "set": {
-            "root.basicAuth": false,
-            "jsonData.oauthPassThru": true,
-            "root.withCredentials": false,
-            "jsonData.apiKeyAuth": false,
-            "jsonData.sigV4Auth": false
-          }
-        },
-        {
-          "when": "value == 'cross-site'",
-          "set": {
-            "root.basicAuth": false,
-            "jsonData.oauthPassThru": false,
-            "root.withCredentials": true,
-            "jsonData.apiKeyAuth": false,
-            "jsonData.sigV4Auth": false
-          }
-        },
-        {
-          "when": "value == 'api-key'",
-          "set": {
-            "root.basicAuth": false,
-            "jsonData.oauthPassThru": false,
-            "root.withCredentials": false,
-            "jsonData.apiKeyAuth": true,
-            "jsonData.sigV4Auth": false
-          }
-        },
-        {
-          "when": "value == 'sigv4'",
-          "set": {
-            "root.basicAuth": false,
-            "jsonData.oauthPassThru": false,
-            "root.withCredentials": false,
-            "jsonData.apiKeyAuth": false,
-            "jsonData.sigV4Auth": true
-          }
-        }
-      ]
-    },
-    {
-      "id": "root.basicAuth",
-      "key": "basicAuth",
-      "label": "Basic Auth",
-      "valueType": "boolean",
-      "target": "root",
-      "tags": [
-        "managed-by:auth.method"
-      ]
-    },
-    {
-      "id": "root.withCredentials",
-      "key": "withCredentials",
-      "label": "Cross-site credentials",
-      "valueType": "boolean",
-      "target": "root",
-      "tags": [
-        "managed-by:auth.method"
-      ]
-    },
-    {
-      "id": "root.basicAuthUser",
-      "key": "basicAuthUser",
-      "label": "Username",
-      "description": "Username for basic HTTP authentication.",
-      "valueType": "string",
-      "target": "root",
-      "dependsOn": "auth.method == 'basic-auth'"
-    },
-    {
-      "id": "secureJsonData.basicAuthPassword",
-      "key": "basicAuthPassword",
-      "label": "Password",
-      "description": "Password for basic HTTP authentication.",
-      "valueType": "string",
-      "semanticType": "password",
-      "target": "secureJsonData",
-      "dependsOn": "auth.method == 'basic-auth'"
-    },
-    {
-      "id": "jsonData.oauthPassThru",
-      "key": "oauthPassThru",
-      "label": "Forward OAuth Identity",
-      "description": "Forward the user's OAuth token to Elasticsearch.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "tags": [
-        "managed-by:auth.method"
-      ]
-    },
-    {
-      "id": "jsonData.apiKeyAuth",
-      "key": "apiKeyAuth",
-      "label": "API key auth",
-      "description": "Enable API key authentication.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "tags": [
-        "managed-by:auth.method"
-      ]
-    },
-    {
-      "id": "secureJsonData.apiKey",
-      "key": "apiKey",
-      "label": "API Key",
-      "description": "Elasticsearch API key for authentication.",
-      "valueType": "string",
-      "semanticType": "token",
-      "target": "secureJsonData",
-      "dependsOn": "auth.method == 'api-key'"
-    },
-    {
-      "id": "jsonData.sigV4Auth",
-      "key": "sigV4Auth",
-      "label": "SigV4 auth",
-      "description": "Enable AWS Signature Version 4 authentication.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "tags": [
-        "managed-by:auth.method"
-      ]
-    },
-    {
-      "id": "jsonData.tlsAuthWithCACert",
-      "key": "tlsAuthWithCACert",
-      "label": "Add self-signed certificate",
-      "description": "Add a self-signed CA certificate for TLS verification.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "ui": {
-        "component": "switch"
-      }
-    },
-    {
-      "id": "secureJsonData.tlsCACert",
-      "key": "tlsCACert",
-      "label": "CA Cert",
-      "description": "PEM-encoded CA certificate.",
-      "valueType": "string",
-      "target": "secureJsonData",
-      "dependsOn": "jsonData.tlsAuthWithCACert == true",
-      "ui": {
-        "component": "textarea",
-        "rows": 7
-      }
-    },
-    {
-      "id": "jsonData.tlsAuth",
-      "key": "tlsAuth",
-      "label": "TLS Client Authentication",
-      "description": "Enable TLS client certificate authentication.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "ui": {
-        "component": "switch"
-      }
-    },
-    {
-      "id": "jsonData.serverName",
-      "key": "serverName",
-      "label": "Server name",
-      "description": "Server name for SNI in TLS handshake.",
-      "valueType": "string",
-      "target": "jsonData",
-      "dependsOn": "jsonData.tlsAuth == true"
-    },
-    {
-      "id": "secureJsonData.tlsClientCert",
-      "key": "tlsClientCert",
-      "label": "Client Cert",
-      "description": "PEM-encoded client certificate.",
-      "valueType": "string",
-      "target": "secureJsonData",
-      "dependsOn": "jsonData.tlsAuth == true",
-      "ui": {
-        "component": "textarea",
-        "rows": 7
-      }
-    },
-    {
-      "id": "secureJsonData.tlsClientKey",
-      "key": "tlsClientKey",
-      "label": "Client Key",
-      "description": "PEM-encoded client private key.",
-      "valueType": "string",
-      "semanticType": "token",
-      "target": "secureJsonData",
-      "dependsOn": "jsonData.tlsAuth == true",
-      "ui": {
-        "component": "textarea",
-        "rows": 7
-      }
-    },
-    {
-      "id": "jsonData.tlsSkipVerify",
-      "key": "tlsSkipVerify",
-      "label": "Skip TLS certificate validation",
-      "description": "Skip server certificate verification.",
-      "valueType": "boolean",
-      "target": "jsonData",
-      "ui": {
-        "component": "switch"
-      }
-    },
-    {
-      "id": "httpHeaders",
-      "key": "httpHeaders",
-      "label": "HTTP headers",
-      "description": "Pass along additional context and metadata about the request/response.",
-      "valueType": "array",
-      "target": "jsonData",
-      "storage": {
-        "type": "indexedPair",
-        "key": {
-          "pattern": "httpHeaderName{index}",
-          "target": "jsonData"
-        },
-        "value": {
-          "pattern": "httpHeaderValue{index}",
-          "target": "secureJsonData"
-        },
-        "startIndex": 1
-      },
-      "item": {
-        "valueType": "object"
-      }
-    },
-    {
-      "id": "jsonData.keepCookies",
-      "key": "keepCookies",
-      "label": "Allowed cookies",
-      "description": "Grafana proxy deletes forwarded cookies by default. Specify cookies by name that should be forwarded.",
-      "valueType": "array",
-      "target": "jsonData",
-      "item": {
-        "valueType": "string"
-      }
-    },
-    {
-      "id": "jsonData.timeout",
-      "key": "timeout",
-      "label": "Timeout",
-      "description": "HTTP request timeout in seconds.",
-      "valueType": "number",
-      "target": "jsonData",
-      "ui": {
-        "component": "input",
-        "placeholder": "Timeout in seconds"
-      }
-    },
-    {
       "id": "jsonData.timeField",
       "key": "timeField",
       "label": "Time field name",
@@ -506,55 +177,58 @@
       }
     },
     {
+      "id": "jsonData.sigV4Auth",
+      "key": "sigV4Auth",
+      "label": "SigV4 auth",
+      "description": "Enable AWS Signature Version 4 authentication.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "jsonData.oauthPassThru",
+      "key": "oauthPassThru",
+      "label": "Forward OAuth Identity",
+      "description": "Forward the user's OAuth token to Elasticsearch.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
       "id": "jsonData.defaultQueryMode",
       "key": "defaultQueryMode",
       "label": "Default query mode",
       "description": "Default query editor mode for new queries.",
       "valueType": "string",
       "target": "jsonData"
+    },
+    {
+      "id": "jsonData.apiKeyAuth",
+      "key": "apiKeyAuth",
+      "label": "API key auth",
+      "description": "Enable API key authentication.",
+      "valueType": "boolean",
+      "target": "jsonData",
+      "ui": {
+        "component": "switch"
+      }
+    },
+    {
+      "id": "secureJsonData.apiKey",
+      "key": "apiKey",
+      "label": "API Key",
+      "description": "Elasticsearch API key for authentication.",
+      "valueType": "string",
+      "semanticType": "token",
+      "target": "secureJsonData",
+      "dependsOn": "jsonData.apiKeyAuth == true"
     }
   ],
   "groups": [
-    {
-      "id": "connection",
-      "title": "Connection",
-      "fieldRefs": [
-        "root.url"
-      ]
-    },
-    {
-      "id": "auth",
-      "title": "Authentication",
-      "fieldRefs": [
-        "auth.method",
-        "root.basicAuthUser",
-        "secureJsonData.basicAuthPassword",
-        "secureJsonData.apiKey"
-      ]
-    },
-    {
-      "id": "tls",
-      "title": "TLS settings",
-      "description": "Additional security measures that can be applied on top of authentication.",
-      "fieldRefs": [
-        "jsonData.tlsAuthWithCACert",
-        "secureJsonData.tlsCACert",
-        "jsonData.tlsAuth",
-        "jsonData.serverName",
-        "secureJsonData.tlsClientCert",
-        "secureJsonData.tlsClientKey",
-        "jsonData.tlsSkipVerify"
-      ]
-    },
-    {
-      "id": "http",
-      "title": "HTTP settings",
-      "fieldRefs": [
-        "httpHeaders",
-        "jsonData.keepCookies",
-        "jsonData.timeout"
-      ]
-    },
     {
       "id": "elasticsearch-details",
       "title": "Elasticsearch details",
@@ -563,9 +237,7 @@
         "jsonData.timeField",
         "jsonData.interval",
         "jsonData.timeInterval",
-        "jsonData.maxConcurrentShardRequests",
-        "jsonData.includeFrozen",
-        "jsonData.defaultQueryMode"
+        "jsonData.maxConcurrentShardRequests"
       ]
     },
     {
@@ -581,6 +253,24 @@
       "title": "Data links",
       "fieldRefs": [
         "jsonData.dataLinks"
+      ]
+    },
+    {
+      "id": "auth",
+      "title": "Authentication",
+      "fieldRefs": [
+        "jsonData.sigV4Auth",
+        "jsonData.oauthPassThru",
+        "jsonData.apiKeyAuth",
+        "secureJsonData.apiKey"
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced",
+      "fieldRefs": [
+        "jsonData.includeFrozen",
+        "jsonData.defaultQueryMode"
       ]
     }
   ]

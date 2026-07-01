@@ -1,7 +1,25 @@
 # Change Log
 
-## next
+## v0.16.0 - 2026-06-18
 
+- Added schema for datasource configuration
+
+## v0.15.1 - 2026-06-16
+
+- Fix: add `react` and `react-dom` back to `peerDependencies`; omitting them caused the Rollup build to inline a second copy of React into the published bundle, breaking all hook calls in plugins that consume this package.
+
+## v0.15.0 - 2026-06-09
+
+- Fix some `@grafana/*` dependencies incorrectly listed as `dependencies` instead of `devDependencies`
+- Remove unused dependencies
+
+## v0.14.0 - 2026-06-05
+
+- Added/Moved components from [`@grafana/async-query-data`](https://www.npmjs.com/package/@grafana/async-query-data) package from [https://github.com/grafana/grafana-async-query-data-js](https://github.com/grafana/grafana-async-query-data-js)
+
+## v0.13.2 - 2026-05-28
+
+- Remove unused devDependencies: `copyfiles`, `fast-glob`, `@types/memoize-one`. Reduces supply-chain surface.
 - Replace `sql-formatter-plus` with `sql-formatter` for actively maintained SQL formatting.
 - Add `language` prop to `SqlQueryEditor`, `RawEditor`, `QueryEditorRaw`, `VisualEditor`, and `Preview` to support dialect-specific formatting (e.g. `postgresql`, `mysql`, `bigquery`). Defaults to `'sql'` for backward compatibility.
 

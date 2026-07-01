@@ -144,7 +144,7 @@ function effectiveItemField(field: ConfigField, isSecure: boolean): ConfigField 
   if (!isSecure) {
     return field;
   }
-  return { ...field, semanticType: 'password' };
+  return { ...field };
 }
 
 function ObjectArrayItemRow({

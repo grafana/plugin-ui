@@ -4,5 +4,6 @@
  * @packageDocumentation
  */
 export * from './components';
+export * from './async-query-data';
 export { SqlDatasource } from './datasource/SqlDatasource';
 export * from './schema';

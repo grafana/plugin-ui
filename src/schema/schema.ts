@@ -88,11 +88,6 @@ export interface ConfigField {
   valueType: ValueType;
 
   /**
-   * Semantic meaning (optional)
-   */
-  semanticType?: SemanticType;
-
-  /**
    * Storage location (required for storage fields)
    */
   target?: TargetLocation;
@@ -114,11 +109,6 @@ export interface ConfigField {
    * True if field belongs to array item schema
    */
   isItemField?: boolean;
-
-  /**
-   * Lifecycle state
-   */
-  lifecycle?: Lifecycle;
 
   /**
    * UI rendering hints
@@ -223,22 +213,10 @@ export type Expression = string;
 export type ValueType = 'string' | 'number' | 'boolean' | 'array' | 'object' | 'map' | 'any';
 
 // ============================================================
-// Semantic Types
-// ============================================================
-
-export type SemanticType = 'url' | 'password' | 'token' | 'hostname' | 'duration' | 'datasourceUid' | 'query';
-
-// ============================================================
 // Field Kind
 // ============================================================
 
 export type FieldKind = 'storage' | 'virtual';
-
-// ============================================================
-// Lifecycle
-// ============================================================
-
-export type Lifecycle = 'stable' | 'deprecated' | 'experimental';
 
 // ============================================================
 // Target Location

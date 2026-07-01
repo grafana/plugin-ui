@@ -74,6 +74,24 @@ The `storage` property defines how logical fields map to Grafana's legacy storag
 
 Tools, docs generators, provisioning, and LLM integrations should use `validations[]` — not `ui.options` — as the source of truth for allowed values.
 
+## UI components
+
+`ui.component` supports the following values:
+
+| Value         | Purpose                                       |
+| ------------- | --------------------------------------------- |
+| `input`       | Single-line text/number input                 |
+| `textarea`    | Multi-line text                               |
+| `select`      | Single-select dropdown                        |
+| `multiselect` | Multi-select dropdown                         |
+| `radio`       | Radio option group                            |
+| `checkbox`    | Boolean checkbox                              |
+| `switch`      | Boolean switch/toggle                         |
+| `code`        | Code editor input                             |
+| `keyvalue`    | Key-value editor                              |
+| `list`        | List editor                                   |
+| `fileUpload`  | File upload input (supports `accept` mapping) |
+
 ### Rule types
 
 | Type            | Required fields    | Purpose                               |
@@ -467,17 +485,15 @@ Set `"optional": true` on groups that can be collapsed or hidden by default (e.g
 }
 ```
 
+`FieldRelationship.type` supports:
+
+| Value                 | Meaning                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------ |
+| `pair`                | Two (or more) fields that belong together semantically                               |
+| `group`               | A conceptual grouping relationship (non-layout metadata)                             |
+| `datasourceReference` | A field references another datasource (optionally constrained by `targetPluginType`) |
+
 Groups and relationships are metadata — they do not affect storage or validation.
-
-## Lifecycle
-
-Fields can be marked with a lifecycle stage:
-
-| Value          | Meaning                             |
-| -------------- | ----------------------------------- |
-| `stable`       | Production-ready                    |
-| `deprecated`   | Will be removed in a future version |
-| `experimental` | Subject to change                   |
 
 ## Expression language
 

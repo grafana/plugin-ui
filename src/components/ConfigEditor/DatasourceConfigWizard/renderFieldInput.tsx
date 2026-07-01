@@ -22,7 +22,7 @@ export function renderFieldInput(
   }
 
   // Secure fields (password/token in secureJsonData)
-  if (field.target === 'secureJsonData' || field.semanticType === 'password' || field.semanticType === 'token') {
+  if (field.target === 'secureJsonData') {
     return (
       <SecureFieldInput formField={formField} placeholder={placeholder ?? label} disabled={disabled} label={label} />
     );
@@ -92,13 +92,6 @@ export function renderFieldInput(
           formField.onChange(Number.isNaN(n) ? undefined : n);
         }}
       />
-    );
-  }
-
-  // URL fields
-  if (field.semanticType === 'url') {
-    return (
-      <Input {...formField} value={String(value ?? '')} type="url" placeholder={placeholder} disabled={disabled} />
     );
   }
 
