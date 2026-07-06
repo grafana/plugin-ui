@@ -4,7 +4,7 @@ import { useStyles2, Button, Tooltip, Stack } from '@grafana/ui';
 import { type GrafanaTheme2 } from '@grafana/data';
 import { SECURE_FIELD_CONFIGURED, findActiveSecureOverride } from '../datasource';
 import { type ConfigField } from '../../../../schema/schema';
-import { renderFieldInput } from '../renderFieldInput';
+import { FieldInput } from '../FieldInput';
 import { parseItemErrors } from '../fieldUtils';
 import { type FormFieldRef } from './SecureFieldInput';
 
@@ -128,7 +128,7 @@ function makeItemFormField(
     name: `item-${index}-${fieldKey}`,
     value: item[fieldKey],
     onChange: (eventOrValue: unknown) => {
-      // renderFieldInput spreads formField onto <Input> / <TextArea>,
+      // FieldInput spreads formField onto <Input> / <TextArea>,
       // so onChange receives a React ChangeEvent. Extract the value.
       if (eventOrValue != null && typeof eventOrValue === 'object' && 'target' in (eventOrValue as object)) {
         onUpdate(index, fieldKey, (eventOrValue as React.ChangeEvent<HTMLInputElement>).target.value);
@@ -190,7 +190,7 @@ function ObjectArrayItemRow({
                   {field.label ?? field.key}
                   {field.required && <span className={styles.required}> *</span>}
                 </span>
-                {renderFieldInput(eff, formField, disabled)}
+                <FieldInput field={eff} formField={formField} disabled={disabled} />
               </div>
             );
           })}

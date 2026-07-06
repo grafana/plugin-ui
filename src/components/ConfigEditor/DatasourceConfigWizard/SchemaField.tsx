@@ -6,7 +6,7 @@ import { resolveActiveOverride, formKey } from './config';
 import type { FormValues } from './datasource';
 import { isFieldRequired, buildValidationRules, parseItemErrors } from './fieldUtils';
 import { PdcFieldNote } from './inputs/PdcFieldNote';
-import { renderFieldInput } from './renderFieldInput';
+import { FieldInput } from './FieldInput';
 import { getWizardStyles } from './styles';
 
 export type SchemaFieldProps = {
@@ -92,7 +92,13 @@ export function SchemaField({
               )}
             </div>
             <div className={styles.fieldInputCol}>
-              {renderFieldInput(effectiveField, formField, disabled || isReadOnly, errorMessage, setValue)}
+              <FieldInput
+                field={effectiveField}
+                formField={formField}
+                disabled={disabled || isReadOnly}
+                errorMessage={errorMessage}
+                setValue={setValue}
+              />
               {/* Show global error only if it's NOT a per-item error (those render inline) */}
               {errorMessage && !parseItemErrors(errorMessage) && (
                 <span className={styles.fieldError}>{errorMessage}</span>
