@@ -6,7 +6,7 @@ import { SECURE_FIELD_CONFIGURED, findActiveSecureOverride } from '../datasource
 import { type ConfigField } from '../../../../schema/schema';
 import { FieldInput } from '../FieldInput';
 import { parseItemErrors } from '../fieldUtils';
-import { type FormFieldRef } from './SecureFieldInput';
+import { type FormFieldRef } from './types';
 
 type Props = {
   field: ConfigField;

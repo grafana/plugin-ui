@@ -1,23 +1,25 @@
 import React, { useMemo } from 'react';
-import { type useForm, Controller } from 'react-hook-form';
+import { type useForm, Controller, useWatch } from 'react-hook-form';
 import { useStyles2, Icon, Tooltip } from '@grafana/ui';
 import { IndexedPairEditor } from './IndexedPairEditor';
-import { getWizardStyles } from '../styles';
+import { getFieldStyles } from '../styles';
 import { type IndexedPairItem, type FormValues } from '../datasource';
 
 type Props = {
   headersFieldKey: string;
   control: ReturnType<typeof useForm<FormValues>>['control'];
   disabled?: boolean;
-  watchedValues: Record<string, unknown>;
 };
 
 export const AuthorizationHeaderField = (props: Props) => {
-  const { headersFieldKey, control, disabled, watchedValues } = props;
-  const styles = useStyles2(getWizardStyles);
+  const { headersFieldKey, control, disabled } = props;
+  const styles = useStyles2(getFieldStyles);
+  // Subscribe to just this field rather than receiving the whole watched-values
+  // blob; keeps the component self-contained and consistent with RHF idioms.
+  const watchedHeaders = useWatch({ control, name: headersFieldKey });
   const items = useMemo(
-    () => (Array.isArray(watchedValues[headersFieldKey]) ? watchedValues[headersFieldKey] : []) as IndexedPairItem[],
-    [watchedValues, headersFieldKey]
+    () => (Array.isArray(watchedHeaders) ? watchedHeaders : []) as IndexedPairItem[],
+    [watchedHeaders]
   );
 
   const authEntries = useMemo(() => {

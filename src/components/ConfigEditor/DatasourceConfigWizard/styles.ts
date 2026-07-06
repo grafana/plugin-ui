@@ -1,6 +1,42 @@
 import { css } from '@emotion/css';
 import type { GrafanaTheme2 } from '@grafana/data';
 
+// ── Shared style objects ──
+// Returned as plain objects (not css() results, which are unmergeable class
+// strings) so callers can spread + tweak them. `as const` narrows string
+// literals (e.g. 'absolute') into the CSS property unions css() expects.
+
+/** Centered saving/loading overlay. Identical in tab and wizard layouts. */
+const overlayStyle = (theme: GrafanaTheme2) =>
+  ({
+    position: 'absolute',
+    inset: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: theme.spacing(1),
+    background: theme.colors.background.secondary,
+    borderRadius: theme.shape.radius.default,
+    zIndex: 1,
+    fontSize: theme.typography.bodySmall.fontSize,
+    color: theme.colors.text.primary,
+    opacity: 0.95,
+  }) as const;
+
+/** "Read-only — managed externally" banner. Tab layout adds a marginBottom. */
+const readOnlyBannerStyle = (theme: GrafanaTheme2) =>
+  ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: theme.spacing(0.5),
+    padding: `${theme.spacing(0.25)} ${theme.spacing(0.75)}`,
+    fontSize: theme.typography.bodySmall.fontSize,
+    color: theme.colors.text.secondary,
+    backgroundColor: theme.colors.background.secondary,
+    borderRadius: theme.shape.radius.default,
+    border: `1px solid ${theme.colors.border.weak}`,
+  }) as const;
+
 export const getTabStyles = (theme: GrafanaTheme2) => ({
   root: css({
     display: 'flex',
@@ -214,32 +250,8 @@ export const getTabStyles = (theme: GrafanaTheme2) => ({
     padding: theme.spacing(3),
     color: theme.colors.text.secondary,
   }),
-  overlay: css({
-    position: 'absolute',
-    inset: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: theme.spacing(1),
-    background: theme.colors.background.secondary,
-    borderRadius: theme.shape.radius.default,
-    zIndex: 1,
-    fontSize: theme.typography.bodySmall.fontSize,
-    color: theme.colors.text.primary,
-    opacity: 0.95,
-  }),
-  readOnlyBanner: css({
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: theme.spacing(0.5),
-    padding: `${theme.spacing(0.25)} ${theme.spacing(0.75)}`,
-    fontSize: theme.typography.bodySmall.fontSize,
-    color: theme.colors.text.secondary,
-    backgroundColor: theme.colors.background.secondary,
-    borderRadius: theme.shape.radius.default,
-    border: `1px solid ${theme.colors.border.weak}`,
-    marginBottom: theme.spacing(1),
-  }),
+  overlay: css(overlayStyle(theme)),
+  readOnlyBanner: css({ ...readOnlyBannerStyle(theme), marginBottom: theme.spacing(1) }),
 });
 
 export const getWizardStyles = (theme: GrafanaTheme2) => ({
@@ -254,31 +266,8 @@ export const getWizardStyles = (theme: GrafanaTheme2) => ({
     border: `1px solid ${theme.colors.border.weak}`,
     overflow: 'hidden',
   }),
-  overlay: css({
-    position: 'absolute',
-    inset: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: theme.spacing(1),
-    background: theme.colors.background.secondary,
-    borderRadius: theme.shape.radius.default,
-    zIndex: 1,
-    fontSize: theme.typography.bodySmall.fontSize,
-    color: theme.colors.text.primary,
-    opacity: 0.95,
-  }),
-  readOnlyBanner: css({
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: theme.spacing(0.5),
-    padding: `${theme.spacing(0.25)} ${theme.spacing(0.75)}`,
-    fontSize: theme.typography.bodySmall.fontSize,
-    color: theme.colors.text.secondary,
-    backgroundColor: theme.colors.background.secondary,
-    borderRadius: theme.shape.radius.default,
-    border: `1px solid ${theme.colors.border.weak}`,
-  }),
+  overlay: css(overlayStyle(theme)),
+  readOnlyBanner: css(readOnlyBannerStyle(theme)),
   navBar: css({
     display: 'flex',
     alignItems: 'center',
@@ -312,6 +301,11 @@ export const getWizardStyles = (theme: GrafanaTheme2) => ({
     gap: theme.spacing(1),
     paddingTop: theme.spacing(0.25),
   }),
+});
+
+// Field-level styles shared by SchemaField and AuthorizationHeaderField, which
+// render in both the tab and wizard layouts (hence not tied to either one).
+export const getFieldStyles = (theme: GrafanaTheme2) => ({
   fieldRow: css({
     display: 'grid',
     gridTemplateColumns: 'minmax(80px, 1fr) minmax(0, 2fr)',

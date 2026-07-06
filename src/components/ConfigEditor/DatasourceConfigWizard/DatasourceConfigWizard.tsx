@@ -307,7 +307,6 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
                 headersFieldKey={formKey(httpHeadersField)}
                 control={control}
                 disabled={allDisabled}
-                watchedValues={watchedValues}
               />
             )}
 

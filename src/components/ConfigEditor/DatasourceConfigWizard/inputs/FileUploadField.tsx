@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { FileDropzone, TextArea, Button, useTheme2 } from '@grafana/ui';
 import { css } from '@emotion/css';
 import type { ConfigField } from '../../../../schema/schema';
-import type { FormFieldRef } from './SecureFieldInput';
+import type { FormFieldRef } from './types';
 
 type EntryMode = 'upload' | 'paste' | 'manual';
 

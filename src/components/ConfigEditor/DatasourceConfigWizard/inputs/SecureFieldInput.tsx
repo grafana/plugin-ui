@@ -3,13 +3,7 @@ import { css } from '@emotion/css';
 import type { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Button, Input, Icon } from '@grafana/ui';
 import { SECURE_FIELD_CONFIGURED } from '../datasource';
-
-export type FormFieldRef = {
-  onChange: (v: unknown) => void;
-  onBlur: () => void;
-  value: unknown;
-  name: string;
-};
+import type { FormFieldRef } from './types';
 
 type Props = {
   formField: FormFieldRef;

@@ -239,7 +239,6 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
                         headersFieldKey={formKey(httpHeadersField!)}
                         control={control}
                         disabled={allDisabled}
-                        watchedValues={watchedValues}
                       />
                     )}
                   </div>

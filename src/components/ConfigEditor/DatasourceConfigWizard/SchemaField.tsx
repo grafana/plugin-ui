@@ -7,7 +7,7 @@ import type { FormValues } from './datasource';
 import { isFieldRequired, buildValidationRules, parseItemErrors } from './fieldUtils';
 import { PdcFieldNote } from './inputs/PdcFieldNote';
 import { FieldInput } from './FieldInput';
-import { getWizardStyles } from './styles';
+import { getFieldStyles } from './styles';
 
 export type SchemaFieldProps = {
   field: ConfigField;
@@ -32,7 +32,7 @@ export function SchemaField({
   celContext,
   setValue,
 }: SchemaFieldProps) {
-  const styles = useStyles2(getWizardStyles);
+  const styles = useStyles2(getFieldStyles);
 
   const activeOverride = resolveActiveOverride(field, watchedValues, fieldById);
   const fk = formKey(field);
