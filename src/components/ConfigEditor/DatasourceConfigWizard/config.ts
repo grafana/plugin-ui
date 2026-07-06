@@ -8,6 +8,18 @@ import { extractFieldRefs } from './cel';
 import type { DatasourceConfigSchema, ConfigField, ConfigGroup, FieldOverride } from '../../../schema';
 
 /**
+ * Group ids that denote the authentication section. Registry schemas use the
+ * full form `authentication`; `auth` is accepted for backwards compatibility
+ * with older/short-form schemas.
+ */
+export const AUTH_GROUP_IDS: readonly string[] = ['authentication', 'auth'];
+
+/** Whether a group id denotes the authentication group. */
+export function isAuthGroupId(id: string): boolean {
+  return AUTH_GROUP_IDS.includes(id);
+}
+
+/**
  * Resolve a schema's groups into arrays of ConfigField objects.
  * If the schema has no groups, returns a single group containing all non-virtual fields.
  */
@@ -40,9 +52,10 @@ export function resolveGroups(schema: DatasourceConfigSchema): Array<{ group: Co
 /**
  * Build a virtual "Required" group containing all required fields, any parent
  * fields they depend on (via `dependsOn`), and any child fields that depend on
- * required fields.  When the schema contains an "auth" group, its fields are
- * also pulled in (auth is effectively required for Prometheus/Loki/Tempo style
- * datasources).  Fields are returned in schema order and de-duplicated.
+ * required fields.  When the schema contains an authentication group (id
+ * `authentication` or `auth`), its fields are also pulled in (auth is
+ * effectively required for Prometheus/Loki/Tempo style datasources).  Fields
+ * are returned in schema order and de-duplicated.
  * Returns `null` when the virtual group would be empty.
  */
 export function resolveRequiredFieldsGroup(
@@ -60,8 +73,8 @@ export function resolveRequiredFieldsGroup(
     }
   }
 
-  // Include all fields from the "auth" group as effectively required
-  const authGroup = schema.groups?.find((g) => g.id === 'auth');
+  // Include all fields from the authentication group as effectively required
+  const authGroup = schema.groups?.find((g) => isAuthGroupId(g.id));
   if (authGroup) {
     for (const ref of authGroup.fieldRefs) {
       if (fieldMap.has(ref)) {

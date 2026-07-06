@@ -1,7 +1,7 @@
 import React, { type ReactNode, useCallback, useMemo, useState } from 'react';
 import { useStyles2, Button, LinkButton, Select, Icon, Alert, Tooltip, Spinner } from '@grafana/ui';
 import type { DatasourceConfigSchema } from '../../../schema/schema';
-import { formKey, getWatchedValue } from './config';
+import { formKey, getWatchedValue, isAuthGroupId } from './config';
 import { SECURE_FIELD_CONFIGURED } from './datasource';
 import { isFieldRequired } from './fieldUtils';
 import { SchemaField } from './SchemaField';
@@ -301,14 +301,15 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
             />
           ))}
 
-          {(currentResolved.group.id === '_required' || currentResolved.group.id === 'auth') && httpHeadersField && (
-            <AuthorizationHeaderField
-              headersFieldKey={formKey(httpHeadersField)}
-              control={control}
-              disabled={allDisabled}
-              watchedValues={watchedValues}
-            />
-          )}
+          {(currentResolved.group.id === '_required' || isAuthGroupId(currentResolved.group.id)) &&
+            httpHeadersField && (
+              <AuthorizationHeaderField
+                headersFieldKey={formKey(httpHeadersField)}
+                control={control}
+                disabled={allDisabled}
+                watchedValues={watchedValues}
+              />
+            )}
 
           {submitError && (
             <Alert severity="error" title="Error">

@@ -1,7 +1,7 @@
 import React, { type ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { useStyles2, Button, Icon, Alert, Spinner, LinkButton, Collapse } from '@grafana/ui';
 import type { DatasourceConfigSchema } from '../../../schema/schema';
-import { formKey } from './config';
+import { formKey, isAuthGroupId } from './config';
 import type { useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
 import { SchemaField } from './SchemaField';
 import { AuthorizationHeaderField } from './inputs/AuthorizationHeaderField';
@@ -185,7 +185,7 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
 
             const showHeaders =
               httpHeadersField &&
-              (g.group.id === 'auth' ||
+              (isAuthGroupId(g.group.id) ||
                 g.group.id === 'url-and-auth' ||
                 g.group.id === '_required' ||
                 g.group.fieldRefs.includes('httpHeaders'));
