@@ -8,6 +8,7 @@ import path from 'path';
 const nodeModulesToTransform = (moduleNames) => `node_modules\/(?!(${moduleNames.join('|')})\/)`;
 
 const grafanaESModules = [
+  '@marcbachmann/cel-js',
   'd3',
   'd3-color',
   'd3-force',
