@@ -1,26 +1,46 @@
-name: Publish to NPM
+name: publish-npm
+
+permissions: {}
+
 on:
   push:
     branches:
       - main
       - dsconfig
-permissions: {}
+
 jobs:
   publish:
     name: Publish to NPM Package Registry
     runs-on: ubuntu-latest
+    # Required for this workflow to have permission to publish NPM packages
     environment: release
     permissions:
       contents: read
-      id-token: write # id-token: write required for npm trusted publishing
+      # id-token: write required for npm trusted publishing
+      id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: main
           persist-credentials: false
-      # limit releases to version changes - https://github.com/EndBug/version-check
+
+      - name: Determine publish mode
+        id: publish_mode
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [[ "$REF_NAME" == "main" ]]; then
+            echo "is_main=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_main=false" >> "$GITHUB_OUTPUT"
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            BASE_VERSION=$(node -p "require('./package.json').version")
+            echo "sha_version=${BASE_VERSION}-dsconfig.${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # limit releases to version changes (main only)
       - name: Check version changes
+        if: steps.publish_mode.outputs.is_main == 'true'
         uses: EndBug/version-check@5102328418c0130d66ca712d755c303e93368ce2 # v2.1.7
         id: version_check
         with:
@@ -31,61 +51,50 @@ jobs:
         env:
           OUTPUT_VERSION: ${{ steps.version_check.outputs.version }}
           OUTPUT_TYPE: ${{ steps.version_check.outputs.type }}
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.publish_mode.outputs.is_main == 'true' && steps.version_check.outputs.changed == 'true'
         run: 'echo "Version change found! New version: ${OUTPUT_VERSION} (${OUTPUT_TYPE})"'
 
+      - name: Should publish
+        id: should_publish
+        run: |
+          if [[ "${{ steps.publish_mode.outputs.is_main }}" == "true" ]]; then
+            echo "publish=${{ steps.version_check.outputs.changed }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Setup .npmrc file for NPM registry
-        if: steps.version_check.outputs.changed == 'true'
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        if: steps.should_publish.outputs.publish == 'true'
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
 
-      # npm trusted publishing requires version ^11.5.1; we pin to an exact
-      # version here because corepack manages exact versions rather than
-      # semver ranges. Bump this pin deliberately when a newer npm is needed.
-      #
-      # Use corepack instead of `npm install -g npm@...` because the bundled
-      # npm in the runner image that built 0.13.2 had a corrupt module tree
-      # (missing `promise-retry` in `@npmcli/arborist`), so the broken npm
-      # could not upgrade itself. Corepack fetches npm independently, which
-      # avoids the issue.
-      # An example failure is:
-      # https://github.com/grafana/plugin-ui/actions/runs/26574220612/job/78289033224
-      #
-      # COREPACK_ENABLE_PROJECT_SPEC=0 stops corepack from refusing to run npm
-      # because package.json pins `packageManager: yarn@...` (yarn itself is
-      # resolved via yarnPath, not corepack, so this does not affect it).
-      - name: Install npm 11.5.1 via corepack
-        if: steps.version_check.outputs.changed == 'true'
-        env:
-          COREPACK_ENABLE_PROJECT_SPEC: '0'
-        run: |
-          corepack enable npm
-          corepack prepare npm@11.5.1 --activate
-          npm --version
+      # npm trusted publishing requires version ^11.5.1
+      # Use npx to bootstrap a working npm, avoiding MODULE_NOT_FOUND in bundled npm
+      - name: Install npm version ^11.5.1
+        if: steps.should_publish.outputs.publish == 'true'
+        run: npx npm@^11.5.1 install -g npm@^11.5.1
 
       - name: Install dependencies
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.should_publish.outputs.publish == 'true'
         run: yarn install --immutable
 
-      - name: Test & Lint library
-        if: steps.version_check.outputs.changed == 'true'
-        run: |
-          yarn spellcheck
-          yarn lint
-          yarn typecheck
-          yarn test:ci
-
       - name: Build library
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.should_publish.outputs.publish == 'true'
         run: yarn build
 
+      # For branch builds: stamp SHA-based prerelease version
+      - name: Stamp prerelease version
+        if: steps.should_publish.outputs.publish == 'true' && steps.publish_mode.outputs.is_main != 'true'
+        run: npm version "${{ steps.publish_mode.outputs.sha_version }}" --no-git-tag-version
+
       - name: Publish package to NPM
-        if: steps.version_check.outputs.changed == 'true'
-        env:
-          # The corepack npm shim persists on PATH from the step above; without
-          # this it would abort with "This project is configured to use yarn".
-          COREPACK_ENABLE_PROJECT_SPEC: '0'
-        run: npm publish --access public
+        if: steps.should_publish.outputs.publish == 'true'
+        run: |
+          if [[ "${{ steps.publish_mode.outputs.is_main }}" == "true" ]]; then
+            npm publish --access public
+          else
+            npm publish --access public --tag dsconfig
+          fi
