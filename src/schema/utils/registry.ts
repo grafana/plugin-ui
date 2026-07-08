@@ -1,6 +1,6 @@
-import { getBackendSrv } from '@grafana/runtime';
+// import { getBackendSrv } from '@grafana/runtime';
 import { resolveBaseFields } from './packs';
-import { DSCONFIG_STATIC_URL } from './constants';
+// import { DSCONFIG_STATIC_URL } from './constants';
 import type { DatasourceConfigSchema } from '../schema';
 
 const schemaCache = new Map<string, DatasourceConfigSchema | null>();
@@ -13,9 +13,13 @@ export async function getConfigSchema(pluginType: string): Promise<DatasourceCon
 
   let schema: DatasourceConfigSchema | null;
   try {
-    schema = await getBackendSrv().get<DatasourceConfigSchema>(
-      DSCONFIG_STATIC_URL.replaceAll('{pluginType}', pluginType)
-    );
+    // TODO: When going prod, use the schema from the plugin instead of static schema
+    const SCHEMA_BASE_URL = 'https://raw.githubusercontent.com/grafana/dsconfig/schema-discovery/registry';
+    let res = await fetch(`${SCHEMA_BASE_URL}/${pluginType}/dsconfig.json`);
+    schema = (await res.json()) as DatasourceConfigSchema;
+    // schema = await getBackendSrv().get<DatasourceConfigSchema>(
+    //   DSCONFIG_STATIC_URL.replaceAll('{pluginType}', pluginType)
+    // );
   } catch {
     console.warn(`no schema available for ${pluginType}`);
     schema = {} as DatasourceConfigSchema;
