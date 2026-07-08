@@ -1,11 +1,10 @@
 import React, { type ReactNode, useCallback, useMemo, useState } from 'react';
-import { useStyles2, Button, LinkButton, Select, Icon, Alert, Tooltip, Spinner } from '@grafana/ui';
+import { useStyles2, Button, Select, Icon, Tooltip, Spinner } from '@grafana/ui';
 import type { DatasourceConfigSchema } from '../../../schema/schema';
 import { formKey, getWatchedValue, isAuthGroupId } from './config';
 import { SECURE_FIELD_CONFIGURED } from './datasource';
 import { isFieldRequired } from './fieldUtils';
-import { SchemaField } from './SchemaField';
-import { AuthorizationHeaderField } from './inputs/AuthorizationHeaderField';
+import { GroupFields, FormFooter, FetchErrorState } from './layoutParts';
 import { TabLayout } from './TabLayout';
 import { getWizardStyles } from './styles';
 import { useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
@@ -73,8 +72,6 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
   const {
     resolvedGroups,
     fieldById,
-    httpHeadersField,
-    control,
     handleSubmit,
     trigger,
     errors,
@@ -83,12 +80,9 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
     initializing,
     fetchError,
     submitting,
-    submitError,
     readOnly,
     isFieldVisible,
-    isFieldDisabled,
     onSubmit,
-    setValue,
   } = form;
 
   const arrowSteps = useMemo(() => {
@@ -196,24 +190,10 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
   if (fetchError) {
     return (
       <div className={styles.container}>
-        <Alert severity="error" title="Failed to load configuration">
-          {fetchError}
-        </Alert>
-        <div className={styles.buttons}>
-          <LinkButton
-            variant="secondary"
-            size="sm"
-            icon="external-link-alt"
-            href={`/connections/datasources/edit/${dsUid}`}
-          >
-            Open datasource settings
-          </LinkButton>
-        </div>
+        <FetchErrorState error={fetchError} dsUid={dsUid} buttonClassName={styles.buttons} />
       </div>
     );
   }
-
-  const allDisabled = submitting || readOnly;
 
   if (resolvedGroups.length === 0) {
     return null;
@@ -286,48 +266,23 @@ function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, rend
 
       {currentResolved && (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          {visibleFieldsForStep.map((field) => (
-            <SchemaField
-              key={formKey(field)}
-              field={field}
-              control={control}
-              errors={errors}
-              disabled={allDisabled || isFieldDisabled(field)}
-              dsUid={dsUid}
-              watchedValues={watchedValues}
-              fieldById={fieldById}
-              celContext={celContext}
-              setValue={setValue}
-            />
-          ))}
-
-          {(currentResolved.group.id === '_required' || isAuthGroupId(currentResolved.group.id)) &&
-            httpHeadersField && (
-              <AuthorizationHeaderField
-                headersFieldKey={formKey(httpHeadersField)}
-                control={control}
-                disabled={allDisabled}
-              />
-            )}
-
-          {submitError && (
-            <Alert severity="error" title="Error">
-              {submitError}
-            </Alert>
-          )}
-
-          <div className={styles.buttons}>
-            {readOnly ? (
-              <Button variant="primary" size="sm" icon="sync" onClick={onRetest} type="button">
-                Test
-              </Button>
-            ) : (
-              <Button variant="primary" size="sm" disabled={submitting || !currentGroupValid} type="submit">
-                {submitting ? 'Saving...' : 'Save & Test'}
-              </Button>
-            )}
-            {healthError && renderActions?.({ dsUid, dsName, dsType: schema.pluginType, healthError })}
-          </div>
+          <GroupFields
+            group={currentResolved}
+            form={form}
+            dsUid={dsUid}
+            showAuthHeaders={currentResolved.group.id === '_required' || isAuthGroupId(currentResolved.group.id)}
+          />
+          <FormFooter
+            form={form}
+            schema={schema}
+            dsUid={dsUid}
+            dsName={dsName}
+            onRetest={onRetest}
+            healthError={healthError}
+            renderActions={renderActions}
+            saveDisabled={submitting || !currentGroupValid}
+            className={styles.buttons}
+          />
         </form>
       )}
     </div>

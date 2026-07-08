@@ -7,6 +7,9 @@
 import { extractFieldRefs } from './cel';
 import type { DatasourceConfigSchema, ConfigField, ConfigGroup, FieldOverride } from '../../../schema';
 
+/** A group paired with its resolved ConfigField objects (in fieldRefs order). */
+export type ResolvedGroup = { group: ConfigGroup; fields: ConfigField[] };
+
 /**
  * Group ids that denote the authentication section. Registry schemas use the
  * full form `authentication`; `auth` is accepted for backwards compatibility
@@ -23,7 +26,7 @@ export function isAuthGroupId(id: string): boolean {
  * Resolve a schema's groups into arrays of ConfigField objects.
  * If the schema has no groups, returns a single group containing all non-virtual fields.
  */
-export function resolveGroups(schema: DatasourceConfigSchema): Array<{ group: ConfigGroup; fields: ConfigField[] }> {
+export function resolveGroups(schema: DatasourceConfigSchema): ResolvedGroup[] {
   const fieldMap = new Map<string, ConfigField>();
   for (const f of schema.fields) {
     fieldMap.set(f.id, f);
@@ -58,9 +61,7 @@ export function resolveGroups(schema: DatasourceConfigSchema): Array<{ group: Co
  * are returned in schema order and de-duplicated.
  * Returns `null` when the virtual group would be empty.
  */
-export function resolveRequiredFieldsGroup(
-  schema: DatasourceConfigSchema
-): { group: ConfigGroup; fields: ConfigField[] } | null {
+export function resolveRequiredFieldsGroup(schema: DatasourceConfigSchema): ResolvedGroup | null {
   const fieldMap = new Map<string, ConfigField>();
   for (const f of schema.fields) {
     fieldMap.set(f.id, f);

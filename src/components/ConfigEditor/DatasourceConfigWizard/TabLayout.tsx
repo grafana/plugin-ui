@@ -1,10 +1,9 @@
 import React, { type ReactNode, useCallback, useMemo, useRef, useState } from 'react';
-import { useStyles2, Button, Icon, Alert, Spinner, LinkButton, Collapse } from '@grafana/ui';
+import { useStyles2, Icon, Spinner, Collapse } from '@grafana/ui';
 import type { DatasourceConfigSchema } from '../../../schema/schema';
-import { formKey, isAuthGroupId } from './config';
+import { isAuthGroupId } from './config';
 import type { useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
-import { SchemaField } from './SchemaField';
-import { AuthorizationHeaderField } from './inputs/AuthorizationHeaderField';
+import { GroupFields, FormFooter, FetchErrorState } from './layoutParts';
 import { SidebarNav, type SectionState } from './SidebarNav';
 import { getTabStyles } from './styles';
 
@@ -24,24 +23,16 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
 
   const {
     resolvedGroups,
-    fieldById,
     httpHeadersField,
-    control,
     handleSubmit,
-    errors,
-    watchedValues,
-    celContext,
     initializing,
     fetchError,
     submitting,
-    submitError,
     readOnly,
     isFieldVisible,
-    isFieldDisabled,
     isGroupValid,
     groupHasData,
     onSubmit,
-    setValue,
   } = form;
 
   // Filter out _required synthetic group — in tab mode we show all groups from schema directly
@@ -131,24 +122,10 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
   if (fetchError) {
     return (
       <div>
-        <Alert severity="error" title="Failed to load configuration">
-          {fetchError}
-        </Alert>
-        <div className={styles.formButtons}>
-          <LinkButton
-            variant="secondary"
-            size="sm"
-            icon="external-link-alt"
-            href={`/connections/datasources/edit/${dsUid}`}
-          >
-            Open datasource settings
-          </LinkButton>
-        </div>
+        <FetchErrorState error={fetchError} dsUid={dsUid} buttonClassName={styles.formButtons} />
       </div>
     );
   }
-
-  const allDisabled = submitting || readOnly;
 
   return (
     <div className={styles.root}>
@@ -183,12 +160,13 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
               return null;
             }
 
-            const showHeaders =
+            const showHeaders = Boolean(
               httpHeadersField &&
-              (isAuthGroupId(g.group.id) ||
-                g.group.id === 'url-and-auth' ||
-                g.group.id === '_required' ||
-                g.group.fieldRefs.includes('httpHeaders'));
+                (isAuthGroupId(g.group.id) ||
+                  g.group.id === 'url-and-auth' ||
+                  g.group.id === '_required' ||
+                  g.group.fieldRefs.includes('httpHeaders'))
+            );
 
             const sectionLabel = (
               <span className={styles.sectionLabel}>
@@ -219,52 +197,24 @@ export function TabLayout({ form, schema, dsUid, dsName, onRetest, healthError, 
                 >
                   <div className={styles.sectionBody}>
                     {g.group.description && <div className={styles.sectionDescription}>{g.group.description}</div>}
-                    {visibleFields.map((field) => (
-                      <SchemaField
-                        key={formKey(field)}
-                        field={field}
-                        control={control}
-                        errors={errors}
-                        disabled={allDisabled || isFieldDisabled(field)}
-                        dsUid={dsUid}
-                        watchedValues={watchedValues}
-                        fieldById={fieldById}
-                        celContext={celContext}
-                        setValue={setValue}
-                      />
-                    ))}
-
-                    {showHeaders && (
-                      <AuthorizationHeaderField
-                        headersFieldKey={formKey(httpHeadersField!)}
-                        control={control}
-                        disabled={allDisabled}
-                      />
-                    )}
+                    <GroupFields group={g} form={form} dsUid={dsUid} showAuthHeaders={showHeaders} />
                   </div>
                 </Collapse>
               </div>
             );
           })}
 
-          {submitError && (
-            <Alert severity="error" title="Error">
-              {submitError}
-            </Alert>
-          )}
-
-          <div className={styles.formButtons}>
-            {readOnly ? (
-              <Button variant="primary" size="sm" icon="sync" onClick={onRetest} type="button">
-                Test
-              </Button>
-            ) : (
-              <Button variant="primary" size="sm" disabled={submitting} type="submit">
-                {submitting ? 'Saving…' : 'Save & Test'}
-              </Button>
-            )}
-            {healthError && renderActions?.({ dsUid, dsName, dsType: schema.pluginType, healthError })}
-          </div>
+          <FormFooter
+            form={form}
+            schema={schema}
+            dsUid={dsUid}
+            dsName={dsName}
+            onRetest={onRetest}
+            healthError={healthError}
+            renderActions={renderActions}
+            saveDisabled={submitting}
+            className={styles.formButtons}
+          />
         </form>
       </div>
     </div>

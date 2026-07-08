@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type { ConfigField, ConfigGroup, DatasourceConfigSchema } from '../../../../schema/schema';
+import type { ConfigField, DatasourceConfigSchema } from '../../../../schema/schema';
 import {
   resolveGroups,
   resolveRequiredFieldsGroup,
@@ -9,10 +9,17 @@ import {
   computeVirtualFieldValues,
   formKey,
   getWatchedValue,
+  type ResolvedGroup,
 } from '../config';
-import { extractFieldRefs, evaluateCelExpression } from '../cel';
-import { SECURE_FIELD_CONFIGURED, fetchExistingValues, submitDatasourceConfig, type FormValues } from '../datasource';
-import { evaluateEffectCondition, isFieldRequired } from '../fieldUtils';
+import { fetchExistingValues, submitDatasourceConfig, type FormValues } from '../datasource';
+import { evaluateEffectCondition } from '../fieldUtils';
+import {
+  buildFieldCelContext,
+  isFieldVisible as isFieldVisibleImpl,
+  isFieldDisabled as isFieldDisabledImpl,
+  isGroupValid as isGroupValidImpl,
+  groupHasData as groupHasDataImpl,
+} from './formInterpreter';
 
 export type DatasourceConfigFormOptions = {
   schema: DatasourceConfigSchema;
@@ -21,7 +28,7 @@ export type DatasourceConfigFormOptions = {
   onSaving?: (saving: boolean) => void;
 };
 
-export type ResolvedGroup = { group: ConfigGroup; fields: ConfigField[] };
+export type { ResolvedGroup };
 
 export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: DatasourceConfigFormOptions) {
   const [submitting, setSubmitting] = useState(false);
@@ -207,59 +214,10 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
   }, [watchedValues, fieldsWithOverrideDefaults, initializing, setValue]);
 
   // Build a CEL-compatible nested context from flat watched values + field ID mappings.
-  // Field IDs like "jsonData.auth_method" become { jsonData: { auth_method: value } }.
-  const celContext = useMemo(() => {
-    const ctx: Record<string, unknown> = {};
-    for (const f of fieldById.values()) {
-      const fk = formKey(f);
-      const val = getWatchedValue(watchedValues, fk);
-      if (val !== undefined) {
-        // Set by field ID path (e.g. "jsonData.oauth2.oauth2_type")
-        const parts = f.id.split('.');
-        let current = ctx as Record<string, unknown>;
-        for (let i = 0; i < parts.length - 1; i++) {
-          if (!(parts[i] in current) || typeof current[parts[i]] !== 'object' || current[parts[i]] === null) {
-            current[parts[i]] = {};
-          }
-          current = current[parts[i]] as Record<string, unknown>;
-        }
-        current[parts[parts.length - 1]] = val;
-      }
-    }
-    return ctx;
-  }, [watchedValues, fieldById]);
+  const celContext = useMemo(() => buildFieldCelContext(fieldById, watchedValues), [watchedValues, fieldById]);
 
   const isFieldVisible = useCallback(
-    (field: ConfigField): boolean => {
-      // Inner recursive helper with a visited set to guard against circular deps.
-      function check(f: ConfigField, visited: Set<string>): boolean {
-        if (f.kind === 'virtual' && !f.ui) {
-          return false;
-        }
-        if (f.tags?.some((t) => t.startsWith('managed-by:'))) {
-          return false;
-        }
-        if (!f.dependsOn) {
-          return true;
-        }
-
-        // Transitive visibility: all referenced dependency fields must themselves be visible.
-        const refs = extractFieldRefs(f.dependsOn);
-        for (const ref of refs) {
-          const depField = fieldById.get(ref);
-          if (depField && !visited.has(depField.id)) {
-            visited.add(f.id);
-            if (!check(depField, visited)) {
-              return false;
-            }
-          }
-        }
-
-        // Evaluate the full CEL expression
-        return evaluateCelExpression(f.dependsOn, celContext);
-      }
-      return check(field, new Set<string>());
-    },
+    (field: ConfigField): boolean => isFieldVisibleImpl(field, fieldById, celContext),
     [celContext, fieldById]
   );
 
@@ -294,56 +252,25 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
     [dsUid, allStorageFields, isFieldVisible, schema, reset, onSuccess, onSaving]
   );
 
-  /** Check if a group has any visible required fields that are empty. */
   const isGroupValid = useCallback(
-    (group: ResolvedGroup): boolean => {
-      for (const field of group.fields) {
-        if (!isFieldVisible(field)) {
-          continue;
-        }
-        if (errors[formKey(field)]) {
-          return false;
-        }
-        if (isFieldRequired(field, watchedValues, fieldById, celContext)) {
-          const val = getWatchedValue(watchedValues, formKey(field));
-          if (val === SECURE_FIELD_CONFIGURED) {
-            continue;
-          }
-          if (val === undefined || val === null || val === '') {
-            return false;
-          }
-        }
-      }
-      return true;
-    },
+    (group: ResolvedGroup): boolean =>
+      isGroupValidImpl(group, {
+        watchedValues,
+        fieldById,
+        celContext,
+        errors: errors as Record<string, unknown>,
+        isVisible: isFieldVisible,
+      }),
     [errors, watchedValues, fieldById, celContext, isFieldVisible]
   );
 
   const isFieldDisabled = useCallback(
-    (field: ConfigField): boolean => {
-      if (!field.disabledWhen) {
-        return false;
-      }
-      return evaluateCelExpression(field.disabledWhen, celContext);
-    },
+    (field: ConfigField): boolean => isFieldDisabledImpl(field, celContext),
     [celContext]
   );
 
-  /** Check if a group has any fields with non-default/non-empty values. */
   const groupHasData = useCallback(
-    (group: ResolvedGroup): boolean => {
-      for (const field of group.fields) {
-        const val = getWatchedValue(watchedValues, formKey(field));
-        if (val === undefined || val === null || val === '' || val === false) {
-          continue;
-        }
-        if (val === field.defaultValue) {
-          continue;
-        }
-        return true;
-      }
-      return false;
-    },
+    (group: ResolvedGroup): boolean => groupHasDataImpl(group, watchedValues),
     [watchedValues]
   );
 
