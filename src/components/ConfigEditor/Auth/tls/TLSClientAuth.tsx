@@ -1,8 +1,8 @@
-import React from 'react';
 import { cx } from '@emotion/css';
 import { InlineField, Input, SecretTextArea } from '@grafana/ui';
-import { TLSSettingsSection } from './TLSSettingsSection';
+import React from 'react';
 import { useCommonStyles } from '../styles';
+import { TLSSettingsSection } from './TLSSettingsSection';
 
 export type Props = {
   enabled: boolean;
@@ -64,6 +64,7 @@ export const TLSClientAuth = ({
           value={serverName}
           onChange={(e) => onServerNameChange(e.currentTarget.value)}
           required
+          width={40}
         />
       </InlineField>
       <InlineField
@@ -88,6 +89,7 @@ export const TLSClientAuth = ({
           placeholder="Begins with --- BEGIN CERTIFICATE ---"
           rows={6}
           required
+          cols={36}
         />
       </InlineField>
       <InlineField
@@ -109,6 +111,7 @@ export const TLSClientAuth = ({
           placeholder={`Begins with --- RSA PRIVATE KEY CERTIFICATE ---`}
           rows={6}
           required
+          cols={36}
         />
       </InlineField>
     </TLSSettingsSection>

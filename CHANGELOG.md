@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.16.1 - 2026-06-18
+
+- Improve styling of `TLSClientAuth` components
+
 ## v0.16.0 - 2026-06-18
 
 - Added schema for datasource configuration
