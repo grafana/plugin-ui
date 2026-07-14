@@ -1,13 +1,12 @@
 import React from 'react';
 import { type useForm, Controller } from 'react-hook-form';
 import { useStyles2, Icon, Tooltip } from '@grafana/ui';
-import type { ConfigField } from '../../../schema/schema';
 import { resolveActiveOverride, formKey } from './config';
-import type { FormValues } from './datasource';
 import { isFieldRequired, buildValidationRules, parseItemErrors } from './fieldUtils';
-import { PdcFieldNote } from './inputs/PdcFieldNote';
 import { FieldInput } from './FieldInput';
 import { getFieldStyles } from './styles';
+import type { FormValues } from './datasource';
+import type { ConfigField } from '../../../schema/schema';
 
 export type SchemaFieldProps = {
   field: ConfigField;
@@ -26,7 +25,6 @@ export function SchemaField({
   control,
   errors,
   disabled,
-  dsUid,
   watchedValues,
   fieldById,
   celContext,
@@ -36,22 +34,6 @@ export function SchemaField({
 
   const activeOverride = resolveActiveOverride(field, watchedValues, fieldById);
   const fk = formKey(field);
-
-  if (field.key === 'pdcInjected' && field.target === 'jsonData') {
-    return (
-      <Controller
-        name={fk}
-        control={control}
-        render={({ field: formField }) => (
-          <PdcFieldNote
-            enabled={!!formField.value}
-            description={field.description}
-            configUrl={`/connections/datasources/edit/${dsUid}`}
-          />
-        )}
-      />
-    );
-  }
 
   const required = isFieldRequired(field, watchedValues, fieldById, celContext);
   const validationRules = buildValidationRules(field, required);
