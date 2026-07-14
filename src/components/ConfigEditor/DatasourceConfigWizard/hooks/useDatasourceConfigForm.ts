@@ -28,8 +28,6 @@ export type DatasourceConfigFormOptions = {
   onSaving?: (saving: boolean) => void;
 };
 
-export type { ResolvedGroup };
-
 export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: DatasourceConfigFormOptions) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);

@@ -5,7 +5,6 @@ import { formKey, getWatchedValue, isAuthGroupId } from './config';
 import { SECURE_FIELD_CONFIGURED } from './datasource';
 import { isFieldRequired } from './fieldUtils';
 import { GroupFields, FormFooter, FetchErrorState } from './layoutParts';
-import { TabLayout } from './TabLayout';
 import { getWizardStyles } from './styles';
 import { useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
 
@@ -18,29 +17,14 @@ export type DatasourceConfigWizardProps = {
   onRetest?: () => void;
   onFollowup?: (intent: string) => void;
   healthError?: string;
-  mode?: 'tab' | 'wizard';
   /** Optional render prop for custom action buttons (e.g. analyze/troubleshoot). */
   renderActions?: (props: { dsUid: string; dsName: string; dsType: string; healthError?: string }) => ReactNode;
 };
 
 export function DatasourceConfigWizard(props: DatasourceConfigWizardProps) {
-  const { schema, dsUid, dsName, onSuccess, onSaving, onRetest, healthError, renderActions, mode = 'tab' } = props;
+  const { schema, dsUid, dsName, onSuccess, onSaving, onRetest, healthError, renderActions } = props;
 
   const form = useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving });
-
-  if (mode === 'tab') {
-    return (
-      <TabLayout
-        form={form}
-        schema={schema}
-        dsUid={dsUid}
-        dsName={dsName}
-        onRetest={onRetest}
-        healthError={healthError}
-        renderActions={renderActions}
-      />
-    );
-  }
 
   return (
     <WizardLayout
