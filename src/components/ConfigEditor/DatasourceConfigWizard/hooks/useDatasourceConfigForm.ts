@@ -28,7 +28,8 @@ export type DatasourceConfigFormOptions = {
   onSaving?: (saving: boolean) => void;
 };
 
-export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: DatasourceConfigFormOptions) {
+export function useDatasourceConfigForm(props: DatasourceConfigFormOptions) {
+  const { schema, dsUid, onSuccess, onSaving } = props;
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [initializing, setInitializing] = useState(true);
