@@ -1725,7 +1725,7 @@ __metadata:
     fast-glob: "npm:3.3.3"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
-    jest-fetch-mock: "npm:3.2.0"
+    jest-fetch-mock: "npm:4.2.0"
     lefthook: "npm:2.1.10"
     lodash: "npm:4.18.1"
     mockdate: "npm:3.0.5"
@@ -9546,13 +9546,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-fetch-mock@npm:3.2.0":
-  version: 3.2.0
-  resolution: "jest-fetch-mock@npm:3.2.0"
+"jest-fetch-mock@npm:4.2.0":
+  version: 4.2.0
+  resolution: "jest-fetch-mock@npm:4.2.0"
   dependencies:
     cross-fetch: "npm:^3.1.8"
-    domexception: "npm:^4.0.0"
-  checksum: 10c0/39bbd17208ea67b4c60fced2dfeb71d73a0f19c3214f46bc15099cb1b347c66fbb40c9d83b95c5f7a4aa332b2da1448f1573d7cc258add3e0df554a097f2eb28
+  checksum: 10c0/6b02bba4d48db46881be0a5f6b7b105ea3e33d6a7c26ae1e3370297a997d888ac45ad2601034511852ed900f0da75ebe19bf3b99cb34471d4def93ac1e3712f4
   languageName: node
   linkType: hard
 
