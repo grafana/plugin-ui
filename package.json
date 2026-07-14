@@ -86,7 +86,7 @@
     "@storybook/addon-links": "10.5.0",
     "@storybook/addon-webpack5-compiler-swc": "4.0.3",
     "@storybook/react-webpack5": "10.5.0",
-    "@stylistic/eslint-plugin-ts": "2.13.0",
+    "@stylistic/eslint-plugin-ts": "4.4.1",
     "@swc/core": "1.15.43",
     "@swc/jest": "0.2.39",
     "@testing-library/jest-dom": "5.17.0",
