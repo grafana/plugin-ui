@@ -1742,7 +1742,7 @@ __metadata:
     rollup: "npm:4.59.0"
     rollup-plugin-dts: "npm:6.4.1"
     rollup-plugin-esbuild: "npm:6.2.1"
-    rollup-plugin-node-externals: "npm:8.1.2"
+    rollup-plugin-node-externals: "npm:9.0.1"
     rxjs: "npm:7.8.1"
     sql-formatter: "npm:15.8.2"
     storybook: "npm:10.5.0"
@@ -13094,12 +13094,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-node-externals@npm:8.1.2":
-  version: 8.1.2
-  resolution: "rollup-plugin-node-externals@npm:8.1.2"
+"rollup-plugin-node-externals@npm:9.0.1":
+  version: 9.0.1
+  resolution: "rollup-plugin-node-externals@npm:9.0.1"
   peerDependencies:
     rollup: ^4.0.0
-  checksum: 10c0/ea37fb84e562c311b473f354e7ff98f8d19caf7c57b526ef6a29f1fab05880d291d2edd3c482dfedd27150a4133ebe914723ac9dc3165ce679ec00146a97df06
+    vite: ">=5.0.0"
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+    vite:
+      optional: true
+  checksum: 10c0/0d57f267cf7356aecd3ec08fa031cccfb4e621b1d0f83216240bcf647ab439b083340a1d927bb8dab3a20fe21b47fd4929a99086bfb3d08c7ad740f191d3bf9d
   languageName: node
   linkType: hard
 
