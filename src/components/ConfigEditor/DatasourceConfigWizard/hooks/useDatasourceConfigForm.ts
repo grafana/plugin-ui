@@ -224,8 +224,8 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
       setSubmitting(true);
       setSubmitError(null);
       onSaving?.(true);
+      // just introduced 2 second delay to add a visual hue. Can be removed if nor required.
       const minDelay = new Promise((r) => setTimeout(r, 2000));
-
       try {
         await submitDatasourceConfig(dsUid, data, allStorageFields, isFieldVisible);
         const [refreshed] = await Promise.all([fetchExistingValues(dsUid, allStorageFields), minDelay]);
