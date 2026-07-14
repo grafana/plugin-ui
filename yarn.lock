@@ -1738,7 +1738,7 @@ __metadata:
     react-popper-tooltip: "npm:4.4.2"
     react-select-event: "npm:5.5.1"
     react-use: "npm:17.6.1"
-    react-virtualized-auto-sizer: "npm:1.0.26"
+    react-virtualized-auto-sizer: "npm:2.0.3"
     rollup: "npm:4.59.0"
     rollup-plugin-dts: "npm:6.4.1"
     rollup-plugin-esbuild: "npm:6.2.1"
@@ -12849,13 +12849,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-virtualized-auto-sizer@npm:1.0.26":
-  version: 1.0.26
-  resolution: "react-virtualized-auto-sizer@npm:1.0.26"
+"react-virtualized-auto-sizer@npm:2.0.3":
+  version: 2.0.3
+  resolution: "react-virtualized-auto-sizer@npm:2.0.3"
   peerDependencies:
-    react: ^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0 || ^19.0.0
-    react-dom: ^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/788b438c9cb55f94a0561ef07e6bb6e5051ad3d5ececd9b2131014324ffe773b507ac7060f965e44c84bd8d6aa85c686754ac944384878c97f7304c0473a7754
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  checksum: 10c0/3788e77a696a696a0f5a72de8a43cab7bdf8b60476d18244802e0cd8ba6d3d83bebb3aa0c56a2f28a911b701056d0c323a6c965ed26ae413503528f028261c94
   languageName: node
   linkType: hard
 
