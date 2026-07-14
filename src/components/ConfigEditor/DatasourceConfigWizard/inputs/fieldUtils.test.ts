@@ -1,5 +1,5 @@
-import type { ConfigField } from '../../../schema/schema';
-import { SECURE_FIELD_CONFIGURED } from './datasource';
+import type { ConfigField } from '../../../../schema/schema';
+import { SECURE_FIELD_CONFIGURED } from '../datasource';
 import { evaluateEffectCondition, isFieldRequired, buildValidationRules, parseItemErrors } from './fieldUtils';
 
 const field = (partial: Partial<ConfigField> & { id: string; key: string }): ConfigField => ({

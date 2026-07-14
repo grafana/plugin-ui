@@ -12,7 +12,7 @@ import {
   type ResolvedGroup,
 } from '../config';
 import { fetchExistingValues, submitDatasourceConfig, type FormValues } from '../datasource';
-import { evaluateEffectCondition } from '../fieldUtils';
+import { evaluateEffectCondition } from '../inputs/fieldUtils';
 import {
   buildFieldCelContext,
   isFieldVisible as isFieldVisibleImpl,

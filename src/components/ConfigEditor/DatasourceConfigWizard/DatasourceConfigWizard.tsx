@@ -3,7 +3,7 @@ import { useStyles2, Button, Select, Icon, Tooltip, Spinner } from '@grafana/ui'
 import type { DatasourceConfigSchema } from '../../../schema/schema';
 import { formKey, getWatchedValue, isAuthGroupId } from './config';
 import { SECURE_FIELD_CONFIGURED } from './datasource';
-import { isFieldRequired } from './fieldUtils';
+import { isFieldRequired } from './inputs/fieldUtils';
 import { GroupFields, FormFooter, FetchErrorState } from './layoutParts';
 import { getWizardStyles } from './styles';
 import { useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
