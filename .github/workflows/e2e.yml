@@ -59,6 +59,10 @@ jobs:
       #    React 18 / Grafana 10.4+ range the fixture (and real consumers)
       #    build against, so strict npm peer resolution would reject the
       #    install. This mirrors how consumers install the package today.
+      #    TODO: drop `--legacy-peer-deps` once the peer-dependency relaxation
+      #    (`@grafana/*` -> `^13`, react -> `^18 || ^19`) lands on main; after
+      #    that the library's peers will match this range and strict resolution
+      #    will succeed.
       - name: Install fixture plugin deps
         working-directory: e2e/fixture-datasource
         run: npm install --ignore-scripts --legacy-peer-deps
