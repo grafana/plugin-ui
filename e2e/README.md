@@ -50,9 +50,12 @@ yarn install --immutable
 yarn build
 npm pack && mv grafana-plugin-ui-*.tgz plugin-ui.tgz
 
-# 2. Build the fixture plugin against the packed library
+# 2. Build the fixture plugin against the packed library.
+#    `--legacy-peer-deps` is required because the published library pins its
+#    react/@grafana/* peers to exact versions that don't match the React 18 /
+#    Grafana 10.4+ range the fixture builds against.
 cd e2e/fixture-datasource
-npm install --ignore-scripts
+npm install --ignore-scripts --legacy-peer-deps
 npm run build
 cd ..
 

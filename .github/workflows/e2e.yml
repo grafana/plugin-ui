@@ -54,9 +54,14 @@ jobs:
           mv grafana-plugin-ui-*.tgz plugin-ui.tgz
 
       # 2. Build the fixture data source plugin against the packed library.
+      #    `--legacy-peer-deps` is required: the published library pins its
+      #    `react`/`@grafana/*` peers to exact versions that don't match the
+      #    React 18 / Grafana 10.4+ range the fixture (and real consumers)
+      #    build against, so strict npm peer resolution would reject the
+      #    install. This mirrors how consumers install the package today.
       - name: Install fixture plugin deps
         working-directory: e2e/fixture-datasource
-        run: npm install --ignore-scripts
+        run: npm install --ignore-scripts --legacy-peer-deps
       - name: Build fixture plugin
         working-directory: e2e/fixture-datasource
         run: npm run build
