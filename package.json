@@ -131,7 +131,7 @@
     "rxjs": "7.8.2",
     "storybook": "10.5.0",
     "ts-node": "10.9.2",
-    "typescript": "5.9.3"
+    "typescript": "7.0.2"
   },
   "peerDependencies": {
     "@grafana/data": "^13.0.0",
