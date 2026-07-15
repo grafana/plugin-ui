@@ -5,6 +5,7 @@
     "dist/**",
     "compiled/",
     "yarn.lock",
+    "*.test.{ts,tsx}",
     "staticRegistry.ts",
     "*.schema.json",
     "*.d.ts",
@@ -199,6 +200,7 @@
     "marcbachmann",
     "publint",
     "uplot",
+    "upserts",
     "trufflehog",
     "arethetypeswrong"
   ]
