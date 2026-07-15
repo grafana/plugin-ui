@@ -79,7 +79,18 @@ module.exports = (env = {}) => {
             options: {
               jsc: {
                 parser: { syntax: 'typescript', tsx: true },
-                transform: { react: { runtime: 'automatic' } },
+                // Use the *classic* JSX runtime (React.createElement) rather than
+                // the automatic one. The automatic runtime imports
+                // `react/jsx-runtime`, which is NOT externalized above and would
+                // therefore be bundled at the fixture's React 18. On a React 19
+                // host (Grafana >=13, nightly) that bundled jsx-runtime crashes
+                // on load because it reaches into `__SECRET_INTERNALS_*`, which
+                // React 19 renamed. The classic runtime only touches the stable
+                // `React.createElement`/`React.Fragment` API (every fixture file
+                // already `import React from 'react'`), so the plugin loads
+                // across the whole 10.4 -> nightly matrix on both React 18 and 19.
+                // See https://grafana.com/developers/plugin-tools/migration-guides/update-from-grafana-versions/migrate-12_x-to-13_x
+                transform: { react: { runtime: 'classic' } },
                 target: 'es2020',
               },
             },
