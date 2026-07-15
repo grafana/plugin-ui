@@ -1,5 +1,6 @@
 {
   "extends": ["@grafana/eslint-config"],
+  "ignorePatterns": ["e2e/"],
   "rules": {
     "react/prop-types": "off",
     "@typescript-eslint/consistent-type-imports": [
