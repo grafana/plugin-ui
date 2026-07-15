@@ -1,0 +1,1 @@
+export { getConfigSchema } from './registry';
