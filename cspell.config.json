@@ -1,10 +1,12 @@
 {
   "ignorePaths": [
     ".github/**",
+    "e2e/**",
     "node_modules/**",
     "dist/**",
     "compiled/",
     "yarn.lock",
+    "*.test.{ts,tsx}",
     "staticRegistry.ts",
     "*.schema.json",
     "*.test.{ts,tsx}",
@@ -206,6 +208,15 @@
     "verifysignedbycert",
     "waitfor",
     "writetext",
-    "xact"
+    "xact",
+    "logql",
+    "packagejson",
+    "marcbachmann",
+    "publint",
+    "uplot",
+    "upserts",
+    "trufflehog",
+    "arethetypeswrong",
+    "wojtekmaj"
   ]
 }

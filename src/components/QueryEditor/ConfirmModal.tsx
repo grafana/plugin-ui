@@ -27,6 +27,7 @@ export function ConfirmModal({ isOpen, onCancel, onDiscard, onCopy }: ConfirmMod
           <span className="p-l-1">Warning</span>
         </div>
       }
+      ariaLabel="Warning"
       onDismiss={onCancel}
       isOpen={isOpen}
     >

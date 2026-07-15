@@ -30,6 +30,7 @@ export const OperationInfoButton = memo<Props>(({ definition, operation, innerQu
     <>
       <Button
         title="Click to show description"
+        aria-label="Click to show description"
         ref={setTriggerRef}
         icon="info-circle"
         size="sm"
@@ -48,6 +49,7 @@ export const OperationInfoButton = memo<Props>(({ definition, operation, innerQu
                 fill="text"
                 variant="secondary"
                 title="Remove operation"
+                aria-label="Remove operation"
               />
             </div>
             <div

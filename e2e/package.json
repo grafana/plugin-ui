@@ -1,0 +1,15 @@
+{
+  "name": "plugin-ui-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright e2e harness that validates @grafana/plugin-ui components inside real Grafana versions.",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@grafana/plugin-e2e": "3.10.0",
+    "@playwright/test": "1.61.1"
+  }
+}

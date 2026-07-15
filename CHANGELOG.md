@@ -1,5 +1,33 @@
 # Change Log
 
+## v0.17.0 - 2026-07-15
+
+### Note
+
+- The `@grafana/*` dev dependencies were upgraded from `10.4.19` to `13.1.0`. The code is now built and tested against Grafana versions back to 10.4.x. Consumers on Grafana < 13 should stay on `0.16.x` if they experience issues with this version of the library.
+
+### Changed
+
+- Relaxed `peerDependencies` from exact pins to compatibility ranges: `@grafana/*` is now `^13.0.0`, `react`/`react-dom` are `^18.0.0 || ^19.0.0`, and the `@testing-library/*` peers use caret ranges. This lets consumers dedupe against their own Grafana/React versions instead of being forced onto an exact patch. Renovate is now configured to leave `peerDependencies` alone so it won't re-pin them.
+- Replaced the removed `HorizontalGroup` component with `Stack` in `QueryToolbox`, `DataSourcePicker`, and `SecretTextArea` (no public API change).
+- Replaced the deprecated `InfoBox` with `Alert` in Storybook stories.
+- Added `aria-label`s to icon-only `Button`/`IconButton` usages and an `ariaLabel` to the custom-title `Modal` in `ConfirmModal`, as required by Grafana 13's stricter accessibility types.
+- Reworked the datasource-config schema registry: `getConfigSchema` now resolves a plugin's schema from `/public/plugins/{pluginType}/schema/dsconfig.json` and falls back to the shared `grafana/dsconfig` registry when the plugin does not bundle one, returning an empty schema if neither is available. The bundled static schema JSON files were removed from the package, considerably reducing its size.
+- Testing: added an `IntersectionObserver` mock and taught Jest's `transformIgnorePatterns` to transform Grafana 13's nested ES-module dependencies.
+
+### Removed
+
+- Removed the bundled static schema registry and its exports (`getStaticConfigSchema`, `staticSchemaRegistry`, `getConfigSchemaUrl`) along with the per-datasource `*.schema.json` files. Consumers should rely on `getConfigSchema`, which now fetches schemas at runtime.
+
+### Added
+
+- End-to-end tests: added a Playwright suite that runs against a fixture datasource, wired up in CI via a new `e2e` workflow.
+- Published the component Storybook to GitHub Pages.
+
+### Dependencies
+
+- Updated dev/tooling dependencies, including `typescript-eslint` v8, the `testing-library` monorepo, `lefthook` v2, `rollup-plugin-node-externals` v9, `@stylistic/eslint-plugin-ts` v4, `@types/testing-library__jest-dom` v6, and Node.js 24.16.0.
+
 ## v0.16.1 - 2026-06-18
 
 - Improve styling of `TLSClientAuth` components

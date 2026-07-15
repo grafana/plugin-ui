@@ -1,4 +1,4 @@
 export * from './llm';
-export * from './provisioning';
+export { datasourceToProvisioningYaml, generateProvisioningTemplate, formatYamlDiff } from './provisioning';
 export * from './dsconfig';
-export * from './registry';
+export { getConfigSchema } from './registry';

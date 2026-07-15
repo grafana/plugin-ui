@@ -15,5 +15,23 @@ Object.defineProperty(global, 'matchMedia', {
   })),
 });
 
+// jsdom does not implement IntersectionObserver, which @grafana/ui's Select (and other
+// components) rely on as of Grafana 13. Provide a no-op mock so tests can render them.
+class MockIntersectionObserver {
+  constructor(callback) {
+    this.callback = callback;
+  }
+  observe = jest.fn();
+  unobserve = jest.fn();
+  disconnect = jest.fn();
+  takeRecords = jest.fn(() => []);
+}
+
+Object.defineProperty(global, 'IntersectionObserver', {
+  writable: true,
+  configurable: true,
+  value: MockIntersectionObserver,
+});
+
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
