@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.17.1 - 2026-07-15
+
+- Added new `DatasourceConfigWizard` component ( schema driven config page )
+
 ## v0.17.0 - 2026-07-15
 
 ### Note

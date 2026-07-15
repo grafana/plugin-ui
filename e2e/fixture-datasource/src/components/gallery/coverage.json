@@ -8,6 +8,8 @@
     "TLSSettings",
     "ConnectionSettings",
     "AdvancedHttpSettings",
+    "DatasourceConfigWizard",
+    "DatasourceErrorBoundary",
     "SecureSocksProxyToggle",
     "CustomHeadersSettings"
   ],
