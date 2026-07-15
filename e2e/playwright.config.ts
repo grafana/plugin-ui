@@ -16,6 +16,10 @@ export default defineConfig<PluginOptions>({
     baseURL: process.env.GRAFANA_URL ?? 'http://localhost:3000',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    // Record a video for each test but only keep it when the test fails, so the
+    // always-uploaded HTML report carries recordings for failures without
+    // bloating artifacts with videos of passing runs.
+    video: 'retain-on-failure',
     // plugin-e2e reads provisioned datasources from here.
     provisioningRootDir: process.env.PROVISIONING_ROOT_DIR ?? 'provisioning',
   },
