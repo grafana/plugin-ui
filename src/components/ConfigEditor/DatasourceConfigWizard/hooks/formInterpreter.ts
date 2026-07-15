@@ -10,7 +10,7 @@
 import type { ConfigField } from '../../../../schema/schema';
 import { formKey, getWatchedValue, type ResolvedGroup } from '../config';
 import { extractFieldRefs, evaluateCelExpression } from '../cel';
-import { isFieldRequired } from '../fieldUtils';
+import { isFieldRequired } from '../inputs/fieldUtils';
 import { SECURE_FIELD_CONFIGURED } from '../datasource';
 
 /**

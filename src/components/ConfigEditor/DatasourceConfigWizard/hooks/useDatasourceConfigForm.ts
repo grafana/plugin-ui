@@ -12,7 +12,7 @@ import {
   type ResolvedGroup,
 } from '../config';
 import { fetchExistingValues, submitDatasourceConfig, type FormValues } from '../datasource';
-import { evaluateEffectCondition } from '../fieldUtils';
+import { evaluateEffectCondition } from '../inputs/fieldUtils';
 import {
   buildFieldCelContext,
   isFieldVisible as isFieldVisibleImpl,
@@ -28,9 +28,8 @@ export type DatasourceConfigFormOptions = {
   onSaving?: (saving: boolean) => void;
 };
 
-export type { ResolvedGroup };
-
-export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: DatasourceConfigFormOptions) {
+export function useDatasourceConfigForm(props: DatasourceConfigFormOptions) {
+  const { schema, dsUid, onSuccess, onSaving } = props;
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [initializing, setInitializing] = useState(true);
@@ -226,8 +225,8 @@ export function useDatasourceConfigForm({ schema, dsUid, onSuccess, onSaving }: 
       setSubmitting(true);
       setSubmitError(null);
       onSaving?.(true);
+      // just introduced 2 second delay to add a visual hue. Can be removed if nor required.
       const minDelay = new Promise((r) => setTimeout(r, 2000));
-
       try {
         await submitDatasourceConfig(dsUid, data, allStorageFields, isFieldVisible);
         const [refreshed] = await Promise.all([fetchExistingValues(dsUid, allStorageFields), minDelay]);

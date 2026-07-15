@@ -1,83 +1,16 @@
 import React from 'react';
-import type { ConfigField } from '../../../schema/schema';
-import type { IndexedPairItem } from './datasource';
-import type { FieldInputProps } from './inputs/types';
-import { SecureFieldInput } from './inputs/SecureFieldInput';
-import { StringArrayInput } from './inputs/StringArrayInput';
-import { IndexedPairEditor } from './inputs/IndexedPairEditor';
-import { FileUploadField } from './inputs/FileUploadField';
-import { ObjectArrayEditor } from './inputs/ObjectArrayEditor';
-import { ComplexFieldNote } from './inputs/ComplexFieldNote';
-import { TextInput, NumberInput, BooleanInput, TextAreaInput, SelectInput, RadioInput } from './inputs/PrimitiveInputs';
+import type { IndexedPairItem } from '../datasource';
+import type { FieldInputProps } from './types';
+import { SecureFieldInput } from './SecureFieldInput';
+import { StringArrayInput } from './StringArrayInput';
+import { IndexedPairEditor } from './IndexedPairEditor';
+import { FileUploadField } from './FileUploadField';
+import { ObjectArrayEditor } from './ObjectArrayEditor';
+import { ComplexFieldNote } from './ComplexFieldNote';
+import { TextInput, NumberInput, BooleanInput, TextAreaInput, SelectInput, RadioInput } from './PrimitiveInputs';
+import { type FieldInputKind, resolveFieldInputKind } from './fieldUtils';
 
 export type { FieldInputProps };
-
-/** Discriminant identifying which input component renders a field. */
-export type FieldInputKind =
-  | 'fileUpload'
-  | 'secure'
-  | 'radio'
-  | 'select'
-  | 'boolean'
-  | 'number'
-  | 'textarea'
-  | 'indexedPair'
-  | 'stringArray'
-  | 'objectArray'
-  | 'complex'
-  | 'text';
-
-/**
- * Resolve a field to its input kind.
- *
- * Order matters: earlier rules win. Cross-cutting storage concerns (secure
- * storage, indexed-pair storage) intentionally take precedence over
- * `valueType`, and an explicit `ui.component` (radio/select/textarea) takes
- * precedence over the type-derived default. `fileUpload` requires `setValue`
- * because it distributes parsed values across sibling fields.
- */
-export function resolveFieldInputKind(field: ConfigField, hasSetValue: boolean): FieldInputKind {
-  if (field.ui?.component === 'fileUpload' && field.ui.fileMapping && hasSetValue) {
-    return 'fileUpload';
-  }
-  if (field.target === 'secureJsonData') {
-    return 'secure';
-  }
-  if (field.ui?.component === 'radio') {
-    return 'radio';
-  }
-  if (field.ui?.component === 'select') {
-    return 'select';
-  }
-  if (field.valueType === 'boolean') {
-    return 'boolean';
-  }
-  if (field.valueType === 'number') {
-    return 'number';
-  }
-  if (field.ui?.component === 'textarea') {
-    return 'textarea';
-  }
-  if (field.storage?.type === 'indexedPair') {
-    return 'indexedPair';
-  }
-  if (field.valueType === 'array' && field.item?.valueType === 'string') {
-    return 'stringArray';
-  }
-  if (field.valueType === 'array' && field.item?.valueType === 'object' && field.item.fields?.length) {
-    return 'objectArray';
-  }
-  if (
-    field.valueType === 'object' ||
-    field.valueType === 'map' ||
-    (field.valueType === 'array' && (field.item?.valueType === 'object' || field.item?.valueType === 'map'))
-  ) {
-    return 'complex';
-  }
-  return 'text';
-}
-
-// ── Adapters: map the normalized FieldInputProps onto each leaf component's own API ──
 
 /** Password/token stored in secureJsonData. */
 function SecureInput({ field, formField, disabled }: FieldInputProps) {

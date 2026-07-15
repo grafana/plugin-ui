@@ -1,4 +1,5 @@
 import type { DatasourceConfigSchema } from '../schema';
+import type { TroubleShootingContext } from './types';
 
 /**
  * Generate LLM hints for select fields (used when creating datasources).
@@ -27,30 +28,8 @@ export function generateLLMHint(schema: DatasourceConfigSchema): string {
  * Generate comprehensive structured field data for troubleshooting context.
  * Returns an array of field descriptors the LLM can use to render rich tables.
  */
-export function generateTroubleshootingFields(schema: DatasourceConfigSchema): Array<{
-  label: string;
-  key: string;
-  target: string;
-  type: string;
-  required: boolean;
-  description?: string;
-  defaultValue?: unknown;
-  options?: string[];
-  section?: string;
-  dependsOn?: string;
-}> {
-  const result: Array<{
-    label: string;
-    key: string;
-    target: string;
-    type: string;
-    required: boolean;
-    description?: string;
-    defaultValue?: unknown;
-    options?: string[];
-    section?: string;
-    dependsOn?: string;
-  }> = [];
+export function generateTroubleshootingFields(schema: DatasourceConfigSchema): TroubleShootingContext[] {
+  const result: TroubleShootingContext[] = [];
   for (const field of schema.fields) {
     if (field.kind === 'virtual' || field.isItemField) {
       continue;

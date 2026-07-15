@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Field, Select, Spinner } from '@grafana/ui';
 import { setBackendSrv, type BackendSrv } from '@grafana/runtime';
-import { type SelectableValue } from '@grafana/data';
 import { useArgs } from 'storybook/preview-api';
 import { DatasourceConfigWizard } from './DatasourceConfigWizard';
-import type { DatasourceConfigSchema } from '../../../schema/schema';
 import { resolveBaseFields } from '../../../schema/utils/packs';
+import type { DatasourceConfigSchema } from '../../../schema/schema';
+import { type SelectableValue } from '@grafana/data';
 
 // ------------------------------------------------------------------
 // Mock backend
@@ -211,7 +211,6 @@ function WizardStory({ mode, pluginType, onPluginTypeChange }: WizardStoryProps)
           schema={schema}
           dsUid="story-datasource"
           dsName={schema.pluginName}
-          mode={mode}
           onSuccess={(status, message) => console.log('onSuccess', status, message)}
           onSaving={(saving) => console.log('onSaving', saving)}
           onRetest={() => console.log('onRetest')}
@@ -258,12 +257,6 @@ function usePluginTypeArg() {
     setPluginType: (next: string) => updateArgs({ pluginType: next }),
   };
 }
-
-/** Accordion / sidebar layout (default). */
-export const Tab = () => {
-  const { pluginType, setPluginType } = usePluginTypeArg();
-  return <WizardStory mode="tab" pluginType={pluginType} onPluginTypeChange={setPluginType} />;
-};
 
 /** Step-by-step wizard layout. */
 export const Wizard = () => {
