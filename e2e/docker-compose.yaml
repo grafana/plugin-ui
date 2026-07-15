@@ -1,0 +1,16 @@
+# Boots a single Grafana at a configurable version with the freshly-built
+# fixture plugin mounted in. GRAFANA_IMAGE / GRAFANA_VERSION are supplied by the
+# grafana/plugin-actions e2e-version matrix in CI (defaults are for local runs).
+services:
+  grafana:
+    container_name: grafana-pluginuifixture
+    image: grafana/${GRAFANA_IMAGE:-grafana-enterprise}:${GRAFANA_VERSION:-13.1.0}
+    ports:
+      - '3000:3000/tcp'
+    volumes:
+      - ./fixture-datasource/dist:/var/lib/grafana/plugins/grafana-pluginuifixture-datasource
+      - ./provisioning:/etc/grafana/provisioning
+    environment:
+      GF_DEFAULT_APP_MODE: development
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: grafana-pluginuifixture-datasource
+      GF_LOG_LEVEL: warn
