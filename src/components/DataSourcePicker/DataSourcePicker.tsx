@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { HorizontalGroup, Select } from '@grafana/ui';
+import { Stack, Select } from '@grafana/ui';
 import { type DataSourceInstanceSettings, type SelectableValue } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
 import { isUnsignedPluginSignature, PluginSignatureBadge } from '../Plugins/PluginSignatureBadge';
@@ -125,9 +125,9 @@ export class DataSourcePicker extends PureComponent<Props, State> {
           getOptionLabel={(o) => {
             if (o.meta && isUnsignedPluginSignature(o.meta.signature) && o !== value) {
               return (
-                <HorizontalGroup align="center" justify="space-between">
+                <Stack alignItems="center" justifyContent="space-between">
                   <span>{o.label}</span> <PluginSignatureBadge status={o.meta.signature} />
-                </HorizontalGroup>
+                </Stack>
               );
             }
             return o.label || '';

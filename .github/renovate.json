@@ -1,4 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>grafana/grafana-renovate-config//presets/data-sources/base"]
+  "extends": ["github>grafana/grafana-renovate-config//presets/data-sources/base"],
+  "packageRules": [
+    {
+      "matchDepTypes": ["peerDependencies"],
+      "enabled": false,
+      "description": "peerDependencies express a compatibility range and are maintained by hand; Renovate must not pin them to exact versions or bump them."
+    }
+  ]
 }

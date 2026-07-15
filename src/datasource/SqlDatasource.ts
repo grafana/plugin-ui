@@ -24,12 +24,12 @@ import { type DataQuery } from '@grafana/schema';
 import { MACRO_NAMES } from './constants';
 // import { toTestingStatus } from '@grafana/runtime/utils/queryResponse';
 import {
-  type SQLQuery,
-  type SQLOptions,
   type DB,
-  type SqlQueryModel,
-  type ResponseParser,
   QueryFormat,
+  type ResponseParser,
+  type SQLOptions,
+  type SQLQuery,
+  type SqlQueryModel,
 } from '../components/QueryEditor/types';
 
 export interface SearchFilterOptions {
@@ -69,7 +69,8 @@ export abstract class SqlDatasource extends DataSourceWithBackend<SQLQuery, SQLO
   ) {
     super(instanceSettings);
     this.name = instanceSettings.name;
-    this.id = instanceSettings.id;
+    // If the id is not present, set it to 0 - it's deprecated in Grafana 13
+    this.id = instanceSettings.id ?? 0;
     const settingsData = instanceSettings.jsonData || {};
     this.interval = settingsData.timeInterval || '1m';
     this.db = this.getDB();

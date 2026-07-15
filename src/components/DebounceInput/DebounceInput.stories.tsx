@@ -1,4 +1,4 @@
-import { InfoBox } from '@grafana/ui';
+import { Alert } from '@grafana/ui';
 import React from 'react';
 import { DebounceInput } from './DebounceInput';
 
@@ -12,7 +12,7 @@ export const Basic = () => {
 
   return (
     <>
-      <InfoBox title="Updated value">{`"${value}"`}</InfoBox>
+      <Alert title="Updated value" severity="info">{`"${value}"`}</Alert>
       <DebounceInput placeholder="Type something here" value={value} onDebounce={(newValue) => setValue(newValue!)} />
     </>
   );
@@ -24,7 +24,7 @@ export const CustomDelay = () => {
 
   return (
     <>
-      <InfoBox title={`Updated value with custom delay of ${delay}`}>{`"${value}"`}</InfoBox>
+      <Alert title={`Updated value with custom delay of ${delay}`} severity="info">{`"${value}"`}</Alert>
       <DebounceInput
         placeholder="Type something here"
         value={value}

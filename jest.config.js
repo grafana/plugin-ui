@@ -4,16 +4,32 @@ import path from 'path';
 /*
  * This utility function is useful in combination with jest `transformIgnorePatterns` config
  * to transform specific packages (e.g.ES modules) in a projects node_modules folder.
+ *
+ * The second negative lookahead matches the listed packages even when they are nested inside
+ * another dependency's `node_modules` (e.g. `@grafana/data/node_modules/marked`), which a plain
+ * `node_modules/(?!(pkg)/)` pattern would otherwise skip and leave untransformed.
+ *
+ * @type {(moduleNames: string[]) => string}
  */
-const nodeModulesToTransform = (moduleNames) => `node_modules\/(?!(${moduleNames.join('|')})\/)`;
+const nodeModulesToTransform = (moduleNames) => {
+  const names = moduleNames.join('|');
+  return `node_modules\/(?!(${names})\/)(?!.*\/node_modules\/(${names})\/)`;
+};
 
 const grafanaESModules = [
+  '@wojtekmaj/date-utils',
   'd3',
   'd3-color',
   'd3-force',
   'd3-interpolate',
   'd3-scale-chromatic',
+  'get-user-locale',
+  'marked',
+  'marked-mangle',
+  'memoize',
+  'mimic-function',
   'ol',
+  'react-calendar',
   'react-colorful',
   'uuid',
 ];

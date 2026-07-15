@@ -1,4 +1,4 @@
-import { InfoBox } from '@grafana/ui';
+import { Alert } from '@grafana/ui';
 import React from 'react';
 import { Segment } from './Segment';
 import { type SelectableValue } from '@grafana/data';
@@ -23,7 +23,7 @@ export const Basic = () => {
 
   return (
     <>
-      <InfoBox title="Updated value">{`"${value}"`}</InfoBox>
+      <Alert title="Updated value" severity="info">{`"${value}"`}</Alert>
       <Segment
         options={options}
         placeholder="Type something here"
@@ -50,7 +50,7 @@ export const CustomDelay = () => {
 
   return (
     <>
-      <InfoBox title={`Updated value with custom delay of ${delay}`}>{`"${value}"`}</InfoBox>
+      <Alert title={`Updated value with custom delay of ${delay}`} severity="info">{`"${value}"`}</Alert>
       <Segment
         options={options}
         placeholder="Type something here"
