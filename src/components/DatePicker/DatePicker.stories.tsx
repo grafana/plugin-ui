@@ -3,7 +3,7 @@ import { DatePicker } from './DatePicker';
 import { Button } from '@grafana/ui';
 
 export default {
-  title: 'Pickers And Editors/DatePicker',
+  title: 'Components/DatePicker',
   component: DatePicker,
 };
 

@@ -1,6 +1,7 @@
 {
   "ignorePaths": [
     ".github/**",
+    "e2e/**",
     "node_modules/**",
     "dist/**",
     "compiled/",

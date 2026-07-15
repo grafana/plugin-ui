@@ -1,0 +1,112 @@
+name: E2E
+on:
+  pull_request:
+permissions: {}
+
+jobs:
+  resolve-versions:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      matrix: ${{ steps.resolve-versions.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - name: Resolve Grafana E2E versions
+        id: resolve-versions
+        uses: grafana/plugin-actions/e2e-version@e2e-version/v3.0.2
+        with:
+          version-resolver-type: plugin-grafana-dependency
+          # The fixture plugin.json lives under e2e/, not <root>/src, so pass the
+          # supported range explicitly instead of relying on plugin.json discovery.
+          grafana-dependency: '>=10.4.0'
+
+  playwright-tests:
+    needs: resolve-versions
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        GRAFANA_IMAGE: ${{ fromJson(needs.resolve-versions.outputs.matrix) }}
+    name: e2e (${{ matrix.GRAFANA_IMAGE.NAME }}:${{ matrix.GRAFANA_IMAGE.VERSION }})
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      # 1. Build the library and pack it exactly as consumers receive it from
+      #    the registry. Use `npm pack`, NOT `yarn pack`: Yarn Berry strips
+      #    nested node_modules on pack, which drops the ESM build's vendored
+      #    deps (dist/esm/node_modules/*) and breaks ESM consumers of the heavy
+      #    components. npm keeps them, matching how the package is published.
+      - run: yarn install --immutable
+      - run: yarn build
+      - run: |
+          npm pack
+          mv grafana-plugin-ui-*.tgz plugin-ui.tgz
+
+      # 2. Build the fixture data source plugin against the packed library.
+      #    `--legacy-peer-deps` is required: the published library pins its
+      #    `react`/`@grafana/*` peers to exact versions that don't match the
+      #    React 18 / Grafana 10.4+ range the fixture (and real consumers)
+      #    build against, so strict npm peer resolution would reject the
+      #    install. This mirrors how consumers install the package today.
+      #    TODO: drop `--legacy-peer-deps` once the peer-dependency relaxation
+      #    (`@grafana/*` -> `^13`, react -> `^18 || ^19`) lands on main; after
+      #    that the library's peers will match this range and strict resolution
+      #    will succeed.
+      - name: Install fixture plugin deps
+        working-directory: e2e/fixture-datasource
+        run: npm install --ignore-scripts --legacy-peer-deps
+      - name: Build fixture plugin
+        working-directory: e2e/fixture-datasource
+        run: npm run build
+      - name: Check component coverage drift
+        working-directory: e2e/fixture-datasource
+        run: npm run check-coverage
+
+      # 3. Boot the target Grafana version with the fixture plugin mounted.
+      - name: Start Grafana
+        working-directory: e2e
+        run: |
+          GRAFANA_VERSION="${{ matrix.GRAFANA_IMAGE.VERSION }}" \
+          GRAFANA_IMAGE="${{ matrix.GRAFANA_IMAGE.NAME }}" \
+          docker compose up -d --pull always
+      - name: Wait for Grafana to be healthy
+        run: |
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:3000/api/health >/dev/null; then
+              echo "Grafana is up"; exit 0
+            fi
+            sleep 2
+          done
+          echo "Grafana did not become healthy in time"; exit 1
+
+      # 4. Run Playwright against real Grafana.
+      - name: Install e2e deps
+        working-directory: e2e
+        run: npm install --ignore-scripts
+      - name: Install Playwright browser
+        working-directory: e2e
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright tests
+        working-directory: e2e
+        run: npx playwright test
+        env:
+          GRAFANA_URL: http://localhost:3000
+
+      - name: Upload Playwright report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: playwright-report-${{ matrix.GRAFANA_IMAGE.NAME }}-${{ matrix.GRAFANA_IMAGE.VERSION }}
+          path: e2e/playwright-report/
+          retention-days: 7

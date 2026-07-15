@@ -4,7 +4,7 @@ import { Segment } from './Segment';
 import { type SelectableValue } from '@grafana/data';
 
 export default {
-  title: 'Forms/Segment',
+  title: 'Components/Segment',
   component: Segment,
 };
 
