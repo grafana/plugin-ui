@@ -5,6 +5,7 @@ import {
   Auth,
   AuthMethod,
   ConfigDescriptionLink,
+  DatasourceConfigWizard,
   ConfigSection,
   ConfigSubSection,
   ConnectionSettings,
@@ -88,11 +89,11 @@ export function ConfigGallery({ options, onOptionsChange }: Props) {
       </GalleryItem>
 
       <GalleryItem id="ConnectionSettings">
-        <ConnectionSettings config={options} onChange={(config) => onOptionsChange(config)} />
+        <ConnectionSettings config={options} onChange={(config: any) => onOptionsChange(config)} />
       </GalleryItem>
 
       <GalleryItem id="AdvancedHttpSettings">
-        <AdvancedHttpSettings config={options} onChange={(config) => onOptionsChange(config)} />
+        <AdvancedHttpSettings config={options} onChange={(config: any) => onOptionsChange(config)} />
       </GalleryItem>
 
       <GalleryItem id="SecureSocksProxyToggle">
@@ -101,6 +102,30 @@ export function ConfigGallery({ options, onOptionsChange }: Props) {
 
       <GalleryItem id="CustomHeadersSettings">
         <CustomHeadersSettings dataSourceConfig={settings} onChange={noop} />
+      </GalleryItem>
+
+      <GalleryItem id="DatasourceConfigWizard">
+        <DatasourceConfigWizard
+          key={`grafana-pluginuifixture-datasource`}
+          schema={{
+            schemaVersion: 'v1',
+            pluginType: 'grafana-pluginuifixture-datasource',
+            pluginName: 'Plugin UI Fixture',
+            fields: [
+              {
+                id: 'root_url',
+                key: 'url',
+                valueType: 'string',
+                target: 'root',
+              },
+            ],
+          }}
+          dsUid="story-datasource"
+          dsName={'Plugin UI Fixture'}
+          onSuccess={(status: any, message: any) => console.log('onSuccess', status, message)}
+          onSaving={(saving: any) => console.log('onSaving', saving)}
+          onRetest={() => console.log('onRetest')}
+        />
       </GalleryItem>
     </div>
   );
