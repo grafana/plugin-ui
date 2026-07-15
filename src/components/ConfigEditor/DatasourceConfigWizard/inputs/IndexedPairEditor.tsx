@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { css } from '@emotion/css';
-import type { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Button, Input, Icon, Tooltip, Stack } from '@grafana/ui';
 import { SECURE_FIELD_CONFIGURED, type IndexedPairItem } from '../datasource';
 import { getSecureFieldStyles } from './SecureFieldInput';
+import type { GrafanaTheme2 } from '@grafana/data';
+import type { FieldInputProps } from './types';
 
 type Props = {
   value: IndexedPairItem[];
@@ -13,6 +14,23 @@ type Props = {
   hideControls?: boolean;
   itemLabel?: string;
 };
+
+/** Editable key/value list backed by indexed storage (e.g. HTTP headers). */
+export function IndexedPairInput({ field, formField, disabled }: FieldInputProps) {
+  const items = Array.isArray(formField.value) ? (formField.value as IndexedPairItem[]) : [];
+  const maxItems =
+    field.validations?.find((v): v is { type: 'itemCount'; max?: number } => v.type === 'itemCount')?.max ?? 10;
+  const itemLabel = field.label?.toLowerCase().replace(/s$/, '') ?? 'header';
+  return (
+    <IndexedPairEditor
+      value={items}
+      onChange={formField.onChange}
+      maxItems={maxItems}
+      disabled={disabled}
+      itemLabel={itemLabel}
+    />
+  );
+}
 
 export const IndexedPairEditor = (props: Props) => {
   const { value, onChange, maxItems = 10, disabled, hideControls, itemLabel = 'header' } = props;

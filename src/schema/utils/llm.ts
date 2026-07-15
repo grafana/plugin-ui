@@ -1,5 +1,17 @@
 import type { DatasourceConfigSchema } from '../schema';
-import type { TroubleShootingContext } from './types';
+
+type TroubleShootingContext = {
+  label: string;
+  key: string;
+  target: string;
+  type: string;
+  required: boolean;
+  description?: string;
+  defaultValue?: unknown;
+  options?: string[];
+  section?: string;
+  dependsOn?: string;
+};
 
 /**
  * Generate LLM hints for select fields (used when creating datasources).

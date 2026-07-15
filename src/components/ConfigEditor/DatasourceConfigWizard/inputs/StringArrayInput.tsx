@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { css } from '@emotion/css';
 import { useStyles2, Button, Input, Stack, Tooltip } from '@grafana/ui';
 import type { GrafanaTheme2 } from '@grafana/data';
+import type { FieldInputProps } from './types';
 
 type Props = {
   value: string[];
@@ -10,6 +11,19 @@ type Props = {
   disabled?: boolean;
   itemLabel?: string;
 };
+
+export function StringArrayField({ field, formField, disabled }: FieldInputProps) {
+  const label = field.label ?? field.key;
+  return (
+    <StringArrayInput
+      value={Array.isArray(formField.value) ? (formField.value as string[]) : []}
+      onChange={formField.onChange}
+      placeholder={field.ui?.placeholder}
+      disabled={disabled}
+      itemLabel={label.toLowerCase().replace(/s$/, '')}
+    />
+  );
+}
 
 export const StringArrayInput = (props: Props) => {
   const { value, onChange, placeholder, disabled, itemLabel = 'item' } = props;

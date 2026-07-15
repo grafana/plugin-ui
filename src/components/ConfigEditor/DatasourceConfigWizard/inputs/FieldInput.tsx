@@ -1,88 +1,87 @@
 import React from 'react';
-import type { IndexedPairItem } from '../datasource';
-import type { FieldInputProps } from './types';
-import { SecureFieldInput } from './SecureFieldInput';
-import { StringArrayInput } from './StringArrayInput';
-import { IndexedPairEditor } from './IndexedPairEditor';
-import { FileUploadField } from './FileUploadField';
-import { ObjectArrayEditor } from './ObjectArrayEditor';
-import { ComplexFieldNote } from './ComplexFieldNote';
 import { TextInput, NumberInput, BooleanInput, TextAreaInput, SelectInput, RadioInput } from './PrimitiveInputs';
-import { type FieldInputKind, resolveFieldInputKind } from './fieldUtils';
+import { SecureInput } from './SecureFieldInput';
+import { StringArrayField } from './StringArrayInput';
+import { IndexedPairInput } from './IndexedPairEditor';
+import { FileUploadInput } from './FileUploadField';
+import { ObjectArrayInput } from './ObjectArrayEditor';
+import { ComplexInput } from './ComplexFieldNote';
+import { type ConfigField } from './../../../../schema';
+import { type FieldInputProps } from './types';
 
-export type { FieldInputProps };
+export type FieldInputKind =
+  | 'fileUpload'
+  | 'secure'
+  | 'radio'
+  | 'select'
+  | 'boolean'
+  | 'number'
+  | 'textarea'
+  | 'indexedPair'
+  | 'stringArray'
+  | 'objectArray'
+  | 'complex'
+  | 'text';
 
-/** Password/token stored in secureJsonData. */
-function SecureInput({ field, formField, disabled }: FieldInputProps) {
-  const label = field.label ?? field.key;
-  return (
-    <SecureFieldInput
-      formField={formField}
-      placeholder={field.ui?.placeholder ?? label}
-      disabled={disabled}
-      label={label}
-    />
-  );
-}
+const INPUT_KIND_RULES: ReadonlyArray<{
+  kind: FieldInputKind;
+  matches: (field: ConfigField, hasSetValue: boolean) => boolean;
+}> = [
+  {
+    kind: 'fileUpload',
+    matches: (f, hasSetValue) => f.ui?.component === 'fileUpload' && !!f.ui.fileMapping && hasSetValue,
+  },
+  {
+    kind: 'secure',
+    matches: (f) => f.target === 'secureJsonData',
+  },
+  {
+    kind: 'radio',
+    matches: (f) => f.ui?.component === 'radio',
+  },
+  {
+    kind: 'select',
+    matches: (f) => f.ui?.component === 'select',
+  },
+  {
+    kind: 'boolean',
+    matches: (f) => f.valueType === 'boolean',
+  },
+  {
+    kind: 'number',
+    matches: (f) => f.valueType === 'number',
+  },
+  {
+    kind: 'textarea',
+    matches: (f) => f.ui?.component === 'textarea',
+  },
+  {
+    kind: 'indexedPair',
+    matches: (f) => f.storage?.type === 'indexedPair',
+  },
+  {
+    kind: 'stringArray',
+    matches: (f) => f.valueType === 'array' && f.item?.valueType === 'string',
+  },
+  {
+    kind: 'objectArray',
+    matches: (f) => f.valueType === 'array' && f.item?.valueType === 'object' && !!f.item.fields?.length,
+  },
+  {
+    kind: 'complex',
+    matches: (f) =>
+      f.valueType === 'object' ||
+      f.valueType === 'map' ||
+      (f.valueType === 'array' && (f.item?.valueType === 'object' || f.item?.valueType === 'map')),
+  },
+  {
+    kind: 'text',
+    matches: () => true,
+  },
+];
 
-/** JSON file upload that distributes parsed keys across sibling fields. */
-function FileUploadInput({ field, formField, disabled, setValue }: FieldInputProps) {
-  // Only reachable when setValue exists (see resolveFieldInputKind), but guard anyway.
-  if (!setValue) {
-    return null;
-  }
-  return <FileUploadField field={field} formField={formField} disabled={disabled} setValue={setValue} />;
-}
-
-/** Editable key/value list backed by indexed storage (e.g. HTTP headers). */
-function IndexedPairInput({ field, formField, disabled }: FieldInputProps) {
-  const items = Array.isArray(formField.value) ? (formField.value as IndexedPairItem[]) : [];
-  const maxItems =
-    field.validations?.find((v): v is { type: 'itemCount'; max?: number } => v.type === 'itemCount')?.max ?? 10;
-  const itemLabel = field.label?.toLowerCase().replace(/s$/, '') ?? 'header';
-  return (
-    <IndexedPairEditor
-      value={items}
-      onChange={formField.onChange}
-      maxItems={maxItems}
-      disabled={disabled}
-      itemLabel={itemLabel}
-    />
-  );
-}
-
-/** Row-based editor for an array of strings. */
-function StringArrayField({ field, formField, disabled }: FieldInputProps) {
-  const label = field.label ?? field.key;
-  return (
-    <StringArrayInput
-      value={Array.isArray(formField.value) ? (formField.value as string[]) : []}
-      onChange={formField.onChange}
-      placeholder={field.ui?.placeholder}
-      disabled={disabled}
-      itemLabel={label.toLowerCase().replace(/s$/, '')}
-    />
-  );
-}
-
-/** Inline editor for an array of objects with defined item fields. */
-function ObjectArrayInput({ field, formField, disabled, errorMessage }: FieldInputProps) {
-  return (
-    <ObjectArrayEditor
-      field={field}
-      value={formField.value}
-      onChange={formField.onChange}
-      disabled={disabled}
-      errorMessage={errorMessage}
-    />
-  );
-}
-
-/** Read-only note for complex shapes not editable in the wizard. */
-function ComplexInput({ field, formField }: FieldInputProps) {
-  const label = field.label ?? field.key;
-  const count = Array.isArray(formField.value) ? formField.value.length : 0;
-  return <ComplexFieldNote count={count} label={label} />;
+export function resolveFieldInputKind(field: ConfigField, hasSetValue: boolean): FieldInputKind {
+  return INPUT_KIND_RULES.find((rule) => rule.matches(field, hasSetValue))!.kind;
 }
 
 /** Registry mapping each resolved kind to its renderer. */

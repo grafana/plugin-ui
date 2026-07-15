@@ -1,5 +1,5 @@
 import type { ConfigField } from '../../../../schema/schema';
-import { resolveFieldInputKind } from './fieldUtils';
+import { resolveFieldInputKind } from './FieldInput';
 
 const field = (partial: Partial<ConfigField> & { id: string; key: string }): ConfigField => ({
   valueType: 'string',

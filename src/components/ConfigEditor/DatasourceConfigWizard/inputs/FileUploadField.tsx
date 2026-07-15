@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { FileDropzone, TextArea, Button, useTheme2 } from '@grafana/ui';
 import { css } from '@emotion/css';
 import type { ConfigField } from '../../../../schema/schema';
-import type { FormFieldRef } from './types';
+import type { FormFieldRef, FieldInputProps } from './types';
 
 type EntryMode = 'upload' | 'paste' | 'manual';
 
@@ -13,7 +13,15 @@ type Props = {
   setValue: (name: string, value: unknown) => void;
 };
 
-export function FileUploadField(props: Props) {
+export function FileUploadInput({ field, formField, disabled, setValue }: FieldInputProps) {
+  // Only reachable when setValue exists (see resolveFieldInputKind), but guard anyway.
+  if (!setValue) {
+    return null;
+  }
+  return <FileUploadField field={field} formField={formField} disabled={disabled} setValue={setValue} />;
+}
+
+function FileUploadField(props: Props) {
   const { field, formField, disabled, setValue } = props;
   const [mode, setModeLocal] = useState<EntryMode>('upload');
   const [error, setError] = useState<string | null>(null);

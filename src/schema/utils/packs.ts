@@ -1,4 +1,3 @@
-import { PACK_STATIC_URL } from './constants';
 import type { BaseFieldRef, ConfigField, DatasourceConfigSchema, FieldPack, FieldPackID, FieldPatch } from '../schema';
 
 const PACK_IDS: FieldPackID[] = [
@@ -29,7 +28,12 @@ export function loadPack(id: FieldPackID): Promise<FieldPack> {
 }
 
 async function fetchPack(id: FieldPackID): Promise<FieldPack> {
-  const res = await fetch(PACK_STATIC_URL.replaceAll('{packID}', id));
+  const res = await fetch(
+    'https://raw.githubusercontent.com/grafana/dsconfig/refs/heads/main/dsconfig/packs/{packID}.json'.replaceAll(
+      '{packID}',
+      id
+    )
+  );
   if (!res.ok) {
     throw new Error(`failed to fetch field pack ${id}: ${res.status} ${res.statusText}`);
   }

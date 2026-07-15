@@ -1,7 +1,7 @@
-import type { ConfigField } from '../../../../schema/schema';
 import { parseDependsOn, evaluateDependsOn, formKey, getWatchedValue } from '../config';
 import { evaluateCelExpression } from '../cel';
 import { SECURE_FIELD_CONFIGURED } from '../datasource';
+import type { ConfigField } from '../../../../schema/schema';
 
 /**
  * Evaluate an effect's `when` condition against a field value.
@@ -163,69 +163,4 @@ export function parseItemErrors(errorMessage: string | undefined): Record<number
   } catch {
     return null;
   }
-}
-
-/** Discriminant identifying which input component renders a field. */
-export type FieldInputKind =
-  | 'fileUpload'
-  | 'secure'
-  | 'radio'
-  | 'select'
-  | 'boolean'
-  | 'number'
-  | 'textarea'
-  | 'indexedPair'
-  | 'stringArray'
-  | 'objectArray'
-  | 'complex'
-  | 'text';
-
-/**
- * Resolve a field to its input kind.
- *
- * Order matters: earlier rules win. Cross-cutting storage concerns (secure
- * storage, indexed-pair storage) intentionally take precedence over
- * `valueType`, and an explicit `ui.component` (radio/select/textarea) takes
- * precedence over the type-derived default. `fileUpload` requires `setValue`
- * because it distributes parsed values across sibling fields.
- */
-export function resolveFieldInputKind(field: ConfigField, hasSetValue: boolean): FieldInputKind {
-  if (field.ui?.component === 'fileUpload' && field.ui.fileMapping && hasSetValue) {
-    return 'fileUpload';
-  }
-  if (field.target === 'secureJsonData') {
-    return 'secure';
-  }
-  if (field.ui?.component === 'radio') {
-    return 'radio';
-  }
-  if (field.ui?.component === 'select') {
-    return 'select';
-  }
-  if (field.valueType === 'boolean') {
-    return 'boolean';
-  }
-  if (field.valueType === 'number') {
-    return 'number';
-  }
-  if (field.ui?.component === 'textarea') {
-    return 'textarea';
-  }
-  if (field.storage?.type === 'indexedPair') {
-    return 'indexedPair';
-  }
-  if (field.valueType === 'array' && field.item?.valueType === 'string') {
-    return 'stringArray';
-  }
-  if (field.valueType === 'array' && field.item?.valueType === 'object' && field.item.fields?.length) {
-    return 'objectArray';
-  }
-  if (
-    field.valueType === 'object' ||
-    field.valueType === 'map' ||
-    (field.valueType === 'array' && (field.item?.valueType === 'object' || field.item?.valueType === 'map'))
-  ) {
-    return 'complex';
-  }
-  return 'text';
 }

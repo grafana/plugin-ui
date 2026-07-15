@@ -2,10 +2,17 @@ import React from 'react';
 import { css } from '@emotion/css';
 import { type GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Icon } from '@grafana/ui';
+import type { FieldInputProps } from './types';
 
 type Props = { count: number; label: string };
 
-export const ComplexFieldNote = (props: Props) => {
+export function ComplexInput({ field, formField }: FieldInputProps) {
+  const label = field.label ?? field.key;
+  const count = Array.isArray(formField.value) ? formField.value.length : 0;
+  return <ComplexFieldNote count={count} label={label} />;
+}
+
+const ComplexFieldNote = (props: Props) => {
   const { count, label } = props;
   const styles = useStyles2(getStyles);
   return (

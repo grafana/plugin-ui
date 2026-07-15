@@ -3,7 +3,7 @@ import { css } from '@emotion/css';
 import type { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2, Button, Input, Icon } from '@grafana/ui';
 import { SECURE_FIELD_CONFIGURED } from '../datasource';
-import type { FormFieldRef } from './types';
+import type { FormFieldRef, FieldInputProps } from './types';
 
 type Props = {
   formField: FormFieldRef;
@@ -11,6 +11,19 @@ type Props = {
   disabled?: boolean;
   label: string;
 };
+
+/** Password/token stored in secureJsonData. */
+export function SecureInput({ field, formField, disabled }: FieldInputProps) {
+  const label = field.label ?? field.key;
+  return (
+    <SecureFieldInput
+      formField={formField}
+      placeholder={field.ui?.placeholder ?? label}
+      disabled={disabled}
+      label={label}
+    />
+  );
+}
 
 export function SecureFieldInput(props: Props) {
   const { formField, placeholder, disabled } = props;

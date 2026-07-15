@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getConfigSchema } from '../utils/registry';
-import type { DatasourceConfigSchema } from '../schema';
+import { getConfigSchema } from '../../../../schema/utils/registry';
+import type { DatasourceConfigSchema } from '../../../../schema/schema';
 
 type UseDatasourceSchemaResult = { schema: DatasourceConfigSchema | null; loading: boolean; error: string | null };
 

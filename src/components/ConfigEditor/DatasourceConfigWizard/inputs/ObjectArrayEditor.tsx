@@ -1,12 +1,12 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import { useStyles2, Button, Tooltip, Stack } from '@grafana/ui';
-import { type GrafanaTheme2 } from '@grafana/data';
 import { SECURE_FIELD_CONFIGURED, findActiveSecureOverride } from '../datasource';
-import { type ConfigField } from '../../../../schema/schema';
 import { FieldInput } from './FieldInput';
 import { parseItemErrors } from './fieldUtils';
-import { type FormFieldRef } from './types';
+import { type ConfigField } from '../../../../schema/schema';
+import { type GrafanaTheme2 } from '@grafana/data';
+import { type FormFieldRef, type FieldInputProps } from './types';
 
 type Props = {
   field: ConfigField;
@@ -16,7 +16,20 @@ type Props = {
   errorMessage?: string;
 };
 
-export function ObjectArrayEditor(props: Props) {
+/** Inline editor for an array of objects with defined item fields. */
+export function ObjectArrayInput({ field, formField, disabled, errorMessage }: FieldInputProps) {
+  return (
+    <ObjectArrayEditor
+      field={field}
+      value={formField.value}
+      onChange={formField.onChange}
+      disabled={disabled}
+      errorMessage={errorMessage}
+    />
+  );
+}
+
+function ObjectArrayEditor(props: Props) {
   const { field, value, onChange, disabled, errorMessage } = props;
   const styles = useStyles2(getStyles);
   const itemFields = field.item?.fields ?? [];
@@ -155,7 +168,6 @@ function ObjectArrayItemRow({
   disabled,
   onUpdate,
   onRemove,
-  showLabels,
   error,
 }: {
   item: Record<string, unknown>;
