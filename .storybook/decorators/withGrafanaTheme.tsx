@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Decorator } from '@storybook/react-webpack5';
 import { getThemeById, ThemeContext } from '@grafana/data';
 import { GlobalStyles, PortalContainer } from '@grafana/ui';
