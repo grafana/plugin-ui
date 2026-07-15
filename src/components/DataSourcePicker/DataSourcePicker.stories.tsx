@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   PluginSignatureStatus,
   PluginType,
@@ -7,6 +6,7 @@ import {
   type DataSourcePluginMeta,
 } from '@grafana/data';
 import { setDataSourceSrv, type DataSourceSrv, type GetDataSourceListFilters } from '@grafana/runtime';
+import React, { useState } from 'react';
 import { DataSourcePicker } from './DataSourcePicker';
 
 const createMeta = (
@@ -150,7 +150,8 @@ const mockDataSourceSrv: DataSourceSrv = {
   getList: (filters) => filterDataSources(mockDataSources, filters),
   getInstanceSettings: (ref) => findDataSource(ref),
   get: (ref) => Promise.resolve(findDataSource(ref) as unknown as DataSourceApi),
-  reload: () => {},
+  reload: () => Promise.resolve(),
+  registerRuntimeDataSource: () => {},
 };
 
 setDataSourceSrv(mockDataSourceSrv);
