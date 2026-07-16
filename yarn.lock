@@ -1899,7 +1899,7 @@ __metadata:
     "@grafana/tsconfig": "npm:2.2.0"
     "@grafana/ui": "npm:13.1.0"
     "@hello-pangea/dnd": "npm:17.0.0"
-    "@marcbachmann/cel-js": "npm:7.6.1"
+    "@marcbachmann/cel-js": "npm:8.0.0"
     "@react-awesome-query-builder/ui": "npm:6.6.15"
     "@rollup/plugin-commonjs": "npm:29.0.3"
     "@rollup/plugin-json": "npm:6.1.0"
@@ -2645,12 +2645,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@marcbachmann/cel-js@npm:7.6.1":
-  version: 7.6.1
-  resolution: "@marcbachmann/cel-js@npm:7.6.1"
+"@marcbachmann/cel-js@npm:8.0.0":
+  version: 8.0.0
+  resolution: "@marcbachmann/cel-js@npm:8.0.0"
   bin:
     cel-evaluate: bin/cel-evaluate.js
-  checksum: 10c0/ba96b42d1b026f6e1eeffc9d4b9388eb4bc888799e51ab0f9a16af2e407403c456e784428917d1993e90458d295bc6a0c59a7e389bf858a9a3f153ce08428b7c
+  checksum: 10c0/31efee91d646d54a0c6945a647659ad422ee0e7d3c9ab2833c7e296c518ea841d2b01d04c7b6ec3404c6666ef5d6c41e4a0e26a852620accac6804dc926dabe4
   languageName: node
   linkType: hard
 

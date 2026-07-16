@@ -61,7 +61,7 @@
   "dependencies": {
     "@emotion/css": "11.13.5",
     "@hello-pangea/dnd": "17.0.0",
-    "@marcbachmann/cel-js": "7.6.1",
+    "@marcbachmann/cel-js": "8.0.0",
     "@react-awesome-query-builder/ui": "6.6.15",
     "lodash": "4.18.1",
     "prismjs": "1.30.0",
