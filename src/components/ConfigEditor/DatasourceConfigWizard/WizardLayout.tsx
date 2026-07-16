@@ -1,11 +1,9 @@
-import React, { type ReactNode, useCallback, useMemo, useState } from 'react';
+import React, { type ReactNode, useMemo, useState } from 'react';
 import { useStyles2, Button, Select, Icon, Tooltip, Spinner } from '@grafana/ui';
-import { formKey, getWatchedValue, isAuthGroupId } from './config';
-import { SECURE_FIELD_CONFIGURED } from './datasource';
-import { isFieldRequired } from './inputs/fieldUtils';
+import { isAuthGroupId } from './config';
 import { GroupFields, FormFooter, FetchErrorState } from './layoutParts';
 import { getWizardStyles } from './styles';
-import type { DatasourceConfigSchema } from '../../../schema/schema';
+import { type DatasourceConfigSchema } from '../../../schema/schema';
 import { type useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
 
 type WizardLayoutProps = {
@@ -21,115 +19,8 @@ type WizardLayoutProps = {
 export function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthError, renderActions }: WizardLayoutProps) {
   const styles = useStyles2(getWizardStyles);
   const [currentStep, setCurrentStep] = useState(0);
-  const {
-    resolvedGroups,
-    fieldById,
-    handleSubmit,
-    trigger,
-    errors,
-    watchedValues,
-    celContext,
-    initializing,
-    fetchError,
-    submitting,
-    readOnly,
-    isFieldVisible,
-    onSubmit,
-  } = form;
-
-  const arrowSteps = useMemo(() => {
-    const requiredGroup = resolvedGroups.find((g) => g.group.id === '_required');
-    if (!requiredGroup) {
-      return new Set(resolvedGroups.map((_, i) => i));
-    }
-    const requiredFieldIds = new Set(requiredGroup.fields.map((f) => f.id));
-    const steps = new Set<number>();
-    for (let i = 0; i < resolvedGroups.length; i++) {
-      const g = resolvedGroups[i];
-      if (g.group.id === '_required' || g.fields.some((f) => !requiredFieldIds.has(f.id))) {
-        steps.add(i);
-      }
-    }
-    return steps;
-  }, [resolvedGroups]);
-
-  const currentResolved = resolvedGroups[currentStep];
-
-  const isFirstStep = useMemo(() => {
-    for (let i = 0; i < currentStep; i++) {
-      if (arrowSteps.has(i)) {
-        return false;
-      }
-    }
-    return true;
-  }, [currentStep, arrowSteps]);
-
-  const isLastStep = useMemo(() => {
-    for (let i = currentStep + 1; i < resolvedGroups.length; i++) {
-      if (arrowSteps.has(i)) {
-        return false;
-      }
-    }
-    return true;
-  }, [currentStep, arrowSteps, resolvedGroups.length]);
-
-  const visibleFieldsForStep = useMemo(
-    () => (currentResolved ? currentResolved.fields.filter(isFieldVisible) : []),
-    [currentResolved, isFieldVisible]
-  );
-
-  const currentGroupValid = useMemo(() => {
-    if (!currentResolved) {
-      return true;
-    }
-    for (const field of visibleFieldsForStep) {
-      if (errors[formKey(field)]) {
-        return false;
-      }
-      if (isFieldRequired(field, watchedValues, fieldById, celContext)) {
-        const val = getWatchedValue(watchedValues, formKey(field));
-        if (val === SECURE_FIELD_CONFIGURED) {
-          continue;
-        }
-        if (val === undefined || val === null || val === '') {
-          return false;
-        }
-      }
-    }
-    return true;
-  }, [currentResolved, errors, visibleFieldsForStep, watchedValues, fieldById, celContext]);
-
-  const goNext = useCallback(async () => {
-    if (!currentResolved) {
-      return;
-    }
-    if (!readOnly) {
-      const visibleKeys = visibleFieldsForStep.map((f) => formKey(f));
-      const valid = await trigger(visibleKeys);
-      if (!valid) {
-        return;
-      }
-    }
-    setCurrentStep((s) => {
-      for (let i = s + 1; i < resolvedGroups.length; i++) {
-        if (arrowSteps.has(i)) {
-          return i;
-        }
-      }
-      return s;
-    });
-  }, [currentResolved, visibleFieldsForStep, trigger, resolvedGroups.length, arrowSteps, readOnly]);
-
-  const goPrev = useCallback(() => {
-    setCurrentStep((s) => {
-      for (let i = s - 1; i >= 0; i--) {
-        if (arrowSteps.has(i)) {
-          return i;
-        }
-      }
-      return s;
-    });
-  }, [arrowSteps]);
+  const { resolvedGroups, handleSubmit, initializing, fetchError, submitting, readOnly, isGroupValid, onSubmit } = form;
+  const canSave = useMemo(() => resolvedGroups.every(isGroupValid), [resolvedGroups, isGroupValid]);
 
   if (initializing) {
     return (
@@ -148,10 +39,13 @@ export function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthErro
   }
 
   if (resolvedGroups.length === 0) {
-    return null;
+    return <></>;
   }
 
+  const currentResolved = resolvedGroups[currentStep];
   const currentGroup = currentResolved?.group;
+  const isFirstStep = currentStep === 0;
+  const isLastStep = currentStep === resolvedGroups.length - 1;
 
   return (
     <div className={styles.container}>
@@ -186,7 +80,7 @@ export function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthErro
               size="sm"
               icon="angle-left"
               aria-label="Previous"
-              onClick={goPrev}
+              onClick={() => setCurrentStep(currentStep - 1)}
               disabled={isFirstStep || submitting}
               type="button"
             />
@@ -195,8 +89,8 @@ export function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthErro
             options={resolvedGroups.map((g, i) => ({ label: g.group.title, value: i }))}
             value={currentStep}
             onChange={(v) => {
-              if (v) {
-                setCurrentStep(v.value!);
+              if (v?.value != null) {
+                setCurrentStep(v.value);
               }
             }}
             disabled={submitting}
@@ -204,11 +98,11 @@ export function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthErro
           />
           <Tooltip content={isLastStep ? 'Last step' : `Next: ${resolvedGroups[currentStep + 1]?.group.title}`}>
             <Button
-              variant={isLastStep || (!readOnly && !currentGroupValid) ? 'secondary' : 'primary'}
+              variant={isLastStep ? 'secondary' : 'primary'}
               size="sm"
               icon="angle-right"
               aria-label="Next"
-              onClick={goNext}
+              onClick={() => setCurrentStep(currentStep + 1)}
               disabled={isLastStep || submitting}
               type="button"
             />
@@ -232,7 +126,7 @@ export function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthErro
             onRetest={onRetest}
             healthError={healthError}
             renderActions={renderActions}
-            saveDisabled={submitting || !currentGroupValid}
+            saveDisabled={submitting || !canSave}
             className={styles.buttons}
           />
         </form>
