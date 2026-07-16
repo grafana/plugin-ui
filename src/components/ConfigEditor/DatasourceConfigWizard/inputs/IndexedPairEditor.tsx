@@ -1,0 +1,190 @@
+import React, { useState } from 'react';
+import { css } from '@emotion/css';
+import { useStyles2, Button, Input, Icon, Tooltip, Stack } from '@grafana/ui';
+import { SECURE_FIELD_CONFIGURED, type IndexedPairItem } from '../datasource';
+import { getSecureFieldStyles } from './SecureFieldInput';
+import type { GrafanaTheme2 } from '@grafana/data';
+import type { FieldInputProps } from './types';
+
+type Props = {
+  value: IndexedPairItem[];
+  onChange: (items: IndexedPairItem[]) => void;
+  maxItems?: number;
+  disabled?: boolean;
+  hideControls?: boolean;
+  itemLabel?: string;
+};
+
+/** Editable key/value list backed by indexed storage (e.g. HTTP headers). */
+export function IndexedPairInput({ field, formField, disabled }: FieldInputProps) {
+  const items = Array.isArray(formField.value) ? (formField.value as IndexedPairItem[]) : [];
+  const maxItems =
+    field.validations?.find((v): v is { type: 'itemCount'; max?: number } => v.type === 'itemCount')?.max ?? 10;
+  const itemLabel = field.label?.toLowerCase().replace(/s$/, '') ?? 'header';
+  return (
+    <IndexedPairEditor
+      value={items}
+      onChange={formField.onChange}
+      maxItems={maxItems}
+      disabled={disabled}
+      itemLabel={itemLabel}
+    />
+  );
+}
+
+export const IndexedPairEditor = (props: Props) => {
+  const { value, onChange, maxItems = 10, disabled, hideControls, itemLabel = 'header' } = props;
+  const styles = useStyles2(getStyles);
+  const items = Array.isArray(value) ? value : [];
+  const addItem = () => {
+    if (items.length >= maxItems) {
+      return;
+    }
+    onChange([...items, { index: 0, name: '', value: '' }]);
+  };
+  const removeItem = (index: number) => {
+    onChange(items.filter((_, i) => i !== index));
+  };
+  const updateItem = (index: number, key: 'name' | 'value', val: string) => {
+    const updated = items.map((item, i) => (i === index ? { ...item, [key]: val } : item));
+    onChange(updated);
+  };
+  return (
+    <Stack direction="column" gap={0.5}>
+      {items.map((item, i) => (
+        <IndexedPairRow
+          key={item.index || `new-${i}`}
+          item={item}
+          index={i}
+          disabled={disabled}
+          onUpdate={updateItem}
+          onRemove={removeItem}
+          hideControls={hideControls}
+          itemLabel={itemLabel}
+        />
+      ))}
+      {!hideControls && items.length < maxItems && (
+        <div>
+          <Button variant="secondary" size="sm" icon="plus" disabled={disabled} onClick={addItem} type="button">
+            Add {itemLabel}
+          </Button>
+        </div>
+      )}
+      {!hideControls && items.length >= maxItems && (
+        <span className={styles.limitNote}>
+          Maximum {maxItems} {itemLabel}s reached
+        </span>
+      )}
+    </Stack>
+  );
+};
+
+type IndexedPairRowProps = {
+  item: IndexedPairItem;
+  index: number;
+  disabled?: boolean;
+  onUpdate: (index: number, key: 'name' | 'value', val: string) => void;
+  onRemove: (index: number) => void;
+  hideControls?: boolean;
+  itemLabel?: string;
+};
+
+const IndexedPairRow = (props: IndexedPairRowProps) => {
+  const { item, index, disabled, onUpdate, onRemove, hideControls, itemLabel = 'header' } = props;
+  const styles = useStyles2(getStyles);
+  const secureStyles = useStyles2(getSecureFieldStyles);
+  const isConfigured = item.value === SECURE_FIELD_CONFIGURED;
+  const [editing, setEditing] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+  return (
+    <Stack direction="row" gap={1}>
+      <div className={styles.inputCell}>
+        <Input
+          value={item.name}
+          placeholder="key"
+          disabled={disabled || hideControls}
+          onChange={(e) => onUpdate(index, 'name', e.currentTarget.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+            }
+          }}
+        />
+      </div>
+      <div className={styles.inputCell}>
+        {isConfigured && !editing ? (
+          <Stack direction="row" gap={1} alignItems="center">
+            <span className={secureStyles.configuredBadge}>
+              <Icon name="lock" size="xs" />
+              Configured
+            </span>
+            {!disabled && (
+              <Button
+                variant="secondary"
+                fill="text"
+                size="sm"
+                onClick={() => {
+                  setEditing(true);
+                  onUpdate(index, 'value', '');
+                }}
+                type="button"
+              >
+                Reset
+              </Button>
+            )}
+          </Stack>
+        ) : (
+          <Input
+            value={item.value === SECURE_FIELD_CONFIGURED ? '' : item.value}
+            placeholder={`${itemLabel} value`}
+            disabled={disabled}
+            type={revealed ? 'text' : 'password'}
+            onChange={(e) => onUpdate(index, 'value', e.currentTarget.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+              }
+            }}
+            suffix={
+              <Button
+                variant="secondary"
+                fill="text"
+                size="sm"
+                icon={revealed ? 'eye-slash' : 'eye'}
+                aria-label={revealed ? 'Hide' : 'Reveal'}
+                onClick={() => setRevealed((r) => !r)}
+                type="button"
+              />
+            }
+          />
+        )}
+      </div>
+      {!hideControls && (
+        <Tooltip content={`Remove ${itemLabel}`}>
+          <Button
+            variant="secondary"
+            fill="text"
+            size="sm"
+            icon="trash-alt"
+            aria-label={`Remove ${itemLabel}`}
+            disabled={disabled}
+            onClick={() => onRemove(index)}
+            type="button"
+          />
+        </Tooltip>
+      )}
+    </Stack>
+  );
+};
+
+const getStyles = (theme: GrafanaTheme2) => ({
+  inputCell: css({
+    flex: '1 1 0',
+    minWidth: 0,
+    overflow: 'hidden',
+  }),
+  limitNote: css({
+    fontSize: theme.typography.bodySmall.fontSize,
+    color: theme.colors.text.secondary,
+  }),
+});

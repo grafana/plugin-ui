@@ -1,4 +1,4 @@
-import { TextEncoder } from 'util';
+import { TextEncoder, TextDecoder } from 'util';
 import '@testing-library/jest-dom';
 
 Object.defineProperty(global, 'matchMedia', {
@@ -34,3 +34,4 @@ Object.defineProperty(global, 'IntersectionObserver', {
 });
 
 global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;

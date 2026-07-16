@@ -8,6 +8,7 @@
     "TLSSettings",
     "ConnectionSettings",
     "AdvancedHttpSettings",
+    "DatasourceConfigWizard",
     "SecureSocksProxyToggle",
     "CustomHeadersSettings"
   ],
@@ -73,6 +74,7 @@
     "CompletionItemInsertTextRule",
     "BINARY_OPERATIONS_KEY",
     "QUERY_FORMAT_OPTIONS",
+    "DatasourceErrorBoundary",
     "grafanaStandardSQLLanguage",
     "grafanaStandardSQLLanguageConf",
     "convertLegacyAuthProps",
