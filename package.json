@@ -7,6 +7,11 @@
   },
   "license": "Apache-2.0",
   "author": "Grafana Labs",
+  "overrides": {
+    "@stylistic/eslint-plugin-ts": {
+      "eslint": "$eslint"
+    }
+  },
   "type": "module",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.js",
@@ -52,11 +57,11 @@
     "storybook": "storybook dev",
     "storybook:build": "storybook build",
     "lint": "eslint --cache --ignore-path ./.gitignore --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "yarn run lint --fix",
+    "lint:fix": "npm run lint -- --fix",
     "typecheck": "tsc",
     "verify-types": "attw --pack .",
-    "verify-packagejson": "yarn publint .",
-    "sanity-check": "yarn clean && yarn spellcheck && yarn lint && yarn typecheck && yarn test:ci && yarn build && yarn verify-types && yarn verify-packagejson && yarn storybook:build && yarn clean"
+    "verify-packagejson": "npx publint .",
+    "sanity-check": "npm run clean && npm run spellcheck && npm run lint && npm run typecheck && npm run test:ci && npm run build && npm run verify-types && npm run verify-packagejson && npm run storybook:build && npm run clean"
   },
   "dependencies": {
     "@emotion/css": "11.13.5",
@@ -150,7 +155,7 @@
   ],
   "engines": {
     "node": ">=24",
-    "yarn": ">=4.16.0"
+    "npm": ">=11.12.1"
   },
-  "packageManager": "yarn@4.17.1"
+  "packageManager": "npm@11.18.0"
 }

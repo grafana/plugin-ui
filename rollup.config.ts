@@ -1,5 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
 import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
 import path from 'path';
 import dts from 'rollup-plugin-dts';
 import commonjs from '@rollup/plugin-commonjs';
@@ -7,9 +8,9 @@ import json from '@rollup/plugin-json';
 import esbuild from 'rollup-plugin-esbuild';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 
-if (!process.env.PROJECT_CWD) {
-  throw new Error('PROJECT_CWD is not defined');
-}
+// Derived from this file's own location rather than a package-manager-injected
+// env var (e.g. Yarn's PROJECT_CWD), so this works identically under npm/yarn/pnpm.
+const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const rq = createRequire(import.meta.url);
 const pkg = rq('./package.json');
@@ -47,7 +48,7 @@ export default [
         sourcemap: true,
         dir: path.dirname(pkg.module),
         preserveModules: true,
-        preserveModulesRoot: path.join(process.env.PROJECT_CWD, 'src'),
+        preserveModulesRoot: path.join(projectRoot, 'src'),
         ...legacyOutputDefaults,
       },
     ],
