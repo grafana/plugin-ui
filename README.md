@@ -8,14 +8,14 @@ Requires running a local version of Grafana from source.
 
 ### Setting up local version of @grafana/plugin-ui with app plugin
 
-1. Run `yarn install && yarn dev`
-1. Run `yarn link ../path/to/plugin-ui` from app plugin directory. Make sure not to commit the changes to grafana/grafana that are introduced to the package.json.
+1. Run `npm install && npm run dev`
+1. Run `npm link` here, then `npm link @grafana/plugin-ui` from the app plugin directory. Make sure not to commit the changes to grafana/grafana that are introduced to the package.json.
 1. Start app plugin development server.
 
-To avoid needing to manually rebuild core grafana on every change you make in this repo while developing, instead of running `yarn dev`, run
+To avoid needing to manually rebuild core grafana on every change you make in this repo while developing, instead of running `npm run dev`, run
 
 ```bash
-yarn tsc -p ./tsconfig.build.json && yarn rollup -c rollup.config.ts --configPlugin esbuild -w --watch.onEnd="cd ../grafana/public/app/plugins/datasource/loki && yarn build
+npx tsc -p ./tsconfig.build.json && npx rollup -c rollup.config.ts --configPlugin esbuild -w --watch.onEnd="cd ../grafana/public/app/plugins/datasource/loki && npm run build
 ```
 
 Replacing the --watch.onEnd command with whatever you are targeting.
@@ -69,5 +69,5 @@ When you do that, consider also incrementing your plugin's major version to make
 Storybook is pretty broken, components link to assets that only exist within Grafana, as such most components haven't bothered to add support for storybook.
 
 ```bash
-yarn storybook
+npm run storybook
 ```

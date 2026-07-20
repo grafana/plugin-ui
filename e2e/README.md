@@ -46,8 +46,8 @@ From the repo root:
 
 ```bash
 # 1. Build + pack the library (npm pack, so the ESM build's vendored deps ship)
-yarn install --immutable
-yarn build
+npm ci
+npm run build
 npm pack && mv grafana-plugin-ui-*.tgz plugin-ui.tgz
 
 # 2. Build the fixture plugin against the packed library.
