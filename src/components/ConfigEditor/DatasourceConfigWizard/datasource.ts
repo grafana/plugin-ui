@@ -1,5 +1,6 @@
 import { getBackendSrv } from '@grafana/runtime';
 import { formKey } from './config';
+import { trackConfigWizardSubmitEvent } from './tracking';
 import type { ConfigField, FieldOverride } from '../../../schema/schema';
 
 export type DatasourceResponse = Record<string, unknown> & {
@@ -491,6 +492,7 @@ export async function submitDatasourceConfig(
   fields: ConfigField[],
   isFieldVisible: (field: ConfigField) => boolean
 ): Promise<void> {
+  trackConfigWizardSubmitEvent();
   const existing: DatasourceResponse = await getBackendSrv().get(`/api/datasources/uid/${dsUid}`);
   const { rootFields, jsonData, secureJsonData, secureJsonFields } = buildDatasourceConfigPayload(
     data,
