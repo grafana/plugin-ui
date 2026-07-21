@@ -20,6 +20,7 @@ import {
   isGroupValid as isGroupValidImpl,
   groupHasData as groupHasDataImpl,
 } from './formInterpreter';
+import { trackConfigWizardSubmitEvent } from '../tracking';
 
 export type DatasourceConfigFormOptions = {
   schema: DatasourceConfigSchema;
@@ -239,8 +240,10 @@ export function useDatasourceConfigForm(props: DatasourceConfigFormOptions) {
         const merged = { ...defaults, ...refreshed.values };
         const virtualValues = computeVirtualFieldValues(schema, merged);
         reset({ ...merged, ...virtualValues });
+        trackConfigWizardSubmitEvent({ success: true });
         onSuccess('UPDATED', 'Configuration saved.');
       } catch (err: unknown) {
+        trackConfigWizardSubmitEvent({ success: false });
         await minDelay;
         setSubmitError(err instanceof Error ? err.message : 'Failed to update datasource');
       } finally {
