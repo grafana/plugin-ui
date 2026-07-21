@@ -3,6 +3,7 @@
 ## v0.17.2 - 2026-07-21
 
 - Added tracking events to `DatasourceConfigWizard` component
+- Export provisioning scripts from dsconfig/schema
 
 ## v0.17.1 - 2026-07-16
 
