@@ -5,6 +5,7 @@ import { GroupFields, FormFooter, FetchErrorState } from './layoutParts';
 import { getWizardStyles } from './styles';
 import { type DatasourceConfigSchema } from '../../../schema/schema';
 import { type useDatasourceConfigForm } from './hooks/useDatasourceConfigForm';
+import { trackConfigWizardSectionChange } from './tracking';
 
 type WizardLayoutProps = {
   form: ReturnType<typeof useDatasourceConfigForm>;
@@ -90,6 +91,7 @@ export function WizardLayout({ form, schema, dsUid, dsName, onRetest, healthErro
             value={currentStep}
             onChange={(v) => {
               if (v?.value != null) {
+                trackConfigWizardSectionChange(v.label || v.title);
                 setCurrentStep(v.value);
               }
             }}
