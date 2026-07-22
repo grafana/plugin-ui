@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.17.3 - 2026-07-22
+
+- Dependency updates
+
 ## v0.17.2 - 2026-07-21
 
 - Added tracking events to `DatasourceConfigWizard` component
