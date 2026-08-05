@@ -15,6 +15,9 @@
     "*": {
       "test": [
         "dist/cjs/test-utils.d.cts"
+      ],
+      "secret-scanner": [
+        "dist/cjs/secret-scanner.d.cts"
       ]
     }
   },
@@ -39,6 +42,16 @@
         "types": "./dist/cjs/test-utils.d.cts",
         "default": "./dist/cjs/test-utils.cjs"
       }
+    },
+    "./secret-scanner": {
+      "import": {
+        "types": "./dist/esm/secret-scanner.d.ts",
+        "default": "./dist/esm/secret-scanner.js"
+      },
+      "require": {
+        "types": "./dist/cjs/secret-scanner.d.cts",
+        "default": "./dist/cjs/secret-scanner.cjs"
+      }
     }
   },
   "sideEffects": false,
@@ -46,6 +59,7 @@
     "build": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.ts --configPlugin esbuild",
     "dev": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.ts --configPlugin esbuild -w",
     "clean": "rm -rf ./dist ./compiled ./storybook-static",
+    "gen:secret-rules": "node ./scripts/generate-secret-rules.mjs",
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "spellcheck": "cspell -c cspell.config.json \"**/*.{ts,tsx,js,md,mdx,yml,yaml,json,scss,css}\"",
@@ -63,6 +77,9 @@
     "@hello-pangea/dnd": "17.0.0",
     "@marcbachmann/cel-js": "7.6.1",
     "@react-awesome-query-builder/ui": "6.6.15",
+    "acorn": "8.17.0",
+    "acorn-loose": "8.5.2",
+    "acorn-typescript": "1.4.13",
     "lodash": "4.18.1",
     "prismjs": "1.30.0",
     "react-calendar": "4.8.0",
@@ -120,6 +137,7 @@
     "jest-fetch-mock": "3.2.0",
     "lefthook": "2.1.10",
     "mockdate": "3.0.5",
+    "monaco-editor": "0.34.1",
     "prettier": "3.9.5",
     "publint": "0.3.21",
     "react": "18.3.1",
@@ -130,6 +148,7 @@
     "rollup-plugin-esbuild": "6.2.1",
     "rollup-plugin-node-externals": "9.0.1",
     "rxjs": "7.8.2",
+    "smol-toml": "1.7.0",
     "storybook": "10.5.0",
     "ts-node": "10.9.2",
     "typescript": "5.9.3"
@@ -142,11 +161,18 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "monaco-editor": ">=0.30",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
+  "peerDependenciesMeta": {
+    "monaco-editor": {
+      "optional": true
+    }
+  },
   "files": [
-    "dist"
+    "dist",
+    "NOTICE"
   ],
   "engines": {
     "node": ">=24",
