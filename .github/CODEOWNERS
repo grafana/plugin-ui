@@ -1,1 +1,3 @@
 * @grafana/data-sources-plugins
+
+/src/secret-scanner @grafana/k6-cloud-engine
