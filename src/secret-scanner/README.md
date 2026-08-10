@@ -1,25 +1,6 @@
 # Secret scanner
 
-Detects hardcoded secrets in **any string** — a script, a prompt, a description —
-and helps move them into a managed secrets store. Monaco support is optional: pass
-an editor and findings also appear as gutter markers with a quick fix.
-
-The library makes **no network calls** and ships **no create-secret modal**. It
-reports findings and applies rewrites; creating the secret and rendering the
-confirmation UI stay in the host application.
-
-## Layers
-
-| Layer | Entry point | Requires |
-| --- | --- | --- |
-| Detection | `scanCode`, `scanText` | nothing (pure) |
-| Rewrite | `SecretRewriter`, `k6SecretRewriter` | nothing (pure) |
-| State | `useSecretScanner` | React |
-| Editor | `useMonacoSecretScanner`, `installSecretScanner` | Monaco (types only) |
-| UI | `SecretScannerPanel`, `SecretReferenceModal` | `@grafana/ui` |
-
-Each layer works on its own. Nothing below the Editor row imports Monaco, so a
-non-editor surface pays no Monaco cost.
+Set of utilities and components to detect secrets in a Monaco Editor or a generic string input.
 
 ## Usage with a Monaco editor
 
@@ -78,23 +59,23 @@ Detection also works standalone, without React:
 ```ts
 import { scanText, suggestSecretName } from '@grafana/plugin-ui/secret-scanner';
 
-for (const finding of scanText(userPrompt)) {
-  // finding.secret occupies [finding.range.start, finding.range.end)
+for (const finding of scanText(anyText)) {
+  // finding.secret includes [finding.range.start, finding.range.end]
   const name = suggestSecretName(finding, existingSecretNames);
 }
 ```
 
 ## Hook options
 
-| Option | Default | Description |
-| --- | --- | --- |
-| `text` | — | The string to scan. Controlled by the caller. |
-| `scan` | a private `createCodeScanner()` | Detection strategy. Pass `createTextScanner()` for prose. |
-| `rewriter` | `k6SecretRewriter` | How an accepted finding is rewritten. See [Migration](#migration). |
-| `onChange` | — | Receives the rewritten text. Omit on read-only surfaces. |
-| `enabled` | `true` | When false, no scanning runs and `findings` is empty. |
-| `ignoreStorageKey` | `secretScanner.ignored` | localStorage key for dismissals. Namespace it per document. |
-| `debounceMs` | `1500` | Delay between an edit and the re-scan it triggers. |
+| Option             | Default                         | Description                                                        |
+| ------------------ | ------------------------------- | ------------------------------------------------------------------ |
+| `text`             | —                               | The string to scan. Controlled by the caller.                      |
+| `scan`             | a private `createCodeScanner()` | Detection strategy. Pass `createTextScanner()` for prose.          |
+| `rewriter`         | `k6SecretRewriter`              | How an accepted finding is rewritten. See [Migration](#migration). |
+| `onChange`         | —                               | Receives the rewritten text. Omit on read-only surfaces.           |
+| `enabled`          | `true`                          | When false, no scanning runs and `findings` is empty.              |
+| `ignoreStorageKey` | `secretScanner.ignored`         | localStorage key for dismissals. Namespace it per document.        |
+| `debounceMs`       | `1500`                          | Delay between an edit and the re-scan it triggers.                 |
 
 `useMonacoSecretScanner` accepts all of the above plus `monaco`, `editor`,
 `canMigrate` (default `true`) and `languages` (default TypeScript and JavaScript).
@@ -119,16 +100,16 @@ use `findings` and `ignore` alone.
 Every scanner returns the same `SecretFinding`, so panels, dismissal state and
 editor adapters do not branch on which scanner produced it.
 
-| Field | Description |
-| --- | --- |
-| `id` | Stable key for React lists. Derived from position, so it changes when the secret moves. |
-| `type` / `label` | Machine-readable detector key (`jwt`) and display label (`JWT`). |
-| `confidence` | `high`, `medium` or `low`. |
-| `secret` | The detected value. |
-| `range` | The span of the secret value. Always present — this is the range to highlight. |
-| `line` / `column` | 1-based position of `range.start`. |
-| `literal` | Code scans only: the enclosing string literal, quotes included. |
-| `rewrite` | Code scans only. See [Migration](#migration). Undefined means no in-place rewrite is possible. |
+| Field             | Description                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------- |
+| `id`              | Stable key for React lists. Derived from position, so it changes when the secret moves.        |
+| `type` / `label`  | A type key (`jwt`) and display label (`JWT`).                                                  |
+| `confidence`      | `high`, `medium` or `low`.                                                                     |
+| `secret`          | The detected value.                                                                            |
+| `range`           | The span of the secret value. Always present.                                                  |
+| `line` / `column` | Position of `range.start`.                                                                     |
+| `literal`         | Code scans only: the enclosing string literal, quotes included.                                |
+| `rewrite`         | Code scans only. See [Migration](#migration). Undefined means no in-place rewrite is possible. |
 
 ### Choosing `scanCode` or `scanText`
 
@@ -178,17 +159,17 @@ same way — the secret is still created, and `reference.pending` is populated s
 
 ## Exports
 
-| Export | Purpose |
-| --- | --- |
-| `useSecretScanner` | Headless hook: `findings`, `ignore`, `migration`, `reference`. |
-| `useMonacoSecretScanner` | The same, plus gutter markers and a quick fix. |
-| `installSecretScanner` | The Monaco wiring alone, for non-React hosts. |
-| `SecretScannerPanel` / `SecretFindingsPanel` | Panels listing findings with move and ignore actions. |
-| `SecretReferenceModal` | Modal with a copyable reference snippet. |
-| `scanCode` / `scanText` | Detection, standalone. |
-| `createCodeScanner` / `createTextScanner` | Independent scanner instances. |
-| `k6SecretRewriter`, `applySecretReference`, `buildSecretReference` | The default k6 rewriter. |
-| `suggestSecretName`, `maskSecret` | Helpers for naming and displaying a finding. |
+| Export                                                             | Purpose                                                        |
+| ------------------------------------------------------------------ | -------------------------------------------------------------- |
+| `useSecretScanner`                                                 | Headless hook: `findings`, `ignore`, `migration`, `reference`. |
+| `useMonacoSecretScanner`                                           | The same, plus gutter markers and a quick fix.                 |
+| `installSecretScanner`                                             | The Monaco wiring alone, for non-React hosts.                  |
+| `SecretScannerPanel` / `SecretFindingsPanel`                       | Panels listing findings with move and ignore actions.          |
+| `SecretReferenceModal`                                             | Modal with a copyable reference snippet.                       |
+| `scanCode` / `scanText`                                            | Detection, standalone.                                         |
+| `createCodeScanner` / `createTextScanner`                          | Independent scanner instances.                                 |
+| `k6SecretRewriter`, `applySecretReference`, `buildSecretReference` | The default k6 rewriter.                                       |
+| `suggestSecretName`, `maskSecret`                                  | Helpers for naming and displaying a finding.                   |
 
 ## How detection works
 
