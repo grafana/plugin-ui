@@ -9,7 +9,7 @@
     "test:headed": "playwright test --headed"
   },
   "devDependencies": {
-    "@grafana/plugin-e2e": "3.10.0",
+    "@grafana/plugin-e2e": "3.11.0",
     "@playwright/test": "1.61.1"
   }
 }
