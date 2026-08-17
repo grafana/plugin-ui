@@ -1,5 +1,11 @@
 # Change Log
 
+## v0.17.4 - 2026-08-17
+- Chore: bump several dependencies for CVE fixes in [#334](https://github.com/grafana/plugin-ui/pull/334)
+- Bump plugin e2e in [#333](https://github.com/grafana/plugin-ui/pull/333)
+- feat: add secret scanner utilities and components in [#332](https://github.com/grafana/plugin-ui/pull/332)
+- ci: use shared reusable add-to-project workflow in [#327](https://github.com/grafana/plugin-ui/pull/327)
+
 ## v0.17.3 - 2026-07-22
 
 - Dependency updates
