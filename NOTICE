@@ -1,0 +1,18 @@
+Grafana plugin-ui
+Copyright 2026 Grafana Labs
+
+This product includes software developed at Grafana Labs (https://grafana.com/),
+licensed under the Apache License, Version 2.0. See LICENSE.
+
+---
+
+This product bundles a secret-detection ruleset derived from gitleaks
+(https://github.com/gitleaks/gitleaks):
+
+Copyright (c) 2019 Zachary Rice
+Licensed under the MIT License.
+
+The vendored ruleset lives at src/secret-scanner/rules/gitleaks.toml and is
+compiled into src/secret-scanner/rules/rules.generated.ts, which ships in the
+`@grafana/plugin-ui/secret-scanner` entry point. The full MIT license text is at
+src/secret-scanner/rules/gitleaks-LICENSE.

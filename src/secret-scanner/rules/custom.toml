@@ -1,0 +1,91 @@
+# Project-specific secret patterns, in gitleaks rule format.
+#
+# These are MERGED with the vendored gitleaks ruleset (gitleaks.toml) to build
+# the scanner's detectors (see ../core/detection/ruleDetectors.ts). Rules here
+# are authoritative: any gitleaks rule whose keywords overlap a keyword below is
+# skipped, so these tuned patterns win over gitleaks'
+#
+# Schema (per rule):
+#   [[rules]]
+#   id = "acme-api-key"
+#   description = "Acme API key"
+#   regex = '''acme_[A-Za-z0-9]{32}'''
+#   confidence = "high"    # optional: high | medium | low (default: high here)
+#   entropy = 3            # optional: min Shannon entropy of the match
+#   keywords = ["acme_"]   # optional but recommended: fast pre-filter + dedupe key
+
+# --- Core, hand-tuned detectors (moved out of TypeScript) ------------------
+
+[[rules]]
+id = "private-key"
+description = "Identified a private key, which may compromise cryptographic security and sensitive data encryption."
+regex = '''-----BEGIN (?:RSA |EC |OPENSSH |DSA |PGP )?PRIVATE KEY-----'''
+confidence = "high"
+keywords = ["-----begin"]
+
+[[rules]]
+id = "aws-access-key-id"
+description = "Identified an AWS access key ID, risking unauthorized access to cloud resources and data breaches on AWS platforms."
+regex = '''(?:AKIA|ASIA|AGPA|AIDA|AROA|ANPA)[A-Z0-9]{16}'''
+confidence = "high"
+keywords = ["akia", "asia", "agpa", "aida", "aroa", "anpa"]
+
+[[rules]]
+id = "github-token"
+description = "Uncovered a GitHub token, potentially leading to unauthorized repository access and sensitive content exposure."
+regex = '''(?:ghp|gho|ghu|ghs|ghr|github_pat)_[A-Za-z0-9_]{20,}'''
+confidence = "high"
+keywords = ["ghp_", "gho_", "ghu_", "ghs_", "ghr_", "github_pat"]
+
+[[rules]]
+id = "slack-token"
+description = "Identified a Slack token, which may compromise bot integrations and communication channel security."
+regex = '''xox[baprs]-[A-Za-z0-9-]{10,}'''
+confidence = "high"
+keywords = ["xox"]
+
+[[rules]]
+id = "google-api-key"
+description = "Uncovered a Google API key, which could lead to unauthorized access to Google Cloud services and data breaches."
+regex = '''AIza[0-9A-Za-z_-]{35}'''
+confidence = "high"
+keywords = ["aiza"]
+
+[[rules]]
+id = "grafana-token"
+description = "Discovered a Grafana token, posing a risk of compromised monitoring services and data integrity."
+regex = '''gl(?:sa_[A-Za-z0-9]{16,}_[A-Za-z0-9]{6,}|c_[A-Za-z0-9+/=_-]{32,}|api_[A-Za-z0-9]{16,})'''
+confidence = "high"
+keywords = ["glsa_", "glc_", "glapi_"]
+
+[[rules]]
+id = "stripe-key"
+description = "Found a Stripe key, posing a risk to payment processing services and sensitive financial data."
+regex = '''(?:sk|rk|pk)_(?:live|test)_[0-9A-Za-z]{16,}'''
+confidence = "high"
+keywords = ["sk_", "rk_", "pk_"]
+
+[[rules]]
+id = "jwt"
+description = "Uncovered a JSON Web Token, which may lead to unauthorized access to web applications and sensitive user data."
+# base64url and standard-base64 (+/=) segments, so non-strict tokens still match.
+regex = '''eyJ[A-Za-z0-9_/+-]{6,}={0,2}(?:\.[A-Za-z0-9_/+-]{6,}={0,2}){2}'''
+confidence = "high"
+keywords = ["eyj"]
+
+[[rules]]
+id = "authorization-bearer"
+description = "Detected an Authorization Bearer token, which may grant unauthorized access to protected APIs and services."
+# Generic `Bearer <token>`; captures just the token (group 1), not the prefix.
+regex = '''(?i)bearer\s+([a-z0-9._~+/=-]{20,})'''
+confidence = "medium"
+entropy = 3
+keywords = ["bearer"]
+
+[[rules]]
+id = "basic-auth-url-credentials"
+description = "Detected credentials embedded in a URL (user:password@host), risking exposure of account passwords and unauthorized access."
+# e.g. postgres://admin:s3cr3t@db:5432 — captures the password (group 1).
+regex = '''://[^:@/\s]+:([^@/\s]{6,})@'''
+confidence = "medium"
+keywords = ["://"]

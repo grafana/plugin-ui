@@ -1925,6 +1925,9 @@ __metadata:
     "@types/testing-library__jest-dom": "npm:6.0.0"
     "@typescript-eslint/eslint-plugin": "npm:8.63.0"
     "@typescript-eslint/parser": "npm:8.63.0"
+    acorn: "npm:8.17.0"
+    acorn-loose: "npm:8.5.2"
+    acorn-typescript: "npm:1.4.13"
     chance: "npm:1.1.13"
     copyfiles: "npm:2.4.1"
     cspell: "npm:10.0.1"
@@ -1942,6 +1945,7 @@ __metadata:
     lefthook: "npm:2.1.10"
     lodash: "npm:4.18.1"
     mockdate: "npm:3.0.5"
+    monaco-editor: "npm:0.34.1"
     prettier: "npm:3.9.5"
     prismjs: "npm:1.30.0"
     publint: "npm:0.3.21"
@@ -1957,6 +1961,7 @@ __metadata:
     rollup-plugin-esbuild: "npm:6.2.1"
     rollup-plugin-node-externals: "npm:9.0.1"
     rxjs: "npm:7.8.2"
+    smol-toml: "npm:1.7.0"
     sql-formatter: "npm:15.8.2"
     storybook: "npm:10.5.0"
     ts-node: "npm:10.9.2"
@@ -1970,8 +1975,12 @@ __metadata:
     "@testing-library/jest-dom": ^6.9.1
     "@testing-library/react": ^16.3.2
     "@testing-library/user-event": ^14.6.1
+    monaco-editor: ">=0.30"
     react: ^18.0.0 || ^19.0.0
     react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    monaco-editor:
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -5564,6 +5573,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"acorn-loose@npm:8.5.2":
+  version: 8.5.2
+  resolution: "acorn-loose@npm:8.5.2"
+  dependencies:
+    acorn: "npm:^8.15.0"
+  checksum: 10c0/169a85ad2df888586fe6eda2af9ff8fbcca7174ce83d00632cea5fffa73476218012af91be0cd6b68e4df6183baffa463506fd2ab54800903378140e679302fd
+  languageName: node
+  linkType: hard
+
+"acorn-typescript@npm:1.4.13":
+  version: 1.4.13
+  resolution: "acorn-typescript@npm:1.4.13"
+  peerDependencies:
+    acorn: ">=8.9.0"
+  checksum: 10c0/f2f17cf03379d63beeb007f0feea02cebbd9af261f6b5619ea7345b177bd7a5f99752927cbf652baa3fc97962ae4561592093ab0a1c3e00ca4f354ba23c557ae
+  languageName: node
+  linkType: hard
+
 "acorn-walk@npm:^8.0.2, acorn-walk@npm:^8.1.1":
   version: 8.3.5
   resolution: "acorn-walk@npm:8.3.5"
@@ -5573,7 +5600,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.1.0, acorn@npm:^8.11.0, acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.4.1, acorn@npm:^8.8.1, acorn@npm:^8.9.0":
+"acorn@npm:8.17.0, acorn@npm:^8.1.0, acorn@npm:^8.11.0, acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.4.1, acorn@npm:^8.8.1, acorn@npm:^8.9.0":
   version: 8.17.0
   resolution: "acorn@npm:8.17.0"
   bin:
@@ -13431,7 +13458,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"smol-toml@npm:^1.6.1":
+"smol-toml@npm:1.7.0, smol-toml@npm:^1.6.1":
   version: 1.7.0
   resolution: "smol-toml@npm:1.7.0"
   checksum: 10c0/8eef246b9b96f278a181f6dd2a90c754304cb4cf92ccdfe1d2f714fb980fb3f539ba00283609e8fd2fbcf7c0d48a4ae76b36bc0de556ed286b2c865827a778e8

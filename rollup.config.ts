@@ -19,7 +19,7 @@ const legacyOutputDefaults = {
   interop: 'compat',
 };
 
-const entryPoints = ['src/index.ts', 'src/test-utils.ts'];
+const entryPoints = ['src/index.ts', 'src/test-utils.ts', 'src/secret-scanner.ts'];
 
 export default [
   {
@@ -76,6 +76,20 @@ export default [
       },
       {
         file: pkg.exports['./test'].import.types,
+        format: 'esm',
+      },
+    ],
+  },
+  {
+    input: './compiled/secret-scanner.d.ts',
+    plugins: [dts()],
+    output: [
+      {
+        file: pkg.exports['./secret-scanner'].require.types,
+        format: 'cjs',
+      },
+      {
+        file: pkg.exports['./secret-scanner'].import.types,
         format: 'esm',
       },
     ],
