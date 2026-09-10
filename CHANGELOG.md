@@ -1,5 +1,8 @@
 # Change Log
 
+## v0.17.5 - 2026-09-10
+- fix(deps): patch npm CVEs (fast-uri, tar, browserslist, postcss, nanoid, dompurify) and pin the nested react-router used by `react-router-dom-v5-compat`, without bumping `@grafana/*` to 13.2.1, in [#335](https://github.com/grafana/plugin-ui/pull/335)
+
 ## v0.17.4 - 2026-08-17
 - Chore: bump several dependencies for CVE fixes in [#334](https://github.com/grafana/plugin-ui/pull/334)
 - Bump plugin e2e in [#333](https://github.com/grafana/plugin-ui/pull/333)
