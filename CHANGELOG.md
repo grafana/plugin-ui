@@ -1,5 +1,8 @@
 # Change Log
 
+## v0.17.6 - 2026-09-23
+- fix(deps): resolve security vulnerabilities (CVE-2026-53666, CVE-2026-53669, CVE-2026-84375, CVE-2026-85730)
+
 ## v0.17.5 - 2026-09-10
 - fix(deps): patch npm CVEs (fast-uri, tar, browserslist, postcss, nanoid, dompurify) and pin the nested react-router used by `react-router-dom-v5-compat`, without bumping `@grafana/*` to 13.2.1, in [#335](https://github.com/grafana/plugin-ui/pull/335)
 

@@ -1,6 +1,6 @@
 {
   "name": "@grafana/plugin-ui",
-  "version": "0.17.5",
+  "version": "0.17.6",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/grafana/plugin-ui.git"
@@ -148,7 +148,7 @@
     "rollup-plugin-esbuild": "6.2.1",
     "rollup-plugin-node-externals": "9.0.1",
     "rxjs": "7.8.2",
-    "smol-toml": "1.7.0",
+    "smol-toml": "1.7.1",
     "storybook": "10.5.0",
     "ts-node": "10.9.2",
     "typescript": "5.9.3"
@@ -182,9 +182,9 @@
   "resolutions": {
     "undici": "8.9.0",
     "js-yaml@^3.13.1": "4.3.2",
-    "js-yaml@^4.1.0": "4.3.1",
+    "js-yaml@^4.1.0": "4.3.2",
     "fast-uri": "3.1.7",
-    "react-router@6.30.4": "7.18.0",
+    "react-router@6.30.4": "7.18.2",
     "brace-expansion@^1.1.7": "1.1.18",
     "brace-expansion@^5.0.5": "5.0.9"
   }
