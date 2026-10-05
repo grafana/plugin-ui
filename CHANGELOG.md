@@ -1,5 +1,8 @@
 # Change Log
 
+## v0.17.7 - 2026-10-05
+- fix(deps): resolve security vulnerability in webpack-dev-middleware (CVE-2024-29180)
+
 ## v0.17.6 - 2026-09-23
 - fix(deps): resolve security vulnerabilities (CVE-2026-53666, CVE-2026-53669, CVE-2026-84375, CVE-2026-85730)
 
