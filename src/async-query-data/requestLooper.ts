@@ -47,6 +47,7 @@ export function getRequestLooper<T extends DataQuery = DataQuery>(
   return new Observable<DataQueryResponse>((subscriber) => {
     let nextQuery: T | undefined = undefined;
     let subscription: Subscription | undefined = undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined;
     let loadingState: LoadingState | undefined = LoadingState.Loading;
     let nextRequestDelay = 1; // number of DELAY_INTERVAL_MS to wait before the next request
     let count = 1;
@@ -105,7 +106,7 @@ export function getRequestLooper<T extends DataQuery = DataQuery>(
         // The timeout is set in the `next` callback.
         if (nextQuery) {
           const next = nextQuery;
-          setTimeout(() => {
+          timeoutId = setTimeout(() => {
             subscription = options
               .query({ ...req, requestId: `${req.requestId}.${++count}`, targets: [next] })
               .subscribe(observer);
@@ -122,7 +123,8 @@ export function getRequestLooper<T extends DataQuery = DataQuery>(
 
     // Cleanup function
     return function unsubscribe() {
-      observer.complete();
+      clearTimeout(timeoutId);
+      subscription?.unsubscribe();
       if (nextQuery || shouldCancel) {
         options.onCancel();
       }
