@@ -1922,6 +1922,7 @@ __metadata:
     "@types/prismjs": "npm:1.26.6"
     "@types/react": "npm:18.3.31"
     "@types/react-calendar": "npm:3.9.0"
+    "@types/semver": "npm:7.7.1"
     "@types/testing-library__jest-dom": "npm:6.0.0"
     "@typescript-eslint/eslint-plugin": "npm:8.63.0"
     "@typescript-eslint/parser": "npm:8.63.0"
@@ -1961,6 +1962,7 @@ __metadata:
     rollup-plugin-esbuild: "npm:6.2.1"
     rollup-plugin-node-externals: "npm:9.0.1"
     rxjs: "npm:7.8.2"
+    semver: "npm:^7.6.3"
     smol-toml: "npm:1.7.1"
     sql-formatter: "npm:15.8.2"
     storybook: "npm:10.5.0"
@@ -5155,7 +5157,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/semver@npm:^7.7.1":
+"@types/semver@npm:7.7.1, @types/semver@npm:^7.7.1":
   version: 7.7.1
   resolution: "@types/semver@npm:7.7.1"
   checksum: 10c0/c938aef3bf79a73f0f3f6037c16e2e759ff40c54122ddf0b2583703393d8d3127130823facb880e694caa324eb6845628186aac1997ee8b31dc2d18fafe26268

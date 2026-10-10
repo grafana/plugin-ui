@@ -1,5 +1,8 @@
 # Change Log
 
+## v0.17.8 - 2026-10-10
+- fix(deps): declare semver so plugins do not bundle a second copy
+
 ## v0.17.7 - 2026-10-05
 - fix(deps): resolve security vulnerability in webpack-dev-middleware (CVE-2024-29180)
 
