@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.17.9 - 2026-10-22
+- fix(deps): declare semver so plugins do not bundle a second copy
+- fix(async-query-data): stop polling a query after it is cancelled in [#347](https://github.com/grafana/plugin-ui/pull/347)
+
 ## v0.17.8 - 2026-10-13
 - fix(deps): resolve security vulnerabilities in undici, brace-expansion, fast-uri, smol-toml, moment, dompurify, postcss-selector-parser and source-map-js in [#349](https://github.com/grafana/plugin-ui/pull/349)
 
