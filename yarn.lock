@@ -1961,7 +1961,7 @@ __metadata:
     rollup-plugin-esbuild: "npm:6.2.1"
     rollup-plugin-node-externals: "npm:9.0.1"
     rxjs: "npm:7.8.2"
-    smol-toml: "npm:1.7.1"
+    smol-toml: "npm:1.9.1"
     sql-formatter: "npm:15.8.2"
     storybook: "npm:10.5.0"
     ts-node: "npm:10.9.2"
@@ -6316,22 +6316,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brace-expansion@npm:1.1.18":
-  version: 1.1.18
-  resolution: "brace-expansion@npm:1.1.18"
+"brace-expansion@npm:1.1.21":
+  version: 1.1.21
+  resolution: "brace-expansion@npm:1.1.21"
   dependencies:
     balanced-match: "npm:^1.0.0"
     concat-map: "npm:0.0.1"
-  checksum: 10c0/3432c18a9e2ebf94162d4effb62198bd0adea06a9f332b2c0188df5d5e30b1e51ea3c848b6608e47d0b857ebe1ea5b3888ed3326dd3c4f6f9645c94153cf9c14
+  checksum: 10c0/8f0a68a720f9cb28c2ecaea5cdaf15fafd686d6b6e4e722a81c9d4bd2f68c1fd0619731cac05875d842221eaf4d97d564d329a12eb3c4c22137502fb3c65be8b
   languageName: node
   linkType: hard
 
-"brace-expansion@npm:5.0.9":
-  version: 5.0.9
-  resolution: "brace-expansion@npm:5.0.9"
+"brace-expansion@npm:5.0.12":
+  version: 5.0.12
+  resolution: "brace-expansion@npm:5.0.12"
   dependencies:
     balanced-match: "npm:^4.0.2"
-  checksum: 10c0/3dea38884a1c3c8b1c9c44a7402a0c76fca460f70cffb3127242b0b4cbf4472019e022ade021eec44838ff19f1dac2625dfd11dd459d7e1e055b0698a8d52fec
+  checksum: 10c0/a40ac64d3bdb5bb222456514d3633c1f627f03b844f509c69e70f98b78be0ce85e21b44bbfecdd0ddd4cc0855ca4242b41ea96ddccf88c7c3c7a84405474bb3a
   languageName: node
   linkType: hard
 
@@ -7531,14 +7531,14 @@ __metadata:
   linkType: hard
 
 "dompurify@npm:^3.4.0":
-  version: 3.4.15
-  resolution: "dompurify@npm:3.4.15"
+  version: 3.4.16
+  resolution: "dompurify@npm:3.4.16"
   dependencies:
     "@types/trusted-types": "npm:^2.0.7"
   dependenciesMeta:
     "@types/trusted-types":
       optional: true
-  checksum: 10c0/406b5f0f9c9dcbc80016367d33e73585b6a6f440815228d7e9cbe8abe71058183b1f4cb4207b79b8473637de4a106fc055eb6da271ef9db353d29679b891ecbc
+  checksum: 10c0/65a901c6b6d489d3e898f67223d81dac66d613cda48f5785f0ed52a4ae320c4b2745490a58c14161e29f0273080fea0a0cb234a9ef892650e1a9b2a7befa07a5
   languageName: node
   linkType: hard
 
@@ -8402,10 +8402,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-uri@npm:3.1.7":
-  version: 3.1.7
-  resolution: "fast-uri@npm:3.1.7"
-  checksum: 10c0/ca2baa4bde48fc7322bdc692c6636975943ebe4f6dd97e07d70b14e0ab85af2ff30de90f550f5ec2956684fe208e150d85d6cb5f3c74438c8ac1bf86bd435c13
+"fast-uri@npm:3.1.8":
+  version: 3.1.8
+  resolution: "fast-uri@npm:3.1.8"
+  checksum: 10c0/c9c47860a7f9110176d94bb30a02942182f0bfc8d6780e9702f320336dc2dadb83b1d9879cceaf8d4b439642d1ec6d78c317cb808ab155455551bd5d9d7c22d8
   languageName: node
   linkType: hard
 
@@ -11204,10 +11204,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:2.30.1, moment@npm:^2.29.4, moment@npm:^2.30.1":
-  version: 2.30.1
-  resolution: "moment@npm:2.30.1"
-  checksum: 10c0/865e4279418c6de666fca7786607705fd0189d8a7b7624e2e56be99290ac846f90878a6f602e34b4e0455c549b85385b1baf9966845962b313699e7cb847543a
+"moment@npm:2.31.0, moment@npm:^2.29.4, moment@npm:^2.30.1":
+  version: 2.31.0
+  resolution: "moment@npm:2.31.0"
+  checksum: 10c0/3755b186b8ff62c565685ce69dde55bf46003c0329139be5c8dd7845cd567bfd7d02be3a13e379a25acb9e98f6b87136c4776745e440615a4f5ca8dd9a8815b9
   languageName: node
   linkType: hard
 
@@ -12049,12 +12049,12 @@ __metadata:
   linkType: hard
 
 "postcss-selector-parser@npm:^7.0.0":
-  version: 7.1.4
-  resolution: "postcss-selector-parser@npm:7.1.4"
+  version: 7.1.6
+  resolution: "postcss-selector-parser@npm:7.1.6"
   dependencies:
     cssesc: "npm:^3.0.0"
     util-deprecate: "npm:^1.0.2"
-  checksum: 10c0/3d533d25bab83592e7134be0435e6cb1e2865f5e7d9fde65f1e7e1c75ccc5905168c9f55b05d2a3e10d01914a178433d3a54eab003f5ef6aa9a9d6816926caa2
+  checksum: 10c0/fc8279859896b96ef25b24d0289b2bfff7bce6647b247aa983939ff872e226663788d1ea57bddf9d1695119c071e5cdcb8b2a364ed4313502efe4b0319879154
   languageName: node
   linkType: hard
 
@@ -13737,24 +13737,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"smol-toml@npm:1.7.1":
-  version: 1.7.1
-  resolution: "smol-toml@npm:1.7.1"
-  checksum: 10c0/c2494e19e748578cf9f81f918dd66a548dfe5a0e581ab9f980d5420f2319c882c661a62d01d216a43f2db490faaccd2185bcdb6f2ba0658eb303eda9db871d76
-  languageName: node
-  linkType: hard
-
-"smol-toml@npm:^1.6.1":
-  version: 1.8.0
-  resolution: "smol-toml@npm:1.8.0"
-  checksum: 10c0/4e01dbfb7c7af142176b037ebedaccccafb8229cc873feaa47c184ee31073d86e30b4b1b0fe9a5a6d083ed3ce21615eda9e81d1f5d779ad8b2e2e9459b900aea
+"smol-toml@npm:1.9.1, smol-toml@npm:^1.6.1":
+  version: 1.9.1
+  resolution: "smol-toml@npm:1.9.1"
+  checksum: 10c0/8acccf7bbc063f29405f58f5014ab39bf4eb9d7f0e000e5e3f140f7d4d6ead5696681a7c15260d1f2910213012c0af43b31a05bf94f704b0bdf39989fba08c02
   languageName: node
   linkType: hard
 
 "source-map-js@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "source-map-js@npm:1.2.1"
-  checksum: 10c0/7bda1fc4c197e3c6ff17de1b8b2c20e60af81b63a52cb32ec5a5d67a20a7d42651e2cb34ebe93833c5a2a084377e17455854fee3e21e7925c64a51b6a52b0faf
+  version: 1.2.2
+  resolution: "source-map-js@npm:1.2.2"
+  checksum: 10c0/d5d6dec62266834f83dd4f8a2606a196fb1a006ca5d53b0ef80ee513b7eba2f4e2ae241f4bc129ae7e9b80dea24f6e3d92b446b7e6e96be7653cab8888168a94
   languageName: node
   linkType: hard
 
@@ -14760,10 +14753,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:8.9.0":
-  version: 8.9.0
-  resolution: "undici@npm:8.9.0"
-  checksum: 10c0/e3d9fa35a9aa8360d9f56e66bd372f451ee053e25066a97fd9fab3816267035660f67870c6d709a58a5411551657af78c4475be5b31c113b04f70251309900d0
+"undici@npm:8.10.2":
+  version: 8.10.2
+  resolution: "undici@npm:8.10.2"
+  checksum: 10c0/66d7fc69149207cab570d6abbc9e965b6afe1ae889a7d46945b431165c973d6a56f3dd8b70a856e7ae1e550b6366a1cde6f06e68640587f0dadca38de72995ee
   languageName: node
   linkType: hard
 
