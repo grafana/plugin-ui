@@ -1,7 +1,7 @@
 # Change Log
 
 ## v0.17.8 - 2026-10-13
-- fix(deps): resolve security vulnerabilities in undici, brace-expansion, fast-uri, smol-toml, moment, dompurify, postcss-selector-parser and source-map-js
+- fix(deps): resolve security vulnerabilities in undici, brace-expansion, fast-uri, smol-toml, moment, dompurify, postcss-selector-parser and source-map-js in [#349](https://github.com/grafana/plugin-ui/pull/349)
 
 ## v0.17.7 - 2026-10-05
 - fix(deps): resolve security vulnerability in webpack-dev-middleware (CVE-2024-29180)
