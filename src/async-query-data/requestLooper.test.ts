@@ -125,4 +125,26 @@ describe('requestLooper', () => {
       },
     });
   });
+
+  it('stops polling after unsubscribe', () => {
+    jest.useFakeTimers();
+    const query = jest.fn().mockImplementation(() => of({ data: [], state: LoadingState.Loading, meta }));
+    const onCancel = jest.fn();
+
+    const opt: RequestLoopOptions = {
+      getNextQuery: jest.fn().mockImplementation(() => ({ ...mockQuery, queryId: 'queryId' })),
+      query,
+      onCancel,
+      process: jest.fn().mockImplementation(() => []),
+      shouldCancel: jest.fn().mockImplementation(() => false),
+    };
+
+    const subscription = getRequestLooper(request, opt).subscribe();
+    subscription.unsubscribe();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+
+    expect(query).toHaveBeenCalledTimes(1);
+    expect(onCancel).toHaveBeenCalledTimes(1);
+  });
 });
