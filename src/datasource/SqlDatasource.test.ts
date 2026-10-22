@@ -59,6 +59,10 @@ describe('SqlDatasource', () => {
       expect(rawSqlFor("SELECT * FROM t WHERE a = '' AND b = 'x'")).toBe("SELECT * FROM t WHERE a = '' AND b = 'x'");
     });
 
+    it('keeps the escaping of a single-value variable', () => {
+      expect(rawSqlFor("SELECT * FROM t WHERE name = '$single'")).toBe("SELECT * FROM t WHERE name = 'O''Brien'");
+    });
+
     it('keeps the escaping of a multi-value variable', () => {
       expect(rawSqlFor('SELECT * FROM t WHERE name IN ($multi)')).toBe(
         "SELECT * FROM t WHERE name IN ('O''Brien','Smith')"
@@ -67,6 +71,10 @@ describe('SqlDatasource', () => {
   });
 
   describe('interpolateVariable', () => {
+    it('escapes single quotes in a single-value string', () => {
+      expect(ds.interpolateVariable("O'Brien", variable(false))).toBe("O''Brien");
+    });
+
     it('quotes a multi-value string', () => {
       expect(ds.interpolateVariable("O'Brien", variable(true))).toBe("'O''Brien'");
     });

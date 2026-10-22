@@ -88,7 +88,7 @@ export abstract class SqlDatasource extends DataSourceWithBackend<SQLQuery, SQLO
         const result = this.getQueryModel().quoteLiteral(value);
         return result;
       } else {
-        return value;
+        return value.replace(/'/g, "''");
       }
     }
 
