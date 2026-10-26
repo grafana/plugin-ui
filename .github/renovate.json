@@ -6,6 +6,12 @@
       "matchDepTypes": ["peerDependencies"],
       "enabled": false,
       "description": "peerDependencies express a compatibility range and are maintained by hand; Renovate must not pin them to exact versions or bump them."
+    },
+    {
+      "matchDepTypes": ["dependencies"],
+      "matchPackageNames": ["semver"],
+      "rangeStrategy": "update-lockfile",
+      "description": "Consumers bundle semver. A range lets them share one copy with their own semver 7, so Renovate keeps the range and updates only the lockfile."
     }
   ]
 }
