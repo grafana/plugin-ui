@@ -1,5 +1,8 @@
 # Change Log
 
+## v0.17.9 - 2026-10-28
+- fix(deps): resolve security vulnerabilities in storybook (bumped to 10.6.2), dompurify, zod and undici
+
 ## v0.17.8 - 2026-10-13
 - fix(deps): resolve security vulnerabilities in undici, brace-expansion, fast-uri, smol-toml, moment, dompurify, postcss-selector-parser and source-map-js in [#349](https://github.com/grafana/plugin-ui/pull/349)
 
