@@ -145,7 +145,8 @@ const findDataSource = (ref?: Parameters<DataSourceSrv['getInstanceSettings']>[0
   return mockDataSources.find((ds) => ds.uid === key || ds.name === key);
 };
 
-// A mock DataSourceSrv so DataSourcePicker's getDataSourceSrv() resolves inside Storybook.
+// A mock DataSourceSrv. DataSourcePicker uses `@grafana/plugin-compat`, which falls back to the legacy
+// getDataSourceSrv() when the host (here: Storybook) has no async data source APIs populated.
 const mockDataSourceSrv: DataSourceSrv = {
   getList: (filters) => filterDataSources(mockDataSources, filters),
   getInstanceSettings: (ref) => findDataSource(ref),
