@@ -1,6 +1,6 @@
 {
   "name": "@grafana/plugin-ui",
-  "version": "0.17.10",
+  "version": "0.18.0",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/grafana/plugin-ui.git"
@@ -74,6 +74,7 @@
   },
   "dependencies": {
     "@emotion/css": "11.13.5",
+    "@grafana/plugin-compat": "0.7.0",
     "@hello-pangea/dnd": "17.0.0",
     "@marcbachmann/cel-js": "7.6.1",
     "@react-awesome-query-builder/ui": "6.6.15",
