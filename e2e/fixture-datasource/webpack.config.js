@@ -58,9 +58,11 @@ module.exports = (env = {}) => {
     externals: [
       // Provided by the Grafana host at runtime.
       ...GRAFANA_MODULES,
-      // Externalize every @grafana/* package EXCEPT the library under test.
+      // Externalize every @grafana/* package EXCEPT the library under test and its npm dependency
+      // @grafana/plugin-compat, which Grafana does not provide at runtime.
       function ({ request }, callback) {
-        if (request === '@grafana/plugin-ui' || request.startsWith('@grafana/plugin-ui/')) {
+        const bundled = ['@grafana/plugin-ui', '@grafana/plugin-compat'];
+        if (bundled.some((name) => request === name || request.startsWith(`${name}/`))) {
           return callback(); // bundle it
         }
         if (/^@grafana\/[a-z-]+(\/.*)?$/.test(request)) {

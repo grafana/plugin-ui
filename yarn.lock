@@ -1886,6 +1886,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@grafana/plugin-compat@npm:0.7.0":
+  version: 0.7.0
+  resolution: "@grafana/plugin-compat@npm:0.7.0"
+  peerDependencies:
+    "@grafana/data": ">=12.0.0"
+    "@grafana/runtime": ">=12.0.0"
+    "@grafana/schema": ">=12.0.0"
+    react: ">=18"
+  checksum: 10c0/11b93a319d18759610a60bb70ac87dbefe14431362fe36d78a322f902f426ee2e1aab278a1a66b968a08f678cfa9657b772fbf10ca6ccabcff2deb07820e33f5
+  languageName: node
+  linkType: hard
+
 "@grafana/plugin-ui@workspace:.":
   version: 0.0.0-use.local
   resolution: "@grafana/plugin-ui@workspace:."
@@ -1895,6 +1907,7 @@ __metadata:
     "@grafana/data": "npm:13.1.1"
     "@grafana/e2e-selectors": "npm:13.1.1"
     "@grafana/eslint-config": "npm:8.2.0"
+    "@grafana/plugin-compat": "npm:0.7.0"
     "@grafana/runtime": "npm:13.1.1"
     "@grafana/tsconfig": "npm:2.2.0"
     "@grafana/ui": "npm:13.1.1"
