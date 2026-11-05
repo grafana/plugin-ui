@@ -1,5 +1,10 @@
 # Change Log
 
+## v0.18.0 - 2026-11-10
+- **Breaking:** `DataSourcePicker` now resolves data sources asynchronously through `@grafana/plugin-compat` instead of the sync `getDataSourceSrv()`, and works on hosts with or without the async data source APIs. It is a function component, so the `dataSourceSrv` field, `getDataSourceOptions()` and the `State` type are gone, and `onChange` fires once the full instance settings are resolved. It also shows loading and invalid states.
+- **Breaking:** removed the unused `resolvePluginName` helper.
+- Added `@grafana/plugin-compat` as a dependency.
+
 ## v0.17.10 - 2026-11-03
 - fix(deps): declare semver so plugins do not bundle a second copy
 - fix(sql): stop collapsing escaped quotes in SQL queries (#351)
