@@ -1,4 +1,4 @@
-export { QueryEditorRow } from './QueryEditorRow/QueryEditorRow';
+export { QueryEditorRow } from './QueryEditor/QueryEditorRow';
 export { DebounceInput, type DebounceInputProps } from './DebounceInput/DebounceInput';
 export { Segment, type SegmentProps } from './Segment/Segment';
 export { DatePicker, type DatePickerProps } from './DatePicker/DatePicker';

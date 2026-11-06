@@ -57,6 +57,7 @@ export const OperationHeader = memo<Props>(
                 fill="text"
                 variant="secondary"
                 title="Click to view alternative operations"
+                aria-label="Click to view alternative operations"
               />
               <OperationInfoButton
                 definition={definition}
@@ -71,6 +72,7 @@ export const OperationHeader = memo<Props>(
                   fill="text"
                   variant="secondary"
                   title={operation.disabled ? 'Enable operation' : 'Disable operation'}
+                  aria-label={operation.disabled ? 'Enable operation' : 'Disable operation'}
                 />
               )}
               <Button
@@ -80,6 +82,7 @@ export const OperationHeader = memo<Props>(
                 fill="text"
                 variant="secondary"
                 title="Remove operation"
+                aria-label="Remove operation"
               />
             </div>
           </>

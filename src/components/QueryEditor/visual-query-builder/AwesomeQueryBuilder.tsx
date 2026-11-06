@@ -148,6 +148,7 @@ export const settings: Settings = {
       <Button
         type="button"
         title={`${buttonProps?.label} filter`}
+        aria-label={`${buttonProps?.label} filter`}
         onClick={buttonProps?.onClick}
         variant="secondary"
         size="md"

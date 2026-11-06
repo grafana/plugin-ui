@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "datasource",
+  "name": "Plugin UI Fixture",
+  "id": "grafana-pluginuifixture-datasource",
+  "metrics": true,
+  "backend": false,
+  "info": {
+    "description": "Fixture data source that renders @grafana/plugin-ui components so they can be validated inside real Grafana runtimes.",
+    "author": {
+      "name": "Grafana Labs"
+    },
+    "keywords": ["fixture", "e2e", "plugin-ui"],
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [],
+    "screenshots": [],
+    "version": "1.0.0",
+    "updated": "2026-07-15"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=10.4.0",
+    "grafanaVersion": "*",
+    "plugins": []
+  }
+}

@@ -1,5 +1,5 @@
 export * from './visual-query-builder';
-
+export { QueryEditorRow } from './QueryEditorRow';
 export { AccessoryButton } from './AccessoryButton';
 export { EditorFieldGroup } from './EditorFieldGroup';
 export { EditorHeader } from './EditorHeader';

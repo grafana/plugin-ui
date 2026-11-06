@@ -103,6 +103,9 @@ export const mockPluginState = (): PluginState =>
 export const mockPluginDependencies = (): PluginDependencies => ({
   grafanaVersion: Chance().word(),
   plugins: [],
+  extensions: {
+    exposedComponents: [],
+  },
 });
 
 export const mockPluginSignatureStatus = (): PluginSignatureStatus =>

@@ -2,7 +2,7 @@ import { css, cx } from '@emotion/css';
 import * as React from 'react';
 
 import { type GrafanaTheme2 } from '@grafana/data';
-import { TextArea, useStyles2, HorizontalGroup, Button } from '@grafana/ui';
+import { TextArea, useStyles2, Stack, Button } from '@grafana/ui';
 
 export type Props = React.ComponentProps<typeof TextArea> & {
   /** TRUE if the secret was already configured. (It is needed as often the backend doesn't send back the actual secret, only the information that it was configured) */
@@ -31,7 +31,7 @@ const getStyles = (theme: GrafanaTheme2) => {
 export const SecretTextArea = ({ isConfigured, onReset, ...props }: Props) => {
   const styles = useStyles2(getStyles);
   return (
-    <HorizontalGroup>
+    <Stack gap={2} alignItems="center">
       {!isConfigured && <TextArea {...props} />}
       {isConfigured && (
         <TextArea {...props} rows={1} disabled={true} value={CONFIGURED_TEXT} className={cx(styles.configuredStyle)} />
@@ -41,6 +41,6 @@ export const SecretTextArea = ({ isConfigured, onReset, ...props }: Props) => {
           {RESET_BUTTON_TEXT}
         </Button>
       )}
-    </HorizontalGroup>
+    </Stack>
   );
 };

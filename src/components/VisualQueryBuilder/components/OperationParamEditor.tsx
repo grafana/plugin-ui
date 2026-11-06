@@ -114,6 +114,7 @@ function SelectInputParamEditor({
           icon="times"
           variant="secondary"
           title={`Remove ${paramDef.name}`}
+          aria-label={`Remove ${paramDef.name}`}
           onClick={() => onChange(index, '')}
         />
       )}

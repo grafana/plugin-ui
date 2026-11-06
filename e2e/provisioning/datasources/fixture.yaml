@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: Plugin UI Fixture
+    type: grafana-pluginuifixture-datasource
+    uid: pluginuifixture
+    access: proxy
+    isDefault: false
+    editable: true
+    jsonData:
+      host: localhost:5432

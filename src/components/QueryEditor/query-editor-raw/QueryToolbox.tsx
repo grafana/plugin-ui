@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import React, { useMemo, useState } from 'react';
 
-import { HorizontalGroup, Icon, IconButton, Tooltip, useTheme2 } from '@grafana/ui';
+import { Icon, IconButton, Stack, Tooltip, useTheme2 } from '@grafana/ui';
 
 import { QueryValidator, type QueryValidatorProps } from './QueryValidator';
 import { reportInteraction } from '@grafana/runtime';
@@ -73,7 +73,7 @@ export function QueryToolbox({ showTools, onFormatCode, onExpand, isExpanded, ..
       </div>
       {showTools && (
         <div>
-          <HorizontalGroup spacing="sm">
+          <Stack gap={1} alignItems="center">
             {onFormatCode && (
               <IconButton onClick={onFormatClick} name="brackets-curly" size="xs" tooltip="Format query" />
             )}
@@ -88,7 +88,7 @@ export function QueryToolbox({ showTools, onFormatCode, onExpand, isExpanded, ..
             <Tooltip content="Hit CTRL/CMD+Return to run query">
               <Icon className={styles.hint} name="keyboard" />
             </Tooltip>
-          </HorizontalGroup>
+          </Stack>
         </div>
       )}
     </div>

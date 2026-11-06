@@ -1,0 +1,9 @@
+node_modules/
+package-lock.json
+fixture-datasource/node_modules/
+fixture-datasource/dist/
+fixture-datasource/package-lock.json
+plugin-ui.tgz
+playwright/.auth/
+playwright-report/
+test-results/

@@ -7,3 +7,4 @@ export { TLSSettings } from './Auth/tls/TLSSettings';
 export type { Props as TLSSettingsProps } from './Auth/tls/TLSSettings';
 export { ConnectionSettings } from './Connection';
 export { AdvancedHttpSettings } from './AdvancedSettings';
+export * from './DatasourceConfigWizard';
