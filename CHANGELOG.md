@@ -1,5 +1,44 @@
 # Change Log
 
+## v0.17.10 - 2026-11-03
+- fix(deps): declare semver so plugins do not bundle a second copy
+- fix(sql): stop collapsing escaped quotes in SQL queries (#351)
+
+## v0.17.9 - 2026-10-28
+- fix(deps): resolve security vulnerabilities in storybook (bumped to 10.6.2), dompurify, zod and undici
+- fix(async-query-data): stop polling a query after it is cancelled in [#347](https://github.com/grafana/plugin-ui/pull/347)
+
+## v0.17.8 - 2026-10-13
+- fix(deps): resolve security vulnerabilities in undici, brace-expansion, fast-uri, smol-toml, moment, dompurify, postcss-selector-parser and source-map-js in [#349](https://github.com/grafana/plugin-ui/pull/349)
+
+## v0.17.7 - 2026-10-05
+- fix(deps): resolve security vulnerability in webpack-dev-middleware (CVE-2024-29180)
+
+## v0.17.6 - 2026-09-23
+- fix(deps): resolve security vulnerabilities (CVE-2026-53666, CVE-2026-53669, CVE-2026-84375, CVE-2026-85730)
+
+## v0.17.5 - 2026-09-10
+- fix(deps): patch npm CVEs (fast-uri, tar, browserslist, postcss, nanoid, dompurify) and pin the nested react-router used by `react-router-dom-v5-compat`, without bumping `@grafana/*` to 13.2.1, in [#335](https://github.com/grafana/plugin-ui/pull/335)
+
+## v0.17.4 - 2026-08-17
+- Chore: bump several dependencies for CVE fixes in [#334](https://github.com/grafana/plugin-ui/pull/334)
+- Bump plugin e2e in [#333](https://github.com/grafana/plugin-ui/pull/333)
+- feat: add secret scanner utilities and components in [#332](https://github.com/grafana/plugin-ui/pull/332)
+- ci: use shared reusable add-to-project workflow in [#327](https://github.com/grafana/plugin-ui/pull/327)
+
+## v0.17.3 - 2026-07-22
+
+- Dependency updates
+
+## v0.17.2 - 2026-07-21
+
+- Added tracking events to `DatasourceConfigWizard` component
+- Export provisioning scripts from dsconfig/schema
+
+## v0.17.1 - 2026-07-16
+
+- Added new `DatasourceConfigWizard` component ( schema driven config page )
+
 ## v0.17.0 - 2026-07-15
 
 ### Note

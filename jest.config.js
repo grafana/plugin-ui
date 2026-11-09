@@ -17,6 +17,7 @@ const nodeModulesToTransform = (moduleNames) => {
 };
 
 const grafanaESModules = [
+  '@marcbachmann/cel-js',
   '@wojtekmaj/date-utils',
   'd3',
   'd3-color',
