@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Stack, Select } from '@grafana/ui';
 import { type DataSourceInstanceSettings, type SelectableValue } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
-import { getDataSourceInstanceSettings, useDataSourceInstanceList } from '@grafana/plugin-compat/datasources';
+import { useDataSourceInstanceList, useDefaultDataSourceInstanceListItem } from '@grafana/plugin-compat/datasources';
 import { isUnsignedPluginSignature, PluginSignatureBadge } from '../Plugins/PluginSignatureBadge';
 
 export interface Props {
@@ -31,46 +31,10 @@ export interface Props {
   noDefault?: boolean;
 }
 
-type CurrentDataSource =
-  | { status: 'loading'; previous?: DataSourceInstanceSettings }
-  | { status: 'found'; settings: DataSourceInstanceSettings }
-  | { status: 'not-found' };
+type DataSourceListItem = Parameters<Props['onChange']>[0];
 
-/** Resolves `current` (uid, name, or null for the default) and ignores results that arrive after it changed. */
-function useCurrentDataSource(current: string | null, skip: boolean): CurrentDataSource {
-  const [result, setResult] = useState<{ key: string | null; value: CurrentDataSource }>({
-    key: current,
-    value: { status: 'loading' },
-  });
-
-  useEffect(() => {
-    if (skip) {
-      return;
-    }
-    let isCurrent = true;
-    getDataSourceInstanceSettings(current).then(
-      (settings) => {
-        if (isCurrent) {
-          setResult({ key: current, value: settings ? { status: 'found', settings } : { status: 'not-found' } });
-        }
-      },
-      () => {
-        if (isCurrent) {
-          setResult({ key: current, value: { status: 'not-found' } });
-        }
-      }
-    );
-    return () => {
-      isCurrent = false;
-    };
-  }, [current, skip]);
-
-  if (result.key === current) {
-    return result.value;
-  }
-  // Keep the previous value visible so the Select does not flash its placeholder after a selection.
-  return { status: 'loading', previous: result.value.status === 'found' ? result.value.settings : undefined };
-}
+// Stable reference, so the default lookup does not re-run when it is not needed.
+const NO_ITEMS: DataSourceListItem[] = [];
 
 export function DataSourcePicker({
   onChange,
@@ -83,9 +47,15 @@ export function DataSourcePicker({
   noDefault,
 }: Props) {
   const current = currentProp ?? null;
-  const showNoDatasources = !current && noDefault;
+  const showNoDatasources = !current && !!noDefault;
+  const needsDefault = !current && !noDefault;
   const { items, isLoading: isListLoading, error: listError } = useDataSourceInstanceList();
-  const currentDataSource = useCurrentDataSource(current, !!showNoDatasources);
+  const { item: defaultItem, isLoading: isDefaultLoading } = useDefaultDataSourceInstanceListItem(
+    needsDefault ? items : NO_ITEMS
+  );
+  const selected = current ? findByUidOrName(items, current) : defaultItem;
+  const isLoading = isListLoading || (needsDefault && isDefaultLoading);
+  const notFound = !selected && !isLoading && !listError && !showNoDatasources;
 
   const handleChange = (option: SelectableValue<string>) => {
     const item = items.find((ds) => ds.uid === option.value);
@@ -101,8 +71,8 @@ export function DataSourcePicker({
     meta: ds.meta,
   }));
 
-  const value = getCurrentValue(current, currentDataSource, { hideTextValue, noDefault });
-  const invalid = !!listError || currentDataSource.status === 'not-found';
+  const value = getCurrentValue({ current, selected, notFound, showNoDatasources, hideTextValue });
+  const invalid = !!listError || notFound;
 
   return (
     <div aria-label={selectors.components.DataSourcePicker.container}>
@@ -113,7 +83,7 @@ export function DataSourcePicker({
         backspaceRemovesValue={false}
         onChange={handleChange}
         options={options}
-        isLoading={isListLoading || (!showNoDatasources && currentDataSource.status === 'loading')}
+        isLoading={isLoading}
         autoFocus={autoFocus}
         onBlur={onBlur}
         openMenuOnFocus={openMenuOnFocus}
@@ -138,23 +108,35 @@ export function DataSourcePicker({
   );
 }
 
-function getCurrentValue(
-  current: string | null,
-  currentDataSource: CurrentDataSource,
-  { hideTextValue, noDefault }: Pick<Props, 'hideTextValue' | 'noDefault'>
-): SelectableValue<string> | undefined {
-  if (!current && noDefault) {
+function findByUidOrName(items: DataSourceListItem[], ref: string): DataSourceListItem | undefined {
+  return items.find((ds) => ds.uid === ref) ?? items.find((ds) => ds.name === ref);
+}
+
+function getCurrentValue({
+  current,
+  selected,
+  notFound,
+  showNoDatasources,
+  hideTextValue,
+}: {
+  current: string | null;
+  selected?: DataSourceListItem;
+  notFound: boolean;
+  showNoDatasources: boolean;
+  hideTextValue?: boolean;
+}): SelectableValue<string> | undefined {
+  if (showNoDatasources) {
     return {
       label: 'No datasources found',
     };
   }
 
-  if (currentDataSource.status === 'loading') {
-    return currentDataSource.previous && toOption(currentDataSource.previous, hideTextValue);
+  if (selected) {
+    return toOption(selected, hideTextValue);
   }
 
-  if (currentDataSource.status === 'found') {
-    return toOption(currentDataSource.settings, hideTextValue);
+  if (!notFound) {
+    return undefined;
   }
 
   return {
@@ -165,7 +147,7 @@ function getCurrentValue(
   };
 }
 
-function toOption(ds: DataSourceInstanceSettings, hideTextValue?: boolean): SelectableValue<string> {
+function toOption(ds: DataSourceListItem, hideTextValue?: boolean): SelectableValue<string> {
   return {
     label: ds.name.substr(0, 37),
     value: ds.name,
