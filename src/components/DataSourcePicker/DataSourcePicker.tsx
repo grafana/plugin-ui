@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack, Select } from '@grafana/ui';
 import { type DataSourceInstanceSettings, type SelectableValue } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
@@ -6,7 +6,14 @@ import { getDataSourceInstanceSettings, useDataSourceInstanceList } from '@grafa
 import { isUnsignedPluginSignature, PluginSignatureBadge } from '../Plugins/PluginSignatureBadge';
 
 export interface Props {
-  onChange: (ds: DataSourceInstanceSettings) => void;
+  // Mirrors `DataSourceInstanceListItem` instead of importing it: `@grafana/data` only exports it from 13.3,
+  // so with our `^13.0.0` peer range consumers on 13.0–13.2 would get `any`. Callbacks typed with the real
+  // `DataSourceInstanceListItem` (13.3+) still fit because the shapes are identical.
+  /**
+   * Receives the selected data source's list item (`uid`, `type`, `name`, `meta`). Call
+   * `getDataSourceInstanceSettings(ds.uid)` from `@grafana/plugin-compat` if you need the full settings.
+   */
+  onChange: (ds: Pick<DataSourceInstanceSettings, 'uid' | 'type' | 'name' | 'meta'>) => void;
   /** Uid or name of the selected data source. `null`/`undefined` resolves to the default data source. */
   current?: string | null;
   hideTextValue?: boolean;
@@ -79,33 +86,11 @@ export function DataSourcePicker({
   const showNoDatasources = !current && noDefault;
   const { items, isLoading: isListLoading, error: listError } = useDataSourceInstanceList();
   const currentDataSource = useCurrentDataSource(current, !!showNoDatasources);
-  const [selectionFailed, setSelectionFailed] = useState(false);
 
-  // Only the latest selection may call `onChange`, and nothing may after unmount.
-  const latestSelection = useRef(0);
-  useEffect(
-    () => () => {
-      latestSelection.current = -1;
-    },
-    []
-  );
-
-  const handleChange = async (item: SelectableValue<string>) => {
-    const selection = ++latestSelection.current;
-    const isStale = () => latestSelection.current !== selection;
-    try {
-      const settings = await getDataSourceInstanceSettings(item.value!);
-      if (isStale()) {
-        return;
-      }
-      if (settings) {
-        onChange(settings);
-        setSelectionFailed(false);
-      }
-    } catch {
-      if (!isStale()) {
-        setSelectionFailed(true);
-      }
+  const handleChange = (option: SelectableValue<string>) => {
+    const item = items.find((ds) => ds.uid === option.value);
+    if (item) {
+      onChange(item);
     }
   };
 
@@ -117,7 +102,7 @@ export function DataSourcePicker({
   }));
 
   const value = getCurrentValue(current, currentDataSource, { hideTextValue, noDefault });
-  const invalid = !!listError || selectionFailed || currentDataSource.status === 'not-found';
+  const invalid = !!listError || currentDataSource.status === 'not-found';
 
   return (
     <div aria-label={selectors.components.DataSourcePicker.container}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { openMenu, select } from 'react-select-event';
 import { type DataSourceInstanceSettings } from '@grafana/data';
 import { getDataSourceInstanceSettings, useDataSourceInstanceList } from '@grafana/plugin-compat/datasources';
@@ -96,64 +96,17 @@ describe('DataSourcePicker', () => {
     expect(getSettingsMock).not.toHaveBeenCalled();
   });
 
-  it('calls onChange with the full instance settings of the selected data source', async () => {
+  it('calls onChange with the selected list item without resolving its settings', async () => {
     const onChange = jest.fn();
     render(<DataSourcePicker current="prom-uid" onChange={onChange} />);
     await screen.findByText('Prometheus');
+    getSettingsMock.mockClear();
 
     await select(screen.getByRole('combobox'), 'Loki', { container: document.body });
-
-    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
-    expect(getSettingsMock).toHaveBeenCalledWith('loki-uid');
-    // The list items are slim, so the settings (e.g. jsonData) must come from getDataSourceInstanceSettings.
-    expect(onChange).toHaveBeenCalledWith(loki);
-  });
-
-  it('does not call onChange and marks the picker invalid when the selected data source cannot be resolved', async () => {
-    const onChange = jest.fn();
-    render(<DataSourcePicker current="prom-uid" onChange={onChange} />);
-    await screen.findByText('Prometheus');
-    const pending = deferred<DataSourceInstanceSettings>();
-    getSettingsMock.mockReturnValueOnce(pending.promise);
-
-    await select(screen.getByRole('combobox'), 'Loki', { container: document.body });
-    await act(async () => pending.reject(new Error('boom')));
-
-    expect(screen.getByRole('combobox')).toHaveAttribute('aria-invalid', 'true');
-    expect(onChange).not.toHaveBeenCalled();
-  });
-
-  it('only reports the most recent selection when selections resolve out of order', async () => {
-    const onChange = jest.fn();
-    render(<DataSourcePicker current="prom-uid" onChange={onChange} />);
-    await screen.findByText('Prometheus');
-    const first = deferred<DataSourceInstanceSettings>();
-    const second = deferred<DataSourceInstanceSettings>();
-    getSettingsMock.mockReturnValueOnce(first.promise).mockReturnValueOnce(second.promise);
-
-    await select(screen.getByRole('combobox'), 'Loki', { container: document.body });
-    await select(screen.getByRole('combobox'), 'Prometheus', { container: document.body });
-    await act(async () => {
-      second.resolve(prometheus);
-      first.resolve(loki);
-    });
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith(prometheus);
-  });
-
-  it('does not call onChange when unmounted before the selection resolves', async () => {
-    const onChange = jest.fn();
-    const { unmount } = render(<DataSourcePicker current="prom-uid" onChange={onChange} />);
-    await screen.findByText('Prometheus');
-    const pending = deferred<DataSourceInstanceSettings>();
-    getSettingsMock.mockReturnValueOnce(pending.promise);
-
-    await select(screen.getByRole('combobox'), 'Loki', { container: document.body });
-    unmount();
-    await act(async () => pending.resolve(loki));
-
-    expect(onChange).not.toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledWith(listItem('loki-uid', 'Loki'));
+    expect(getSettingsMock).not.toHaveBeenCalled();
   });
 
   it('ignores a stale resolution of the current value after the current prop changed', async () => {
