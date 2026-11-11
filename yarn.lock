@@ -428,7 +428,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.11.1, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.24.4, @babel/runtime@npm:^7.25.6, @babel/runtime@npm:^7.26.7, @babel/runtime@npm:^7.27.0, @babel/runtime@npm:^7.28.6, @babel/runtime@npm:^7.29.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.11.1, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.24.4, @babel/runtime@npm:^7.26.7, @babel/runtime@npm:^7.27.0, @babel/runtime@npm:^7.28.6, @babel/runtime@npm:^7.29.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.29.7
   resolution: "@babel/runtime@npm:7.29.7"
   checksum: 10c0/ca11572f7146b21e0bde6a9ed4bb6a89eafbee5f0944c7eb54d0d8a2dac962c33638a1d611e14faa71dfbb92b4b5f9236232208568a6b7d5c6f3f39ddb91771e
@@ -1911,7 +1911,7 @@ __metadata:
     "@grafana/runtime": "npm:13.1.1"
     "@grafana/tsconfig": "npm:2.2.0"
     "@grafana/ui": "npm:13.1.1"
-    "@hello-pangea/dnd": "npm:17.0.0"
+    "@hello-pangea/dnd": "npm:18.0.1"
     "@marcbachmann/cel-js": "npm:7.6.1"
     "@react-awesome-query-builder/ui": "npm:6.6.15"
     "@rollup/plugin-commonjs": "npm:29.0.3"
@@ -2129,24 +2129,6 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
   checksum: 10c0/ef039dd90989b2d6284b7416f10615f58f07752f452a877e70fdc238141881ad06790f3e20665cd9fd0e2d2b5b3c6acbd9765bf31c587a59418571007922d7f1
-  languageName: node
-  linkType: hard
-
-"@hello-pangea/dnd@npm:17.0.0":
-  version: 17.0.0
-  resolution: "@hello-pangea/dnd@npm:17.0.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.25.6"
-    css-box-model: "npm:^1.2.1"
-    memoize-one: "npm:^6.0.0"
-    raf-schd: "npm:^4.0.3"
-    react-redux: "npm:^9.1.2"
-    redux: "npm:^5.0.1"
-    use-memo-one: "npm:^1.1.3"
-  peerDependencies:
-    react: ^18.0.0
-    react-dom: ^18.0.0
-  checksum: 10c0/93417c055267f6f12a37a1cdb08d9db85ab021b102315e1e5a70a79d7de6c2ffaeff211e3ec40441c110f39e60688cfcea85ab86c21820041d974415c1ca715e
   languageName: node
   linkType: hard
 
@@ -2590,14 +2572,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15, @jridgewell/sourcemap-codec@npm:^1.5.0, @jridgewell/sourcemap-codec@npm:^1.5.5":
-  version: 1.5.5
-  resolution: "@jridgewell/sourcemap-codec@npm:1.5.5"
-  checksum: 10c0/f9e538f302b63c0ebc06eecb1dd9918dd4289ed36147a0ddce35d6ea4d7ebbda243cda7b2213b6a5e1d8087a298d5cf630fb2bd39329cdecb82017023f6081a0
-  languageName: node
-  linkType: hard
-
-"@jridgewell/sourcemap-codec@npm:^1.6.0":
+"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15, @jridgewell/sourcemap-codec@npm:^1.5.0, @jridgewell/sourcemap-codec@npm:^1.5.5, @jridgewell/sourcemap-codec@npm:^1.6.0":
   version: 1.6.0
   resolution: "@jridgewell/sourcemap-codec@npm:1.6.0"
   checksum: 10c0/b5be700e45a775f218589c3466c4ffea630582b4988657652da464e5ab8a7d18bf928ee4fd2363fb346ede4bea9c6ff0bae05a538358c4565ece6199531b5f72
@@ -2967,19 +2942,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@napi-rs/wasm-runtime@npm:^1.1.4":
-  version: 1.1.6
-  resolution: "@napi-rs/wasm-runtime@npm:1.1.6"
-  dependencies:
-    "@tybys/wasm-util": "npm:^0.10.3"
-  peerDependencies:
-    "@emnapi/core": ^1.7.1
-    "@emnapi/runtime": ^1.7.1
-  checksum: 10c0/344518bf3ef65051dda4c00969f293aa4a21ab7dc7822b3f48519b17cd5eaa3f0bc34898d115d50ba59b1817a0cb905d46f7a7223c8249239cd14c28db388e10
-  languageName: node
-  linkType: hard
-
-"@napi-rs/wasm-runtime@npm:^1.1.5":
+"@napi-rs/wasm-runtime@npm:^1.1.4, @napi-rs/wasm-runtime@npm:^1.1.5":
   version: 1.2.6
   resolution: "@napi-rs/wasm-runtime@npm:1.2.6"
   dependencies:
@@ -12679,7 +12642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-redux@npm:^9.1.2, react-redux@npm:^9.2.0":
+"react-redux@npm:^9.2.0":
   version: 9.3.0
   resolution: "react-redux@npm:9.3.0"
   dependencies:
@@ -14885,15 +14848,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-memo-one@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "use-memo-one@npm:1.1.3"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/3d596e65a6b47b2f1818061599738e00daad1f9a9bb4e5ce1f014b20a35b297e50fe4bf1d8c1699ab43ea97f01f84649a736c15ceff96de83bfa696925f6cc6b
-  languageName: node
-  linkType: hard
-
 "use-sync-external-store@npm:^1.0.0, use-sync-external-store@npm:^1.4.0, use-sync-external-store@npm:^1.5.0, use-sync-external-store@npm:^1.6.0":
   version: 1.6.0
   resolution: "use-sync-external-store@npm:1.6.0"
@@ -15289,22 +15243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.11.0":
-  version: 8.21.0
-  resolution: "ws@npm:8.21.0"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ">=5.0.2"
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 10c0/ef4a243476283fc49bc7550966c4af4aa0eef56273837211e700de3b664e08604a760cdddcb5ba43c049140e74ccfec5b0ee0bb439e08c2adf9138902fdde5f9
-  languageName: node
-  linkType: hard
-
-"ws@npm:^8.21.1":
+"ws@npm:^8.11.0, ws@npm:^8.21.1":
   version: 8.22.0
   resolution: "ws@npm:8.22.0"
   peerDependencies:
