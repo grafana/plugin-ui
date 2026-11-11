@@ -3,7 +3,7 @@
 ## v0.18.0 - 2026-11-10
 - **Breaking:** `DataSourcePicker` now resolves data sources asynchronously through `@grafana/plugin-compat` instead of the sync `getDataSourceSrv()`, and works on hosts with or without the async data source APIs. It is a function component, so the `dataSourceSrv` field, `getDataSourceOptions()` and the `State` type are gone, and it shows loading and invalid states.
 - **Breaking:** `DataSourcePicker`'s `onChange` now receives the selected data source's list item (`uid`, `name`, `type`, `meta`) instead of the full `DataSourceInstanceSettings`. If you need fields like `jsonData`, call `getDataSourceInstanceSettings(ds.uid)` from `@grafana/plugin-compat`.
-- **Breaking:** `DataSourcePicker` now looks `current` up by uid or name in the data source list, so values the list doesn't include, such as template variables (`$ds`) or the Mixed and Dashboard data sources, show as "not found".
+- `DataSourcePicker` now shows the data source a template variable in `current` resolves to, instead of the variable name.
 - **Breaking:** removed the unused `resolvePluginName` helper.
 - Added `@grafana/plugin-compat` as a dependency.
 

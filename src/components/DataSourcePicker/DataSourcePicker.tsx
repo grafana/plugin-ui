@@ -2,7 +2,7 @@ import React from 'react';
 import { Stack, Select } from '@grafana/ui';
 import { type DataSourceInstanceSettings, type SelectableValue } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
-import { useDataSourceInstanceList, useDefaultDataSourceInstanceListItem } from '@grafana/plugin-compat/datasources';
+import { useDataSourceInstanceList, useDataSourceInstanceListItem } from '@grafana/plugin-compat/datasources';
 import { isUnsignedPluginSignature, PluginSignatureBadge } from '../Plugins/PluginSignatureBadge';
 
 export interface Props {
@@ -14,7 +14,10 @@ export interface Props {
    * `getDataSourceInstanceSettings(ds.uid)` from `@grafana/plugin-compat` if you need the full settings.
    */
   onChange: (ds: Pick<DataSourceInstanceSettings, 'uid' | 'type' | 'name' | 'meta'>) => void;
-  /** Uid or name of the selected data source. `null`/`undefined` resolves to the default data source. */
+  /**
+   * Reference to the selected data source, resolved the way Grafana does: uid, name, template variable or
+   * built-in. `null`/`undefined` resolves to the default data source.
+   */
   current?: string | null;
   hideTextValue?: boolean;
   onBlur?: () => void;
@@ -33,9 +36,6 @@ export interface Props {
 
 type DataSourceListItem = Parameters<Props['onChange']>[0];
 
-// Stable reference, so the default lookup does not re-run when it is not needed.
-const NO_ITEMS: DataSourceListItem[] = [];
-
 export function DataSourcePicker({
   onChange,
   current: currentProp,
@@ -48,14 +48,12 @@ export function DataSourcePicker({
 }: Props) {
   const current = currentProp ?? null;
   const showNoDatasources = !current && !!noDefault;
-  const needsDefault = !current && !noDefault;
   const { items, isLoading: isListLoading, error: listError } = useDataSourceInstanceList();
-  const { item: defaultItem, isLoading: isDefaultLoading } = useDefaultDataSourceInstanceListItem(
-    needsDefault ? items : NO_ITEMS
-  );
-  const selected = current ? findByUidOrName(items, current) : defaultItem;
-  const isLoading = isListLoading || (needsDefault && isDefaultLoading);
-  const notFound = !selected && !isLoading && !listError && !showNoDatasources;
+  const currentResult = useDataSourceInstanceListItem(current);
+  const selected: DataSourceListItem | undefined = currentResult.item;
+  const isCurrentLoading = !showNoDatasources && currentResult.isLoading;
+  const isLoading = isListLoading || isCurrentLoading;
+  const notFound = !selected && !isCurrentLoading && !showNoDatasources;
 
   const handleChange = (option: SelectableValue<string>) => {
     const item = items.find((ds) => ds.uid === option.value);
@@ -106,10 +104,6 @@ export function DataSourcePicker({
       />
     </div>
   );
-}
-
-function findByUidOrName(items: DataSourceListItem[], ref: string): DataSourceListItem | undefined {
-  return items.find((ds) => ds.uid === ref) ?? items.find((ds) => ds.name === ref);
 }
 
 function getCurrentValue({
