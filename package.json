@@ -76,7 +76,7 @@
     "@emotion/css": "11.13.5",
     "@grafana/plugin-compat": "0.11.0",
     "@hello-pangea/dnd": "18.0.1",
-    "@marcbachmann/cel-js": "7.6.1",
+    "@marcbachmann/cel-js": "8.0.0",
     "@react-awesome-query-builder/ui": "6.6.15",
     "acorn": "8.17.0",
     "acorn-loose": "8.5.2",
