@@ -16,7 +16,7 @@ jobs:
           persist-credentials: false
       - name: Resolve Grafana E2E versions
         id: resolve-versions
-        uses: grafana/plugin-actions/e2e-version@3ef49643a84470fd25bafeb96701fa0be3be6746 # e2e-version/v3.0.2
+        uses: grafana/plugin-actions/e2e-version@e7022755532ccbdcd470c999be9155e7d257dd8a # e2e-version/v4.0.1
         with:
           version-resolver-type: plugin-grafana-dependency
           # The fixture plugin.json lives under e2e/, not <root>/src, so pass the
